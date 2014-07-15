@@ -80,21 +80,22 @@ void read_Data_out() //remote signals
     TCNT1 = 0;
 
     //eval times
-    if (captimehi > 8300/8 && captimelo > 3500/8)
+    //cca 9000us HIGH, 4500us LOW,; 18000tiks and 9000tics(0.5us tick@16MHz)
+    if (captimehi > 16600 && captimelo > 8000)
     {
       capturingstart = 0;
       capturingbytes = 1;
       cmdbit=0;
       cmd=0;
       //Serial.println("startseq found");
-    }
-    else if(capturingbytes && captimelo > 1500/8)
+    }//cca 1700us; 3400ticks (0.5us tick@16MHz)
+    else if(capturingbytes && captimelo > 3300)
     {
       //Serial.println("bit 1");
       cmd = (cmd<<1) | 0x00000001;
       cmdbit++;
-    }
-    else if (capturingbytes && captimelo > 500/8)
+    }//cca 550us; 1100ticks (0.5us tick@16MHz)
+    else if (capturingbytes && captimelo > 1000)
     {
       //Serial.println("bit 0");
       cmd = (cmd<<1);
@@ -124,14 +125,9 @@ void setup(){
   TCCR1A = 0;// set entire TCCR1A register to 0
   TCCR1B = 0;// same for TCCR1B
   TCNT1  = 0;//initialize counter value to 0;
-  // set timer count for 20khz increments
-  //OCR1A = 65000;// = (16*10^6) / (1000000*8) - 1 (must be <256)
-  // turn on CTC mode
-  //TCCR1B |= (1 << WGM12);
-  // Set CS11 bit for 8 => tick every 1us;64 prescaler => tick every 8us
-  TCCR1B |= (1 << CS11)| (1 << CS10);
-  // enable timer compare interrupt
-  //TIMSK1 |= (1 << OCIE1A);
+  // Set CS11 bit for 8 => tick every 1us@8MHz, 0.5us@16MHz
+  // Set CS11 bit and CS10 for 64 prescaler => tick every 8us@8MHz, 4us@16MHz
+  TCCR1B |= (1 << CS11);
   sei();//allow interrupts
   Serial.begin(57600);
   Serial.println("start");
