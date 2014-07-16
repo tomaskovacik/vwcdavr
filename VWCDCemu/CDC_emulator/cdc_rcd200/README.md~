@@ -41,12 +41,3 @@ Further information and attachments
     
     
 - Basically, after the information above, you can see the new information about the protocol in the ``cd_changer_protocol.pdf`` file in this folder.
-
-
-How to connect the wires
-========================
-
-Above image ilustrats which wires are used for ``Clock``, ``MOSI`` (from SPI interface) from the Arduino to the HU interface. 
-To power up the arduino from the HU, you can simply get GND from HU to Arduino GND, and HU CDC Ub+ to Arduino VDIn. You can see the HU wire diagram in the image below
-
-![RCD200 CDC Wire Diagram](wire_config.jpg?raw=true "CDC Wire Diagram")
