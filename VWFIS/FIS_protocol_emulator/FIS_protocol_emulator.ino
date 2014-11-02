@@ -70,7 +70,7 @@ void loop(){
 //WRITE TO CLUSTER
 if (Serial.available()) {
         FIS_WRITE_CHAR_FROM_SERIAL=(char)Serial.read();
-        //Serial.print(s);
+        Serial.print(FIS_WRITE_CHAR_FROM_SERIAL);
         if (FIS_WRITE_CHAR_FROM_SERIAL == '\n') {
           FIS_WRITE_nl=1;
           if (FIS_WRITE_line==1){
