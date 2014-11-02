@@ -133,14 +133,15 @@ void setup() {
   delayMicroseconds(100);
   digitalWrite(FIS_READ_ENA,LOW);
   delayMicroseconds(100);
-//  digitalWrite(FIS_READ_ENA,HIGH);
-//  delayMicroseconds(37);
-//  digitalWrite(FIS_READ_ENA,LOW);
-//  delayMicroseconds(37);
+  digitalWrite(FIS_READ_ENA,HIGH);
+  delayMicroseconds(37);
+  digitalWrite(FIS_READ_ENA,LOW);
+  delayMicroseconds(37);
   pinMode(FIS_READ_ENA,INPUT);//_PULLUP);
   pinMode(FIS_READ_CLK,INPUT_PULLUP);
   pinMode(FIS_READ_DATA,INPUT_PULLUP);
   attachInterrupt(FIS_READ_intENA,FIS_READ_detect_ena_line,CHANGE);
+ //attachInterrupt(FIS_READ_intCLK,FIS_READ_read_data_line,CHANGE);
 }
 
 void loop() {

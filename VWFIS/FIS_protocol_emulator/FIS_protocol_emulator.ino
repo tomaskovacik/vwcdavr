@@ -163,7 +163,7 @@ void FIS_WRITE_sendTEXT(String FIS_WRITE_line1,String FIS_WRITE_line2) {
     }
 
 int crc=(255-FIS_WRITE_START+FIS_WRITE_line1[0]+FIS_WRITE_line1[1]+FIS_WRITE_line1[2]+FIS_WRITE_line1[3]+FIS_WRITE_line1[4]+FIS_WRITE_line1[5]+FIS_WRITE_line1[6]+FIS_WRITE_line1[7]+FIS_WRITE_line2[0]+FIS_WRITE_line2[1]+FIS_WRITE_line2[2]+FIS_WRITE_line2[3]+FIS_WRITE_line2[4]+FIS_WRITE_line2[5]+FIS_WRITE_line2[6]+FIS_WRITE_line2[7])%256;
-FIS_WRITE_startENA();
+//FIS_WRITE_startENA();
 SPI.begin();
 SPI.setDataMode(SPI_MODE2);
 SPI.setBitOrder(MSBFIRST);
@@ -187,7 +187,7 @@ FIS_WRITE_sendByte(255-FIS_WRITE_line2[6]);
 FIS_WRITE_sendByte(255-FIS_WRITE_line2[7]);
 FIS_WRITE_sendByte(crc);
 SPI.end();
-FIS_WRITE_stopENA();
+//FIS_WRITE_stopENA();
 
 }
 
