@@ -45,6 +45,7 @@ char FIS_WRITE_CHAR_FROM_SERIAL;
 int FIS_WRITE_line=1;
 long FIS_WRITE_last_refresh=0;
 int FIS_WRITE_nl=0;
+int FIS_WRITE_ENA_STATUS=0;
 //END WRITE TO CLUSTER
 
 //WRITE TO CLUSTER
@@ -56,8 +57,7 @@ void FIS_WRITE_stopENA();
 
 void setup(){
 //WRITE TO CLUSTER
-pinMode(FIS_WRITE_ENA, OUTPUT);
-digitalWrite(FIS_WRITE_ENA,LOW);
+pinMode(FIS_WRITE_ENA, INPUT);
 Serial.begin(9600);
 //END WRITE TO CLUSTER
 }
@@ -103,8 +103,9 @@ if (Serial.available()) {
    
     //do rotary and refresh each 0.5second
     //refresh cluster each 5s 
-    if(millis()-FIS_WRITE_last_refresh>500 && !FIS_WRITE_line1_length || !FIS_WRITE_line2_length){//&& !FIS_WRITE_ack){
-      
+    if(millis()-FIS_WRITE_last_refresh>500 && !FIS_WRITE_line1_length || !FIS_WRITE_line2_length){
+    FIS_WRITE_startENA(); //try to enable 
+     if (FIS_WRITE_ENA_STATUS){ //enable set to HIGH, good to go
       if (FIS_WRITE_line1_length>8){
       for (int i=0;i<8;i++){
         if (FIS_WRITE_rotary_position_line1+i>=0 && (FIS_WRITE_rotary_position_line1+i)<FIS_WRITE_line1_length) {
@@ -135,10 +136,12 @@ if (Serial.available()) {
      } else {
        FIS_WRITE_sendline2=FIS_WRITE_line2;
      }
-      // Serial.println("refresh"); 
+      // Serial.println("refresh");
       FIS_WRITE_sendTEXT(FIS_WRITE_sendline1,FIS_WRITE_sendline2);
       FIS_WRITE_last_refresh=millis();
+      FIS_WRITE_stopENA()
     //end refresh
+     }
   }
 //END WRITE TO CLUSTER  
 }
@@ -159,7 +162,10 @@ void FIS_WRITE_sendTEXT(String FIS_WRITE_line1,String FIS_WRITE_line2) {
     }
 
 int crc=(255-FIS_WRITE_START+FIS_WRITE_line1[0]+FIS_WRITE_line1[1]+FIS_WRITE_line1[2]+FIS_WRITE_line1[3]+FIS_WRITE_line1[4]+FIS_WRITE_line1[5]+FIS_WRITE_line1[6]+FIS_WRITE_line1[7]+FIS_WRITE_line2[0]+FIS_WRITE_line2[1]+FIS_WRITE_line2[2]+FIS_WRITE_line2[3]+FIS_WRITE_line2[4]+FIS_WRITE_line2[5]+FIS_WRITE_line2[6]+FIS_WRITE_line2[7])%256;
-FIS_WRITE_startENA();
+SPI.begin();
+SPI.setDataMode(SPI_MODE2);
+SPI.setBitOrder(MSBFIRST);
+SPI.setClockDivider(SPI_CLOCK_DIV128);
 FIS_WRITE_sendByte(FIS_WRITE_START);
 FIS_WRITE_sendByte(255-FIS_WRITE_line1[0]);
 FIS_WRITE_sendByte(255-FIS_WRITE_line1[1]);
@@ -187,16 +193,20 @@ void FIS_WRITE_sendByte(int Byte){
 }
 
 void FIS_WRITE_startENA(){
+  if (!digitalRead(FIS_WRITE_ENA)) {
   digitalWrite(FIS_WRITE_ENA,HIGH);
   delayMicroseconds(FIS_WRITE_STARTPULSEW);
   digitalWrite(FIS_WRITE_ENA,LOW);
   delayMicroseconds(FIS_WRITE_STARTPULSEW);
   digitalWrite(FIS_WRITE_ENA,HIGH);
   delayMicroseconds(FIS_WRITE_STARTPULSEW);
+  FIS_WRITE_ENA_STATUS=1;
+  }
 }
 
 void FIS_WRITE_stopENA(){
  digitalWrite(FIS_WRITE_ENA,LOW);
+ FIS_WRITE_ENA_STATUS=0;
 }
 //END WRITE TO CLUSTER
 
