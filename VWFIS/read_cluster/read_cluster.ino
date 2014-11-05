@@ -1,9 +1,7 @@
-//enable need to have pullup to 5V
-
 #define FIS_READ_intCLK 1 //interupt on FIS_READ_CLK line
-#define FIS_READ_CLK 3 //clk
-#define FIS_READ_DATA 12 //data
-#define FIS_READ_ENA 2 //enable
+#define FIS_READ_CLK 3 //clk pin 3 - int1
+#define FIS_READ_DATA 12 //data pin 12
+#define FIS_READ_ENA 2 //enable pin 2 int0
 #define FIS_READ_intENA 0 //interupt on FIS_READ_ENA line
 
 #include <LiquidCrystal.h>
@@ -20,10 +18,10 @@ volatile uint8_t FIS_READ_newmsg2=0;
 volatile uint8_t FIS_READ_adrok=0;
 volatile uint8_t FIS_READ_cksumok=0;
 volatile uint8_t FIS_READ_tmp_cksum=0;
-volatile uint8_t packet_counter=0;
+volatile uint8_t FIS_READ_ENABLE_LINE_STATE=0;
 
 void FIS_READ_read_data_line(){
-  if (!digitalRead(FIS_READ_CLK)){
+  //if (!digitalRead(FIS_READ_CLK)){//used only if interrupt is "CHANGE" no "FALLING"
     if(!FIS_READ_adrok){
       FIS_READ_read_adr();
     }
@@ -36,7 +34,7 @@ void FIS_READ_read_data_line(){
     else if (!FIS_READ_cksumok){
       FIS_READ_read_cksum();
     }
-  }
+//  }
 }
 
 void FIS_READ_read_cksum(){
@@ -58,7 +56,6 @@ void FIS_READ_read_cksum(){
     }
     if((FIS_READ_tmp_cksum%256)==FIS_READ_cksum)
     FIS_READ_cksumok=1;
-    packet_counter++;
     FIS_READ_msgbit=0;
   }
 
@@ -114,10 +111,11 @@ void FIS_READ_read_adr(){
     FIS_READ_msgbit=0;
   }
 }
+
 void FIS_READ_detect_ena_line(){
-  if(digitalRead(FIS_READ_ENA)) {
-    attachInterrupt(FIS_READ_intCLK,FIS_READ_read_data_line,CHANGE);
-    detachInterrupt(FIS_READ_intENA);
+  //FIS_READ_ENABLE_LINE_STATE=digitalRead(FIS_READ_ENA);
+  if (digitalRead(FIS_READ_ENA)){ //Enable line changed to HIGH -> data on data line are valid
+    attachInterrupt(FIS_READ_intCLK,FIS_READ_read_data_line,FALLING); //can be changed to CHANGE->uncoment "if (!digitalRead(FIS_READ_CLK)){" in FIS_READ_read_data_line function
   } else {
     detachInterrupt(FIS_READ_intCLK);
   }
@@ -129,27 +127,19 @@ void setup() {
   lcd.print("start");
   delay(500);
   lcd.clear();
-  digitalWrite(FIS_READ_ENA,HIGH);
-  delayMicroseconds(100);
-  digitalWrite(FIS_READ_ENA,LOW);
-  delayMicroseconds(100);
-  digitalWrite(FIS_READ_ENA,HIGH);
-  delayMicroseconds(37);
-  digitalWrite(FIS_READ_ENA,LOW);
-  delayMicroseconds(37);
-  pinMode(FIS_READ_ENA,INPUT);//_PULLUP);
+  pinMode(FIS_READ_ENA,INPUT);//_PULLUP); //no need to pullup radio internaly has pullup
   pinMode(FIS_READ_CLK,INPUT_PULLUP);
   pinMode(FIS_READ_DATA,INPUT_PULLUP);
+  //attachInterrupt(FIS_READ_intCLK,FIS_READ_read_data_line,FALLING);
   attachInterrupt(FIS_READ_intENA,FIS_READ_detect_ena_line,CHANGE);
- //attachInterrupt(FIS_READ_intCLK,FIS_READ_read_data_line,CHANGE);
 }
 
 void loop() {
-  if(FIS_READ_cksumok){     
+  if(FIS_READ_cksumok){ //whole packet received and checksum is ok    
     lcd.home();
     lcd.clear();
-    lcd.print(FIS_READ_adr,DEC);
-    lcd.setCursor (3,0);
+   // lcd.print(FIS_READ_adr,DEC); // debug
+   // lcd.setCursor (3,0);// debug
     for(int i=56;i>=0;i=i-8){
       lcd.write(0xFF^((FIS_READ_msg1>>i) & 0xFF));
     }
@@ -161,18 +151,7 @@ void loop() {
     FIS_READ_newmsg2=0;
     FIS_READ_adrok=0;
     FIS_READ_cksumok=0;
-    pinMode(FIS_READ_ENA,OUTPUT);
-    digitalWrite(FIS_READ_ENA,HIGH);
-    delayMicroseconds(100);
-    digitalWrite(FIS_READ_ENA,LOW);
-    delayMicroseconds(100);
-    pinMode(FIS_READ_ENA,INPUT);//_PULLUP);
-    attachInterrupt(FIS_READ_intENA,FIS_READ_detect_ena_line,CHANGE);
-    lcd.setCursor(6,1);
-    lcd.print(millis());
   }
-  lcd.setCursor(12,1);
-  lcd.print(packet_counter);  
   delay(1000);
 }
 
