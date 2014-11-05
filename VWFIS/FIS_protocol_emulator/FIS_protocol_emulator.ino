@@ -1,13 +1,22 @@
+#include <SPI.h> 
 //spi version:
 //http://arduino.cc/en/Reference/SPI
 //data MOSI pin -> uno/due: 11,mega: 51
 //clk  SCK  pin -> uno/due: 13,mega: 52
 //ena       pin -> uno/due/mega 2
+#define useSPI
 
-#include <SPI.h> 
+//nospi version:
+//data pin 4
+//clk  pin 3
+//ena  pin 2
 
 //WRITE TO CLUSTER
-#define FIS_WRITE_ENA 2 //
+#define FIS_WRITE_ENA 2 
+#ifndef useSPI
+#define FIS_WRITE_CLK 3 
+#define FIS_WRITE_DATA 4 
+#endif
 #define FIS_WRITE_PULSEW 50
 #define FIS_WRITE_STARTPULSEW 100
 #define FIS_WRITE_START 15 //something like address, first byte is always 15
@@ -57,7 +66,14 @@ void FIS_WRITE_stopENA();
 
 void setup(){
 //WRITE TO CLUSTER
-pinMode(FIS_WRITE_ENA, INPUT);
+pinMode(FIS_WRITE_ENA, OUTPUT);
+digitalWrite(FIS_WRITE_ENA,LOW);
+#ifndef useSPI
+pinMode(FIS_WRITE_CLK, OUTPUT); 
+digitalWrite(FIS_WRITE_CLK, LOW);
+pinMode(FIS_WRITE_DATA, OUTPUT); 
+digitalWrite(FIS_WRITE_DATA, LOW);
+#endif
 Serial.begin(9600);
 //END WRITE TO CLUSTER
 }
@@ -139,7 +155,7 @@ if (Serial.available()) {
       // Serial.println("refresh");
       FIS_WRITE_sendTEXT(FIS_WRITE_sendline1,FIS_WRITE_sendline2);
       FIS_WRITE_last_refresh=millis();
-      FIS_WRITE_stopENA()
+      FIS_WRITE_stopENA();
     //end refresh
      }
   }
@@ -162,10 +178,12 @@ void FIS_WRITE_sendTEXT(String FIS_WRITE_line1,String FIS_WRITE_line2) {
     }
 
 int crc=(255-FIS_WRITE_START+FIS_WRITE_line1[0]+FIS_WRITE_line1[1]+FIS_WRITE_line1[2]+FIS_WRITE_line1[3]+FIS_WRITE_line1[4]+FIS_WRITE_line1[5]+FIS_WRITE_line1[6]+FIS_WRITE_line1[7]+FIS_WRITE_line2[0]+FIS_WRITE_line2[1]+FIS_WRITE_line2[2]+FIS_WRITE_line2[3]+FIS_WRITE_line2[4]+FIS_WRITE_line2[5]+FIS_WRITE_line2[6]+FIS_WRITE_line2[7])%256;
-SPI.begin();
-SPI.setDataMode(SPI_MODE2);
-SPI.setBitOrder(MSBFIRST);
-SPI.setClockDivider(SPI_CLOCK_DIV128);
+#ifdef useSPI
+  SPI.begin();
+  SPI.setDataMode(SPI_MODE2);
+  SPI.setBitOrder(MSBFIRST);
+  SPI.setClockDivider(SPI_CLOCK_DIV128);
+#endif
 FIS_WRITE_sendByte(FIS_WRITE_START);
 FIS_WRITE_sendByte(255-FIS_WRITE_line1[0]);
 FIS_WRITE_sendByte(255-FIS_WRITE_line1[1]);
@@ -184,12 +202,18 @@ FIS_WRITE_sendByte(255-FIS_WRITE_line2[5]);
 FIS_WRITE_sendByte(255-FIS_WRITE_line2[6]);
 FIS_WRITE_sendByte(255-FIS_WRITE_line2[7]);
 FIS_WRITE_sendByte(crc);
-SPI.end();
+#ifdef useSPI
+  SPI.end();
+#endif
 FIS_WRITE_stopENA();
 }
 
 void FIS_WRITE_sendByte(int Byte){
+#ifdef useSPI
   SPI.transfer(Byte);
+#else
+  shiftOut(FIS_WRITE_DATA,FIS_WRITE_CLK,MSBFIRST,Byte);
+#endif
 }
 
 void FIS_WRITE_startENA(){
