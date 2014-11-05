@@ -21,7 +21,7 @@ volatile uint8_t FIS_READ_tmp_cksum=0;
 volatile uint8_t FIS_READ_ENABLE_LINE_STATE=0;
 
 void FIS_READ_read_data_line(){
-  //if (!digitalRead(FIS_READ_CLK)){//used only if interrupt is "CHANGE" no "FALLING"
+  if (!digitalRead(FIS_READ_CLK) /*&& FIS_READ_ENABLE_LINE_STATE*/){//used only if interrupt is "CHANGE" no "FALLING"
     if(!FIS_READ_adrok){
       FIS_READ_read_adr();
     }
@@ -34,7 +34,7 @@ void FIS_READ_read_data_line(){
     else if (!FIS_READ_cksumok){
       FIS_READ_read_cksum();
     }
-//  }
+  }
 }
 
 void FIS_READ_read_cksum(){
@@ -49,6 +49,9 @@ void FIS_READ_read_cksum(){
   }
   if (FIS_READ_msgbit==8)
   {
+    FIS_READ_newmsg1=0;
+    FIS_READ_newmsg2=0;
+    FIS_READ_adrok=0;
     FIS_READ_tmp_cksum=(0xFF^FIS_READ_adr);
     for (int i=56;i>=0;i=i-8){
       FIS_READ_tmp_cksum=FIS_READ_tmp_cksum+(0xFF^((FIS_READ_msg1>>i) & 0xFF))
@@ -113,24 +116,22 @@ void FIS_READ_read_adr(){
 }
 
 void FIS_READ_detect_ena_line(){
-  //FIS_READ_ENABLE_LINE_STATE=digitalRead(FIS_READ_ENA);
+ // FIS_READ_ENABLE_LINE_STATE=digitalRead(FIS_READ_ENA);
   if (digitalRead(FIS_READ_ENA)){ //Enable line changed to HIGH -> data on data line are valid
-    attachInterrupt(FIS_READ_intCLK,FIS_READ_read_data_line,FALLING); //can be changed to CHANGE->uncoment "if (!digitalRead(FIS_READ_CLK)){" in FIS_READ_read_data_line function
+    attachInterrupt(FIS_READ_intCLK,FIS_READ_read_data_line,CHANGE); //can be changed to CHANGE->uncoment "if (!digitalRead(FIS_READ_CLK)){" in FIS_READ_read_data_line function
   } else {
     detachInterrupt(FIS_READ_intCLK);
   }
 }
 
 void setup() { 
+  attachInterrupt(FIS_READ_intCLK,FIS_READ_read_data_line,CHANGE);
+  pinMode(FIS_READ_CLK,INPUT_PULLUP);
   lcd.begin(16,2);
   lcd.home();
-  lcd.print("start");
-  delay(500);
   lcd.clear();
   pinMode(FIS_READ_ENA,INPUT);//_PULLUP); //no need to pullup radio internaly has pullup
-  pinMode(FIS_READ_CLK,INPUT_PULLUP);
   pinMode(FIS_READ_DATA,INPUT_PULLUP);
-  //attachInterrupt(FIS_READ_intCLK,FIS_READ_read_data_line,FALLING);
   attachInterrupt(FIS_READ_intENA,FIS_READ_detect_ena_line,CHANGE);
 }
 
@@ -147,12 +148,9 @@ void loop() {
     for(int i=56;i>=0;i=i-8){
       lcd.write(0xFF^((FIS_READ_msg2>>i) & 0xFF));   
     }
-    FIS_READ_newmsg1=0;
-    FIS_READ_newmsg2=0;
-    FIS_READ_adrok=0;
     FIS_READ_cksumok=0;
   }
-  delay(1000);
+ // delay(1000);
 }
 
 
