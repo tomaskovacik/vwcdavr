@@ -1,8 +1,10 @@
-arduino 1.0 up related to audi radios  (probably also for vw, skoda, seat) remote control protocol
+arduino 1.0 stuff up related to audi radios  (probably also for vw, skoda, seat) remote control protocol
 
-code_finder is sketchup for finding all codes understended by my audi concert/chorus 1 radios
-
-emulator is sketchup emulating audi MFSW
+- code_finder is sketchup for finding all codes understended by my audi concert/chorus 1 radios
+- emulator is sketchup emulating audi MFSW
+- dumps of audi steering wheel controls to HU(radio) made by https://github.com/gillham/logic_analyzer
+- audi_MFSW_eletric_connection_schematics.pdf is how and where is what connected in car ...
+- remote_control_codes_control_unit_to_radio.ods and steering_wheel_to_control_unit.ods analyzis of OLS ouput in opendocument format
 
 using ebay LCD shield(2x16) with 5 buttons on A0 
 output (remote signal) is on pin 2
