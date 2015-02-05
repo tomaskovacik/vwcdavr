@@ -5,18 +5,10 @@ blog: http://kovo-blog.blogspot.sk/2013/10/remote-control-audi-radio.html
 
 5V LOGIC idle state is HIGH (5V)
 
-start bit:
- 9ms LOW
-4.55ms HIGH
-
- logic 0:
-~600us LOW ~1700us HIGH
-
-logic 1:
-~600us LOW ~600us HIGH
-
-stop bit:
-~600us LOW
+- start bit:    9ms LOW 4.55ms HIGH
+- logic 0:      ~600us LOW ~1700us HIGH
+- logic 1:      ~600us LOW ~600us HIGH
+- stop bit:     ~600us LOW
 
 
 I have MFSW without telephone option, so I read codes just for radio:

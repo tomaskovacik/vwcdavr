@@ -5,7 +5,7 @@ output (remote signal) is on pin 2
 more info:
 http://kovo-blog.blogspot.sk/2013/10/remote-control-audi-radio.html
 
-5V logic
+5V logic idle state is HIGH (5V)
 
 - start bit:	9ms LOW 4.55ms HIGH
 - logic 0:	~600us LOW ~1700us HIGH
