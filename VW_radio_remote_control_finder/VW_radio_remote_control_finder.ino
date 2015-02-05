@@ -2,7 +2,7 @@
 
 license: GPL 
 
-emulator for audi radios (probably also for vw, skoda, seat)
+code finder for audi radios (probably also for vw, skoda, seat)
 using ebay LCD shield(2x16) with 5 buttons on A0 
 output (remote signal) is on pin 2
 
@@ -34,66 +34,6 @@ VOL-:    0x41E800FF
 
 code is always 0x41 0xE8 X 0xFF-X
 
-discovered codes on my audi concert I unit:
-
-0x00 	Volume down
-0x01 	mem/cd1
-0x03 	mem/cd3
-0x05 	mem/cd5
-0x07 	search up
-0x09 	reg on/off
-0x0B 	tp
-0x11 	AM
-0x15 	AS-STORE
-0x17 	FM
-0x1D 	search down
-0x20 	AM->AM+AS->FM1->FM2->FM1+AS->FM2->AS/in CD mode “RD”
-0x22 	AM->AM+AS->FM1->FM2->FM1+AS->FM2->AS/in CD mode “RD”
-0x24 	AM->AM+AS->FM1->FM2->FM1+AS->FM2->AS/in CD mode “RD”
-0x26 	AM->AM+AS->FM1->FM2->FM1+AS->FM2->AS/in CD mode “RD”
-0x29 	TP
-0x2B 	search up
-0x3C 	seek up
-0x40 	LEFT FM1 6-5-4-3-2-1-FM2 6-5-4-3-2-1
-0x42 	LEFT FM1 6-5-4-3-2-1-FM2 6-5-4-3-2-1
-0x44 	LEFT FM1 6-5-4-3-2-1-FM2 6-5-4-3-2-1
-0x46 	LEFT FM1 6-5-4-3-2-1-FM2 6-5-4-3-2-1
-0x50 	Seek down/FR
-0x52 	Seek down/FR
-0x54 	Seek down/FR
-0x56 	Seek down/FR
-0x60 	Seek down/FR
-0x62 	seek down
-0x64 	seek down
-0x80 	Volume up
-0x81 	Volume up
-0x82 	Volume up
-0x83 	Volume up
-0x84 	Volume up
-0x85 	Volume up
-0x86 	Volume up
-0x89 	-2 Volume down bas/treble down/fade rear/bal left
-0x8B 	-4 Volume down bas/treble down/fade rear/bal left
-0x8D 	-6 Volume down bas/treble down/fade rear/bal left
-0x8F 	-8 Volume down/fade rear/bal left
-0x97 	TP
-0x9B 	SCAN
-0xA0 	MODE
-0xA2 	MODE
-0xA4 	MODE
-0xA6 	MODE
-0xC0 	RIGHT FM1 6-5-4-3-2-1-FM2 6-5-4-3-2-1
-0xC2 	RIGHT FM1 6-5-4-3-2-1-FM2 6-5-4-3-2-1
-0xC4 	RIGHT FM1 6-5-4-3-2-1-FM2 6-5-4-3-2-1
-0xC6 	RIGHT FM1 6-5-4-3-2-1-FM2 6-5-4-3-2-1
-0xD0 	Seek up/FF
-0xD2 	Seek up/FF
-0xD4 	Seek up/FF
-0xD6 	Seek up/FF
-0xE0 	seek up
-0xE2 	seek up
-0xE4 	seek up
-0xE6 	seek up
 */
 
 
@@ -113,8 +53,6 @@ discovered codes on my audi concert I unit:
 //0,1,0,0,0,0,0,1,1,1,1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1
 //VOL-: 0x00
 //0,1,0,0,0,0,0,1,1,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1
-#define MODE 0xA0
-
 #include <LiquidCrystal.h>
 
 //lcd pins
@@ -154,49 +92,43 @@ void loop() {
       switch (key)
       {
       case 0:
-        // righ
-        sendByte(RIGHT);
-  lcd.clear();
-  lcd.home();
-  lcd.print("NEXT CD/station");
+        // righ - increment and send
+        h++;
+        sendByte(h);
         break;
       case 1:
-        // up
-  lcd.clear();
+        // up - increment but dont send
+        h++;
+          lcd.clear();
   lcd.home();
-  lcd.print("NEXT track/FF");
-        sendByte(UP);
+  lcd.print(h,HEX);
         break;
       case 2:
-        // down
+        // down - decrement bu dont send
+        h--; 
   lcd.clear();
   lcd.home();
-  lcd.print("PREV track/FR");
-        sendByte(DOWN);
+  lcd.print(h,HEX);
         break;
       case 3:
-        // left
-  lcd.clear();
-  lcd.home();
-  lcd.print("PREV CD/station");
-        sendByte(LEFT);
+        // left - decrement and send
+        if(h>0)
+        h--; 
+        sendByte(h);
         break;
       case 4:
-        // select
-  lcd.clear();
-  lcd.home();
-  lcd.print("MODE");
-        sendByte(MODE);
+        // select - repeat sending of last number
+        sendByte(h);
         break;
       }
 
      }
     }
   }
-  
+ 
 void sendByte(int cislo) {
   lcd.clear();
-  lcd.setCursor(0, 1);
+  lcd.home();
   lcd.print(cislo,HEX);
   int c_cislo=0xFF-cislo;
   int cmdStart[32]={0,1,0,0,0,0,0,1,1,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -224,7 +156,7 @@ void sendByte(int cislo) {
     if (cmdStart[i]==1)
       delayMicroseconds(1700);
   }
-  Serial.println();
+  Serial.println("");
   digitalWrite(2,LOW);
   delayMicroseconds(600);
   digitalWrite(2,HIGH);
@@ -245,5 +177,3 @@ int get_key(unsigned int input)
     k = -1;     // No valid key pressed
   return k;
 }
-
-
