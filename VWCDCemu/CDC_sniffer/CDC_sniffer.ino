@@ -1,9 +1,19 @@
-//mega + lcd shield from ebay (buttons on analog 0)
+/*
 
+mega + lcd shield from ebay (5 buttons on analog 0)
+
+CDC sniffer
+ - emulate RADIO DataOut signals 
+ - receive and print CD changer responce to serial console 
+  
+DataOut -> arduino pin 12
+Clk     -> arduino pin 3
+DataIn  -> arduino pin 11
+
+*/
 #define DataOut 12
 #define Clk 3
 #define DataIn 11
-#define BUFFER 10
 
 #ifdef Clk=2
 #define ClkInt 0
