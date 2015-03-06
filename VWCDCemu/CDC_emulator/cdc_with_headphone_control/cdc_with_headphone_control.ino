@@ -248,7 +248,7 @@ void loop(){
   {
     send_package(0x34,cd,tr,0xFF,0xFF,mode,0xCF,0x7c);
   }
-  delay(PACKET_DALEY);
+  delay(PACKET_DALEY); //tk: this is bad, i lose all comunication from radio while I wait for this stupid delay ... rework it!!
 
 }
 
