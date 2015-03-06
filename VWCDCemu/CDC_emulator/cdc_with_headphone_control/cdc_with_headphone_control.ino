@@ -1,7 +1,22 @@
-// works also with ATMEGA8 - tested
-// SPI PINS used for transfer from CDCemulator to RADIO:
-// MOSI (arduino pin 11) -> DataIN
-// CLK (arduino pin 13) -> CLK
+/*
+ works also with ATMEGA8 - tested
+
+16MHz arduino
+
+CDC connection:
+arduino pin 2 -> RADIO DataOUT
+arduino pin 11 -> RADIO DataIN
+arduino pin 13 -> RADIO CLK
+
+HEADPHONE control circute:
+arduino pin 9 -> control signal for virtual PREVIOUS button
+arduino pin 5 -> control signal for virtual NEXT button
+arduino pin 6 -> control signal for virtual PLAY/PAUSE button
+
+schematics:
+https://github.com/tomaskovacik/hw/tree/master/kicad/arduino_based_cdc_emulator/atmegax8_dip
+
+*/
 
 #include <SPI.h>
 //#include <SoftwareSerial.h>

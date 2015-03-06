@@ -1,3 +1,20 @@
+/*
+
+idea of this is control ipod remote as easy as with HTC headphone, code based on 
+
+htc hedphones ultrasound identification
+
+site i currently unavalable, archive:
+https://web.archive.org/web/20131128010310/http://david.carne.ca/shuffle_hax/shuffle_remote.html
+
+or whole page with pics is on my github page
+
+this is untested .....
+
+no HW part was made, no test was made....
+
+*/
+
 #define F_CPU 16000000
 //#include <avr/io.h>
 
