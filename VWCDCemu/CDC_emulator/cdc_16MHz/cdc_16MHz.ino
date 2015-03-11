@@ -1,6 +1,14 @@
+
+#define USESPI
+#define DataPin 11
+#define ClockPin 13
+
+#ifdef USESPI
 #include <SPI.h>
+#endif
 
 #define DataOut 2
+
 
 #define CDC_PREFIX1 0x53
 #define CDC_PREFIX2 0x2C
@@ -32,7 +40,6 @@ volatile uint16_t captimelo = 0;
 volatile uint8_t capturingstart = 0;
 volatile uint8_t capturingbytes = 0;
 volatile uint32_t cmd = 0;
-volatile uint8_t tmp_cmd = 0;
 volatile uint8_t cmdbit = 0;
 volatile uint8_t newcmd = 0;
 volatile uint8_t prevcmd = 0;
@@ -46,111 +53,30 @@ volatile uint8_t load_cd=0;
 //#include <SoftwareSerial.h>
 
 uint8_t getCommand(uint32_t cmd2);
-
-void send_package(uint8_t c0, uint8_t c1, uint8_t c2, uint8_t c3, uint8_t c4, uint8_t c5, uint8_t c6, uint8_t c7)
-{
-  SPI.transfer(c0);
-  delayMicroseconds(874);
-  SPI.transfer(c1);
-  delayMicroseconds(874);
-  SPI.transfer(c2);
-  delayMicroseconds(874);
-  SPI.transfer(c3);
-  delayMicroseconds(874);
-  SPI.transfer(c4);
-  delayMicroseconds(874);
-  SPI.transfer(c5);
-  delayMicroseconds(874);
-  SPI.transfer(c6);
-  delayMicroseconds(874);
-  SPI.transfer(c7);
-}
-
-void read_Data_out() //remote signals
-{
-  //if (newcmd==0){
-  if(digitalRead(DataOut))
-  {
-    if (capturingstart || capturingbytes)
-    {
-      captimelo = TCNT1;
-    }
-    else
-    capturingstart = 1;
-    TCNT1 = 0;
-
-    //eval times
-    //cca 9000us HIGH, 4500us LOW,; 18000tiks and 9000tics(0.5us tick@16MHz)
-    if (captimehi > 16600 && captimelo > 8000)
-    {
-      capturingstart = 0;
-      capturingbytes = 1;
-      cmdbit=0;
-      cmd=0;
-      //Serial.println("startseq found");
-    }//cca 1700us; 3400ticks (0.5us tick@16MHz)
-    else if(capturingbytes && captimelo > 3300)
-    {
-      //Serial.println("bit 1");
-      cmd = (cmd<<1) | 0x00000001;
-      cmdbit++;
-    }//cca 550us; 1100ticks (0.5us tick@16MHz)
-    else if (capturingbytes && captimelo > 1000)
-    {
-      //Serial.println("bit 0");
-      cmd = (cmd<<1);
-      cmdbit++;
-    }
-
-    if(cmdbit == 32)
-    {
-      newcmd = 1;
-      capturingbytes = 0;
-    }
-  }
-  else
-  {
-      captimehi = TCNT1; 
-      TCNT1 = 0;
-  }
- // }
-}
+void cdc_read_Data_out();
+void cdc_send_package(uint8_t c0, uint8_t c1, uint8_t c2, uint8_t c3, uint8_t c4, uint8_t c5, uint8_t c6, uint8_t c7);
+void cdc_setup(int DataOut_pin);
+void myTransfer(uint8_t val);
 
 void setup(){
-
-  pinMode(DataOut,INPUT);
-  attachInterrupt(0,read_Data_out,CHANGE);
-  //  cli();//stop interrupts
-  //set timer1 interrupt at 20kHz
-  TCCR1A = 0;// set entire TCCR1A register to 0
-  TCCR1B = 0;// same for TCCR1B
-  TCNT1  = 0;//initialize counter value to 0;
-  // Set CS11 bit for 8 => tick every 1us@8MHz, 0.5us@16MHz
-  // Set CS11 bit and CS10 for 64 prescaler => tick every 8us@8MHz, 4us@16MHz
-  TCCR1B |= (1 << CS11);
-  sei();//allow interrupts
+  
   Serial.begin(57600);
   Serial.println("start");
-  SPI.begin();
-  SPI.setBitOrder(MSBFIRST);
-  SPI.setDataMode(SPI_MODE1);
-  SPI.setClockDivider(SPI_CLOCK_DIV128); //62.5kHz@8Mhz
-  //SPI.setClockDivider(SPI_CLOCK_DIV64);//125kHz@8Mhz
-  //  
-//  send_package(0x74,cd,tr,0xFF,0xFF,mode,0x8F,0x7C); //idle
-//  delay(10);
-//
-//  send_package(0x34,0xBF,tr,0xFF,0xFF,mode,0xFA,0x3C); //load disc
-//  delay(100);
-//  send_package(0x74,cd,tr,0xFF,0xFF,mode,0x8F,0x7C); //idle
-//  delay(10);
+  
+  cdc_setup(DataOut);
+//init RADIO:
+  send_package(0x74,cd,tr,0xFF,0xFF,mode,0x8F,0x7C); //idle
+  delay(10);
+  send_package(0x34,0xBF,tr,0xFF,0xFF,mode,0xFA,0x3C); //load disc
+  delay(100);
+  send_package(0x74,cd,tr,0xFF,0xFF,mode,0x8F,0x7C); //idle
+  delay(10);
 }
 
 void loop(){
 
   if(newcmd)
   {
-  // tmp_cmd=getCommand(cmd);
    Serial.println(cmd,HEX);
    switch(getCommand(cmd))
     {
@@ -266,6 +192,119 @@ void loop(){
   }
   delay(100);
 
+}
+
+void cdc_setup(int pin){
+  
+  pinMode(pin,INPUT);
+  if (pin == 2) attachInterrupt(0,read_Data_out,CHANGE);
+  if (pin == 3) attachInterrupt(1,read_Data_out,CHANGE);
+  cli();//stop interrupts
+  //for atmegax8 micros
+  //TODO: cpu detection ... 
+  TCCR1A = 0;// set entire TCCR1A register to 0
+  TCCR1B = 0;// same for TCCR1B
+  TCNT1  = 0;//initialize counter value to 0;
+  // Set CS11 bit for 8 => tick every 1us@8MHz, 0.5us@16MHz
+  // Set CS11 bit and CS10 for 64 prescaler => tick every 8us@8MHz, 4us@16MHz
+  TCCR1B |= (1 << CS11);
+  sei();//allow interrupts
+#ifdef USESPI
+  SPI.begin();
+  SPI.setBitOrder(MSBFIRST);
+  SPI.setDataMode(SPI_MODE1);
+  SPI.setClockDivider(SPI_CLOCK_DIV128); //62.5kHz@8Mhz 125kHz@16MHz
+  //SPI.setClockDivider(SPI_CLOCK_DIV64);//125kHz@8Mhz
+#else
+  pinMode(DataPin,OUTPUT);
+  pinMode(ClockPin,OUTPUT);
+#endif
+  
+  
+}
+
+void send_package(uint8_t c0, uint8_t c1, uint8_t c2, uint8_t c3, uint8_t c4, uint8_t c5, uint8_t c6, uint8_t c7)
+{
+  myTransfer(c0);
+  delayMicroseconds(874);
+  myTransfer(c1);
+  delayMicroseconds(874);
+  myTransfer(c2);
+  delayMicroseconds(874);
+  myTransfer(c3);
+  delayMicroseconds(874);
+  myTransfer(c4);
+  delayMicroseconds(874);
+  myTransfer(c5);
+  delayMicroseconds(874);
+  myTransfer(c6);
+  delayMicroseconds(874);
+  myTransfer(c7);
+}
+
+void myTransfer(uint8_t val){
+#ifdef USESPI
+  SPI.transfer(val);
+#else
+  for (uint8_t i = 0; i < 8; i++)  {
+    digitalWrite(ClockPin, HIGH);
+    digitalWrite(DataPin, !!(val & (1 << (7 - i))));
+    delayMicroseconds(50);
+    digitalWrite(ClockPin, LOW);
+    delayMicroseconds(50);
+  }
+#endif
+}
+
+void read_Data_out() //remote signals
+{
+  if(digitalRead(DataOut))
+  {
+    if (capturingstart || capturingbytes)
+    {
+      captimelo = TCNT1;
+    }
+    else
+    capturingstart = 1;
+    TCNT1 = 0;
+
+    //eval times
+    //high: 9000us = 18000tics
+    //low:  4500us = 9000tics(0.5us tick@16MHz)
+    if (captimehi > 17900 && captimehi < 18100 && captimelo > 8900 && captimelo < 9100)
+    {
+      capturingstart = 0;
+      capturingbytes = 1;
+      cmdbit=0;
+      cmd=0;
+    }
+    //high: 550us  = 1100ticks (0.5us tick@16MHz)
+    //low:  1700us = 3400ticks (0.5us tick@16MHz)
+    else if(capturingbytes && captimehi > 1000 && captimehi < 1200 && captimelo > 3300 && captimelo < 3500)
+    {
+      //Serial.println("bit 1");
+      cmd = (cmd<<1) | 0x00000001;
+      cmdbit++;
+    }
+    //high: 550us = 1100ticks (0.5us tick@16MHz)
+    //low:  550us = 1100ticks (0.5us tick@16MHz)
+    else if (capturingbytes && captimehi > 1000 && captimehi < 1200 &&  captimelo > 1000 && captimelo < 1200)
+    {
+      cmd = (cmd<<1);
+      cmdbit++;
+    }
+
+    if(cmdbit == 32)
+    {
+      newcmd = 1;
+      capturingbytes = 0;
+    }
+  }
+  else
+  {
+      captimehi = TCNT1; 
+      TCNT1 = 0;
+  }
 }
 
 uint8_t getCommand(uint32_t cmd2)
