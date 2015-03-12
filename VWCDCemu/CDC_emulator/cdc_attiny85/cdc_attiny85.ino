@@ -17,7 +17,7 @@ SoftwareSerial mySerial(NULL, 4); // RX, TX
 
 #define DataOut 2//PB2 //signal from radio, attiny85 pin 7- INT0
 //data to radio, attiny85 pin 6
-#define DataPin 1
+#define DataIn 1
 //clk to radio, attiny85 pin 5
 #define ClockPin 0
 
@@ -50,13 +50,14 @@ SoftwareSerial mySerial(NULL, 4); // RX, TX
 #define CDC_SCAN 0xA0
 #define CDC_SFL 0x60
 #define CDC_PLAY_NORMAL 0x08
+#define CDC_PREV_CD 0x18
 
 #define MODE_PLAY 0xFF
 #define MODE_SHFFL 0x55
 #define MODE_SCAN 0x00
 
 #define BYTES_DELAY 874 //in microseconds
-#define PACKET_DELAY 1000 //in miliseconds
+#define PACKET_DELAY 40 //in miliseconds
 
 volatile uint16_t captimehi = 0;
 volatile uint16_t captimelo = 0;
@@ -89,7 +90,7 @@ void setup(){
   cdc_setup(DataOut);
 
 //init RADIO:
-  send_package(0x74,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0x8F,0x7C); //idle
+//  send_package(0x74,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0x8F,0x7C); //idle
 //  delay(10);
 //  send_package(0x34,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0xFA,0x3C); //load disc
 //  delay(100);
@@ -270,17 +271,21 @@ void cdc_setup(int pin){
   
   pinMode(pin,INPUT);
   
-  GIMSK|=(1<<INT0); //INT0 enable
-  MCUCR|=(1<<ISC00);// any logic change fire interupt routine
+//  GIMSK|=(1<<INT0); //INT0 enable
+//  MCUCR|=(1<<ISC00);// any logic change fire interupt routine
+  attachInterrupt(0,read_Data_out,CHANGE);
+  
   cli();//stop interrupts
   //for attiny85
+//  GTCCR = 0;
   TCCR0A = 0;// set entire TCCR0A register to 0
   TCCR0B = 0;// same for TCCR0B
   // 8bit counters here
-  //prescaler:             1024  256    64 ...
-  //1 tick in us:           128   32     8 ...
-  //tics per pulse: 9000us:  70  281  1125 
+  //prescaler:             1024  512   256    64 ...
+  //1 tick in us:           128  64     32     8 ...
+  //tics per pulse: 9000us:  70  140   281  1125 
   // only way is to use 1024 prescler
+  //TCCR1 |= (1<<CS13) | (1<<CS11);
   TCCR0B |= (1<<CS02) | (1<<CS00);
   TCNT0=0;
   sei();//allow interrupts
@@ -291,7 +296,7 @@ void cdc_setup(int pin){
   SPI.setClockDivider(SPI_CLOCK_DIV128); //62.5kHz@8Mhz 125kHz@16MHz
   //SPI.setClockDivider(SPI_CLOCK_DIV64);//125kHz@8Mhz
 #else
-  pinMode(DataPin,OUTPUT);
+  pinMode(DataIn,OUTPUT);
   pinMode(ClockPin,OUTPUT);
 #endif  
 }
@@ -321,7 +326,7 @@ void myTransfer(uint8_t val){
 #else
   for (uint8_t i = 0; i < 8; i++)  {
     digitalWrite(ClockPin, HIGH);
-    digitalWrite(DataPin, !!(val & (1 << (7 - i))));
+    digitalWrite(DataIn, !!(val & (1 << (7 - i))));
     delayMicroseconds(50);
     digitalWrite(ClockPin, LOW);
     delayMicroseconds(50);
@@ -335,11 +340,11 @@ void read_Data_out() //remote signals
   {
     if (capturingstart || capturingbytes)
     {
-      captimelo = TCNT1;
+      captimelo = TCNT0;
     }
     else
     capturingstart = 1;
-    TCNT1 = 0;
+    TCNT0 = 0;
 
     //eval times
     //high: 9000us = 18000tics
@@ -388,8 +393,8 @@ void read_Data_out() //remote signals
   }
   else
   {
-      captimehi = TCNT1; 
-      TCNT1 = 0;
+      captimehi = TCNT0; 
+      TCNT0 = 0;
   }
 }
 
