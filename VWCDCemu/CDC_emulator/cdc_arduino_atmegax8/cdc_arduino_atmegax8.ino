@@ -1,3 +1,6 @@
+//tested:
+// atmega328P-PU
+// atmega8P-PU
 
 #define USESPI
 #ifdef USESPI
@@ -9,7 +12,7 @@
 #define DataOut 2
 
 #define BYTES_DELAY 874
-#define PACKET_DALEY 30
+#define PACKET_DALEY 40
 
 #define CDC_PREFIX1 0x53
 #define CDC_PREFIX2 0x2C
@@ -67,7 +70,7 @@ void setup(){
   
   cdc_setup(DataOut);
 //init RADIO:
-  send_package(0x74,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0x8F,0x7C); //idle
+//  send_package(0x74,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0x8F,0x7C); //idle
 //  delay(10);
 //  send_package(0x34,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0xFA,0x3C); //load disc
 //  delay(100);
@@ -125,6 +128,9 @@ if (c){
       {
         idle=0;
         mode = MODE_PLAY;
+        //14BEFEFFFFFFAE1C
+        send_package(0x14,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0xAE,0x1C);
+        //previousMillis=millis();
         DO_UPDATE=1;
       }
       else if (prevcmd==CDC_PREV)
@@ -134,7 +140,7 @@ if (c){
         //FF
        if(tr == 0) tr = 153;
        if((tr & 0xF) == 0xF) tr = tr-6;
-        DO_UPDATE=1;
+       DO_UPDATE=1;
       }
       else if (prevcmd==CDC_NEXT)
       {
@@ -161,6 +167,9 @@ if (c){
       else if (prevcmd==CDC_STOP)
       {
         idle=1;
+        //54BEFEFFFEFF8F5C
+        send_package(0x54,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0x8f,0x5C);
+        //previousMillis=millis();
         DO_UPDATE=1;
       }
       prevcmd=CDC_END_CMD;
@@ -230,7 +239,7 @@ if (c){
   }
   else
   {
-    send_package(0x34,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0xCF,0x7c);
+    send_package(0x34,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0xCF,0x3C);
   }
  previousMillis=millis();
  DO_UPDATE=0; 
@@ -292,9 +301,9 @@ void myTransfer(uint8_t val){
   for (uint8_t i = 0; i < 8; i++)  {
     digitalWrite(ClockPin, HIGH);
     digitalWrite(DataIn, !!(val & (1 << (7 - i))));
-    delayMicroseconds(10);
+    delayMicroseconds(5);
     digitalWrite(ClockPin, LOW);
-    delayMicroseconds(10);
+    delayMicroseconds(5);
   }
 #endif
 }

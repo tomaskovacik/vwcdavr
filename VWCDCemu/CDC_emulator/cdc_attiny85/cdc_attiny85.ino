@@ -103,7 +103,7 @@ void loop(){
   {
     newcmd=0;
     uint8_t c = getCommand(cmd);
-//   Serial.println(cmd,HEX);
+   Serial.println(cmd,HEX);
  
 if (c){
 //  Serial.println(c,HEX);
@@ -147,6 +147,9 @@ if (c){
       {
         idle=0;
         mode = MODE_PLAY;
+        //14BEFEFFFFFFAE1C
+        send_package(0x14,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0xAE,0x1C);
+        //previousMillis=millis();
         DO_UPDATE=1;
       }
       else if (prevcmd==CDC_PREV)
@@ -156,7 +159,7 @@ if (c){
         //FF
        if(tr == 0) tr = 153;
        if((tr & 0xF) == 0xF) tr = tr-6;
-        DO_UPDATE=1;
+       DO_UPDATE=1;
       }
       else if (prevcmd==CDC_NEXT)
       {
@@ -183,6 +186,9 @@ if (c){
       else if (prevcmd==CDC_STOP)
       {
         idle=1;
+        //54BEFEFFFEFF8F5C
+        send_package(0x54,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0x8f,0x5C);
+        //previousMillis=millis();
         DO_UPDATE=1;
       }
       prevcmd=CDC_END_CMD;
@@ -235,14 +241,14 @@ if (c){
       break;
     }
   
-//    Serial.print("CD: ");
-//    Serial.print(cd);
-//    Serial.print("  TR: ");
-//    Serial.print(tr);
-//    Serial.print("  mode: ");
-//    Serial.print(mode,HEX);
-//    Serial.print("  idle: ");
-//    Serial.println(idle);
+    Serial.print("CD: ");
+    Serial.print(cd);
+    Serial.print("  TR: ");
+    Serial.print(tr);
+    Serial.print("  mode: ");
+    Serial.print(mode,HEX);
+    Serial.print("  idle: ");
+    Serial.println(idle);
     }
 }
 
@@ -252,13 +258,13 @@ if (c){
   }
   else
   {
-    send_package(0x34,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0xCF,0x7c);
+    send_package(0x34,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0xCF,0x3C);
   }
  previousMillis=millis();
  DO_UPDATE=0; 
  }
-
 }
+
 
 void cdc_setup(int pin){
   
