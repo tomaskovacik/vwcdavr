@@ -87,7 +87,7 @@ void setup(){
   mySerial.begin(9600);
   mySerial.println("attiny85 start");
 
-  cdc_setup(DataOut);
+  //cdc_setup(DataOut);
 
 //init RADIO:
 //  send_package(0x74,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0x8F,0x7C); //idle
@@ -104,7 +104,7 @@ void loop(){
   {
     newcmd=0;
     uint8_t c = getCommand(cmd);
-   Serial.println(cmd,HEX);
+   mySerial.println(cmd,HEX);
  
 if (c){
 //  Serial.println(c,HEX);
@@ -242,14 +242,14 @@ if (c){
       break;
     }
   
-    Serial.print("CD: ");
-    Serial.print(cd);
-    Serial.print("  TR: ");
-    Serial.print(tr);
-    Serial.print("  mode: ");
-    Serial.print(mode,HEX);
-    Serial.print("  idle: ");
-    Serial.println(idle);
+//    Serial.print("CD: ");
+//    Serial.print(cd);
+//    Serial.print("  TR: ");
+//    Serial.print(tr);
+//    Serial.print("  mode: ");
+//    Serial.print(mode,HEX);
+//    Serial.print("  idle: ");
+//    Serial.println(idle);
     }
 }
 
@@ -261,6 +261,7 @@ if (c){
   {
     send_package(0x34,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0xCF,0x3C);
   }
+  mySerial.println("update");
  previousMillis=millis();
  DO_UPDATE=0; 
  }
@@ -270,12 +271,12 @@ if (c){
 void cdc_setup(int pin){
   
   pinMode(pin,INPUT);
-  
-//  GIMSK|=(1<<INT0); //INT0 enable
-//  MCUCR|=(1<<ISC00);// any logic change fire interupt routine
-  attachInterrupt(0,read_Data_out,CHANGE);
-  
   cli();//stop interrupts
+  GIMSK=0;
+  MCUCR=0;
+  GIMSK|=(1<<INT0); //INT0 enable
+  MCUCR|=(1<<ISC00);// any logic change fire interupt routine
+  
   //for attiny85
 //  GTCCR = 0;
   TCCR0A = 0;// set entire TCCR0A register to 0
@@ -334,13 +335,16 @@ void myTransfer(uint8_t val){
 #endif
 }
 
-void read_Data_out() //remote signals
+//void read_Data_out() //remote signals
+ISR(INT0_vect)
 {
+  
   if(digitalRead(DataOut))
   {
     if (capturingstart || capturingbytes)
     {
       captimelo = TCNT0;
+      mySerial.println(captimelo);
     }
     else
     capturingstart = 1;

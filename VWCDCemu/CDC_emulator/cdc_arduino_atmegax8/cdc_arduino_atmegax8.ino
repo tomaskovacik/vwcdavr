@@ -1,6 +1,6 @@
 //tested:
 // atmega328P-PU
-// atmega8P-PU
+// atmega8A-PU
 
 #define USESPI
 #ifdef USESPI
