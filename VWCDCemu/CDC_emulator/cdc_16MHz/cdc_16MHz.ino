@@ -54,8 +54,6 @@ volatile uint8_t DO_UPDATE=1;
 volatile uint8_t load_cd=0;
 volatile long previousMillis=0;
 
-//#include <SoftwareSerial.h>
-
 uint8_t getCommand(uint32_t cmd2);
 void cdc_read_Data_out();
 void cdc_send_package(uint8_t c0, uint8_t c1, uint8_t c2, uint8_t c3, uint8_t c4, uint8_t c5, uint8_t c6, uint8_t c7);
@@ -64,8 +62,8 @@ void myTransfer(uint8_t val);
 
 void setup(){
   
-  Serial.begin(9600);
-  Serial.println("start");
+//  Serial.begin(9600);
+//  Serial.println("start");
   
   cdc_setup(DataOut);
 //init RADIO:
@@ -83,7 +81,7 @@ void loop(){
   {
     newcmd=0;
     uint8_t c = getCommand(cmd);
-   Serial.println(cmd,HEX);
+//   Serial.println(cmd,HEX);
  
 if (c){
 //  Serial.println(c,HEX);
@@ -215,18 +213,16 @@ if (c){
       break;
     }
   
-    Serial.print("CD: ");
-    Serial.print(cd);
-    Serial.print("  TR: ");
-    Serial.print(tr);
-    Serial.print("  mode: ");
-    Serial.print(mode,HEX);
-    Serial.print("  idle: ");
-    Serial.println(idle);
-
+//    Serial.print("CD: ");
+//    Serial.print(cd);
+//    Serial.print("  TR: ");
+//    Serial.print(tr);
+//    Serial.print("  mode: ");
+//    Serial.print(mode,HEX);
+//    Serial.print("  idle: ");
+//    Serial.println(idle);
+    }
 }
-
-  }
 
  if ((millis()-previousMillis)>PACKET_DALEY || DO_UPDATE){
   if(idle){
@@ -236,7 +232,6 @@ if (c){
   {
     send_package(0x34,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0xCF,0x7c);
   }
-
  previousMillis=millis();
  DO_UPDATE=0; 
  }
