@@ -241,6 +241,7 @@ if (c){
 void cdc_setup(int pin){
   
   pinMode(pin,INPUT);
+
   if (pin == 2) attachInterrupt(0,read_Data_out,CHANGE);
   if (pin == 3) attachInterrupt(1,read_Data_out,CHANGE);
   cli();//stop interrupts
@@ -263,8 +264,6 @@ void cdc_setup(int pin){
   pinMode(DataIn,OUTPUT);
   pinMode(ClockPin,OUTPUT);
 #endif
-  
-  
 }
 
 void send_package(uint8_t c0, uint8_t c1, uint8_t c2, uint8_t c3, uint8_t c4, uint8_t c5, uint8_t c6, uint8_t c7)
