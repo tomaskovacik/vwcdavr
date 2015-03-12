@@ -1,14 +1,15 @@
 
 #define USESPI
-#define DataPin 11
-#define ClockPin 13
-
 #ifdef USESPI
 #include <SPI.h>
 #endif
 
+#define DataIn 11
+#define ClockPin 13
 #define DataOut 2
 
+#define BYTES_DELAY 874
+#define PACKET_DALEY 30
 
 #define CDC_PREFIX1 0x53
 #define CDC_PREFIX2 0x2C
@@ -30,6 +31,7 @@
 #define CDC_SCAN 0xA0
 #define CDC_SFL 0x60
 #define CDC_PLAY_NORMAL 0x08
+#define CDC_PREV_CD 0x18
 
 #define MODE_PLAY 0xFF
 #define MODE_SHFFL 0x55
@@ -44,11 +46,13 @@ volatile uint8_t cmdbit = 0;
 volatile uint8_t newcmd = 0;
 volatile uint8_t prevcmd = 0;
 
-volatile uint8_t cd=0xBE;
-volatile uint8_t tr=0xFE;
+volatile uint8_t cd=1;
+volatile uint8_t tr=1;
 volatile uint8_t mode=MODE_PLAY;
 volatile uint8_t idle=1;
+volatile uint8_t DO_UPDATE=1;
 volatile uint8_t load_cd=0;
+volatile long previousMillis=0;
 
 //#include <SoftwareSerial.h>
 
@@ -60,25 +64,30 @@ void myTransfer(uint8_t val);
 
 void setup(){
   
-  Serial.begin(57600);
+  Serial.begin(9600);
   Serial.println("start");
   
   cdc_setup(DataOut);
 //init RADIO:
-  send_package(0x74,cd,tr,0xFF,0xFF,mode,0x8F,0x7C); //idle
-  delay(10);
-  send_package(0x34,0xBF,tr,0xFF,0xFF,mode,0xFA,0x3C); //load disc
-  delay(100);
-  send_package(0x74,cd,tr,0xFF,0xFF,mode,0x8F,0x7C); //idle
-  delay(10);
+  send_package(0x74,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0x8F,0x7C); //idle
+//  delay(10);
+//  send_package(0x34,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0xFA,0x3C); //load disc
+//  delay(100);
+//  send_package(0x74,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0x8F,0x7C); //idle
+//  delay(10);
 }
 
 void loop(){
 
   if(newcmd)
   {
+    newcmd=0;
+    uint8_t c = getCommand(cmd);
    Serial.println(cmd,HEX);
-   switch(getCommand(cmd))
+ 
+if (c){
+//  Serial.println(c,HEX);
+   switch(c)
     {
     case CDC_STOP:
       prevcmd=CDC_STOP;
@@ -110,87 +119,127 @@ void loop(){
     case CDC_CD6:
       prevcmd=CDC_CD6;
       break;
+    case CDC_PREV_CD:
+      prevcmd=CDC_PREV_CD;
+      break;
     case CDC_END_CMD:
       if (prevcmd==CDC_PLAY_NORMAL)
       {
         idle=0;
         mode = MODE_PLAY;
+        DO_UPDATE=1;
       }
       else if (prevcmd==CDC_PREV)
       {
         idle=0;
-        tr++;
-      }
-      else if (prevcmd==CDC_NEXT)
-      {
-        idle=0;
         tr--;
+        //FF
+       if(tr == 0) tr = 153;
+       if((tr & 0xF) == 0xF) tr = tr-6;
+        DO_UPDATE=1;
       }
       else if (prevcmd==CDC_NEXT)
       {
         idle=0;
-        tr=tr-1;
+        tr++;
+        if(tr == 154) tr = 1;
+        if((tr & 0xF) == 0xA) tr = tr+6;
+        DO_UPDATE=1;
+      }
+      else if (prevcmd==CDC_END_CMD2) //NEXTCD
+      {
+        idle=0;
+        cd++;
+        if(cd==7)cd=1;
+        DO_UPDATE=1;
+      }
+      else if (prevcmd==CDC_PREV_CD)
+      {
+        idle=0;
+        cd--;
+        if(cd==0)cd=6;
+        DO_UPDATE=1;
       } 
       else if (prevcmd==CDC_STOP)
       {
         idle=1;
+        DO_UPDATE=1;
       }
-      prevcmd=0;
+      prevcmd=CDC_END_CMD;
       break;
     case CDC_END_CMD2:
       if (prevcmd==CDC_CD1)
       {
         idle=0;
-        cd = 0xBE;
+        cd = 1;//0xBE;
+        DO_UPDATE=1;
       }
       else if (prevcmd==CDC_CD2)
       {
         idle=0;
-        cd = 0xBD;
+        cd = 2;//0xBD;
+        DO_UPDATE=1;
       }
       else if (prevcmd==CDC_CD3)
       {
         idle=0;
-        cd = 0xBC;
+        cd = 3;//0xBC;
+        DO_UPDATE=1;
       }
       else if (prevcmd==CDC_CD4)
       {
         idle=0;
-        cd = 0xBB;
+        cd = 4;//0xBB;
+        DO_UPDATE=1;
       }
       else if (prevcmd==CDC_CD5)
       {
         idle=0;
-        cd = 0xBA;
+        cd = 5;//0xBA;
+        DO_UPDATE=1;
       }
       else if (prevcmd==CDC_CD6)
       {
         idle=0;
-        cd = 0xB9;
+        cd = 6;//0xB9;
+        DO_UPDATE=1;
       }
-      prevcmd=0;
+      else if (prevcmd==CDC_END_CMD)
+      {
+        //NEXT CD
+        prevcmd=CDC_END_CMD2;
+      }
+      else {
+        prevcmd=0;
+      }
       break;
     }
-   newcmd=0;
+  
     Serial.print("CD: ");
-    Serial.print(cd,HEX);
+    Serial.print(cd);
     Serial.print("  TR: ");
-    Serial.print(tr,HEX);
+    Serial.print(tr);
     Serial.print("  mode: ");
     Serial.print(mode,HEX);
     Serial.print("  idle: ");
     Serial.println(idle);
+
+}
+
   }
 
-
+ if ((millis()-previousMillis)>PACKET_DALEY || DO_UPDATE){
   if(idle){
-    send_package(0x74,cd,tr,0xFF,0xFF,mode,0x8F,0x7C);
+    send_package(0x74,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0x8F,0x7C);
   }
   else
   {
-    send_package(0x34,cd,tr,0xFF,0xFF,mode,0xCF,0x7c);
+    send_package(0x34,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0xCF,0x7c);
   }
-  delay(100);
+
+ previousMillis=millis();
+ DO_UPDATE=0; 
+ }
 
 }
 
@@ -216,7 +265,7 @@ void cdc_setup(int pin){
   SPI.setClockDivider(SPI_CLOCK_DIV128); //62.5kHz@8Mhz 125kHz@16MHz
   //SPI.setClockDivider(SPI_CLOCK_DIV64);//125kHz@8Mhz
 #else
-  pinMode(DataPin,OUTPUT);
+  pinMode(DataIn,OUTPUT);
   pinMode(ClockPin,OUTPUT);
 #endif
   
@@ -226,19 +275,19 @@ void cdc_setup(int pin){
 void send_package(uint8_t c0, uint8_t c1, uint8_t c2, uint8_t c3, uint8_t c4, uint8_t c5, uint8_t c6, uint8_t c7)
 {
   myTransfer(c0);
-  delayMicroseconds(874);
+  delayMicroseconds(BYTES_DELAY);
   myTransfer(c1);
-  delayMicroseconds(874);
+  delayMicroseconds(BYTES_DELAY);
   myTransfer(c2);
-  delayMicroseconds(874);
+  delayMicroseconds(BYTES_DELAY);
   myTransfer(c3);
-  delayMicroseconds(874);
+  delayMicroseconds(BYTES_DELAY);
   myTransfer(c4);
-  delayMicroseconds(874);
+  delayMicroseconds(BYTES_DELAY);
   myTransfer(c5);
-  delayMicroseconds(874);
+  delayMicroseconds(BYTES_DELAY);
   myTransfer(c6);
-  delayMicroseconds(874);
+  delayMicroseconds(BYTES_DELAY);
   myTransfer(c7);
 }
 
@@ -248,10 +297,10 @@ void myTransfer(uint8_t val){
 #else
   for (uint8_t i = 0; i < 8; i++)  {
     digitalWrite(ClockPin, HIGH);
-    digitalWrite(DataPin, !!(val & (1 << (7 - i))));
-    delayMicroseconds(50);
+    digitalWrite(DataIn, !!(val & (1 << (7 - i))));
+    delayMicroseconds(10);
     digitalWrite(ClockPin, LOW);
-    delayMicroseconds(50);
+    delayMicroseconds(10);
   }
 #endif
 }
@@ -275,12 +324,12 @@ void read_Data_out() //remote signals
     {
       capturingstart = 0;
       capturingbytes = 1;
-      cmdbit=0;
-      cmd=0;
+//      cmdbit=0;
+//      cmd=0;
     }
     //high: 550us  = 1100ticks (0.5us tick@16MHz)
     //low:  1700us = 3400ticks (0.5us tick@16MHz)
-    else if(capturingbytes && captimehi > 1000 && captimehi < 1200 && captimelo > 3300 && captimelo < 3500)
+    else if(capturingbytes && captimehi > 1000 && captimehi < 1200 && captimelo > 3300 && captimelo < 3400)
     {
       //Serial.println("bit 1");
       cmd = (cmd<<1) | 0x00000001;
@@ -297,6 +346,7 @@ void read_Data_out() //remote signals
     if(cmdbit == 32)
     {
       newcmd = 1;
+      cmdbit = 0;
       capturingbytes = 0;
     }
   }
