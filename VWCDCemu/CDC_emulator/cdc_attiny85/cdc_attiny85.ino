@@ -1,4 +1,5 @@
 #include <SoftwareSerial.h>
+#include <avr/interrupt.h>
 SoftwareSerial mySerial(NULL, 4); // RX, TX
 
 // SPI part for ATTINY85 written by Nick Gammon
@@ -275,6 +276,7 @@ void cdc_setup(int pin){
   GIMSK=0;
   MCUCR=0;
   GIMSK|=(1<<INT0); //INT0 enable
+//  SREG |=(1<<SREG_I);  //we have sei() below ...
   MCUCR|=(1<<ISC00);// any logic change fire interupt routine
   
   //for attiny85
