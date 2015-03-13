@@ -2,6 +2,77 @@
 // atmega328P-PU
 // atmega8A-PU
 
+/*
+
+notes:
+
+ack if packet (cmd in my case ) is mutliple of 4?
+
+      if ((cmdcode & 0x03) == 0) // verify that Byte 3 is a multiple of 4
+      {
+         //printstr_p(PSTR("7"),DEBUG);
+
+         ACKcount = -4; // acknowledge command
+
+ack:
+
+SendFrameByte - sends a framing byte to head unit (first and last bytes).
+
+
+
+ If the ACK flag is set, we modify the send byte to send an
+
+ acknowledgement.
+
+   if (ACKcount == 0)
+
+   {
+
+      SendByte(byte_u8);
+
+   }
+
+   else
+
+   {
+
+      byte_u8 |= 0x20; // flag acknowledgement
+
+      ACKcount++;
+
+      SendByte(byte_u8);
+
+ When sending an "init cd" packet, we need to send it the number of
+
+ tracks and whatnot available on the CD. Required on Audi Concert II so
+
+ that track up/dn buttons work.
+
+
+
+
+static void SendDisplayBytesInitCD(void)
+
+{
+
+   SendByte(0x99); // number of tracks total (99)?
+
+   SendByte(0x99); // total minutes?
+
+   SendByte(0x59); // total seconds?
+
+   SendByte(0x48); // 48, 53, 31, 25, and 37 seen from real CDC,
+
+   // no idea what it really means.
+
+}
+
+
+
+
+
+*/
+
 #define USESPI
 #ifdef USESPI
 #include <SPI.h>
