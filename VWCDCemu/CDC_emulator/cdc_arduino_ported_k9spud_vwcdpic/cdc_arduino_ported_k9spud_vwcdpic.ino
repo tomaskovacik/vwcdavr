@@ -2230,7 +2230,7 @@ static void DecodeCommand(void)
 
          { // yes, rollover to Track 99 so that jog wheels
 
-            track = 1; // can continue rolling (Audi Concert II)
+            track = 0x99; // can continue rolling (Audi Concert II)
 
          }
 
