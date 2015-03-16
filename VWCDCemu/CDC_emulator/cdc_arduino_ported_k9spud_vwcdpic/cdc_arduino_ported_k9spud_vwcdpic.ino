@@ -25,8 +25,10 @@
    www.mikrocontroller.net/attachment/31279/vwcdc.c
 
    ---------------------------------
+   16. Mar 2015:
+
    https://github.com/tomaskovacik/
-   arduino duemilanove:
+   arduino duemilanove works:
    
    RADIO PIN -> arduino pin
    
@@ -153,13 +155,6 @@
 //#define KOMBI_CLOCK      PB7
 
 //#define KOMBI_CLOCK_DDR  DDB7
-
-
-
-
-
-
-
 
 
 // Command Codes
