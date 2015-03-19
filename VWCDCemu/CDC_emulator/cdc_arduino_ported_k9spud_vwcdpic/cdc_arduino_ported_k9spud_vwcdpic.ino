@@ -751,6 +751,8 @@ void Init_VWCDC(void)
    //Timer 0 init
 
    //Timer 0 used to time the interval between each update
+   //on arduino timer0 is used for millis(), we change prescaler, but also need to disable overflow interrupt
+   TIMSK0 = 0x00;
 
    OCR0A = _10MS; // 10ms Intervall
 
