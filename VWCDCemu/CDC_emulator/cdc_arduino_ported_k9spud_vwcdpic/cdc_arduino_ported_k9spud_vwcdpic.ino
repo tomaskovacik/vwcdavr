@@ -136,15 +136,15 @@
 
 
 
-#define RADIO_COMMAND      PB0 //(Seeeduino Mega PIN PD4)
+#define RADIO_COMMAND      PB0 //arduino pin 8
 
 #define RADIO_COMMAND_DDR  DDB0
 
-#define RADIO_CLOCK        PB4 //(Seeeduino Mega PIN 10)
+#define RADIO_CLOCK        PB4 //arduino pin 12
 
 #define RADIO_CLOCK_DDR    DDB4
 
-#define RADIO_DATA         PB5 //(Seeeduino Mega PIN 11)
+#define RADIO_DATA         PB5 //arduino pin 13
 
 #define RADIO_DATA_DDR     DDB5
 
