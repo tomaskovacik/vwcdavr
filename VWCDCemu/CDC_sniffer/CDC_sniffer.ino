@@ -241,7 +241,7 @@ void loop() {
     //    lcd.print(tr);   
   }
 
-  if(newcmd)// && prev_cmd != cmd){
+  if(newcmd && prev_cmd != cmd && cmd!=0)
   {
     prev_cmd=cmd;
     newcmd=0;      
@@ -348,39 +348,41 @@ void send_cmd(uint8_t cmd)
   //  digitalWrite(DataOut,LOW);
   //  delayMicroseconds(550);
   //  digitalWrite(DataOut,HIGH);
-  Serial.println();
+  Serial.println("---------------------------------------------");
   Serial.print(0x53,HEX);
   Serial.print(0x2C,HEX);
   Serial.print(cmd,HEX);
   Serial.println(0xFF^cmd,HEX);
+  Serial.println("---------------------------------------------");
 }
 
 void readDataIn()
 {
   TIMSK1 &= ~_BV(OCIE1A);  
-  TCNT1=0;//reset counter while we recieving data ...
+  TCNT1=0;//disable and reset counter while we recieving data ...
   if(!newcmd)
   {
-   if(digitalRead(DataIn))
-  {//1
-    cmd=(cmd<<1)|1;
+    if(digitalRead(DataIn))
+    {//1
+      cmd=(cmd<<1)|1;
+    }
+    else
+    {//0
+      cmd = (cmd<<1);
+    }
+    cmdbit++;
+    TIMSK1 |= _BV(OCIE1A); //enable counter
   }
-  else
-  {//0
-    cmd = (cmd<<1);
-  }
-  cmdbit++;
-  TIMSK1 |= _BV(OCIE1A);
-}
 
   if(cmdbit==64)
   {
     newcmd=1;
     cmdbit=0;
   }
-  
-  
+
+
 }
+
 
 
 
