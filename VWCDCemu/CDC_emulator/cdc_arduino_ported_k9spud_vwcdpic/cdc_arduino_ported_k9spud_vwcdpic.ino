@@ -28,7 +28,7 @@
    16. Mar 2015:
 
    https://github.com/tomaskovacik/
-   arduino duemilanove works:
+   arduino duemilanove/UNO/nano works:
    
    RADIO PIN -> arduino pin
    
