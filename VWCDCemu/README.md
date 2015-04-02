@@ -1,4 +1,4 @@
-CDC_sniffer: arduino based sniffer for comunication between audi radio and cd changer, I made this to revers eng. on vwcdpic and improve arduino version of CDchanger better
+radio_emulator: arduino based vw/audi radio emulator, I made this to revers eng. on vwcdpic and improve arduino version of CDchanger
 
  - emulate RADIO DataOut signals 
  - receive and print CD changer responce to serial console 
