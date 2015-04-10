@@ -697,8 +697,7 @@ void Init_VWCDC(void)
 
   TCCR2A |= _BV(WGM21); // Timer2 in CTC Mode
 
-  TCCR2B |= _BV(CS20) + _BV(CS21); // prescaler = 64 -> 1 timer clock tick is 4µs long.
-
+  TCCR2B |= _BV(CS22); // prescaler = 64 -> 1 timer clock tick is 4us long
 
 
 
@@ -908,7 +907,7 @@ ISR(TIMER2_COMPA_vect)
 
 #endif
 
-
+  EnqueueHex(byte_u8);
 
 
 
@@ -963,6 +962,8 @@ ISR(TIMER2_COMPA_vect)
   else
 
   {
+      EnqueueString(sNEWLINE);
+
 
     display_byte_counter_u8 = 0;
 
@@ -1478,7 +1479,7 @@ void CDC_Protocol(void)
     if (secondcount == 0)
 
     {
-Serial.println("second");
+
       secondcount = SECONDWAIT;
 
       poweridentcount++;
@@ -2326,7 +2327,7 @@ static void DecodeCommand(void)
 
     cd_button = TRUE; // mk store cd button pressed
 
-    disc = 0x42; // set CD 1
+    disc = 0x42; // set CD 2
 
     EnqueueString(sLIST2);
 
@@ -2338,7 +2339,7 @@ static void DecodeCommand(void)
 
     cd_button = TRUE; // mk store cd button pressed
 
-    disc = 0x43; // set CD 1
+    disc = 0x43; // set CD 3
 
     EnqueueString(sLIST3);
 
@@ -2350,7 +2351,7 @@ static void DecodeCommand(void)
 
     cd_button = TRUE; // mk store cd button pressed
 
-    disc = 0x44; // set CD 1
+    disc = 0x44; // set CD 4
 
     EnqueueString(sLIST4);
 
@@ -2362,7 +2363,7 @@ static void DecodeCommand(void)
 
     cd_button = TRUE; // mk store cd button pressed
 
-    disc = 0x45; // set CD 1
+    disc = 0x45; // set CD 5
 
     EnqueueString(sLIST5);
 
@@ -2374,7 +2375,7 @@ static void DecodeCommand(void)
 
     cd_button = TRUE; // mk store cd button pressed
 
-    disc = 0x46; // set CD 1
+    disc = 0x46; // set CD 6
 
     EnqueueString(sLIST6);
 
