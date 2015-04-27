@@ -87,6 +87,8 @@ volatile int cmdbit=0;
 volatile uint8_t newcmd=0;
 int incomingByte = 0;
 
+int verbose=0;
+
 void setup()
 {
 
@@ -138,6 +140,7 @@ void loop() {
     case '=':
       // NEXT SONG
       send_cmd(CDC_NEXT);
+      delay(1000);
       send_cmd(CDC_END_CMD);
       break;
     case ']':
@@ -222,7 +225,10 @@ void loop() {
       // shuffle
       send_cmd(CDC_SFL);
       break;
-    }
+    case 'v': //verbose
+      verbose=!verbose;
+    break;
+    }    
     //    lcd.home();
     //    lcd.clear();
     //    if (play){
@@ -251,6 +257,7 @@ void loop() {
     ////      Serial.print(" ");
     //    }
     uint8_t temp;
+    if (verbose){
     temp=((cmd>>56) & 0xFF);
     Serial.print(temp,HEX);
     temp=((cmd>>48) & 0xFF);
@@ -281,14 +288,28 @@ void loop() {
     Serial.print(" sek: ");
     Serial.print(sec,HEX);
     Serial.print(" mode: ");
-    Serial.print(mode,HEX);
+    Serial.println(mode,HEX);
+    }
+    else 
+    {
+    Serial.print("   CD: ");
+    Serial.print(int ((((cmd>>48) & 0xFF)^0xFF)-0x40),HEX);
+    Serial.print(" track: ");
+    Serial.print(int (((cmd>>40) & 0xFF)^0xFF),HEX);
+    Serial.print("   min: ");
+    Serial.print(int (((cmd>>32) & 0xFF)^0xFF),HEX);
+    Serial.print(" sek: ");
+    Serial.print(int (((cmd>>24) & 0xFF)^0xFF),HEX);
+    Serial.print(" mode: ");
+    Serial.print(int (((cmd>>16) & 0xFF)),HEX);
     Serial.println();
+    }
 
   }
 
 }  
 
-//no signal on ISP clock line for more then 45ms => nech change is first bit of packet ...
+//no signal on ISP clock line for more then 45ms => next change is first bit of packet ...
 ISR(TIMER1_COMPA_vect) {
 
   cmdbit=0;
@@ -316,7 +337,6 @@ ISR(TIMER1_COMPA_vect) {
 void shiftOutPulse(uint8_t dataPin, uint8_t val)
 {
   uint8_t i;
-
   for (i = 0; i < 8; i++)  {
     digitalWrite(dataPin, HIGH);
     delayMicroseconds(550);
