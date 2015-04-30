@@ -907,9 +907,6 @@ ISR(TIMER2_COMPA_vect)
 
 #endif
 
-  EnqueueHex(byte_u8);
-
-
 
     for (sendbitcount = -8; sendbitcount != 0; sendbitcount++)
 
@@ -962,7 +959,7 @@ ISR(TIMER2_COMPA_vect)
   else
 
   {
-      EnqueueString(sNEWLINE);
+      
 
 
     display_byte_counter_u8 = 0;
