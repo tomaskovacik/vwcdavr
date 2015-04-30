@@ -3843,7 +3843,6 @@ int main()
 {
 
   Serial.begin(9600);
-  Serial.println("start");
 
   Init_VWCDC();
 
