@@ -2,7 +2,7 @@
 // atmega328P-PU
 // atmega8A-PU
 
-#define USESPI
+//#define USESPI
 #ifdef USESPI
 #include <SPI.h>
 #endif
@@ -12,7 +12,7 @@
 #define DataOut 2
 
 #define BYTES_DELAY 874
-#define PACKET_DALEY 40
+#define PACKET_DALEY 50
 
 #define CDC_PREFIX1 0x53
 #define CDC_PREFIX2 0x2C
@@ -40,6 +40,8 @@
 #define MODE_SHFFL 0x55
 #define MODE_SCAN 0x00
 
+#define RADIO_OUT_IS_HIGH (PIND & (1<<PD2))
+
 volatile uint16_t captimehi = 0;
 volatile uint16_t captimelo = 0;
 volatile uint8_t capturingstart = 0;
@@ -52,7 +54,7 @@ volatile uint8_t prevcmd = 0;
 volatile uint8_t cd=1;
 volatile uint8_t tr=1;
 volatile uint8_t mode=MODE_PLAY;
-volatile uint8_t idle=1;
+volatile uint8_t idle=0;
 volatile uint8_t DO_UPDATE=1;
 volatile uint8_t load_cd=0;
 volatile long previousMillis=0;
@@ -63,19 +65,25 @@ void cdc_send_package(uint8_t c0, uint8_t c1, uint8_t c2, uint8_t c3, uint8_t c4
 void cdc_setup(int DataOut_pin);
 void myTransfer(uint8_t val);
 
+//#define TX_BUFFER_END 12
+//uint16_t txbuffer[TX_BUFFER_END];
+//uint8_t txinptr=0;
+//uint8_t txoutptr=0;
+//static void Enqueue(uint16_t num);
+
 void setup(){
-  
-//  Serial.begin(9600);
-//  Serial.println("start");
-  
+
+  Serial.begin(9600);
+  Serial.println("vw group cd changer emulator");
+
   cdc_setup(DataOut);
-//init RADIO:
-//  send_package(0x74,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0x8F,0x7C); //idle
-//  delay(10);
-//  send_package(0x34,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0xFA,0x3C); //load disc
-//  delay(100);
-//  send_package(0x74,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0x8F,0x7C); //idle
-//  delay(10);
+  //init RADIO:
+  //  send_package(0x74,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0x8F,0x7C); //idle
+  //  delay(10);
+  //  send_package(0x34,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0xFA,0x3C); //load disc
+  //  delay(100);
+  //  send_package(0x74,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0x8F,0x7C); //idle
+  //  delay(10);
 }
 
 void loop(){
@@ -84,171 +92,192 @@ void loop(){
   {
     newcmd=0;
     uint8_t c = getCommand(cmd);
-//   Serial.println(cmd,HEX);
- 
-if (c){
-//  Serial.println(c,HEX);
-   switch(c)
-    {
-    case CDC_STOP:
-      prevcmd=CDC_STOP;
-      break;
-    case CDC_PLAY_NORMAL: 
-      prevcmd=CDC_PLAY_NORMAL;
-      break;
-    case CDC_PREV:
-      prevcmd=CDC_PREV;
-      break;
-    case CDC_NEXT:
-      prevcmd=CDC_NEXT;
-      break;
-    case CDC_CD1:
-      prevcmd=CDC_CD1;
-      break;
-    case CDC_CD2:
-      prevcmd=CDC_CD2;
-      break;
-    case CDC_CD3:
-      prevcmd=CDC_CD3;
-      break;
-    case CDC_CD4:
-      prevcmd=CDC_CD4;
-      break;
-    case CDC_CD5:
-      prevcmd=CDC_CD5;
-      break;
-    case CDC_CD6:
-      prevcmd=CDC_CD6;
-      break;
-    case CDC_PREV_CD:
-      prevcmd=CDC_PREV_CD;
-      break;
-    case CDC_END_CMD:
-      if (prevcmd==CDC_PLAY_NORMAL)
-      {
-        idle=0;
-        mode = MODE_PLAY;
-        //14BEFEFFFFFFAE1C
-        send_package(0x14,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0xAE,0x1C);
-        //previousMillis=millis();
-        DO_UPDATE=1;
-      }
-      else if (prevcmd==CDC_PREV)
-      {
-        idle=0;
-        tr--;
-        //FF
-       if(tr == 0) tr = 153;
-       if((tr & 0xF) == 0xF) tr = tr-6;
-       DO_UPDATE=1;
-      }
-      else if (prevcmd==CDC_NEXT)
-      {
-        idle=0;
-        tr++;
-        if(tr == 154) tr = 1;
-        if((tr & 0xF) == 0xA) tr = tr+6;
-        DO_UPDATE=1;
-      }
-      else if (prevcmd==CDC_END_CMD2) //NEXTCD
-      {
-        idle=0;
-        cd++;
-        if(cd==7)cd=1;
-        DO_UPDATE=1;
-      }
-      else if (prevcmd==CDC_PREV_CD)
-      {
-        idle=0;
-        cd--;
-        if(cd==0)cd=6;
-        DO_UPDATE=1;
-      } 
-      else if (prevcmd==CDC_STOP)
-      {
-        idle=1;
-        //54BEFEFFFEFF8F5C
-        send_package(0x54,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0x8f,0x5C);
-        //previousMillis=millis();
-        DO_UPDATE=1;
-      }
-      prevcmd=CDC_END_CMD;
-      break;
-    case CDC_END_CMD2:
-      if (prevcmd==CDC_CD1)
-      {
-        idle=0;
-        cd = 1;//0xBE;
-        DO_UPDATE=1;
-      }
-      else if (prevcmd==CDC_CD2)
-      {
-        idle=0;
-        cd = 2;//0xBD;
-        DO_UPDATE=1;
-      }
-      else if (prevcmd==CDC_CD3)
-      {
-        idle=0;
-        cd = 3;//0xBC;
-        DO_UPDATE=1;
-      }
-      else if (prevcmd==CDC_CD4)
-      {
-        idle=0;
-        cd = 4;//0xBB;
-        DO_UPDATE=1;
-      }
-      else if (prevcmd==CDC_CD5)
-      {
-        idle=0;
-        cd = 5;//0xBA;
-        DO_UPDATE=1;
-      }
-      else if (prevcmd==CDC_CD6)
-      {
-        idle=0;
-        cd = 6;//0xB9;
-        DO_UPDATE=1;
-      }
-      else if (prevcmd==CDC_END_CMD)
-      {
-        //NEXT CD
-        prevcmd=CDC_END_CMD2;
-      }
-      else {
-        prevcmd=0;
-      }
-      break;
-    }
-  
-//    Serial.print("CD: ");
-//    Serial.print(cd);
-//    Serial.print("  TR: ");
-//    Serial.print(tr);
-//    Serial.print("  mode: ");
-//    Serial.print(mode,HEX);
-//    Serial.print("  idle: ");
-//    Serial.println(idle);
-    }
-}
+//    Serial.println(cmd,HEX);
 
- if ((millis()-previousMillis)>PACKET_DALEY || DO_UPDATE){
-  if(idle){
-    send_package(0x74,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0x8F,0x7C);
+    if (c){
+//      Serial.println(c,HEX);
+      switch(c)
+      {
+      case CDC_STOP:
+        prevcmd=CDC_STOP;
+        break;
+      case CDC_PLAY_NORMAL:
+      case CDC_PLAY:
+        prevcmd=CDC_PLAY_NORMAL;
+        break;
+      case CDC_PREV:
+        prevcmd=CDC_PREV;
+        break;
+      case CDC_NEXT:
+        prevcmd=CDC_NEXT;
+        break;
+      case CDC_CD1:
+        prevcmd=CDC_CD1;
+        break;
+      case CDC_CD2:
+        prevcmd=CDC_CD2;
+        break;
+      case CDC_CD3:
+        prevcmd=CDC_CD3;
+        break;
+      case CDC_CD4:
+        prevcmd=CDC_CD4;
+        break;
+      case CDC_CD5:
+        prevcmd=CDC_CD5;
+        break;
+      case CDC_CD6:
+        prevcmd=CDC_CD6;
+        break;
+      case CDC_PREV_CD:
+        prevcmd=CDC_PREV_CD;
+        break;
+      case CDC_END_CMD:
+        if (prevcmd==CDC_PLAY_NORMAL || prevcmd==CDC_PLAY)
+        {
+          idle=0;
+          mode = MODE_PLAY;
+          //14BEFEFFFFFFAE1C
+          send_package(0x14,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0xAE,0x1C);
+          //previousMillis=millis();
+          DO_UPDATE=1;
+        }
+        else if (prevcmd==CDC_PREV)
+        {
+          idle=0;
+          tr--;
+          //FF
+          if(tr == 0) tr = 153;
+          if((tr & 0xF) == 0xF) tr = tr-6;
+          DO_UPDATE=1;
+        }
+        else if (prevcmd==CDC_NEXT)
+        {
+          idle=0;
+          tr++;
+          if(tr == 154) tr = 1;
+          if((tr & 0xF) == 0xA) tr = tr+6;
+          DO_UPDATE=1;
+        }
+        else if (prevcmd==CDC_END_CMD2) //NEXTCD
+        {
+          idle=0;
+          cd++;
+          if(cd==7)cd=1;
+          DO_UPDATE=1;
+        }
+        else if (prevcmd==CDC_PREV_CD)
+        {
+          idle=0;
+          cd--;
+          if(cd==0)cd=6;
+          DO_UPDATE=1;
+        } 
+        else if (prevcmd==CDC_STOP)
+        {
+          idle=1;
+          idle_sended=0;
+          //54BEFEFFFEFF8F5C
+          send_package(0x54,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0x8f,0x5C);
+          //previousMillis=millis();
+          DO_UPDATE=1;
+        }
+        prevcmd=CDC_END_CMD;
+        break;
+      case CDC_END_CMD2:
+        if (prevcmd==CDC_CD1)
+        {
+          idle=0;
+          cd = 1;//0xBE;
+          DO_UPDATE=1;
+        }
+        else if (prevcmd==CDC_CD2)
+        {
+          idle=0;
+          cd = 2;//0xBD;
+          DO_UPDATE=1;
+        }
+        else if (prevcmd==CDC_CD3)
+        {
+          idle=0;
+          cd = 3;//0xBC;
+          DO_UPDATE=1;
+        }
+        else if (prevcmd==CDC_CD4)
+        {
+          idle=0;
+          cd = 4;//0xBB;
+          DO_UPDATE=1;
+        }
+        else if (prevcmd==CDC_CD5)
+        {
+          idle=0;
+          cd = 5;//0xBA;
+          DO_UPDATE=1;
+        }
+        else if (prevcmd==CDC_CD6)
+        {
+          idle=0;
+          cd = 6;//0xB9;
+          DO_UPDATE=1;
+        }
+        else if (prevcmd==CDC_END_CMD)
+        {
+          //NEXT CD
+          prevcmd=CDC_END_CMD2;
+        }
+        else {
+          prevcmd=0;
+        }
+        break;
+      }
+
+      //    Serial.print("CD: ");
+      //    Serial.print(cd);
+      //    Serial.print("  TR: ");
+      //    Serial.print(tr);
+      //    Serial.print("  mode: ");
+      //    Serial.print(mode,HEX);
+      //    Serial.print("  idle: ");
+      //    Serial.println(idle);
+    }
   }
-  else
-  {
-    send_package(0x34,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0xCF,0x3C);
+
+  if ((millis()-previousMillis)>PACKET_DALEY || DO_UPDATE){
+    if(idle){
+        send_package(0x74,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0x8F,0x7C);
+    }
+    else
+    {
+      send_package(0x34,0xFF^cd,0xFF^tr,0xFF,0xFF,mode,0xCF,0x3C);
+    }
+
+    previousMillis=millis();
+    DO_UPDATE=0; 
   }
- previousMillis=millis();
- DO_UPDATE=0; 
- }
+
+//  while (txoutptr != txinptr)
+//
+//  {
+//
+//    Serial.println(txbuffer[txoutptr]);
+//
+//
+//    txoutptr++;
+//
+//    if (txoutptr == TX_BUFFER_END)
+//
+//    {
+//      txoutptr = 0;
+//
+//    }
+//
+//  }
 
 }
 
 void cdc_setup(int pin){
-  
+
   pinMode(pin,INPUT);
 
   if (pin == 2) attachInterrupt(0,read_Data_out,CHANGE);
@@ -277,6 +306,21 @@ void cdc_setup(int pin){
 
 void send_package(uint8_t c0, uint8_t c1, uint8_t c2, uint8_t c3, uint8_t c4, uint8_t c5, uint8_t c6, uint8_t c7)
 {
+//  Serial.print(c0,HEX);
+//  Serial.print(",");
+//  Serial.print(c1,HEX);
+//  Serial.print(",");
+//  Serial.print(c2,HEX);
+//  Serial.print(",");
+//  Serial.print(c3,HEX);
+//  Serial.print(",");
+//  Serial.print(c4,HEX);
+//  Serial.print(",");
+//  Serial.print(c5,HEX);
+//  Serial.print(",");
+//  Serial.print(c6,HEX);
+//  Serial.print(",");
+//  Serial.println(c7,HEX);
   myTransfer(c0);
   delayMicroseconds(BYTES_DELAY);
   myTransfer(c1);
@@ -295,6 +339,7 @@ void send_package(uint8_t c0, uint8_t c1, uint8_t c2, uint8_t c3, uint8_t c4, ui
 }
 
 void myTransfer(uint8_t val){
+//  Serial.println(val,HEX);
 #ifdef USESPI
   SPI.transfer(val);
 #else
@@ -310,37 +355,43 @@ void myTransfer(uint8_t val){
 
 void read_Data_out() //remote signals
 {
-  if(digitalRead(DataOut))
+//  Enqueue(cmdbit);
+  if(RADIO_OUT_IS_HIGH/*digitalRead(DataOut)*/)
   {
     if (capturingstart || capturingbytes)
     {
       captimelo = TCNT1;
+//            Enqueue(0);
+//            Enqueue(captimelo);
     }
     else
-    capturingstart = 1;
+      capturingstart = 1;
     TCNT1 = 0;
 
     //eval times
     //high: 9000us = 18000tics
     //low:  4500us = 9000tics(0.5us tick@16MHz)
-    if (captimehi > 17900 && captimehi < 18100 && captimelo > 8900 && captimelo < 9100)
+    
+//    if (captimehi > 17800 && captimehi < 18200 && captimelo > 8800 && captimelo < 9200)
+    if (captimehi > 16600 && captimelo > 7000)
     {
       capturingstart = 0;
       capturingbytes = 1;
-//      cmdbit=0;
-//      cmd=0;
+//           cmdbit=0;
+//            cmd=0;
     }
     //high: 550us  = 1100ticks (0.5us tick@16MHz)
     //low:  1700us = 3400ticks (0.5us tick@16MHz)
-    else if(capturingbytes && captimehi > 1000 && captimehi < 1200 && captimelo > 3300 && captimelo < 3400)
+//    else if(capturingbytes && captimehi > 900 && captimehi < 1300 && captimelo > 3200 && captimelo < 3500)
+    else if(capturingbytes && captimelo > 3000)
     {
-      //Serial.println("bit 1");
       cmd = (cmd<<1) | 0x00000001;
       cmdbit++;
     }
     //high: 550us = 1100ticks (0.5us tick@16MHz)
     //low:  550us = 1100ticks (0.5us tick@16MHz)
-    else if (capturingbytes && captimehi > 1000 && captimehi < 1200 &&  captimelo > 1000 && captimelo < 1200)
+//    else if (capturingbytes && captimehi > 900 && captimehi < 1300 &&  captimelo > 900 && captimelo < 1300)
+    else if (capturingbytes &&  captimelo > 1000)
     {
       cmd = (cmd<<1);
       cmdbit++;
@@ -355,8 +406,10 @@ void read_Data_out() //remote signals
   }
   else
   {
-      captimehi = TCNT1; 
-      TCNT1 = 0;
+    captimehi = TCNT1; 
+//          Enqueue(1);
+//          Enqueue(captimehi);
+    TCNT1 = 0;
   }
 }
 
@@ -369,7 +422,29 @@ uint8_t getCommand(uint32_t cmd2)
 }
 
 
+ISR(TIMER1_OVF_vect)
+{
+cmdbit=0;
+Serial.printl("OVF");
+}
 
+//static void Enqueue(uint16_t num)
+//
+//{
+//
+//  txbuffer[txinptr] = num;
+//
+//  txinptr++;
+//
+//  if (txinptr == TX_BUFFER_END)
+//
+//  {
+//
+//    txinptr = 0;
+//
+//  }
+//
+//}
 
 
 
