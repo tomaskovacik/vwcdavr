@@ -612,6 +612,9 @@ const uint8_t sMIN[] PROGMEM = " MIN: ";
 const uint8_t sSEC[] PROGMEM = " SEC: ";
 const uint8_t sMODE[] PROGMEM = " MODE: ";
 
+int verbose=0;
+
+
 /* -- Makros --------------------------------------------------------------- */
 
 
@@ -1417,7 +1420,12 @@ ISR(TIMER1_CAPT_vect)
 void CDC_Protocol(void)
 
 {
-
+  if (Serial.available() > 0)
+  {
+    if (Serial.read() == 'v') verbose=!verbose;
+  }
+  
+  
   if(newcmd && prev_cmd != cmd && cmd!=0)
   {
     prev_cmd=cmd;
@@ -1428,66 +1436,54 @@ void CDC_Protocol(void)
     //      Serial.print(temp,HEX);
     ////      Serial.print(" ");
     //    }
- //   uint8_t temp;
-//    if (verbose){
-//    temp=((cmd>>56) & 0xFF);
-//    Serial.print(temp,HEX);
-//    temp=((cmd>>48) & 0xFF);
-//    Serial.print(temp,HEX);
-//    cd=temp;
-//    temp=((cmd>>40) & 0xFF);
-//    Serial.print(temp,HEX);
-//    tr=temp;
-//    temp=((cmd>>32) & 0xFF);
-//    Serial.print(temp,HEX);
-//    minutes=temp;
-//    temp=((cmd>>24) & 0xFF);
-//    Serial.print(temp,HEX);
-//    sec=0xff-temp;
-//    temp=((cmd>>16) & 0xFF);
-//    Serial.print(temp,HEX);
-//    mode=temp;
-//    temp=((cmd>>8) & 0xFF);
-//    Serial.print(temp,HEX);
-//    temp=(cmd & 0xF);
-//    Serial.print(temp,HEX);
-//    Serial.print("   CD: ");
-//    Serial.print(cd,HEX);
-//    Serial.print(" track: ");
-//    Serial.print(tr,HEX);
-//    Serial.print("   min: ");
-//    Serial.print(minutes,HEX  );
-//    Serial.print(" sek: ");
-//    Serial.print(sec);
-//    Serial.print(" mode: ");
-//    Serial.println(mode,HEX);
-//    }
-//    else 
-//    {
-//    EnqueueString(sCD);
-//    EnqueueHex(0xBf-((cmd>>48) & 0xFF));
-//    EnqueueString(sTR);
-//    EnqueueHex(0xFF-((cmd>>40) & 0xFF));
-//    EnqueueString(sMIN);
-//    EnqueueHex(((cmd>>32) & 0xFF)^0xFF);
-//    EnqueueString(sSEC);
-//    EnqueueHex(((cmd>>24) & 0xFF)^0xFF);
-//    EnqueueString(sMODE);
-//    EnqueueHex((cmd>>16) & 0xFF);
-//    EnqueueString(sNEWLINE);
-
+    uint8_t temp;
+    if (verbose){
+    temp=((cmd>>56) & 0xFF);
+    Serial.print(temp,HEX);
+    temp=((cmd>>48) & 0xFF);
+    Serial.print(temp,HEX);
+    cd=temp;
+    temp=((cmd>>40) & 0xFF);
+    Serial.print(temp,HEX);
+    tr=temp;
+    temp=((cmd>>32) & 0xFF);
+    Serial.print(temp,HEX);
+    minutes=temp;
+    temp=((cmd>>24) & 0xFF);
+    Serial.print(temp,HEX);
+    sec=0xff-temp;
+    temp=((cmd>>16) & 0xFF);
+    Serial.print(temp,HEX);
+    mode=temp;
+    temp=((cmd>>8) & 0xFF);
+    Serial.print(temp,HEX);
+    temp=(cmd & 0xF);
+    Serial.print(temp,HEX);
     Serial.print("   CD: ");
-    Serial.print(int (0xBf-((cmd>>48) & 0xFF)),HEX);
+    Serial.print(cd,HEX);
     Serial.print(" track: ");
-    Serial.print(int (0xFF-((cmd>>40) & 0xFF)),HEX);
+    Serial.print(tr,HEX);
     Serial.print("   min: ");
-    Serial.print(int (((cmd>>32) & 0xFF)^0xFF),DEC);
+    Serial.print(minutes,HEX  );
     Serial.print(" sek: ");
-    Serial.print(int (((cmd>>24) & 0xFF)^0xFF),DEC);
+    Serial.print(sec);
+    Serial.print(" mode: ");
+    Serial.println(mode,HEX);
+    }
+    else 
+    {
+    Serial.print("   CD: ");
+    Serial.print(int (((cmd>>48) & 0xFF)^0xBF),HEX);
+    Serial.print(" track: ");
+    Serial.print(int (((cmd>>40) & 0xFF)^0xFF),HEX);
+    Serial.print("   min: ");
+    Serial.print(int (((cmd>>32) & 0xFF)^0xFF),HEX);
+    Serial.print(" sek: ");
+    Serial.print(int (((cmd>>24) & 0xFF)^0xFF),HEX);
     Serial.print(" mode: ");
     Serial.print(int (((cmd>>16) & 0xFF)),HEX);
     Serial.println();
-//    }
+    }
 
   }
   
