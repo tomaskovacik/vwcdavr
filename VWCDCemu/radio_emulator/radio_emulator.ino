@@ -16,8 +16,8 @@
  seek forward            f
  seek rewind             r
  scan mode               s
- shuffle mode            h
- 
+ shuffle mode            l
+ help                    h
  
  CDC sniffer
  - emulate RADIO DataOut signals 
@@ -31,14 +31,8 @@
 #define DataOut 12
 #define Clk 3
 #define DataIn 4
-
-#ifdef Clk=2
-#define ClkInt 0
-#endif
-
-#ifdef Clk=3
 #define ClkInt 1
-#endif
+
 
 #define CDC_END_CMD 0x14
 #define CDC_END_CMD2 0x38
@@ -82,12 +76,18 @@ int mode=0;
 int ack=0;
 int ack_cd=0;
 volatile uint64_t cmd=0;
-uint64_t prev_cmd=0;
+volatile uint64_t prev_cmd=0;
 volatile int cmdbit=0;
 volatile uint8_t newcmd=0;
 int incomingByte = 0;
 
 int verbose=0;
+
+#define TX_BUFFER_END  12
+uint16_t txbuffer[TX_BUFFER_END];
+uint8_t txinptr=0;
+uint8_t txoutptr=0;
+static void Enqueue(uint16_t num);
 
 void setup()
 {
@@ -101,12 +101,13 @@ void setup()
   TCCR1C = 0;
   TCNT1  = 0;//initialize counter value to 0;
   TIMSK1 |= _BV(OCIE1A);
-  OCR1A = 700;//700*64/16000000=0.0448s
+  OCR1A = 700;//700*64us=44,8ms
+//OCR1A = 778;//50048us=50,048ms
   TCCR1B |= _BV(CS12)|_BV(CS10); //prescaler 1024*1/16000000 -> 64us tick
   sei();//allow interrupts
   //  TIFR1 |= _BV(TOV1);//clear overflow flag
   Serial.begin(9600);
-  Serial.println("start");
+  Serial.println("vw group radio emulator");
   pinMode(DataOut,OUTPUT);
   digitalWrite(DataOut,LOW);
   pinMode(Clk,INPUT);
@@ -140,7 +141,6 @@ void loop() {
     case '=':
       // NEXT SONG
       send_cmd(CDC_NEXT);
-      delay(1000);
       send_cmd(CDC_END_CMD);
       break;
     case ']':
@@ -221,13 +221,30 @@ void loop() {
       // scan
       send_cmd(CDC_SCAN);
       break;
-    case 'h':
+    case 'l':
       // shuffle
       send_cmd(CDC_SFL);
       break;
     case 'v': //verbose
       verbose=!verbose;
     break;
+    case 'h': //help
+      Serial.println("next track button       =");
+      Serial.println("previous track button   -");
+      Serial.println("next CD                 ]");
+      Serial.println("previous CD             [");
+      Serial.println("play/stop               p");
+      Serial.println("CD1                     1");
+      Serial.println("CD2                     2");
+      Serial.println("CD3                     3");
+      Serial.println("CD4                     4");
+      Serial.println("CD5                     5");
+      Serial.println("CD6                     6");
+      Serial.println("seek forward            f");
+      Serial.println("seek rewind             r");
+      Serial.println("scan mode               s");
+      Serial.println("shuffle mode            l");
+      Serial.println("help                    h");   
     }    
     //    lcd.home();
     //    lcd.clear();
@@ -251,6 +268,7 @@ void loop() {
   {
     prev_cmd=cmd;
     newcmd=0;      
+   // TIMSK1 |= _BV(OCIE1A);
     //    for(int b=56;b>-1;b=b-8){
     //      uint8_t temp=((cmd>>b) & 0xFF);
     //      Serial.print(temp,HEX);
@@ -284,7 +302,7 @@ void loop() {
     Serial.print(" track: ");
     Serial.print(tr,HEX);
     Serial.print("   min: ");
-    Serial.print(minutes,HEX);
+    Serial.print(minutes,HEX  );
     Serial.print(" sek: ");
     Serial.print(sec,HEX);
     Serial.print(" mode: ");
@@ -293,7 +311,7 @@ void loop() {
     else 
     {
     Serial.print("   CD: ");
-    Serial.print(int ((((cmd>>48) & 0xFF)^0xFF)-0x40),HEX);
+    Serial.print(int (((cmd>>48) & 0xFF)^0xBF),HEX);
     Serial.print(" track: ");
     Serial.print(int (((cmd>>40) & 0xFF)^0xFF),HEX);
     Serial.print("   min: ");
@@ -307,14 +325,44 @@ void loop() {
 
   }
 
+  if (newcmd && prev_cmd == cmd)
+  {
+    newcmd=0;
+  }
+  
+  if (newcmd && cmd==0)
+  {
+    newcmd=0;
+  }
+  
+  while (txoutptr != txinptr)
+
+  {
+
+    Serial.println(txbuffer[txoutptr]);
+
+
+    txoutptr++;
+
+    if (txoutptr == TX_BUFFER_END)
+
+    {
+      txoutptr = 0;
+
+    }
+
+  }
+ // Serial.println("loop");
+
 }  
 
 //no signal on ISP clock line for more then 45ms => next change is first bit of packet ...
 ISR(TIMER1_COMPA_vect) {
-
+//Enqueue(3);
   cmdbit=0;
   newcmd=0;
   cmd=0;
+  
 
 }
 
@@ -350,10 +398,14 @@ void shiftOutPulse(uint8_t dataPin, uint8_t val)
       delayMicroseconds(550);
     }
   }
+  digitalWrite(dataPin, HIGH);
+//  delay(1);
 }
 
 void send_cmd(uint8_t cmd)
 {
+  digitalWrite(DataOut,LOW);
+//  delay(1);
   digitalWrite(DataOut, HIGH);
   delay(9); //9000us
   digitalWrite(DataOut,LOW);
@@ -378,10 +430,14 @@ void send_cmd(uint8_t cmd)
 
 void readDataIn()
 {
+
+//if (!digitalRead(Clk)){
+
   TIMSK1 &= ~_BV(OCIE1A);  
   TCNT1=0;//disable and reset counter while we recieving data ...
   if(!newcmd)
-  {
+ {
+
     if(digitalRead(DataIn))
     {//1
       cmd=(cmd<<1)|1;
@@ -394,17 +450,34 @@ void readDataIn()
     TIMSK1 |= _BV(OCIE1A); //enable counter
   }
 
+//Enqueue(cmdbit);
   if(cmdbit==64)
   {
     newcmd=1;
     cmdbit=0;
   }
-
+//}
 
 }
 
 
+static void Enqueue(uint16_t num)
 
+{
+
+  txbuffer[txinptr] = num;
+
+  txinptr++;
+
+  if (txinptr == TX_BUFFER_END)
+
+  {
+
+    txinptr = 0;
+
+  }
+
+}
 
 
 
