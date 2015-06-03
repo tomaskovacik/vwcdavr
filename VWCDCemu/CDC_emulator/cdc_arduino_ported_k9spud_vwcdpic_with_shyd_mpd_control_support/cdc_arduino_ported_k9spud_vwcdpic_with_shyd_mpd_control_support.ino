@@ -2192,13 +2192,13 @@ EnqueueHex(Do_SEEKFORWARD);
 
     }
 
-//    else
-//
-//    {
+    else
+
+    {
 
       cd_button = FALSE; // mk clear cd button flag
 
-//    }
+    }
 
 //    EnqueueString(sNXT_LIST);
 EnqueueHex(Do_SEEKFORWARD_MK);
