@@ -60,7 +60,23 @@
 #define TCCR0B TCCR0
 #endif
 
+// uncoment this to have original serial outputs for PJRC players
+//#define PJRC
 
+/* uncoment this to do not send next_list prev_list but calculate
+ * next/prev cd and sencd LIST1-6 - for mpd control with mpc based
+ * script -> cant get which playlist we are playing from mpc
+ */
+#define MPD_CONTROL_WITH_MPC
+
+//enable hex control command on serial line to control mpd control
+//script with shyd.de control script
+//#define JUST_HEX_TO_SERIAL
+
+/*
+ * read disc# track# status over serial line
+ */
+#define DISC_TRACK_NUMBER_FROM_MPD
 
 /* -- Includes ------------------------------------------------------------- */
 
@@ -295,13 +311,8 @@
 
 #define  Do_UP             0xF8  // UP
 
-
-
 //#define DUMPMODE
 //#define DUMPMODE2
-
-
-
 
 enum STATES
 
@@ -368,6 +379,8 @@ const uint8_t sLIST6[] PROGMEM = "LIST6\n\r";
 const uint8_t sRANDOM[] PROGMEM = "RANDOM\n\r";
 
 const uint8_t sPLAY[] PROGMEM = "PLAY\n\r";
+
+const uint8_t sSCAN[] PROGMEM = "SCAN\n\r";
 
 const uint8_t sSTOP[] PROGMEM = "STOP\n\r";
 
@@ -765,7 +778,6 @@ void Init_VWCDC(void)
   TIMSK1 |= _BV(ICIE1); // enable input capture interrupt on timer1
 
 
-
   EnqueueString(sIDENTIFY);
 
   EnqueueString(sVERSION);
@@ -773,7 +785,6 @@ void Init_VWCDC(void)
   EnqueueString(sNEWLINE);
 
   EnqueueString(sRING);
-
 
 
   //Timer 0 init
@@ -1550,8 +1561,6 @@ void CDC_Protocol(void)
 
     EnqueueString(sOVERFLOW);
 
-
-
   }
 
   if (dataerr == TRUE) // has the command receive code detected
@@ -2020,7 +2029,9 @@ static void DecodeCommand(void)
 
   uint8_t decimal_adjust_u8 = 0;
 
-
+#ifdef JUST_HEX_TO_SERIAL
+    if (cmdcode != Do_PREVCD || cmdcode != Do_SEEKFORWARD_MK || cmdcode != Do_SEEKFORWARD) Serial.write(cmdcode);
+#endif
 
   switch (cmdcode) {
 
@@ -2031,8 +2042,9 @@ static void DecodeCommand(void)
     // but the CD Changer seems to completely ignore (doesn't even ACK it).
 
     ACKcount = 0; // do not ack this command
-
+#ifdef PJRC
     EnqueueString(sRANDOM);
+#endif
 
     break;
 
@@ -2053,7 +2065,7 @@ static void DecodeCommand(void)
       SetStateInitPlay(); // skip this if already playing
 
     }
-
+    
     EnqueueString(sMENABLE);
 
     break;
@@ -2084,9 +2096,11 @@ static void DecodeCommand(void)
 
     SetStateIdle(); // skip this if we're already in idle mode
 
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
 
+//      disc = 0x41; // set back to CD 1
 
-      disc = 0x41; // set back to CD 1
+#endif
 
       EnqueueString(sMDISABLE);
 
@@ -2100,6 +2114,42 @@ static void DecodeCommand(void)
 
     ResetTime();
 
+#ifdef MPD_CONTROL_WITH_MPC 
+                            if ((disc & 0x0F) == 1)
+                              EnqueueString(sLIST6);
+                            if ((disc & 0x0F) == 2)
+                              EnqueueString(sLIST1);
+                            if ((disc & 0x0F) == 3)
+                              EnqueueString(sLIST2);
+                            if ((disc & 0x0F) == 4)
+                              EnqueueString(sLIST3);
+                            if ((disc & 0x0F) == 5)
+                              EnqueueString(sLIST4);
+                            if ((disc & 0x0F) == 6)
+                              EnqueueString(sLIST5);
+#else
+    EnqueueString(sPRV_LIST);
+#endif
+
+#ifdef JUST_HEX_TO_SERIAL
+                            if ((disc & 0x0F) == 1)
+                              Serial.write(Do_CD6);
+                            if ((disc & 0x0F) == 2)
+                              Serial.write(Do_CD1);
+                            if ((disc & 0x0F) == 3)
+                              Serial.write(Do_CD2);
+                            if ((disc & 0x0F) == 4)
+                              Serial.write(Do_CD3);
+                            if ((disc & 0x0F) == 5)
+                              Serial.write(Do_CD4);
+                            if ((disc & 0x0F) == 6)
+                              Serial.write(Do_CD5);
+                              
+                            Serial.write(Do_SEEKFORWARD_MK);
+#endif
+
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+
     disc--;
 
     if ((disc & 0x0F) == 0)
@@ -2109,9 +2159,7 @@ static void DecodeCommand(void)
       disc = 0x46; // set back to CD 1
 
     }
-
-    EnqueueString(sPRV_LIST);
-
+#endif
     break;
 
 
@@ -2126,6 +2174,41 @@ static void DecodeCommand(void)
 
     {
 
+#ifdef MPD_CONTROL_WITH_MPC
+                            if ((disc & 0x0F) == 1)
+                              EnqueueString(sLIST2);
+                            if ((disc & 0x0F) == 2)
+                              EnqueueString(sLIST3);
+                            if ((disc & 0x0F) == 3)
+                              EnqueueString(sLIST4);
+                            if ((disc & 0x0F) == 4)
+                              EnqueueString(sLIST5);
+                            if ((disc & 0x0F) == 5)
+                              EnqueueString(sLIST6);
+                            if ((disc & 0x0F) == 6)
+                              EnqueueString(sLIST1);
+                              
+                            EnqueueString(sNXT_LIST);
+#endif
+
+#ifdef JUST_HEX_TO_SERIAL
+                            if ((disc & 0x0F) == 1)
+                              Serial.write(Do_CD2);
+                            if ((disc & 0x0F) == 2)
+                              Serial.write(Do_CD3);
+                            if ((disc & 0x0F) == 3)
+                              Serial.write(Do_CD4);
+                            if ((disc & 0x0F) == 4)
+                              Serial.write(Do_CD5);
+                            if ((disc & 0x0F) == 5)
+                              Serial.write(Do_CD6);
+                            if ((disc & 0x0F) == 6)
+                              Serial.write(Do_CD1);
+                              Serial.write(Do_SEEKFORWARD_MK);
+#endif
+
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+    
       disc++;
 
       if (disc > 0x46)
@@ -2135,6 +2218,8 @@ static void DecodeCommand(void)
         disc = 0x41;
 
       }
+
+#endif
 
       // Going beyond CD9 displays hex codes on premium head unit.
 
@@ -2160,8 +2245,6 @@ static void DecodeCommand(void)
 
     }
 
-    EnqueueString(sNXT_LIST);
-
     break;
 
 
@@ -2169,6 +2252,8 @@ static void DecodeCommand(void)
   case Do_MIX:
 
   case Do_MIX_CD:
+
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
 
     if (mix == FALSE)
 
@@ -2185,6 +2270,8 @@ static void DecodeCommand(void)
       mix = FALSE;
 
     }
+
+#endif
 
     EnqueueString(sRANDOM);
 
@@ -2206,6 +2293,8 @@ static void DecodeCommand(void)
 
     scancount = SCANWAIT;
 
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+
     if (scan == FALSE)
 
     {
@@ -2222,8 +2311,13 @@ static void DecodeCommand(void)
 
     }
 
-    EnqueueString(sPLAY); // this will make the PJRC play/pause
+#endif
 
+#ifdef PJRC
+    EnqueueString(sPLAY); // this will make the PJRC play/pause
+#else
+    EnqueueString(sSCAN); // 
+#endif
     break;
 
 
@@ -2241,6 +2335,8 @@ static void DecodeCommand(void)
     }
 
     ResetTime();
+
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
 
     track++;
 
@@ -2261,7 +2357,9 @@ static void DecodeCommand(void)
       track = 1; // can continue rolling (Audi Concert II)
 
     }
-
+    
+#endif
+    
     EnqueueString(sNEXT);
 
     break;
@@ -2282,6 +2380,8 @@ static void DecodeCommand(void)
 
     ResetTime();
 
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+
     decimal_adjust_u8 = track & 0x0F; // skip past hexidecimal codes
 
     if (decimal_adjust_u8 == 0) // are we at x0?
@@ -2301,7 +2401,9 @@ static void DecodeCommand(void)
       track = 0x99; // can continue rolling (Audi Concert II)
 
     }
-
+    
+#endif
+    
     EnqueueString(sPREVIOUS);
 
     break;
@@ -2311,8 +2413,12 @@ static void DecodeCommand(void)
   case Do_CD1:
 
     cd_button = TRUE; // mk store cd button pressed
+    
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
 
     disc = 0x41; // set CD 1
+
+#endif
 
       EnqueueString(sLIST1);
 
@@ -2324,7 +2430,11 @@ static void DecodeCommand(void)
 
     cd_button = TRUE; // mk store cd button pressed
 
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+
     disc = 0x42; // set CD 2
+
+#endif
 
     EnqueueString(sLIST2);
 
@@ -2336,7 +2446,11 @@ static void DecodeCommand(void)
 
     cd_button = TRUE; // mk store cd button pressed
 
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+
     disc = 0x43; // set CD 3
+
+#endif
 
     EnqueueString(sLIST3);
 
@@ -2348,7 +2462,11 @@ static void DecodeCommand(void)
 
     cd_button = TRUE; // mk store cd button pressed
 
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+
     disc = 0x44; // set CD 4
+
+#endif
 
     EnqueueString(sLIST4);
 
@@ -2360,7 +2478,11 @@ static void DecodeCommand(void)
 
     cd_button = TRUE; // mk store cd button pressed
 
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+
     disc = 0x45; // set CD 5
+
+#endif
 
     EnqueueString(sLIST5);
 
@@ -2372,7 +2494,11 @@ static void DecodeCommand(void)
 
     cd_button = TRUE; // mk store cd button pressed
 
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+
     disc = 0x46; // set CD 6
+
+#endif
 
     EnqueueString(sLIST6);
 
@@ -2384,15 +2510,12 @@ static void DecodeCommand(void)
 
 
 
-    // if execution reaches here, we have verified that we got
-
-      // a valid command packet, but the command code received is not
-
-      // one that we understand.
-
-    //
-
-    // Dump the unknown command code for the user to view.
+/* if execution reaches here, we have verified that we got
+ * a valid command packet, but the command code received is not
+ * one that we understand.
+ *
+ * Dump the unknown command code for the user to view.
+ */
 
 
 
@@ -3202,6 +3325,8 @@ static void EnqueueString(const uint8_t *addr PROGMEM)
 
 {
 
+#ifndef JUST_HEX_TO_SERIAL
+
   txbuffer[txinptr] = addr;
 
   txinptr++;
@@ -3213,6 +3338,8 @@ static void EnqueueString(const uint8_t *addr PROGMEM)
     txinptr = 0;
 
   }
+
+#endif
 
 }
 
@@ -3271,10 +3398,6 @@ static void EnqueueHex(uint8_t hexbyte_u8)
   EnqueueString(&sHEX[nibble_u8]);
 
 }
-
-
-
-
 
 
 
@@ -3853,6 +3976,40 @@ int main()
   {
 
     CDC_Protocol();
+
+
+#ifdef DISC_TRACK_NUMBER_FROM_MPD
+  if (Serial.available() > 0) {
+                  int r = Serial.read();
+		//r has new data
+		if(r <= 0xFF)
+		{
+			//send CD No.
+			if((r & 0xF0) == 0xC0)
+			{
+				if (r == 0xCA)
+					scan = TRUE;
+				else if (r == 0xCB)
+					mix = TRUE;
+				else if (r == 0xCC)
+                                        {
+                                          mix = FALSE;
+                                          scan = FALSE;
+                                        }
+				else
+					if ((r & 0x0F) != ( disc & 0x0F))
+                                          disc = (r & 0x4F);
+			}
+			//send TR No.
+			else 
+				if (track != r)
+                                  {track = r;
+                                    ResetTime();
+                                  }
+		}
+  }
+#endif
+
 
   }
 
