@@ -57,19 +57,22 @@ def play_cd(cd_no):
 	c = ser.read()
 	if c == CDC_END_CMD:
 		if ser.read() == CDC_CDSET:
-			r = os.popen("mpc lsplaylists| grep cd" + str(cd_no)).read()
-			if r != "":
-				set_cd_no(chr(CD_MASK + cd_no))
-				os.popen("mpc clear")
-				os.popen("mpc load cd" + str(cd_no))
-				os.popen("mpc play")
+			play_plst(cd_no)
+
 	elif c == CDC_CDSET: #audi concert unit sent just this no end_cmd
-		r = os.popen("mpc lsplaylists| grep cd" + str(cd_no)).read()
-		if r != "":
-			set_cd_no(chr(CD_MASK + cd_no))
-			os.popen("mpc clear")
-			os.popen("mpc load cd" + str(cd_no))
-			os.popen("mpc play")
+		play_plst(cd_no)
+
+
+# play new playlst
+def play_plst(plst_no):
+	r = os.popen("mpc lsplaylists| grep cd" + str(plst_no)).read()
+	if r != "":
+		set_cd_no(chr(CD_MASK + plst_no))
+		os.popen("mpc clear")
+		os.popen("mpc load cd" + str(plst_no))
+		os.popen("mpc play")
+	else:
+		print "no playlist no. {}".format(plst_no)
 
 # init serial and last cd no. for correct radio display
 def connect():
@@ -153,6 +156,41 @@ try:
 			elif c == CDC_CD6:
 				play_cd(6)
 
+			elif c == CDC_CDSET:
+				if ser.read() == CDC_END_CMD:
+					fo = open(cd_filename, "rb")
+					cd = fo.read(1)
+					fo.close()
+					if cd == chr(0xC1):
+						play_plst(2)
+					elif cd == chr(0xC2):
+						play_plst(3)
+					elif cd == chr(0xC3):
+						play_plst(4)
+					elif cd == chr(0xC4):
+						play_plst(5)
+					elif cd == chr(0xC5):
+						play_plst(6)
+					elif cd == chr(0xC6):
+						play_plst(1)
+
+			elif c == CDC_PREV_CD:
+				if ser.read() == CDC_END_CMD:
+					fo = open(cd_filename, "rb")
+					cd = fo.read(1)
+					fo.close()
+					if cd == chr(0xC1):
+						play_plst(6)
+					elif cd == chr(0xC2):
+						play_plst(1)
+					elif cd == chr(0xC3):
+						play_plst(2)
+					elif cd == chr(0xC4):
+						play_plst(3)
+					elif cd == chr(0xC5):
+						play_plst(4)
+					elif cd == chr(0xC6):
+						play_plst(5)
 			elif c == CDC_SCAN:
 				os.popen("mpc update")
 

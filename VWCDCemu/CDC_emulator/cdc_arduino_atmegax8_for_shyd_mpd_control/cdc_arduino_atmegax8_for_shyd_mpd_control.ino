@@ -166,19 +166,6 @@ Serial.write(c);
           idle=0;
 //          cd++;
 //          if(cd==7)cd=1;
-                            if (cd == 1)
-                              Serial.write(CDC_CD6);
-                            if (cd == 2)
-                              Serial.write(CDC_CD1);
-                            if (cd == 3)
-                              Serial.write(CDC_CD2);
-                            if (cd == 4)
-                              Serial.write(CDC_CD3);
-                            if (cd == 5)
-                              Serial.write(CDC_CD4);
-                            if (cd == 6)
-                              Serial.write(CDC_CD5);
-                            Serial.write(CDC_END_CMD2);
           DO_UPDATE=1;
         }
         else if (prevcmd==CDC_END_CMD2)
@@ -187,19 +174,6 @@ Serial.write(c);
           //cd--;
          // if(cd==0)cd=6;
           //DO_UPDATE=1;
-                            if (cd == 1)
-                              Serial.write(CDC_CD2);
-                            if (cd == 2)
-                              Serial.write(CDC_CD3);
-                            if (cd == 3)
-                              Serial.write(CDC_CD4);
-                            if (cd == 4)
-                              Serial.write(CDC_CD5);
-                            if (cd == 5)
-                              Serial.write(CDC_CD6);
-                            if (cd == 6)
-                              Serial.write(CDC_CD1);
-                            Serial.write(CDC_END_CMD2);
         } 
         else if (prevcmd==CDC_STOP)
         {

@@ -25,10 +25,11 @@ CDC_CD3 = "LIST3\n"#chr(0x4C)
 CDC_CD4 = "LIST4\n"#chr(0xCC)
 CDC_CD5 = "LIST5\n"#chr(0x2C)
 CDC_CD6 = "LIST6\n"#chr(0xAC)
-CDC_CDSET = chr(0x38)
+CDC_CDSET = "NXT_LIST\n"#chr(0x38)
 CDC_SCAN = "SCAN\n"#chr(0xA0)
 CDC_SFL = "RANDOM\n"#chr(0x60)
 CDC_PLAY_NORMAL = "PLAY\n"#chr(0x08)
+CDC_PREV_CD = "PRV_LIST\n"#chr(0x18)
 
 
 # control bytes to set the display
@@ -140,6 +141,40 @@ try:
 
 			elif c == CDC_CD6:
 				play_cd(6)
+
+			elif c == CDC_CDSET:
+				fo = open(cd_filename, "rb")
+				cd = fo.read(1)
+				fo.close()
+				if cd == chr(0xC1):
+					play_cd(2)
+				elif cd == chr(0xC2):
+					play_cd(3)
+				elif cd == chr(0xC3):
+					play_cd(4)
+				elif cd == chr(0xC4):
+					play_cd(5)
+				elif cd == chr(0xC5):
+					play_cd(6)
+				elif cd == chr(0xC6):
+					play_cd(1)
+
+			elif c == CDC_PREV_CD:
+				fo = open(cd_filename, "rb")
+				cd = fo.read(1)
+				fo.close()
+				if cd == chr(0xC1):
+					play_cd(6)
+				elif cd == chr(0xC2):
+					play_cd(1)
+				elif cd == chr(0xC3):
+					play_cd(2)
+				elif cd == chr(0xC4):
+					play_cd(3)
+				elif cd == chr(0xC5):
+					play_cd(4)
+				elif cd == chr(0xC6):
+					play_cd(5)
 
 			elif c == CDC_SCAN:
 				os.popen("mpc update")

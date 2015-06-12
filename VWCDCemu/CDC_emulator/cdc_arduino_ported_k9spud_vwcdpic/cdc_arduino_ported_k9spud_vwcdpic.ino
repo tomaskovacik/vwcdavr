@@ -67,10 +67,11 @@
  * next/prev cd and sencd LIST1-6 - for mpd control with mpc based
  * script -> cant get which playlist we are playing from mpc
  */
-#define MPD_CONTROL_WITH_MPC
+//#define MPD_CONTROL_WITH_MPC
 
-//enable hex control command on serial line to control mpd control
-//script with shyd.de control script
+/* enable hex control command on serial line to control mpd control
+ * script with shyd.de control script
+ */
 //#define JUST_HEX_TO_SERIAL
 
 /*
@@ -482,7 +483,7 @@ uint8_t scan;
 
 uint8_t playing;
 
-uint8_t cd_button;
+uint8_t cd_button = 0;
 
 
 
@@ -1039,7 +1040,7 @@ ISR(TIMER0_OVF_vect){
 
   }
   TIFR &= ~(1 << TOV0);
-      TCNT0 = 5;// to get overflowed after 1000us 1024-(6x4us)=1000us  counting from 0... 0,1,2,3,4,5 = 6ticks
+  TCNT0 = 5;// to get overflowed after 1000us 1024-(6x4us)=1000us  counting from 0... 0,1,2,3,4,5 = 6ticks
 }
 
 #else
@@ -2030,7 +2031,7 @@ static void DecodeCommand(void)
   uint8_t decimal_adjust_u8 = 0;
 
 #ifdef JUST_HEX_TO_SERIAL
-    if (cmdcode != Do_PREVCD || cmdcode != Do_SEEKFORWARD_MK || cmdcode != Do_SEEKFORWARD) Serial.write(cmdcode);
+  Serial.write(cmdcode);
 #endif
 
   switch (cmdcode) {
@@ -2114,39 +2115,22 @@ static void DecodeCommand(void)
 
     ResetTime();
 
-#ifdef MPD_CONTROL_WITH_MPC 
-                            if ((disc & 0x0F) == 1)
-                              EnqueueString(sLIST6);
-                            if ((disc & 0x0F) == 2)
-                              EnqueueString(sLIST1);
-                            if ((disc & 0x0F) == 3)
-                              EnqueueString(sLIST2);
-                            if ((disc & 0x0F) == 4)
-                              EnqueueString(sLIST3);
-                            if ((disc & 0x0F) == 5)
-                              EnqueueString(sLIST4);
-                            if ((disc & 0x0F) == 6)
-                              EnqueueString(sLIST5);
-#else
-    EnqueueString(sPRV_LIST);
-#endif
-
-#ifdef JUST_HEX_TO_SERIAL
-                            if ((disc & 0x0F) == 1)
-                              Serial.write(Do_CD6);
-                            if ((disc & 0x0F) == 2)
-                              Serial.write(Do_CD1);
-                            if ((disc & 0x0F) == 3)
-                              Serial.write(Do_CD2);
-                            if ((disc & 0x0F) == 4)
-                              Serial.write(Do_CD3);
-                            if ((disc & 0x0F) == 5)
-                              Serial.write(Do_CD4);
-                            if ((disc & 0x0F) == 6)
-                              Serial.write(Do_CD5);
-                              
-                            Serial.write(Do_SEEKFORWARD_MK);
-#endif
+//#ifdef MPD_CONTROL_WITH_MPC 
+//                            if ((disc & 0x0F) == 1)
+//                              EnqueueString(sLIST6);
+//                            if ((disc & 0x0F) == 2)
+//                              EnqueueString(sLIST1);
+//                            if ((disc & 0x0F) == 3)
+//                              EnqueueString(sLIST2);
+//                            if ((disc & 0x0F) == 4)
+//                              EnqueueString(sLIST3);
+//                            if ((disc & 0x0F) == 5)
+//                              EnqueueString(sLIST4);
+//                            if ((disc & 0x0F) == 6)
+//                              EnqueueString(sLIST5);
+//#else
+   EnqueueString(sPRV_LIST);
+//#endif
 
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
@@ -2174,38 +2158,7 @@ static void DecodeCommand(void)
 
     {
 
-#ifdef MPD_CONTROL_WITH_MPC
-                            if ((disc & 0x0F) == 1)
-                              EnqueueString(sLIST2);
-                            if ((disc & 0x0F) == 2)
-                              EnqueueString(sLIST3);
-                            if ((disc & 0x0F) == 3)
-                              EnqueueString(sLIST4);
-                            if ((disc & 0x0F) == 4)
-                              EnqueueString(sLIST5);
-                            if ((disc & 0x0F) == 5)
-                              EnqueueString(sLIST6);
-                            if ((disc & 0x0F) == 6)
-                              EnqueueString(sLIST1);
-                              
-                            EnqueueString(sNXT_LIST);
-#endif
-
-#ifdef JUST_HEX_TO_SERIAL
-                            if ((disc & 0x0F) == 1)
-                              Serial.write(Do_CD2);
-                            if ((disc & 0x0F) == 2)
-                              Serial.write(Do_CD3);
-                            if ((disc & 0x0F) == 3)
-                              Serial.write(Do_CD4);
-                            if ((disc & 0x0F) == 4)
-                              Serial.write(Do_CD5);
-                            if ((disc & 0x0F) == 5)
-                              Serial.write(Do_CD6);
-                            if ((disc & 0x0F) == 6)
-                              Serial.write(Do_CD1);
-                              Serial.write(Do_SEEKFORWARD_MK);
-#endif
+      EnqueueString(sNXT_LIST);
 
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
     
@@ -2244,7 +2197,7 @@ static void DecodeCommand(void)
       cd_button = FALSE; // mk clear cd button flag
 
     }
-
+    
     break;
 
 
