@@ -11,6 +11,12 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 //                   GND  4|    |5  PB0 (D 0) pwm0  MOSI / DI / SDA
 //                         +----+
 
+   RADIO PIN -> ATTINY
+
+   DataOut   -> pin 7
+   DataIn    -> pin 6
+   Clock     -> pin 5
+   serial    -> pin 2
 
 
    Audi/Volkswagen Audi Interface

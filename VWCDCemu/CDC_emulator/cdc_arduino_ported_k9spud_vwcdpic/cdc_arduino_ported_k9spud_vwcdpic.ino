@@ -30,11 +30,13 @@
  * https://github.com/tomaskovacik/
  * arduino duemilanove works:
  * 
- * RADIO PIN -> arduino pin
+ * RADIO PIN -> arduino pin (chip pin)
  * 
- * DataOut   -> digital 8
- * DataIn    -> digital 13
- * Clock     -> digital 12
+ * DataOut   -> digital 8 (14)
+ * DataIn    -> digital 13(19)
+ * Clock     -> digital 12(18)
+ * serial TX -> digital 0 (2)
+ * serial RX -> digital 1 (3)
  *
  * 19. Mar 2015  tomaskovacik
  * port to atmega8
