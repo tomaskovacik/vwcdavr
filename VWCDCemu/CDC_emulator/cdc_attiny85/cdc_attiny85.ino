@@ -1,5 +1,3 @@
-#include <TinyDebugSerial.h>
-TinyDebugSerial mySerial = TinyDebugSerial();  
 /*****************************************************************************
 
 // ATMEL ATTINY45 / ARDUINO pin mappings
@@ -55,7 +53,10 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 
 /* -- Includes ------------------------------------------------------------- */
 
-
+#if defined(__AVR_ATtiny85__)
+#include <TinyDebugSerial.h>
+TinyDebugSerial mySerial = TinyDebugSerial();  
+#endif
 
 #include <avr/io.h>
 
@@ -597,11 +598,9 @@ static void SendFrameByte(uint8_t byte_u8);
 
 static void SendByte(uint8_t byte_u8);
 
-static void Start_Timer(uint16_t time_u16);
+static void EnqueueString(const uint8_t *addr PROGMEM);
 
-//static void EnqueueString(const uint8_t *addr PROGMEM);
-
-//static void EnqueueHex(uint8_t hexbyte_u8);
+static void EnqueueHex(uint8_t hexbyte_u8);
 
 static void ResetTime(void);
 
@@ -618,8 +617,6 @@ static void SendStateInitPlayEnd(void);
 static void SendStateInitPlayAnnounceCD(void);
 
 static void SendStatePlayLeadInAnnounceCD(void);
-
-
 
 static void printstr_p(const char *s);
 
