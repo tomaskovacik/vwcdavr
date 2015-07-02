@@ -157,6 +157,9 @@
 
 #define _10MS           156
 
+#define _50MS            500
+
+#define _700US            7
 
 
 #define TX_BUFFER_END   12
@@ -188,14 +191,6 @@
 #define RADIO_DATA         PB5 //(Seeeduino Mega PIN 11)
 
 #define RADIO_DATA_DDR     DDB5
-
-//#define MP3_ENABLE         PC3
-
-//#define MP3_ENABLE_DDR     DDC3
-
-//#define KOMBI_CLOCK      PB7
-
-//#define KOMBI_CLOCK_DDR  DDB7
 
 
 // Command Codes
@@ -558,10 +553,6 @@ uint8_t flag_50ms = false; // indicates that a period of 50ms isover
 uint8_t counter_timer0_overflows = 0; //timer0 overflow counts to calc 10ms
 #endif
 
-
-
-
-
 /* -- Modul Global Function Prototypes ------------------------------------- */
 
 
@@ -594,8 +585,6 @@ static void SendFrameByte(uint8_t byte_u8);
 
 static void SendByte(uint8_t byte_u8);
 
-static void Start_Timer(uint16_t time_u16);
-
 static void EnqueueString(const uint8_t *addr PROGMEM);
 
 static void EnqueueHex(uint8_t hexbyte_u8);
@@ -616,13 +605,7 @@ static void SendStateInitPlayAnnounceCD(void);
 
 static void SendStatePlayLeadInAnnounceCD(void);
 
-
-
 static void printstr_p(const char *s);
-
-
-
-
 
 
 #define TRUE 1
@@ -679,9 +662,7 @@ void Init_VWCDC(void)
 
   //  DDRA |= _BV(DDA6); // debug pin
 
-  DDRB |= _BV(RADIO_CLOCK_DDR) | _BV(RADIO_DATA_DDR);// | KOMBI_CLOCK_DDR;
-
-  //  DDRC |= _BV(MP3_ENABLE_DDR);
+  DDRB |= _BV(RADIO_CLOCK_DDR) | _BV(RADIO_DATA_DDR);
 
   DDRB &= ~_BV(RADIO_COMMAND_DDR); // input capture as input
 
@@ -886,11 +867,6 @@ ISR(TIMER2_COMPA_vect)
 
   uint8_t byte_u8;
 
-
-
-
-  //   PORTB |= _BV(KOMBI_CLOCK);
-
   TCCR2B &= ~_BV(CS20); // stop Timer2
 
   TCCR2B &= ~_BV(CS21);
@@ -928,8 +904,6 @@ ISR(TIMER2_COMPA_vect)
 
       PORTB |= _BV(RADIO_CLOCK); // SCLK high
 
-      //Start_Timer(3);					// to ensure original PIC timing
-
       _delay_loop_1(40);
 
       if ((byte_u8 & 0x80) == 0) // mask highest bit and test if set
@@ -953,8 +927,6 @@ ISR(TIMER2_COMPA_vect)
       byte_u8 <<= 1; // load the next bit
 
       PORTB &= ~_BV(RADIO_CLOCK); // SCLK low
-
-      //Start_Timer(3);					// timing delay to soften emi noise
 
       _delay_loop_1(40);
 
@@ -981,8 +953,6 @@ ISR(TIMER2_COMPA_vect)
     TIMSK2 &= ~_BV(OCIE2A); // disable output compare interrupt on timer2
 
   }
-
-  //   PORTB &= ~_BV(KOMBI_CLOCK);
 
 }
 
@@ -1208,8 +1178,6 @@ ISR(TIMER1_OVF_vect)
 ISR(TIMER1_CAPT_vect)
 
 {
-
-  //Serial.println("TIMER1_CAPT_vect");
 
   captime = ICR1; // save a copy of current TMR1 count
 
@@ -1449,29 +1417,9 @@ void CDC_Protocol(void)
 
   {
 
-    //      if (bit_is_set(PORTA, PA6))
-    //
-    //      {
-    //
-    //         PORTA &= ~_BV(PA6);
-    //
-    //      }
-    //
-    //      else
-    //
-    //      {
-    //
-    //         PORTA |= _BV(PA6);
-    //
-    //      }
-
     flag_50ms = FALSE;
 
-
-
     SendPacket();
-
-
 
     scancount++;
 
@@ -1616,13 +1564,7 @@ void CDC_Protocol(void)
 
     printstr_p((char*) txbuffer[txoutptr]);
 
-
-
     txoutptr++;
-
-
-
-
 
     if (txoutptr == TX_BUFFER_END)
 
@@ -1634,13 +1576,7 @@ void CDC_Protocol(void)
 
   }
 
-  //txoutptr = 0;
-
-
-
 }
-
-
 
 
 
@@ -2057,8 +1993,6 @@ static void DecodeCommand(void)
 
   case Do_ENABLE_MK:
 
-    //PORTC |= _BV(MP3_ENABLE);
-
     mix = FALSE;
 
     if (playing == FALSE)
@@ -2094,8 +2028,6 @@ static void DecodeCommand(void)
 
 
   case Do_DISABLE:
-
-    // PORTC &= ~_BV(MP3_ENABLE);
 
     SetStateIdle(); // skip this if we're already in idle mode
 
@@ -2133,6 +2065,7 @@ static void DecodeCommand(void)
 //#else
    EnqueueString(sPRV_LIST);
 //#endif
+
 
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
@@ -3996,9 +3929,29 @@ static void printstr_p(const char *s)
 
 }
 
+static void push_button(uint8_t button){
+
+  switch (button) {
+    case pPLAY:
+          PORTD |= _BV(pPLAY);
+          break;
+    case pPREV:
+          PORTB |= _BV(pPREV);
+          break;
+    case pNEXT:
+          PORTD |= _BV(pNEXT);
+          break;
+  }
+  button_push_counts = BUTTON_PUSH_COUNTS;
+}
 
 
-
+static void release_button(){
+          PORTD &= ~_BV(pPLAY);
+          PORTB &= ~_BV(pPREV);
+          PORTD &= ~_BV(pNEXT);
+}
+#endif
 
 // eof //
 
