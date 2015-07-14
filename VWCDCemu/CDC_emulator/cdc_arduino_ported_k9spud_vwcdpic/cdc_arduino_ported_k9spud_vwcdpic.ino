@@ -3929,30 +3929,6 @@ static void printstr_p(const char *s)
 
 }
 
-static void push_button(uint8_t button){
-
-  switch (button) {
-    case pPLAY:
-          PORTD |= _BV(pPLAY);
-          break;
-    case pPREV:
-          PORTB |= _BV(pPREV);
-          break;
-    case pNEXT:
-          PORTD |= _BV(pNEXT);
-          break;
-  }
-  button_push_counts = BUTTON_PUSH_COUNTS;
-}
-
-
-static void release_button(){
-          PORTD &= ~_BV(pPLAY);
-          PORTB &= ~_BV(pPREV);
-          PORTD &= ~_BV(pNEXT);
-}
-#endif
-
 // eof //
 
 
