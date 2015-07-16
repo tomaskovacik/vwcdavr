@@ -36,12 +36,15 @@ CDC_PREV_CD = chr(0x18)
 CMD_SCAN = chr(0xCA)
 CMD_SHFFL = chr(0xCB)
 CMD_PLAY = chr(0xCC)
+CMD_STOPED = chr(0xCD)
+CMD_SHFFL_OFF = chr(0xCE)
 
 CD_MASK = 0xC0
 
 cd_filename = "./last_cd"
 global ser
 ser = None
+play_state = 'stoped';
 timeout_seek = 0.5
 timeout_normal = 2
 
@@ -82,13 +85,29 @@ def connect():
 			ser = serial.Serial('/dev/ttyUSB0', 9600)
 			ser.timeout = timeout_normal #we need a timeout to update the track no.
 			ser.writeTimeout = timeout_normal
+			mpc = os.popen("mpc |grep \"] #\"").read()
+			try:
+				mpc = mpc.split("]", 1)
+				mpc = mpc[0].split("[", 1)
+				if mpc[1] == "playing":
+					play_state='playing'
+					ser.write(CMD_PLAY)
+				elif mpc [1] == "paused":
+					play_state = 'paused'
+					ser.write(CMD_STOPED)
+			except:
+				print "no playing [1]"
+				play_state = 'stoped'
+				ser.write(CMD_STOPED)
+			print play_state
 			try:
 				fo = open(cd_filename, "rb")
 				cd = fo.read(1)
 				fo.close()
 				ser.write(cd)
 			except:
-				print "no last cd no. [not sending cd#]"
+				print "no last cd no. seting to one"
+				play_cd(1)
 			return
 		except:
 			time.sleep(2) #wait before retrying
@@ -205,12 +224,18 @@ try:
 			#get current track no. (radio display will be delayed up to {timeout_normal})
 			mpc = os.popen("mpc |grep ] #").read()
 			try:
+				if play_state is not 'playing':
+					play_state = 'playing'
+					ser.write(CMD_PLAY)
 				mpc = mpc.split("/", 1)
 				mpc = mpc[0].split("#", 1)
 				tr = chr(string.atoi(mpc[1], 16))
 				ser.write(tr)
 			except:
-				print "not playing"
+				print "not playing[2]"
+				play_state = 'stoped'
+				#no tr number = mpd is stoped or not playing
+				ser.write(CMD_STOPED)
 
 			#get current playmode
 			mpc = os.popen("mpc | grep random:").read()
@@ -219,9 +244,9 @@ try:
 				if mpc[1].startswith("on"):
 					ser.write(CMD_SHFFL)
 				elif mpc[1].startswith("off"):
-					ser.write(CMD_PLAY)
+					ser.write(CMD_SHFFL_OFF)
 			except:
-				print "not playing"
+				print "not playing[3]"
 		except (serial.SerialException, serial.SerialTimeoutException):
 			print "serial port unavailable, reconnecting..."
 			ser.close()
