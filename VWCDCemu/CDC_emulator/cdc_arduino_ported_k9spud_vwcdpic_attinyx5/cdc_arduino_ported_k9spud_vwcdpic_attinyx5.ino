@@ -53,10 +53,10 @@
 
 /* -- Includes ------------------------------------------------------------- */
 
-#if defined(__AVR_ATtiny85__)
+//#if defined(__AVR_ATtiny85__)
 #include <TinyDebugSerial.h>
 TinyDebugSerial mySerial = TinyDebugSerial();  
-#endif
+//#endif
 
 #include <avr/io.h>
 
