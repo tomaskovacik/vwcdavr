@@ -74,7 +74,12 @@
 /* enable hex control command on serial line to control mpd control
  * script with shyd.de control script
  */
-#define JUST_HEX_TO_SERIAL
+//#define JUST_HEX_TO_SERIAL
+
+/* enable bluetooth module control over serial line
+ * XS3868
+ */
+#define BLUETOOTH
 
 /*
  * read disc# track# status over serial line
@@ -173,10 +178,6 @@
 #define VER_MINOR       '0'
 
 #define VER_PATCHLEVEL  'b'
-
-
-
-#define Baudrate9600
 
 
 
@@ -346,51 +347,103 @@ enum STATES
 
 /* -- Extern Global Variables ---------------------------------------------- */
 
+#ifdef BLUETOOTH
 
+const uint8_t sDATAERR[] PROGMEM = "\r\n";
 
-const uint8_t sDATAERR[] PROGMEM = "dataerr\n\r";
+const uint8_t sOVERFLOW[] PROGMEM = "\r\n";
 
-const uint8_t sOVERFLOW[] PROGMEM = "overflow\n\r";
+const uint8_t sMDISABLE[] PROGMEM = "AT#MA\r\n";
 
-const uint8_t sMDISABLE[] PROGMEM = "MDISABLE\n\r";
+const uint8_t sMENABLE[] PROGMEM = "AT#MA\r\n";
 
-const uint8_t sMENABLE[] PROGMEM = "MENABLE\n\r";
+const uint8_t sMINQUIRY[] PROGMEM = "MINQUIRY\r\n";
 
-const uint8_t sMINQUIRY[] PROGMEM = "MINQUIRY\n\r";
+const uint8_t sPRV_LIST[] PROGMEM = "AT#MA\r\n";
 
-const uint8_t sPRV_LIST[] PROGMEM = "PRV_LIST\n\r";
+const uint8_t sNXT_LIST[] PROGMEM = "AT#MA\r\n";
 
-const uint8_t sNXT_LIST[] PROGMEM = "NXT_LIST\n\r";
+const uint8_t sLIST1[] PROGMEM = "AT#MA\r\n";
 
-const uint8_t sLIST1[] PROGMEM = "LIST1\n\r";
+const uint8_t sLIST2[] PROGMEM = "AT#MA\r\n";
 
-const uint8_t sLIST2[] PROGMEM = "LIST2\n\r";
+const uint8_t sLIST3[] PROGMEM = "AT#MA\r\n";
 
-const uint8_t sLIST3[] PROGMEM = "LIST3\n\r";
+const uint8_t sLIST4[] PROGMEM = "AT#MA\r\n";
 
-const uint8_t sLIST4[] PROGMEM = "LIST4\n\r";
+const uint8_t sLIST5[] PROGMEM = "AT#MA\r\n";
 
-const uint8_t sLIST5[] PROGMEM = "LIST5\n\r";
+const uint8_t sLIST6[] PROGMEM = "AT#MA\r\n";
 
-const uint8_t sLIST6[] PROGMEM = "LIST6\n\r";
+const uint8_t sRANDOM[] PROGMEM = "RANDOM\r\n";
 
-const uint8_t sRANDOM[] PROGMEM = "RANDOM\n\r";
+const uint8_t sPLAY[] PROGMEM = "AT#MA\r\n";
 
-const uint8_t sPLAY[] PROGMEM = "PLAY\n\r";
+const uint8_t sSCAN[] PROGMEM = "SCAN\r\n";
 
-const uint8_t sSCAN[] PROGMEM = "SCAN\n\r";
+const uint8_t sSTOP[] PROGMEM = "AT#MA\r\n";
 
-const uint8_t sSTOP[] PROGMEM = "STOP\n\r";
+const uint8_t sNEXT[] PROGMEM = "AT#MD\r\n";
 
-const uint8_t sNEXT[] PROGMEM = "NEXT\n\r";
+const uint8_t sPREVIOUS[] PROGMEM = "AT#ME\r\n";
 
-const uint8_t sPREVIOUS[] PROGMEM = "PREVIOUS\n\r";
+const uint8_t sRING[] PROGMEM = "\r\n";
 
-const uint8_t sRING[] PROGMEM = "RING\n\r";
+const uint8_t sIDENTIFY[] PROGMEM = "\r\n";
+
+const uint8_t sNEWLINE[] PROGMEM = "\r\n";
+
+const uint8_t sDASH[] PROGMEM = "";
+
+const uint8_t sHEX[] PROGMEM = "";
+
+const uint8_t sVERSION[] PROGMEM = "";
+
+#else
+
+const uint8_t sDATAERR[] PROGMEM = "dataerr\r\n";
+
+const uint8_t sOVERFLOW[] PROGMEM = "overflow\r\n";
+
+const uint8_t sMDISABLE[] PROGMEM = "MDISABLE\r\n";
+
+const uint8_t sMENABLE[] PROGMEM = "MENABLE\r\n";
+
+const uint8_t sMINQUIRY[] PROGMEM = "MINQUIRY\r\n";
+
+const uint8_t sPRV_LIST[] PROGMEM = "PRV_LIST\r\n";
+
+const uint8_t sNXT_LIST[] PROGMEM = "NXT_LIST\r\n";
+
+const uint8_t sLIST1[] PROGMEM = "LIST1\r\n";
+
+const uint8_t sLIST2[] PROGMEM = "LIST2\r\n";
+
+const uint8_t sLIST3[] PROGMEM = "LIST3\r\n";
+
+const uint8_t sLIST4[] PROGMEM = "LIST4\r\n";
+
+const uint8_t sLIST5[] PROGMEM = "LIST5\r\n";
+
+const uint8_t sLIST6[] PROGMEM = "LIST6\r\n";
+
+const uint8_t sRANDOM[] PROGMEM = "RANDOM\r\n";
+
+const uint8_t sPLAY[] PROGMEM = "PLAY\r\n";
+
+const uint8_t sSCAN[] PROGMEM = "SCAN\r\n";
+
+const uint8_t sSTOP[] PROGMEM = "STOP\r\n";
+
+const uint8_t sNEXT[] PROGMEM = "NEXT\r\n";
+
+const uint8_t sPREVIOUS[] PROGMEM = "PREVIOUS\r\n";
+
+const uint8_t sRING[] PROGMEM = "RING\r\n";
 
 const uint8_t sIDENTIFY[] PROGMEM = "Audi Concert I Multimedia Gateway Ver.";
 
-const uint8_t sNEWLINE[] PROGMEM = "\n\r";
+const uint8_t sNEWLINE[] PROGMEM = "\r\n";
 
 const uint8_t sDASH[] PROGMEM = "_";
 
@@ -405,7 +458,7 @@ const uint8_t sVERSION[] PROGMEM = {
   VER_MAJOR, '.', VER_MINOR, VER_PATCHLEVEL, 0
 
 };
-
+#endif
 
 
 
@@ -1711,7 +1764,7 @@ static void DecodeCommand(void)
       SetStateInitPlay(); // skip this if already playing
 
     }
-    
+ 
     EnqueueString(sMENABLE);
 
     break;
@@ -2138,13 +2191,18 @@ static void DecodeCommand(void)
 int main()
 
 {
-
+#ifdef BLUETOOTH
+  Serial.begin(115200);
+#else
   Serial.begin(9600);
+#endif
 
   Init_VWCDC();
 
 //start in idle mode
   SetStateIdle();
+
+  
 
   while (1)
 
@@ -2219,12 +2277,11 @@ static void printstr_p(const char *s)
   for (c = pgm_read_byte(s); c; ++s, c = pgm_read_byte(s))
 
   {
-
-    if (c == '\r')
+    Serial.print(c);
+    
+    if (c == '\n')
 
       break;
-
-    Serial.print(c);
 
   }
 
