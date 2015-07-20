@@ -85,20 +85,6 @@ def connect():
 			ser = serial.Serial('/dev/ttyUSB0', 9600)
 			ser.timeout = timeout_normal #we need a timeout to update the track no.
 			ser.writeTimeout = timeout_normal
-			mpc = os.popen("mpc |grep \"] #\"").read()
-			try:
-				mpc = mpc.split("]", 1)
-				mpc = mpc[0].split("[", 1)
-				if mpc[1] == "playing":
-					play_state='playing'
-					ser.write(CMD_PLAY)
-				elif mpc [1] == "paused":
-					play_state = 'paused'
-					ser.write(CMD_STOPED)
-			except:
-				print "no playing [1]"
-				play_state = 'stoped'
-				ser.write(CMD_STOPED)
 			print play_state
 			try:
 				fo = open(cd_filename, "rb")
@@ -224,15 +210,15 @@ try:
 			#get current track no. (radio display will be delayed up to {timeout_normal})
 			mpc = os.popen("mpc |grep ] #").read()
 			try:
-				if play_state is not 'playing':
-					play_state = 'playing'
-					ser.write(CMD_PLAY)
+				#if play_state is not 'playing':
+				#	play_state = 'playing'
+				#	ser.write(CMD_PLAY)
 				mpc = mpc.split("/", 1)
 				mpc = mpc[0].split("#", 1)
 				tr = chr(string.atoi(mpc[1], 16))
 				ser.write(tr)
 			except:
-				print "not playing[2]"
+				print "not playing[1]"
 				play_state = 'stoped'
 				#no tr number = mpd is stoped or not playing
 				ser.write(CMD_STOPED)
@@ -246,7 +232,21 @@ try:
 				elif mpc[1].startswith("off"):
 					ser.write(CMD_SHFFL_OFF)
 			except:
-				print "not playing[3]"
+				print "not playing[2]"
+			mpc = os.popen("mpc |grep \"] #\"").read()
+			try:
+				mpc = mpc.split("]", 1)
+				mpc = mpc[0].split("[", 1)
+				if mpc[1] == "playing":
+					play_state='playing'
+					ser.write(CMD_PLAY)
+				elif mpc [1] == "paused":
+					play_state = 'paused'
+					ser.write(CMD_STOPED)
+			except:
+				print "no playing [3]"
+				play_state = 'stoped'
+				ser.write(CMD_STOPED)
 		except (serial.SerialException, serial.SerialTimeoutException):
 			print "serial port unavailable, reconnecting..."
 			ser.close()
