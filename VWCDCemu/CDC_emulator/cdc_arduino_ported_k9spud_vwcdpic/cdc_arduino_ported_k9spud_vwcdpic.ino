@@ -65,12 +65,6 @@
 // uncoment this to have original serial outputs for PJRC players
 //#define PJRC
 
-/* uncoment this to do not send next_list prev_list but calculate
- * next/prev cd and sencd LIST1-6 - for mpd control with mpc based
- * script -> cant get which playlist we are playing from mpc
- */
-//#define MPD_CONTROL_WITH_MPC
-
 /* enable hex control command on serial line to control mpd control
  * script with shyd.de control script
  */
@@ -79,7 +73,7 @@
 /* enable bluetooth module control over serial line
  * XS3868
  */
-#define BLUETOOTH
+//#define BLUETOOTH
 
 /*
  * read disc# track# status over serial line
@@ -1126,7 +1120,7 @@ ISR(TIMER1_OVF_vect)
 
   //Serial.println("TIMER1_OVF_vect");
 
-  TIMSK1 &= ~_BV(TOIE1); // disable further timer 0 interrupts
+  TIMSK1 &= ~_BV(TOIE1); // disable further timer 1 interrupts
 
   capbusy = FALSE; // set flag signifying packet capture done
 
@@ -1811,22 +1805,7 @@ static void DecodeCommand(void)
 
     ResetTime();
 
-//#ifdef MPD_CONTROL_WITH_MPC 
-//                            if ((disc & 0x0F) == 1)
-//                              EnqueueString(sLIST6);
-//                            if ((disc & 0x0F) == 2)
-//                              EnqueueString(sLIST1);
-//                            if ((disc & 0x0F) == 3)
-//                              EnqueueString(sLIST2);
-//                            if ((disc & 0x0F) == 4)
-//                              EnqueueString(sLIST3);
-//                            if ((disc & 0x0F) == 5)
-//                              EnqueueString(sLIST4);
-//                            if ((disc & 0x0F) == 6)
-//                              EnqueueString(sLIST5);
-//#else
    EnqueueString(sPRV_LIST);
-//#endif
 
 
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
