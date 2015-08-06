@@ -1,17 +1,11 @@
 litle talk/history: http://kovo-blog.blogspot.sk/2014/02/cd-changer-emulator.html
 
-based on work of SHYD: http://dev.shyd.de/2013/09/avr-raspberry-pi-vw-beta-vag-cdc-faker/
+port_of_shyd_version_for_mpd:
+	arduino port of SHYD version of his emulator, currently not used by me anymore, ( http://dev.shyd.de/2013/09/avr-raspberry-pi-vw-beta-vag-cdc-faker/ )
 
-cdc_arduino_atmegax8: arduino version for atmegax chip(atmega8, 168, 328) (current code on github), PCB (currently untested) https://github.com/tomaskovacik/hw/tree/master/kicad/arduino_based_cdc_emulator/atmegax8_dip
+cdc_arduino_ported_k9spud_vwcdpic:
+	 arduino uno/duemilanove/nano avr port of vwcdpic project, initial work: http://forums.hackaday.com/viewtopic.php?f=3&t=123 tested on atmega328 chips, attiny85,original vwcdpic PJRC controler support, full SHYD mpd control support also initial bluetooth support (using HW UART!!!!) for OVC3886 chipset based modules
 
-cdc_arduino_ported_k9spud_vwcdpic, arduino uno/duemilanove/nano port of vwcdpic port, initial work: http://forums.hackaday.com/viewtopic.php?f=3&t=123
+cdc_arduino_ported_k9spud_vwcdpic_just_8bit_timers:
+	 arduino uno/duemilanove/nano/attiny85 avr port of vwcdpic project, initial work: http://forums.hackaday.com/viewtopic.php?f=3&t=123 tested on atmega328 chips, attiny85 using just 2 8-bit timers, leave timer 1 (16-bit) for something better, original vwcdpic PJRC controler support, full SHYD mpd control support also initial bluetooth support (using HW UART!!!!) for OVC3886 chipset based modules, 
 
-cdc_attiny13: unfinished attiny13 version
-
-cdc_attiny85: unfinished attiny85 version
-
-phone_controled_by_arduino_cable_HTC: arduino code for vwcdpic support circute, PCB: https://github.com/tomaskovacik/hw/tree/master/fritzing/vwcdpic/HTC
-
-phone_controled_by_arduino_cable_iOs: arduino code for vwcdpic support circute to control apple devices emulating headphones (untested), apple remote control interface: https://web.archive.org/web/20131204052111/http://david.carne.ca/shuffle_hax/shuffle_remote.html, NO PCB
-
-phone_controled_by_arduino_over_BT: arduino code for vwcdpic support circute, PCB: https://github.com/tomaskovacik/hw/tree/master/fritzing/vwcdpic/Bluetooth 
