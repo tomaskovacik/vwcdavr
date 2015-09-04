@@ -35,6 +35,8 @@
  * DataOut   -> digital 8 (ICP1)
  * DataIn    -> digital 13(PB5)
  * Clock     -> digital 12(PB4)
+ *
+ * compter -> arduino pin
  * serial TX -> digital 0 (PD0)
  * serial RX -> digital 1 (PD1)
  *
