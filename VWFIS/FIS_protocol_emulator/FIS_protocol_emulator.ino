@@ -1,22 +1,11 @@
-#include <SPI.h> 
-//spi version:
-//http://arduino.cc/en/Reference/SPI
-//data MOSI pin -> uno/due: 11,mega: 51
-//clk  SCK  pin -> uno/due: 13,mega: 52
-//ena       pin -> uno/due/mega 2
-#define useSPI
-
-//nospi version:
 //data pin 4
 //clk  pin 3
 //ena  pin 2
 
 //WRITE TO CLUSTER
 #define FIS_WRITE_ENA 2 
-#ifndef useSPI
 #define FIS_WRITE_CLK 3 
 #define FIS_WRITE_DATA 4 
-#endif
 #define FIS_WRITE_PULSEW 50
 #define FIS_WRITE_STARTPULSEW 100
 #define FIS_WRITE_START 15 //something like address, first byte is always 15
@@ -68,12 +57,10 @@ void setup(){
 //WRITE TO CLUSTER
 pinMode(FIS_WRITE_ENA, OUTPUT);
 digitalWrite(FIS_WRITE_ENA,LOW);
-#ifndef useSPI
 pinMode(FIS_WRITE_CLK, OUTPUT); 
-digitalWrite(FIS_WRITE_CLK, LOW);
+digitalWrite(FIS_WRITE_CLK, HIGH);
 pinMode(FIS_WRITE_DATA, OUTPUT); 
-digitalWrite(FIS_WRITE_DATA, LOW);
-#endif
+digitalWrite(FIS_WRITE_DATA, HIGH);
 Serial.begin(9600);
 //END WRITE TO CLUSTER
 }
@@ -119,9 +106,7 @@ if (Serial.available()) {
    
     //do rotary and refresh each 0.5second
     //refresh cluster each 5s 
-    if(millis()-FIS_WRITE_last_refresh>500 && !FIS_WRITE_line1_length || !FIS_WRITE_line2_length){
-    FIS_WRITE_startENA(); //try to enable 
-     if (FIS_WRITE_ENA_STATUS){ //enable set to HIGH, good to go
+    if(millis()-FIS_WRITE_last_refresh>500 && (FIS_WRITE_line1_length>0 || FIS_WRITE_line2_length>0)){
       if (FIS_WRITE_line1_length>8){
       for (int i=0;i<8;i++){
         if (FIS_WRITE_rotary_position_line1+i>=0 && (FIS_WRITE_rotary_position_line1+i)<FIS_WRITE_line1_length) {
@@ -155,15 +140,15 @@ if (Serial.available()) {
       // Serial.println("refresh");
       FIS_WRITE_sendTEXT(FIS_WRITE_sendline1,FIS_WRITE_sendline2);
       FIS_WRITE_last_refresh=millis();
-      FIS_WRITE_stopENA();
     //end refresh
-     }
   }
 //END WRITE TO CLUSTER  
 }
 
 //WRITE TO CLUSTER 
 void FIS_WRITE_sendTEXT(String FIS_WRITE_line1,String FIS_WRITE_line2) {
+  Serial.println(FIS_WRITE_line1);
+  Serial.println(FIS_WRITE_line2);
   int FIS_WRITE_line1_length=FIS_WRITE_line1.length();
   int FIS_WRITE_line2_length=FIS_WRITE_line2.length();
     if (FIS_WRITE_line1_length<=8){
@@ -177,13 +162,25 @@ void FIS_WRITE_sendTEXT(String FIS_WRITE_line1,String FIS_WRITE_line2) {
       }
     }
 
-int crc=(255-FIS_WRITE_START+FIS_WRITE_line1[0]+FIS_WRITE_line1[1]+FIS_WRITE_line1[2]+FIS_WRITE_line1[3]+FIS_WRITE_line1[4]+FIS_WRITE_line1[5]+FIS_WRITE_line1[6]+FIS_WRITE_line1[7]+FIS_WRITE_line2[0]+FIS_WRITE_line2[1]+FIS_WRITE_line2[2]+FIS_WRITE_line2[3]+FIS_WRITE_line2[4]+FIS_WRITE_line2[5]+FIS_WRITE_line2[6]+FIS_WRITE_line2[7])%256;
-#ifdef useSPI
-  SPI.begin();
-  SPI.setDataMode(SPI_MODE2);
-  SPI.setBitOrder(MSBFIRST);
-  SPI.setClockDivider(SPI_CLOCK_DIV128);
-#endif
+int crc=(255-FIS_WRITE_START+
+FIS_WRITE_line1[0]+
+FIS_WRITE_line1[1]+
+FIS_WRITE_line1[2]+
+FIS_WRITE_line1[3]+
+FIS_WRITE_line1[4]+
+FIS_WRITE_line1[5]+
+FIS_WRITE_line1[6]+
+FIS_WRITE_line1[7]+
+FIS_WRITE_line2[0]+
+FIS_WRITE_line2[1]+
+FIS_WRITE_line2[2]+
+FIS_WRITE_line2[3]+
+FIS_WRITE_line2[4]+
+FIS_WRITE_line2[5]+
+FIS_WRITE_line2[6]+
+FIS_WRITE_line2[7])%256;
+
+FIS_WRITE_startENA();
 FIS_WRITE_sendByte(FIS_WRITE_START);
 FIS_WRITE_sendByte(255-FIS_WRITE_line1[0]);
 FIS_WRITE_sendByte(255-FIS_WRITE_line1[1]);
@@ -202,35 +199,46 @@ FIS_WRITE_sendByte(255-FIS_WRITE_line2[5]);
 FIS_WRITE_sendByte(255-FIS_WRITE_line2[6]);
 FIS_WRITE_sendByte(255-FIS_WRITE_line2[7]);
 FIS_WRITE_sendByte(crc);
-#ifdef useSPI
-  SPI.end();
-#endif
+
 FIS_WRITE_stopENA();
 }
 
 void FIS_WRITE_sendByte(int Byte){
-#ifdef useSPI
-  SPI.transfer(Byte);
-#else
-  shiftOut(FIS_WRITE_DATA,FIS_WRITE_CLK,MSBFIRST,Byte);
-#endif
+  static int iResult[8];
+  for (int i = 0; i <= 7; i++)
+  {    
+    iResult[i] = Byte % 2;
+    Byte = Byte / 2;
+  }
+  for(int i=7;i>=0;i--){
+  switch (iResult[i]) {
+    case 1: digitalWrite(FIS_WRITE_DATA,HIGH);
+            break;
+    case 0:digitalWrite(FIS_WRITE_DATA,LOW);
+           break;
+    }
+    digitalWrite(FIS_WRITE_CLK,LOW);
+    delayMicroseconds(FIS_WRITE_PULSEW);
+    digitalWrite(FIS_WRITE_CLK,HIGH);
+    delayMicroseconds(FIS_WRITE_PULSEW);
+}
 }
 
 void FIS_WRITE_startENA(){
-  if (!digitalRead(FIS_WRITE_ENA)) {
+ if (!digitalRead(FIS_WRITE_ENA)) {
   digitalWrite(FIS_WRITE_ENA,HIGH);
-  delayMicroseconds(FIS_WRITE_STARTPULSEW);
-  digitalWrite(FIS_WRITE_ENA,LOW);
-  delayMicroseconds(FIS_WRITE_STARTPULSEW);
-  digitalWrite(FIS_WRITE_ENA,HIGH);
-  delayMicroseconds(FIS_WRITE_STARTPULSEW);
-  FIS_WRITE_ENA_STATUS=1;
+//  delayMicroseconds(FIS_WRITE_STARTPULSEW);
+//  digitalWrite(FIS_WRITE_ENA,LOW);
+//  delayMicroseconds(FIS_WRITE_STARTPULSEW);
+//  digitalWrite(FIS_WRITE_ENA,HIGH);
+//  delayMicroseconds(FIS_WRITE_STARTPULSEW);
+ // FIS_WRITE_ENA_STATUS=1;
   }
 }
 
 void FIS_WRITE_stopENA(){
  digitalWrite(FIS_WRITE_ENA,LOW);
- FIS_WRITE_ENA_STATUS=0;
+// FIS_WRITE_ENA_STATUS=0;
 }
 //END WRITE TO CLUSTER
 
