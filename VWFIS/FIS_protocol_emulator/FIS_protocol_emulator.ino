@@ -44,6 +44,7 @@ int FIS_WRITE_line=1;
 long FIS_WRITE_last_refresh=0;
 int FIS_WRITE_nl=0;
 int FIS_WRITE_ENA_STATUS=0;
+uint8_t FIS_WRITE_CRC=0;
 //END WRITE TO CLUSTER
 
 //WRITE TO CLUSTER
@@ -162,43 +163,22 @@ void FIS_WRITE_sendTEXT(String FIS_WRITE_line1,String FIS_WRITE_line2) {
       }
     }
 
-int crc=(255-FIS_WRITE_START+
-FIS_WRITE_line1[0]+
-FIS_WRITE_line1[1]+
-FIS_WRITE_line1[2]+
-FIS_WRITE_line1[3]+
-FIS_WRITE_line1[4]+
-FIS_WRITE_line1[5]+
-FIS_WRITE_line1[6]+
-FIS_WRITE_line1[7]+
-FIS_WRITE_line2[0]+
-FIS_WRITE_line2[1]+
-FIS_WRITE_line2[2]+
-FIS_WRITE_line2[3]+
-FIS_WRITE_line2[4]+
-FIS_WRITE_line2[5]+
-FIS_WRITE_line2[6]+
-FIS_WRITE_line2[7])%256;
+FIS_WRITE_CRC=(0xFF^FIS_WRITE_START);
 
 FIS_WRITE_startENA();
 FIS_WRITE_sendByte(FIS_WRITE_START);
-FIS_WRITE_sendByte(255-FIS_WRITE_line1[0]);
-FIS_WRITE_sendByte(255-FIS_WRITE_line1[1]);
-FIS_WRITE_sendByte(255-FIS_WRITE_line1[2]);
-FIS_WRITE_sendByte(255-FIS_WRITE_line1[3]);
-FIS_WRITE_sendByte(255-FIS_WRITE_line1[4]);
-FIS_WRITE_sendByte(255-FIS_WRITE_line1[5]);
-FIS_WRITE_sendByte(255-FIS_WRITE_line1[6]);
-FIS_WRITE_sendByte(255-FIS_WRITE_line1[7]);
-FIS_WRITE_sendByte(255-FIS_WRITE_line2[0]);
-FIS_WRITE_sendByte(255-FIS_WRITE_line2[1]);
-FIS_WRITE_sendByte(255-FIS_WRITE_line2[2]);
-FIS_WRITE_sendByte(255-FIS_WRITE_line2[3]);
-FIS_WRITE_sendByte(255-FIS_WRITE_line2[4]);
-FIS_WRITE_sendByte(255-FIS_WRITE_line2[5]);
-FIS_WRITE_sendByte(255-FIS_WRITE_line2[6]);
-FIS_WRITE_sendByte(255-FIS_WRITE_line2[7]);
-FIS_WRITE_sendByte(crc);
+  for (int i = 0; i <= 7; i++)
+  { 
+    FIS_WRITE_sendByte(0xFF^FIS_WRITE_line1[i]);
+    FIS_WRITE_CRC+=FIS_WRITE_line1[i];
+  }
+    for (int i = 0; i <= 7; i++)
+  { 
+    FIS_WRITE_sendByte(0xFF^FIS_WRITE_line2[i]);
+    FIS_WRITE_CRC+=FIS_WRITE_line2[i];
+  }
+  
+FIS_WRITE_sendByte(FIS_WRITE_CRC%0x100);
 
 FIS_WRITE_stopENA();
 }
