@@ -4,6 +4,7 @@
  * Audi/Volkswagen Audi Interface
  * 
  * Target: arduino atmega328(tested)
+ *         attinu85 (tested)
  * 
  * 
  * Author: Vincent
@@ -36,6 +37,8 @@
  * DataOut   -> digital 2 (INT0)
  * DataIn    -> digital 13(PB5)
  * Clock     -> digital 12(PB4)
+ *
+ * PC PIN    -> arduino pin
  * Serial TX -> digital 0 (PD0)
  * Serial RX -> digital 1 (PD1)
  *
@@ -45,18 +48,18 @@
  * DataOut   -> 7 (INT0)
  * DataIn    -> 6 (PB1)
  * Clock     -> 5 (PB0)
+ * 
+ * PC PIN    -> ATTINYx5 PIN
  * Serial TX -> 2 (PB3) using tinydebug lib
  * Serial RX -> not connected
  * 
  *
  * 6. Aug 2015  tomaskovacik
  *  - 2 8-bit timers used
- *  - INT0 is usedattiny85 pinout
+ *  - INT0 is used
+ *  - attiny85 pinout
  *  - merge with attiny85 port
  *
- * 19. Mar 2015  tomaskovacik
- * port to atmega8
- * 
  *****************************************************************************/
 
 
@@ -103,11 +106,15 @@
 
 #if defined(__AVR_ATtiny85__)
 #include <TinyDebugSerial.h>
-TinyDebugSerial mySerial = TinyDebugSerial();  
+TinyDebugSerial mySerial = TinyDebugSerial();
 //tiny has only Rx, so by default we disable all features which use TX
 #undef DISC_TRACK_NUMBER_FROM_MPD
 #define Serial mySerial
+#else
+#include <HardwareSerial.h>
 #endif
+ 
+
 
 /* -- Includes ------------------------------------------------------------- */
 
