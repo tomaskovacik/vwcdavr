@@ -42,6 +42,14 @@
  * Serial TX -> digital 0 (PD0)
  * Serial RX -> digital 1 (PD1)
  *
+ * ANDROID support:
+ * PLAY BUTTON -> digital 5 (PD5)
+ * PREVIOUS BUTTON -> digital 9 (PB1)
+ * NEXT BUTTON -> digital 6 (PD6)
+ *
+ * to enable android remote control over headphone buttons emulation uncoment #define ANDROID_HEADPHONES
+ * for one button control (SONY) uncoment #define ANDROID_HEADPHONES_ONE_BUTTON
+ *
  * ATTINYx5 version:
  *
  * RADIO PIN -> ATTINYx5 PIN
@@ -53,12 +61,20 @@
  * Serial TX -> 2 (PB3) using tinydebug lib
  * Serial RX -> not connected
  * 
+ * android headphone support, pinout:
+ * play button control:arduino pin 5 (chip pin 11)
+ * previous button control: arduino pin 9 (chip pin 15)
+ * next button control: arduino pin 6 (chip pin 12)
  *
  * 6. Aug 2015  tomaskovacik
  *  - 2 8-bit timers used
  *  - INT0 is used
  *  - attiny85 pinout
  *  - merge with attiny85 port
+ *
+ * 8. Oct 2015 tomas
+ *  - init support for arduino 3-button remote control over headphone mic line
+ *  - init support got sony single buttone remote control on headphone mic line
  *
  *****************************************************************************/
 
@@ -96,19 +112,36 @@
 /* enable bluetooth module control over Serial line
  * XS3868
  */
-#define BLUETOOTH
+//#define BLUETOOTH
 
 /*
  * read disc# track# status over serial line
  */
 //#define DISC_TRACK_NUMBER_FROM_MPD
 
+/*
+ * ANDROID HEADPRONES SUPPORT
+ * HTC: 3buttons, 220ohm previous|0ohm play/pause|470ohm next
+ */
+#define ANDROID_HEADPHONES
+
+/*
+ * ANDROID HEADPHONES SUPORT
+ * SONY: 1button mode: 1xpush play/pause;2xpush previous;3xpush next
+ */
+#define ANDROID_HEADPHONES_ONE_BUTTON
+
+#ifdef ANDROID_HEADPHONES_ONE_BUTTON //just to be shure
+#define ANDROID_HEADPHONES
+#endif
 
 #if defined(__AVR_ATtiny85__)
 #include <TinyDebugSerial.h>
 TinyDebugSerial mySerial = TinyDebugSerial();
 //tiny has only Rx, so by default we disable all features which use TX
 #undef DISC_TRACK_NUMBER_FROM_MPD
+#undef ANDROID_HEADPHONES
+#undef ANDROID_HEADPHONES_ONE_BUTTON
 #define Serial mySerial
 #else
 #include <HardwareSerial.h>
@@ -198,7 +231,24 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 
 #define CAP_BUFFER_END	24
 
+//android headphones
+#ifdef ANDROID_HEADPHONES
 
+#define ANDROID_PUSH_COUNT 2 //100ms push - how long push take 
+
+#define ANDROID_DELAY_COUNT 1 //50ms delay - how long we wait between pushes
+
+#endif
+
+#ifdef ANDROID_HEADPHONES_ONE_BUTTON
+
+#define ANDROID_PLAY_COUNT 1 //how much pushes need to make it play
+
+#define ANDROID_NEXT_COUNT 2 //how much pushes need to make it next
+
+#define ANDROID_PREV_COUNT 3 //how much pushes need to make it previous
+
+#endif
 
 #define VER_MAJOR       '1'
 
@@ -254,13 +304,41 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 
 #define RADIO_CLOCK_PORT    PORTB
 
-#define RADIO_DATA         PB5
+#define RADIO_DATA        PB5
 
 #define RADIO_DATA_DDR     DDRB
 
 #define RADIO_DATA_DDRbit     DDB5
 
 #define RADIO_DATA_PORT    PORTB
+#endif
+
+#ifdef ANDROID_HEADPHONES
+
+#define ANDROID_PLAY       PD5 //android play button control arduino pin 5 (chip pin 11)
+
+#define ANDROID_PLAY_DDR   DDRD
+
+#define ANDROID_PLAY_DDRbit   DDD5
+
+#define ANDROID_PLAY_PORT    PORTD
+
+#define ANDROID_PREV       PB1 //android previous button control arduino pin 9 (chip pin 15)
+
+#define ANDROID_PREV_DDR   DDRB
+
+#define ANDROID_PREV_DDRbit    DDB1
+
+#define ANDROID_PREV_PORT    PORTB
+
+#define ANDROID_NEXT       PD6 //android next button control arduino pin 6 (chip pin 12)
+
+#define ANDROID_NEXT_DDR   DDRD
+
+#define ANDROID_NEXT_DDRbit    DDB6
+
+#define ANDROID_NEXT_PORT    PORTD
+
 #endif
 
 // Command Codes
@@ -679,6 +757,25 @@ uint8_t flag_50ms = false; // indicates that a period of 50ms isover
 
 uint8_t display_byte_counter_u8 = 0;
 
+#ifdef ANDROID_HEADPHONES
+
+//play button: tested: play button pushed for 100ms = 10 cycles of 10ms counter
+uint8_t play_count = 0;
+//next button: tested: next button pushed for 100ms = 10 cycles of 10ms counter
+#ifndef ANDROID_HEADPHONES_ONE_BUTTON
+uint8_t next_count = 0;
+//prev button: tested: prev button pushed twise for 100ms = 2x20 cycles of 10ms counter, 
+uint8_t prev_count = 0;
+#endif
+//test: 10m between updates
+uint8_t prev_count_delay = 0;
+#ifdef ANDROID_HEADPHONES_ONE_BUTTON
+uint8_t play_count_delay = 0;
+uint8_t play_count_push = 0;
+#endif
+#endif
+
+
 /* -- Modul Global Function Prototypes ------------------------------------- */
 
 
@@ -733,6 +830,11 @@ static void SendStatePlayLeadInAnnounceCD(void);
 
 static void printstr_p(const char *s);
 
+#ifdef ANDROID_HEADPHONES
+
+static void android_buttons();
+
+#endif
 
 #define TRUE 1
 
@@ -795,9 +897,18 @@ void Init_VWCDC(void)
 
   RADIO_COMMAND_DDR &= ~_BV(RADIO_COMMAND_DDRbit); // input capture as input
 
-    RADIO_COMMAND_PORT |= _BV(RADIO_COMMAND); // enable pull up
+  RADIO_COMMAND_PORT |= _BV(RADIO_COMMAND); // enable pull up
 
+#ifdef ANDROID_HEADPHONES
 
+  ANDROID_PLAY_DDR |= _BV(ANDROID_PLAY_DDRbit);
+  ANDROID_NEXT_DDR |= _BV(ANDROID_NEXT_DDRbit); 
+  ANDROID_PREV_DDR |= _BV(ANDROID_PREV_DDRbit);
+  ANDROID_PLAY_PORT &= ~_BV(ANDROID_PLAY);
+  ANDROID_NEXT_PORT &= ~_BV(ANDROID_NEXT);
+  ANDROID_PREV_PORT &= ~_BV(ANDROID_PREV);
+  
+#endif
 
   //attinx5 - > timer1, atmegax8 -> timer0
 #if defined(__AVR_ATtiny85__)
@@ -1077,6 +1188,10 @@ ISR(TIMER2_COMPA_vect) //100us
     counter_50ms = _50MS;
 
     flag_50ms = TRUE; 
+    
+#ifdef ANDROID_HEADPHONES
+android_buttons();  
+#endif
 
   }
 
@@ -1805,6 +1920,10 @@ static void DecodeCommand(void)
 
     EnqueueString(sMENABLE);
 
+#ifdef ANDROID_HEADPHONES
+    play_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+#endif
+
     break;
 
 
@@ -1838,6 +1957,10 @@ static void DecodeCommand(void)
 #endif
 
     EnqueueString(sMDISABLE);
+
+#ifdef ANDROID_HEADPHONES
+    play_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+#endif
 
     break;
 
@@ -1956,6 +2079,10 @@ static void DecodeCommand(void)
 
     EnqueueString(sPLAY); // this will make the PJRC play/pause
 
+#ifdef ANDROID_HEADPHONES
+    play_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+#endif
+
     break;
 
 
@@ -1991,6 +2118,11 @@ static void DecodeCommand(void)
 #else
     EnqueueString(sSCAN); // 
 #endif
+
+#ifdef ANDROID_HEADPHONES
+    play_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+#endif
+
     break;
 
 
@@ -2034,6 +2166,15 @@ static void DecodeCommand(void)
 #endif
 
     EnqueueString(sNEXT);
+
+#ifdef ANDROID_HEADPHONES
+#ifdef ANDROID_HEADPHONES_ONE_BUTTON
+   play_count_delay = ANDROID_DELAY_COUNT;
+   play_count_push = ANDROID_NEXT_COUNT;
+#else
+    next_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_NEXT pin
+#endif
+#endif
 
     break;
 
@@ -2079,6 +2220,16 @@ static void DecodeCommand(void)
 
     EnqueueString(sPREVIOUS);
 
+#ifdef ANDROID_HEADPHONES
+#ifdef ANDROID_HEADPHONES_ONE_BUTTON
+   play_count_delay = ANDROID_DELAY_COUNT;
+   play_count_push = ANDROID_PREV_COUNT;
+#else
+    prev_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PREV pin
+    prev_count_delay=ANDROID_DELAY_COUNT; // 50ms high on ANDROID_PREV pin
+#endif
+#endif
+
     break;
 
 
@@ -2094,6 +2245,10 @@ static void DecodeCommand(void)
 #endif
 
     EnqueueString(sLIST1);
+
+#ifdef ANDROID_HEADPHONES
+    play_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+#endif
 
     break;
 
@@ -2111,6 +2266,10 @@ static void DecodeCommand(void)
 
     EnqueueString(sLIST2);
 
+#ifdef ANDROID_HEADPHONES
+    play_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+#endif
+
     break;
 
 
@@ -2126,6 +2285,10 @@ static void DecodeCommand(void)
 #endif
 
     EnqueueString(sLIST3);
+
+#ifdef ANDROID_HEADPHONES
+    play_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+#endif
 
     break;
 
@@ -2143,6 +2306,10 @@ static void DecodeCommand(void)
 
     EnqueueString(sLIST4);
 
+#ifdef ANDROID_HEADPHONES
+    play_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+#endif
+
     break;
 
 
@@ -2159,6 +2326,10 @@ static void DecodeCommand(void)
 
     EnqueueString(sLIST5);
 
+#ifdef ANDROID_HEADPHONES
+    play_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+#endif
+
     break;
 
 
@@ -2174,6 +2345,10 @@ static void DecodeCommand(void)
 #endif
 
     EnqueueString(sLIST6);
+
+#ifdef ANDROID_HEADPHONES
+    play_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+#endif
 
     break;
 
@@ -2281,7 +2456,62 @@ Init_VWCDC();
 
 }
 
+static void android_buttons(){
 
+    //android headphone control, this is fired every 50ms
+    //play button
+    if(play_count > 0){
+      play_count--;
+      ANDROID_PLAY_PORT |= _BV(ANDROID_PLAY); //high
+      //digitalWrite(ANDROID_PLAY,HIGH);
+    } 
+    else {
+      ANDROID_PLAY_PORT &= ~_BV(ANDROID_PLAY); //low
+      //digitalWrite(ANDROID_PLAY,LOW);
+#ifdef ANDROID_HEADPHONES_ONE_BUTTON
+      if(play_count_delay > 0 ){ //counting delay low
+        play_count_delay--;
+	if(play_count_delay==0 && play_count_push>0){
+          play_count = ANDROID_PUSH_COUNT;
+          play_count_delay=ANDROID_DELAY_COUNT;
+          if (play_count_push>0)
+            play_count_push--;
+        }
+      }
+#endif
+    }
+
+#ifndef ANDROID_HEADPHONES_ONE_BUTTON
+    //next button
+    if(next_count > 0){
+      next_count--;
+      ANDROID_NEXT_PORT |= _BV(ANDROID_NEXT); //high
+      //digitalWrite(ANDROID_NEXT,HIGH);
+    } 
+    else {
+      ANDROID_NEXT_PORT &= ~_BV(ANDROID_NEXT); //low
+      //digitalWrite(ANDROID_NEXT,LOW);
+    }
+
+
+    //prev button, double push, head unit goes to previous song, no to start of the song
+    if(prev_count > 0){
+      prev_count--;
+      ANDROID_PREV_PORT |= _BV(ANDROID_PREV); //high
+      //digitalWrite(ANDROID_PREV,HIGH);
+    } 
+    else {
+      //wait between pushes
+      ANDROID_PREV_PORT &= ~_BV(ANDROID_PREV);
+      //digitalWrite(ANDROID_PREV,LOW);
+      if(prev_count_delay > 0 ){ //we ended first push and do not finished second push
+        prev_count_delay--;
+	if(prev_count_delay==0) //we are at last run of delay loop
+          prev_count = ANDROID_PUSH_COUNT;
+      }
+    }
+#endif
+}
 
 static void printstr_p(const char *s)
 
