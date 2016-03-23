@@ -622,9 +622,9 @@ uint8_t disc;
 
 uint8_t track;
 
-uint8_t minute;
+uint8_t minute=0;
 
-uint8_t second;
+uint8_t second=0;
 
 
 
@@ -995,23 +995,21 @@ void Init_VWCDC(void)
   ACKcount = 0;
 
 
-
   // these values can be set depending on the state of mp3
 
   // it has to be evaluated wether CD number can be grater than 6
 
   disc = 0x41; // CD 1
 
-    track = 0x01; // track 1
+  track = 0x01 ; // track 1
 
-    poweridentcount = POWERIDENTWAIT;
+  poweridentcount = POWERIDENTWAIT;
 
 
 
   ResetTime();
 
   SetStateIdleThenPlay();
-
 
   EnqueueString(sIDENTIFY);
 
@@ -1023,7 +1021,7 @@ void Init_VWCDC(void)
 
   SendPacket(); // force first display update packet
 
-    sei();
+  sei();
 
 }
 
@@ -1131,7 +1129,6 @@ void OutputPacket(void)
     display_byte_counter_u8 = 0;
     counter_to_send_packet = _50MS;
   }
-
 }
 
 
@@ -1952,12 +1949,6 @@ static void DecodeCommand(void)
 
     SetStateIdle(); // skip this if we're already in idle mode
 
-#ifndef DISC_TRACK_NUMBER_FROM_MPD
-
-    //      disc = 0x41; // set back to CD 1
-
-#endif
-
     EnqueueString(sMDISABLE);
 
 #ifdef ANDROID_HEADPHONES
@@ -1972,15 +1963,15 @@ static void DecodeCommand(void)
 
   case Do_PREVCD:
 
-    ResetTime();
-
-    EnqueueString(sPRV_LIST);
-
 
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
     disc--;
 
+    track = 1;
+
+    ResetTime();
+    
     if ((disc & 0x0F) == 0)
 
     {
@@ -1989,6 +1980,11 @@ static void DecodeCommand(void)
 
     }
 #endif
+
+    EnqueueString(sPRV_LIST);
+
+
+    
     break;
 
 
@@ -1997,15 +1993,18 @@ static void DecodeCommand(void)
 
   case Do_SEEKFORWARD_MK:
 
-    ResetTime();
+    
 
     if (cd_button == FALSE) // mk don't increment when previous command was a cd button
 
     {
-
       EnqueueString(sNXT_LIST);
 
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
+
+      ResetTime();
+
+      track = 1;
 
       disc++;
 
@@ -2141,11 +2140,13 @@ static void DecodeCommand(void)
 
     }
 
-    ResetTime();
+
 
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
     track++;
+    
+    ResetTime();
 
     decimal_adjust_u8 = track & 0x0F; // skip past hexidecimal codes
 
@@ -2194,8 +2195,6 @@ static void DecodeCommand(void)
 
     }
 
-    ResetTime();
-
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
     decimal_adjust_u8 = track & 0x0F; // skip past hexidecimal codes
@@ -2209,6 +2208,8 @@ static void DecodeCommand(void)
     }
 
     track--;
+    
+    ResetTime();
 
     if (track == 0) // have we gone below Track 1?
 
@@ -2243,6 +2244,8 @@ static void DecodeCommand(void)
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
     disc = 0x41; // set CD 1
+    
+    ResetTime();
 
 #endif
 
@@ -2258,11 +2261,14 @@ static void DecodeCommand(void)
 
   case Do_CD2:
 
+
     cd_button = TRUE; // mk store cd button pressed
 
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
     disc = 0x42; // set CD 2
+
+    ResetTime();
 
 #endif
 
@@ -2284,6 +2290,8 @@ static void DecodeCommand(void)
 
     disc = 0x43; // set CD 3
 
+    ResetTime();
+    
 #endif
 
     EnqueueString(sLIST3);
@@ -2303,6 +2311,8 @@ static void DecodeCommand(void)
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
     disc = 0x44; // set CD 4
+    
+    ResetTime();
 
 #endif
 
@@ -2323,6 +2333,8 @@ static void DecodeCommand(void)
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
     disc = 0x45; // set CD 5
+    
+    ResetTime();
 
 #endif
 
@@ -2343,6 +2355,8 @@ static void DecodeCommand(void)
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
     disc = 0x46; // set CD 6
+    
+    ResetTime();
 
 #endif
 
@@ -2390,7 +2404,7 @@ int main()
   Serial.begin(9600);
 #endif
 
-Init_VWCDC();
+  Init_VWCDC();
 
   //start in idle mode
   //SetStateIdle();
