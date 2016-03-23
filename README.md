@@ -8,22 +8,22 @@ serial output is 9600
 
 commands:
  
- next track button       =
- previous track button   -
- next CD                 ]
- previous CD             [
- play/stop               p
- CD1                     1
- CD2                     2
- CD3                     3
- CD4                     4
- CD5                     5
- CD6                     6
- seek forward            f
- seek rewind             r
- scan mode               s
- shuffle mode            l
- help                    h
+- next track button       =
+- previous track button   -
+- next CD                 ]
+- previous CD             [
+- play/stop               p
+- CD1                     1
+- CD2                     2
+- CD3                     3
+- CD4                     4
+- CD5                     5
+- CD6                     6
+- seek forward            f
+- seek rewind             r
+- scan mode               s
+- shuffle mode            l
+- help                    h
  
 connectios:
 
