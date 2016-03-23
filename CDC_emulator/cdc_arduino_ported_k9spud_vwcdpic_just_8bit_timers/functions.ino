@@ -534,7 +534,7 @@ static void SetStateInitPlay(void)
 
   BIDIstate = StateInitPlay;
 
-  //discload = 0xD1;
+  discload = 0xD1; //0xFF - 0x2E
 
   BIDIcount = -24;
 
@@ -878,7 +878,7 @@ static void SendDisplayBytesInitCD(void)
 
   SendByte(0x59); // total seconds?
 
-  SendByte(0x48); // 48, 53, 31, 25, and 37 seen from real CDC,
+  SendByte(0x49);//0xFF - 0xB7 = 48, 53, 31, 25, and 37 seen from real CDC,
 
   // no idea what it really means.
 
@@ -1055,7 +1055,6 @@ static void SendByte(uint8_t byte_u8)
 static void EnqueueString(const uint8_t *addr PROGMEM)
 
 {
-//#if !defined(__AVR_ATtiny85__)
 #ifndef JUST_HEX_TO_SERIAL
 
   txbuffer[txinptr] = addr;
@@ -1071,7 +1070,6 @@ static void EnqueueString(const uint8_t *addr PROGMEM)
   }
 
 #endif
-//#endif
 }
 
 
@@ -1212,13 +1210,13 @@ static void SendStateIdle(void)
 
   secondcount = SECONDWAIT; // stop display from ticking time
 
-  SendFrameByte(0x8B);
+  SendFrameByte(0x8B);//FF - 0x74
 
   SendDisplayBytes();
 
-  SendByte(0x70); // mutes audio on Monsoon head units
+  SendByte(0x70);//FF - 0x8F, mutes audio on Monsoon head units
 
-  SendFrameByte(0x83);
+  SendFrameByte(0x83);//FF - 0x7C
 
 }
 
@@ -1258,7 +1256,7 @@ static void SendStatePlayLeadInEnd(void)
 
 {
 
-  SendFrameByte(0xC3);
+  SendFrameByte(0xC3);//FF - 0x3C
 
   BIDIcount++;
 
@@ -1308,7 +1306,7 @@ static void SendStateInitPlayEnd(void)
 
 {
 
-  SendFrameByte(0xC3);
+  SendFrameByte(0xC3);//FF - 0x3C
 
   BIDIcount++;
 
@@ -1390,7 +1388,7 @@ static void SendStateInitPlayAnnounceCD(void)
 
   SendDisplayBytesInitCD();
 
-  SendByte(0x00);
+  SendByte(0x00);//0xFF - 0xFF
 
   SendStateInitPlayEnd();
 
@@ -1436,7 +1434,7 @@ static void SendStatePlayLeadInAnnounceCD(void)
 
   SendDisplayBytesInitCD();
 
-  SendByte(0x00);
+  SendByte(0x00);//0xFF - 0xFF
 
   SendStatePlayLeadInEnd();
 
@@ -1546,7 +1544,7 @@ static void SendPacket(void)
 
     secondcount = SECONDWAIT; // stop display from ticking time
 
-    SendFrameByte(0xCB);
+    SendFrameByte(0xCB);//0xFF - 0x34
 
     if ((BIDIcount & 0x01) == 0)
 
@@ -1560,7 +1558,7 @@ static void SendPacket(void)
 
     SendDisplayBytes();
 
-    SendByte(0x10);
+    SendByte(0x10);//0xFF - 0xEF
 
 
 
@@ -1602,7 +1600,7 @@ static void SendPacket(void)
 
     secondcount = SECONDWAIT; // stop display from ticking time
 
-    SendFrameByte(0xCB);
+    SendFrameByte(0xCB);//0xFF - 0x34
 
 
 
@@ -1618,7 +1616,7 @@ static void SendPacket(void)
 
     SendDisplayBytes();
 
-    SendByte(0x51);
+    SendByte(0x51);//0xFF - 0xAE
 
 
 
@@ -1642,13 +1640,13 @@ static void SendPacket(void)
 
     secondcount = SECONDWAIT; // stop display from ticking time
 
-    SendFrameByte(0xCB);
+    SendFrameByte(0xCB);//0xFF - 0x34
 
     SendDisplayBytes();
 
-    SendByte(0x51);
+    SendByte(0x51);//0xFF - 0xAE
 
-    SendFrameByte(0xC3);
+    SendFrameByte(0xC3);//0xFF - 0x3C
 
     BIDIcount++;
 
@@ -1670,13 +1668,13 @@ static void SendPacket(void)
 
   case StatePlay:
 
-    SendFrameByte(0xCB);
+    SendFrameByte(0xCB);//0xFF - 0x34
 
     SendDisplayBytes();
 
-    SendByte(0x30);
+    SendByte(0x30);//0xFF - 0xCF
 
-    SendFrameByte(0xC3);
+    SendFrameByte(0xC3);//FF - 0x3C
 
     break;
 
