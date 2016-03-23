@@ -2173,7 +2173,7 @@ int main()
 
   Init_VWCDC();
 
-//start in idle mode
+  //start in idle mode
   SetStateIdle();
 
   
