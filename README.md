@@ -1,7 +1,7 @@
 
 radio_emulator: arduino (ATMEGAX8 boards only) based vw/audi/skoda/seat radio emulator, I made this to revers eng. on vwcdpic and improve arduino version of CDchanger
 
- - emulate RADIO DataOut signals 
+ - emulate RADIO DataOut signal
  - receive and print CD changer responce to serial console
 
 serial output is 9600
@@ -28,7 +28,9 @@ commands:
 connectios:
 
  DataOut -> arduino pin 12
+
  Clk     -> arduino pin 3
+
  DataIn  -> arduino pin 4 
 
 CDC_emulator: arduino based cd changer emulator for vw/audi/skoda/seat radios, based on avr port of vwcdpic(see header of file for more info)
