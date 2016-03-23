@@ -1,5 +1,7 @@
 /*
 
+atmega328 only
+
  mega + serial console:
  
  next track button       =
