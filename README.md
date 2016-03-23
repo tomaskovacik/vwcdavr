@@ -1,37 +1,42 @@
 
-radio_emulator: arduino based vw/audi radio emulator, I made this to revers eng. on vwcdpic and improve arduino version of CDchanger
+radio_emulator: arduino (ATMEGAX8 boards only) based vw/audi/skoda/seat radio emulator, I made this to revers eng. on vwcdpic and improve arduino version of CDchanger
 
  - emulate RADIO DataOut signals 
- - receive and print CD changer responce to serial console 
+ - receive and print CD changer responce to serial console
 
-CDC_emulator: arduino based cd changer emulator for audi radio based on http://dev.shyd.de/2013/09/avr-raspberry-pi-vw-beta-vag-cdc-faker/ more here: http://kovo-blog.blogspot.sk/2014/02/cd-changer-emulator.html, still alpha version, i work on my free time to improve it
+serial output is 9600
 
-extentions( to vwcdpic :
+commands:
+ 
+ next track button       =
+ previous track button   -
+ next CD                 ]
+ previous CD             [
+ play/stop               p
+ CD1                     1
+ CD2                     2
+ CD3                     3
+ CD4                     4
+ CD5                     5
+ CD6                     6
+ seek forward            f
+ seek rewind             r
+ scan mode               s
+ shuffle mode            l
+ help                    h
+ 
+connectios:
 
-- phone_controled_by_arduino_cable_HTC
-	- attiny85 code
-	- HW part: https://github.com/tomaskovacik/hw/tree/master/fritzing/vwcdpic/HTC
+ DataOut -> arduino pin 12
+ Clk     -> arduino pin 3
+ DataIn  -> arduino pin 4 
 
-- phone_controled_by_arduino_cable_iOs
-	- teoretic code for arduino (mega88/168/328)
-	- for iOs deices based on work from David Carne (https://web.archive.org/web/20131128010310/http://david.carne.ca/shuffle_hax/shuffle_remote.html)
-	- no HW was made
-	- no test was made
+CDC_emulator: arduino based cd changer emulator for vw/audi/skoda/seat radios, based on avr port of vwcdpic(see header of file for more info)
 
-- phone_controled_by_arduino_over_BT
-	- attiny85 code
-	- for BT module MB-CM15113 from sure electronics: http://store.sure-electronics.com/audio/audio-amplifier-accessories/mb-cm15113
-	- HW part: https://github.com/tomaskovacik/hw/tree/master/fritzing/vwcdpic/Bluetooth
-	- Fritzing part: https://github.com/tomaskovacik/hw/tree/master/fritzing/parts/MB-CM15113
+current status (see readme inside dir):
+- tested with my old audi concert 1 radio, and RCD300 (only enable 1CD, TODO: make all 6CD works)
+- ARDUINO headphones support
+- ARDUINO headphones single button support
+- bluetooth support for modules with AT commands (ovc3860 based: XS3868, S3860M-S, BLK-MD-SPK-B) - one way only, no feedback from module - TODO
 
-VW group CD Changer(CDC) emulators code for arduino:
-
-- cdc_with_headphone_control - cdc emulator with support of controling phone over hedphones 4th ring (shorting microphone with diferent resistance, in my case HTC: http://www.george-smart.co.uk/wiki/HTC_Headphones, schematics: https://github.com/tomaskovacik/hw/tree/master/kicad/arduino_based_cdc_emulator/atmegax8_dip
-
-todo:
-- cdc_16MHz    cdc_attiny13  cdc_rcd200		  cdc_with_headphone_control		  README.md
-cdc_atmega8  cdc_attiny85  cdc_with_cluster_info  	
-
-
-
-
+vw_cd_changer_sniffer - sniffer for radio comunication
