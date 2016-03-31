@@ -45,6 +45,8 @@
  * 
  *****************************************************************************/
 
+//#define DUMPMODE
+//#define DUMPMODE2
 
 #if defined(__AVR_ATmega8__) || defined(__AVR_ATmega128__)
 #define TCCR2A TCCR2
@@ -258,7 +260,7 @@
 
 #define  Do_PLAY           0x03  // mix button held down (RCD300 head unit only)
 
-#define  Do_LOADCD			0x01	// not used
+#define  Do_LOADCD	  0x01	// not used
 
 #define  Do_ENABLE_MK      0x08  // mk concert1
 
@@ -305,9 +307,6 @@
 #define  Do_ENABLE         0xE4  // ENABLE
 
 #define  Do_UP             0xF8  // UP
-
-//#define DUMPMODE
-//#define DUMPMODE2
 
 enum STATES
 
@@ -1037,14 +1036,6 @@ ISR(TIMER0_OVF_vect){
   {
     counter_timer0_overflows=0;
 
-      //OCR0 = TCNT0 + _10MS;
-
-#ifdef DUMPMODE2
-
-    Serial.println();
-
-#endif
-
       flag_50ms = TRUE;
 
   }
@@ -1057,18 +1048,6 @@ ISR(TIMER0_OVF_vect){
 ISR(TIMER0_COMPA_vect)
 
 {
-
-  //OCR0 = TCNT0 + _10MS;
-
-#ifdef DUMPMODE2
-
-  Serial.println();
-
-#endif
-
-
-
-
 
   counter_10ms_u8++;
 
