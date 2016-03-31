@@ -35,17 +35,17 @@
  * RADIO PIN -> arduino pin 
  * 
  * DataOut   -> digital 2 (INT0)
- * DataIn    -> digital 13(PB5)
- * Clock     -> digital 12(PB4)
+ * DataIn    -> digital 12(PB4)
+ * Clock     -> digital 13(PB5)
  *
  * PC PIN    -> arduino pin
  * Serial TX -> digital 0 (PD0)
  * Serial RX -> digital 1 (PD1)
  *
  * ANDROID support:
- * PLAY BUTTON -> digital 5 (PD5)
- * PREVIOUS BUTTON -> digital 9 (PB1)
- * NEXT BUTTON -> digital 6 (PD6)
+ * PREVIOUS BUTTON -> digital 7 (PD7)
+ * PLAY BUTTON -> digital 6 (PD6)
+ * NEXT BUTTON -> digital 5 (PD5)
  *
  * to enable android remote control over headphone buttons emulation uncoment #define ANDROID_HEADPHONES
  * for one button control (SONY) uncoment #define ANDROID_HEADPHONES_ONE_BUTTON
@@ -109,12 +109,12 @@
 /* enable hex control command on Serial line to control mpd control
  * script with shyd.de control script
  */
-//#define JUST_HEX_TO_Serial
+//#define JUST_HEX_TO_SERIAL
 
 /* enable bluetooth module control over Serial line
  * XS3868
  */
-#define BLUETOOTH
+//#define BLUETOOTH
 
 /*
  * read disc# track# status over serial line
@@ -125,7 +125,7 @@
  * ANDROID HEADPRONES SUPPORT
  * HTC: 3buttons, 220ohm previous|0ohm play/pause|470ohm next
  */
-//#define ANDROID_HEADPHONES
+#define ANDROID_HEADPHONES
 
 /*
  * ANDROID HEADPHONES SUPORT
@@ -264,8 +264,6 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 
 #define RADIO_COMMAND_DDR  DDRB
 
-#define RADIO_COMMAND_DDRbit  DDB2
-
 #define RADIO_COMMAND_PORT PORTB
 
 #define RADIO_COMMAND_INPUT_PIN_ADDRESS PINB
@@ -274,15 +272,11 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 
 #define RADIO_CLOCK_DDR    DDRB
 
-#define RADIO_CLOCK_DDRbit    DDB1
-
 #define RADIO_CLOCK_PORT    PORTB
 
 #define RADIO_DATA         PB0 
 
 #define RADIO_DATA_DDR     DDRB
-
-#define RADIO_DATA_DDRbit     DDB0
 
 #define RADIO_DATA_PORT    PORTB
 
@@ -292,54 +286,44 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 
 #define RADIO_COMMAND_DDR  DDRD
 
-#define RADIO_COMMAND_DDRbit  DDD2
-
 #define RADIO_COMMAND_PORT PORTD
 
 #define RADIO_COMMAND_INPUT_PIN_ADDRESS PIND
 
-#define RADIO_CLOCK        PB4
+#define RADIO_CLOCK        PB5
 
 #define RADIO_CLOCK_DDR    DDRB
 
-#define RADIO_CLOCK_DDRbit    DDB4
-
 #define RADIO_CLOCK_PORT    PORTB
 
-#define RADIO_DATA        PB5
+#define RADIO_DATA        PB4
 
 #define RADIO_DATA_DDR     DDRB
-
-#define RADIO_DATA_DDRbit     DDB5
 
 #define RADIO_DATA_PORT    PORTB
 #endif
 
 #ifdef ANDROID_HEADPHONES
 
-#define ANDROID_PLAY       PD5 //android play button control arduino pin 5 (chip pin 11)
-
-#define ANDROID_PLAY_DDR   DDRD
-
-#define ANDROID_PLAY_DDRbit   DDD5
-
-#define ANDROID_PLAY_PORT    PORTD
-
-#define ANDROID_PREV       PB1 //android previous button control arduino pin 9 (chip pin 15)
-
-#define ANDROID_PREV_DDR   DDRB
-
-#define ANDROID_PREV_DDRbit    DDB1
-
-#define ANDROID_PREV_PORT    PORTB
-
-#define ANDROID_NEXT       PD6 //android next button control arduino pin 6 (chip pin 12)
+#define ANDROID_NEXT       PD5 //android next button control arduino pin 5 (chip pin 11)
 
 #define ANDROID_NEXT_DDR   DDRD
 
-#define ANDROID_NEXT_DDRbit    DDB6
-
 #define ANDROID_NEXT_PORT    PORTD
+
+
+#define ANDROID_PLAY       PD6 //android play button control arduino pin 6 (chip pin 12)
+
+#define ANDROID_PLAY_DDR   DDRD
+
+#define ANDROID_PLAY_PORT    PORTD
+
+
+#define ANDROID_PREV       PD7 //android previous button control arduino pin 7 (chip pin 13)
+
+#define ANDROID_PREV_DDR   DDRD
+
+#define ANDROID_PREV_PORT    PORTD
 
 #endif
 
@@ -762,10 +746,10 @@ uint8_t display_byte_counter_u8 = 0;
 #ifdef ANDROID_HEADPHONES
 
 //play button: tested: play button pushed for 100ms = 10 cycles of 10ms counter
-uint8_t play_count = 0;
+int8_t play_count = 0;
 //next button: tested: next button pushed for 100ms = 10 cycles of 10ms counter
 #ifndef ANDROID_HEADPHONES_ONE_BUTTON
-uint8_t next_count = 0;
+int8_t next_count = 0;
 //prev button: tested: prev button pushed twise for 100ms = 2x20 cycles of 10ms counter, 
 uint8_t prev_count = 0;
 #endif
@@ -832,11 +816,7 @@ static void SendStatePlayLeadInAnnounceCD(void);
 
 static void printstr_p(const char *s);
 
-#ifdef ANDROID_HEADPHONES
-
 static void android_buttons();
-
-#endif
 
 #define TRUE 1
 
@@ -887,28 +867,29 @@ void Init_VWCDC(void)
 {
   cli();
   //on arduino timer0 is used for millis(), we change prescaler, but also need to disable overflow interrupt
-  //#if defined(__AVR_ATtiny85__)
-  //  TIMSK = 0x00;
-  //#else
-  //  TIMSK0 = 0x00;
-  //#endif
+  #if defined(__AVR_ATtiny85__)
+    TIMSK = 0x00;
+  #else
+    TIMSK0 = 0x00;
+  #endif
 
-  RADIO_CLOCK_DDR |= _BV(RADIO_CLOCK_DDRbit);
+  RADIO_CLOCK_DDR |= _BV(RADIO_CLOCK);
 
-  RADIO_DATA_DDR  |= _BV(RADIO_DATA_DDRbit);
+  RADIO_DATA_DDR  |= _BV(RADIO_DATA);
 
-  RADIO_COMMAND_DDR &= ~_BV(RADIO_COMMAND_DDRbit); // input capture as input
+  RADIO_COMMAND_DDR &= ~_BV(RADIO_COMMAND); // input capture as input
 
   RADIO_COMMAND_PORT |= _BV(RADIO_COMMAND); // enable pull up
 
 #ifdef ANDROID_HEADPHONES
 
-  ANDROID_PLAY_DDR |= _BV(ANDROID_PLAY_DDRbit);
-  ANDROID_NEXT_DDR |= _BV(ANDROID_NEXT_DDRbit); 
-  ANDROID_PREV_DDR |= _BV(ANDROID_PREV_DDRbit);
+  ANDROID_PLAY_DDR |= _BV(ANDROID_PLAY);
+  ANDROID_NEXT_DDR |= _BV(ANDROID_NEXT); 
+  ANDROID_PREV_DDR |= _BV(ANDROID_PREV);
+  ANDROID_PREV_PORT &= ~_BV(ANDROID_PREV);
   ANDROID_PLAY_PORT &= ~_BV(ANDROID_PLAY);
   ANDROID_NEXT_PORT &= ~_BV(ANDROID_NEXT);
-  ANDROID_PREV_PORT &= ~_BV(ANDROID_PREV);
+
   
 #endif
 
@@ -1188,9 +1169,7 @@ ISR(TIMER2_COMPA_vect) //100us
 
     flag_50ms = TRUE; 
     
-#ifdef ANDROID_HEADPHONES
-android_buttons();  
-#endif
+    android_buttons();  
 
   }
 
@@ -1252,69 +1231,65 @@ ISR(TIMER0_OVF_vect)
    */
 
 
-  captime_ovf=captime_ovf+255;
-  //Serial.println("TIMER1_OVF_vect");
+  captime_ovf=captime_ovf+0xFF;
 
-  if (captime_ovf > 8925) {//35*255= 8925
-
-      captime_ovf=0;
-
-    //Serial.println("TIMER1_OVF_vect");
-
-    capbusy = FALSE; // set flag signifying packet capture done
-
-
-
-    if (capbit > -8) // are we already capturing on a blank byte?
-
-    {
-
-      dataerr = TRUE;
-
-      // Note: This should never happen on normal head unit sending 32 bit
-
-      //        command strings with error free data.
-
-      //
-
-      // if the capture bits were not a complete 8 bits, we need to finish
-
-      // rotating the bits upward so that the data is nicely formatted
-
-
-
-      while (capbit != 0) // have we finished rotating all bits up?
-
-      {
-
-        capbuffer[capptr] <<= 1; // rotate in 0 bit
-
-        capbit++;
-
-      }
-
-      capbit = -8;
-
-      capptr++; // move to new capture byte
-
-      if (capptr == CAP_BUFFER_END) // have we gone past the end of the
-
-      { // capture buffer?
-
-        capptr = 0; // yes, roll over to beginning
-
-      }
-
-      if (capptr == scanptr) // have we overflowed the capture queue?
-
-      {
-
-        overflow = TRUE; // yes, set error flag
-
-      }
-
-    }
+  if (captime_ovf > 65000)//35*255= 8925, 65536 = REAL OVERFLOW
+  {
+    captime_ovf=0; 
   }
+
+//    capbusy = FALSE; // set flag signifying packet capture done
+//
+//    if (capbit > -8) // are we already capturing on a blank byte?
+//
+//    {
+//
+//      dataerr = TRUE;
+//
+//      // Note: This should never happen on normal head unit sending 32 bit
+//
+//      //        command strings with error free data.
+//
+//      //
+//
+//      // if the capture bits were not a complete 8 bits, we need to finish
+//
+//      // rotating the bits upward so that the data is nicely formatted
+//
+//
+//
+//      while (capbit != 0) // have we finished rotating all bits up?
+//
+//      {
+//
+//        capbuffer[capptr] <<= 1; // rotate in 0 bit
+//
+//        capbit++;
+//
+//      }
+//
+//      capbit = -8;
+//
+//      capptr++; // move to new capture byte
+//
+//      if (capptr == CAP_BUFFER_END) // have we gone past the end of the
+//
+//      { // capture buffer?
+//
+//        capptr = 0; // yes, roll over to beginning
+//
+//      }
+//
+//      if (capptr == scanptr) // have we overflowed the capture queue?
+//
+//      {
+//
+//        overflow = TRUE; // yes, set error flag
+//
+//      }
+//
+//    }
+//  }
 
 }
 
@@ -1352,24 +1327,20 @@ ISR(TIMER0_OVF_vect)
 
 ISR(INT0_vect)
 {
-
-  captime = captime_ovf+TCNT0;
-
-  //Serial.println(1);
+  
 #if defined(__AVR_ATtiny85__)
-  TCNT1 = 0;
+  captime = captime_ovf + TCNT1;
+  TCNT1 = 0; //clear timer1
 #else
+  captime = captime_ovf + TCNT0;
   TCNT0 = 0; // clear timer0
 #endif
 
-  captime_ovf=0; // clear timer0 overflow count
-
-
+  captime_ovf=0;
 
   if ((RADIO_COMMAND_INPUT_PIN_ADDRESS & _BV(RADIO_COMMAND)) == 0)
 
   {
-
     // We have interrupted at beginning of low pulse (falling edge)
 
     // Low pulse length must be timed to determine bit value
@@ -1383,11 +1354,8 @@ ISR(INT0_vect)
     TIFR0  |= _BV(TOV0); // clear time0 overflow flag
     TIMSK0 |= _BV(TOIE0); // enable timer0 interrupt on overflow
     EICRA |= _BV(ISC01) | _BV(ISC00); // change input capture to rising edge
-    EIFR  |= _BV(INTF0); // clear input  interrupt request flag
+    EIFR  |= _BV(INTF0); // clear input  interrupt request flag   
 #endif
-
-
-
   }
 
   else
@@ -1426,7 +1394,6 @@ ISR(INT0_vect)
 #else
       TIMSK0 &= ~_BV(TOIE0); // turn off capturing time for high pulse
 #endif
-     // Serial.println(captime);
 
       if (captime > STARTTHRESHOLD)
 
@@ -1947,13 +1914,11 @@ static void DecodeCommand(void)
 
   case Do_DISABLE:
 
+
+
     SetStateIdle(); // skip this if we're already in idle mode
 
     EnqueueString(sMDISABLE);
-
-#ifdef ANDROID_HEADPHONES
-    play_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
-#endif
 
     break;
 
@@ -2467,88 +2432,6 @@ int main()
     CDC_Protocol();
 
   }
-
-
-
-}
-#ifdef ANDROID_HEADPHONES
-static void android_buttons(){
-
-    //android headphone control, this is fired every 50ms
-    //play button
-    if(play_count > 0){
-      play_count--;
-      ANDROID_PLAY_PORT |= _BV(ANDROID_PLAY); //high
-      //digitalWrite(ANDROID_PLAY,HIGH);
-    } 
-    else {
-      ANDROID_PLAY_PORT &= ~_BV(ANDROID_PLAY); //low
-      //digitalWrite(ANDROID_PLAY,LOW);
-#ifdef ANDROID_HEADPHONES_ONE_BUTTON
-      if(play_count_delay > 0 ){ //counting delay low
-        play_count_delay--;
-	if(play_count_delay==0 && play_count_push>0){
-          play_count = ANDROID_PUSH_COUNT;
-          play_count_delay=ANDROID_DELAY_COUNT;
-          if (play_count_push>0)
-            play_count_push--;
-        }
-      }
-#endif
-    }
-
-#ifndef ANDROID_HEADPHONES_ONE_BUTTON
-    //next button
-    if(next_count > 0){
-      next_count--;
-      ANDROID_NEXT_PORT |= _BV(ANDROID_NEXT); //high
-      //digitalWrite(ANDROID_NEXT,HIGH);
-    } 
-    else {
-      ANDROID_NEXT_PORT &= ~_BV(ANDROID_NEXT); //low
-      //digitalWrite(ANDROID_NEXT,LOW);
-    }
-
-
-    //prev button, double push, head unit goes to previous song, no to start of the song
-    if(prev_count > 0){
-      prev_count--;
-      ANDROID_PREV_PORT |= _BV(ANDROID_PREV); //high
-      //digitalWrite(ANDROID_PREV,HIGH);
-    } 
-    else {
-      //wait between pushes
-      ANDROID_PREV_PORT &= ~_BV(ANDROID_PREV);
-      //digitalWrite(ANDROID_PREV,LOW);
-      if(prev_count_delay > 0 ){ //we ended first push and do not finished second push
-        prev_count_delay--;
-	if(prev_count_delay==0) //we are at last run of delay loop
-          prev_count = ANDROID_PUSH_COUNT;
-      }
-    }
-#endif
-}
-#endif
-
-static void printstr_p(const char *s)
-
-{
-
-  char c;
-
-
-
-  for (c = pgm_read_byte(s); c; ++s, c = pgm_read_byte(s))
-
-  {
-    Serial.print(c);
-
-    if (c == '\n')
-
-      break;
-
-  }
-
 }
 
 // eof //

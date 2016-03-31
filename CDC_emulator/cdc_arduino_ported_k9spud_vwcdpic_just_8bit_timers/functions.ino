@@ -1684,7 +1684,120 @@ static void SendPacket(void)
 
   }
 
+}
 
+
+static void android_buttons(){
+
+  
+#ifdef ANDROID_HEADPHONES
+
+    //android headphone control, this is fired every 50ms
+    //play button
+
+    if(play_count > 0){
+      Serial.println("play");
+  Serial.println(play_count);
+  Serial.println(next_count);
+  Serial.println(prev_count);
+      play_count--;
+
+      ANDROID_PLAY_PORT |= (1<<ANDROID_PLAY); //high
+      
+      
+    } else {
+  
+      ANDROID_PLAY_PORT &= ~_BV(ANDROID_PLAY); //low
+
+#ifdef ANDROID_HEADPHONES_ONE_BUTTON
+
+      if(play_count_delay > 0 ){ //counting delay low
+
+        play_count_delay--;
+
+	if(play_count_delay==0 && play_count_push>0){
+
+          play_count = ANDROID_PUSH_COUNT;
+          
+          play_count_delay=ANDROID_DELAY_COUNT;
+          
+          if (play_count_push>0) play_count_push--;
+        }
+      }
+
+#endif
+
+    }
+
+#ifndef ANDROID_HEADPHONES_ONE_BUTTON
+
+    //next button
+
+    if(next_count > 0){
+      Serial.println("next");
+  Serial.println(play_count);
+  Serial.println(next_count);
+  Serial.println(prev_count);
+      next_count--;
+
+      ANDROID_NEXT_PORT |= _BV(ANDROID_NEXT); //high
+
+    } else {
+
+      ANDROID_NEXT_PORT &= ~_BV(ANDROID_NEXT); //low
+    }
+
+    //prev button, double push, head unit goes to previous song, no to start of the song
+    if(prev_count > 0){
+      Serial.println("prev");
+  Serial.println(play_count);
+  Serial.println(next_count);
+  Serial.println(prev_count);
+      prev_count--;
+      
+      ANDROID_PREV_PORT |= _BV(ANDROID_PREV); //high
+
+    } else {
+      //wait between pushes
+
+      ANDROID_PREV_PORT &= ~_BV(ANDROID_PREV); //low
+
+
+      if(prev_count_delay > 0 ){ //we ended first push and do not finished second push
+
+        prev_count_delay--;
+
+	if(prev_count_delay==0) //we are at last run of delay loop
+
+          prev_count = ANDROID_PUSH_COUNT;
+
+      }
+
+    }
+
+#endif
+
+#endif
 
 }
 
+static void printstr_p(const char *s)
+
+{
+
+  char c;
+
+
+
+  for (c = pgm_read_byte(s); c; ++s, c = pgm_read_byte(s))
+
+  {
+    Serial.print(c);
+
+    if (c == '\n')
+
+      break;
+
+  }
+
+}
