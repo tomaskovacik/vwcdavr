@@ -45,7 +45,7 @@
  * ANDROID support:
  * PREVIOUS BUTTON -> digital 7 (PD7)
  * PLAY BUTTON -> digital 6 (PD6)
- * NEXT BUTTON -> digital 5 (PD5)
+ * NEXT BUTTON -> digital 5 (PD5)  
  *
  * to enable android remote control over headphone buttons emulation uncoment #define ANDROID_HEADPHONES
  * for one button control (SONY) uncoment #define ANDROID_HEADPHONES_ONE_BUTTON
