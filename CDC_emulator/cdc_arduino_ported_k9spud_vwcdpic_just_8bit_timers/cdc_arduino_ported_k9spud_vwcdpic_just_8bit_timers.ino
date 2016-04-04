@@ -125,7 +125,7 @@
  * ANDROID HEADPRONES SUPPORT
  * HTC: 3buttons, 220ohm previous|0ohm play/pause|470ohm next
  */
-#define ANDROID_HEADPHONES
+//#define ANDROID_HEADPHONES
 
 /*
  * ANDROID HEADPHONES SUPORT
