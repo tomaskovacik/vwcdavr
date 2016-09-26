@@ -22,8 +22,13 @@ cdc_arduino_ported_k9spud_vwcdpic:
 - full SHYD mpd control support
 - initial (aka oneway) bluetooth support without feadback from BT, for OVC3868 chipset based modules, cant use software serial here, it use timers ... bleah, so HW serial is used.
 
+
+for connection detailes look to header of source code file
+
 cdc_arduino_ported_k9spud_vwcdpic_just_8bit_timers:
 same as previous, but use 2 8bit timers
  - tested on atmega328,atmega8, attiny85
  - attiny85 has only serial output, no input  (using tinydebug serial @ 9600)
  - BT support posible only if BT chip has default baudrate set to 9600 (use https://github.com/tomaskovacik/hw/blob/master/kicad/library/datasheet/OVC3860_revd_config_tool.exe to set it)
+
+for connection detailes look to header of source code file
