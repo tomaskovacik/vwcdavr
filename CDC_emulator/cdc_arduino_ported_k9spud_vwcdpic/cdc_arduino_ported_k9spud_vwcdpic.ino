@@ -33,8 +33,8 @@
  * RADIO PIN -> arduino pin
  * 
  * DataOut   -> digital 8 (ICP1)
- * DataIn    -> digital 13(PB5)
- * Clock     -> digital 12(PB4)
+ * DataIn    -> digital 11(PB3)
+ * Clock     -> digital 14(PB5)
  *
  * compter -> arduino pin
  * serial TX -> digital 0 (PD0)
@@ -179,17 +179,17 @@
 
 
 
-#define RADIO_COMMAND      PB0 //(Seeeduino Mega PIN PD4)
+#define RADIO_COMMAND      PB0 
 
 #define RADIO_COMMAND_DDR  DDB0
 
-#define RADIO_CLOCK        PB4 //(Seeeduino Mega PIN 10)
+#define RADIO_CLOCK        PB5
 
-#define RADIO_CLOCK_DDR    DDB4
+#define RADIO_CLOCK_DDR    DDB5
 
-#define RADIO_DATA         PB5 //(Seeeduino Mega PIN 11)
+#define RADIO_DATA         PB3
 
-#define RADIO_DATA_DDR     DDB5
+#define RADIO_DATA_DDR     DDB3
 
 
 // Command Codes

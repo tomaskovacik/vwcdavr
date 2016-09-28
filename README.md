@@ -27,11 +27,11 @@ commands:
  
 connectios:
 
- DataOut -> arduino pin 12
+- DataOut -> arduino pin 12
 
- Clk     -> arduino pin 3
+- Clk     -> arduino pin 3
 
- DataIn  -> arduino pin 4 
+- DataIn  -> arduino pin 4 
 
 CDC_emulator: arduino based cd changer emulator for vw/audi/skoda/seat radios, based on avr port of vwcdpic(see header of file for more info)
 
