@@ -35,8 +35,8 @@
  * RADIO PIN -> arduino pin 
  * 
  * DataOut   -> digital 2 (INT0)
- * DataIn    -> digital 12(PB4)
- * Clock     -> digital 13(PB5)
+ * DataIn    -> digital 13(PB5)
+ * Clock     -> digital 12(PB4)
  *
  * PC PIN    -> arduino pin
  * Serial TX -> digital 0 (PD0)
@@ -290,13 +290,13 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 
 #define RADIO_COMMAND_INPUT_PIN_ADDRESS PIND
 
-#define RADIO_CLOCK        PB5
+#define RADIO_CLOCK        PB4
 
 #define RADIO_CLOCK_DDR    DDRB
 
 #define RADIO_CLOCK_PORT    PORTB
 
-#define RADIO_DATA        PB4
+#define RADIO_DATA        PB5
 
 #define RADIO_DATA_DDR     DDRB
 
