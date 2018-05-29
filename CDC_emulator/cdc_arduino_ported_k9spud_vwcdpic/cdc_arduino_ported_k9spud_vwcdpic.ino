@@ -112,6 +112,7 @@
 #define _10MS           156
 #define _50MS            500
 #define _700US            7
+#define _100us           200
 
 #define TX_BUFFER_END   12
 #define CAP_BUFFER_END	24
@@ -344,6 +345,8 @@ uint8_t flag_50ms = false; // indicates that a period of 50ms isover
 #if defined(__AVR_ATmega8__) || defined(__AVR_ATmega128__)
 uint8_t counter_timer0_overflows = 0; //timer0 overflow counts to calc 10ms
 #endif
+uint16_t counter_50ms = _50MS; // counter for 10ms intervals 100us*500=50ms - just for counting second
+int counter_to_send_packet = _50MS; // intervals betwen packets?
 
 /* -- Modul Global Function Prototypes ------------------------------------- */
 
@@ -394,15 +397,10 @@ static void printstr_p(const char *s);
 */
 //-----------------------------------------------------------------------------
 
-void Init_VWCDC(void)
+void setup()
 {
   cli();
-
-
-  //  DDRA |= _BV(DDA6); // debug pin
-  //  DDRB |= _BV(RADIO_CLOCK_DDR) | _BV(RADIO_DATA_DDR);
-  //  DDRB &= ~_BV(RADIO_COMMAND_DDR); // input capture as input
-  //  PORTB |= _BV(RADIO_COMMAND); // enable pull up
+  
   pinMode(RADIO_CLOCK, OUTPUT);
   pinMode(RADIO_DATA, OUTPUT);
   pinMode(RADIO_COMMAND, INPUT_PULLUP);
@@ -414,10 +412,14 @@ void Init_VWCDC(void)
   TCCR1B |= _BV(CS11); // prescaler = 8 -> 1 timer clock tick is 0.5µs long
 
   //Timer 2 Init
-  //Timer 2 used to time the intervals between package bytes
-  OCR2A = 175; // 4µs x 175 = 700µs
-  TCCR2A |= _BV(WGM21); // Timer2 in CTC Mode
-  TCCR2B |= _BV(CS22); // prescaler = 64 -> 1 timer clock tick is 4us long
+  //Timer 2 used to time the intervals between package bytes (700us - 7x100us) also for 50ms flag (500x100us = 50ms) which is used to time 1second ticks
+  TCCR2A = 0x00; // Normal port operation, OC0 disconnected
+  TCCR2B = 0x00; // Normal port operation, OC0 disconnected
+  TCCR2A |= _BV(WGM21); // CTC mode
+  TCCR2B |= _BV(CS21);// prescaler = 8 -> 1 timer clock tick is 0.5us long @ 16Mhz
+  OCR2A = 200;//run compare rutine every 100us, 0.5x200
+  TCNT2 = 0; //zeroing timer
+  TIMSK2 |= _BV(OCIE2A); // enable output compare interrupt A on timer2, run ISR when counter reach _100us mark
 
   capptr = 0; // indirect pointer to capture buffer
   scanptr = 0;
@@ -446,6 +448,10 @@ void Init_VWCDC(void)
   poweridentcount = POWERIDENTWAIT;
 
   ResetTime();
+  //#ifdef DISC_TRACK_NUMBER_FROM_MPD
+  ////start in idle mode
+  //SetStateIdle();
+  //#endif
   SetStateIdleThenPlay();
 
   TIFR1 |= _BV(ICF1); // clear pending interrupt
@@ -455,27 +461,17 @@ void Init_VWCDC(void)
   EnqueueString(sNEWLINE);
   EnqueueString(sRING);
 
-  //Timer 0 init
-  //Timer 0 used to time the interval between each update
-  //on arduino timer0 is used for millis(), we change prescaler, but also need to disable overflow interrupt
-  TIMSK0 = 0x00;
-#if defined(__AVR_ATmega8__) || defined(__AVR_ATmega128__)
-  //no CTc mode, we must overflow
-  TIMSK |= _BV(TOIE0);
-  TCCR0B |= _BV(CS00) + _BV(CS01); // prescaler = 64 -> timer clock tick is 4us long
-  //timer0 overflow after 256counts, oveflow interup routine is fired every 1024us (4*256)
-  //we need 50 overflows to count to 50ms
-#define _TIMER0_OVERFLOW_COUNTS 50
-#else
-  OCR0A = _10MS; // 10ms Intervall
-  TCCR0A = 0x00; // Normal port operation, OC0 disconnected
-  TCCR0A |= _BV(WGM01); // CTC mode
-  TCCR0B |= _BV(CS00) + _BV(CS02); // prescaler = 1024 -> 1 timer clock tick is 64us long
-  TIMSK0 |= _BV(OCIE0A); // enable output compare interrupt on timer0
-#endif
+
 
   SendPacket(); // force first display update packet
   sei();
+  
+#ifdef BLUETOOTH
+  Serial.begin(115200);
+#else
+  Serial.begin(9600);
+#endif
+SetStateIdle();
 }
 
 //-----------------------------------------------------------------------------
@@ -496,59 +492,93 @@ void Init_VWCDC(void)
 */
 //-----------------------------------------------------------------------------
 
-ISR(TIMER2_COMPA_vect)
+
+void OutputPacket(void)
 {
+
   static uint8_t display_byte_counter_u8 = 0;
+
   uint8_t byte_u8;
-  TCCR2B &= ~_BV(CS20); // stop Timer2
-  TCCR2B &= ~_BV(CS21);
-  TCNT2 = 0; // clear Timer2
-  TIFR2 |= _BV(OCF2A);
 
   if (display_byte_counter_u8 < 8)
+
   {
+
     byte_u8 = display_byte_buffer_mau8[display_byte_counter_u8];
 
+
+
 #ifdef DUMPMODE2
+
     Serial.print("|");
-    Serial.print(byte_u8, HEX);
+
+    Serial.print(byte_u8,HEX);
+
     Serial.print("|");
+
 #endif
+
 
     for (sendbitcount = -8; sendbitcount != 0; sendbitcount++)
     {
       digitalWrite(RADIO_CLOCK, HIGH); //PORTB |= _BV(RADIO_CLOCK); // SCLK high
-      delayMicroseconds(8);//_delay_loop_1(40);
+      delayMicroseconds(8); //_delay_loop_1(40);
       if ((byte_u8 & 0x80) == 0) // mask highest bit and test if set
       {
-        digitalWrite(RADIO_DATA, HIGH); //PORTB |= _BV(RADIO_DATA); // DATA high
+        digitalWrite(RADIO_DATA, HIGH); //RADIO_DATA_PORT |= _BV(RADIO_DATA); // DATA high
       }
       else
       {
-        digitalWrite(RADIO_DATA, LOW); //PORTB &= ~_BV(RADIO_DATA); // DATA low
+        digitalWrite(RADIO_DATA, LOW); //RADIO_DATA_PORT &= ~_BV(RADIO_DATA); // DATA low
       }
 
       byte_u8 <<= 1; // load the next bit
-      digitalWrite(RADIO_CLOCK, LOW); //PORTB &= ~_BV(RADIO_CLOCK); // SCLK low
+      digitalWrite(RADIO_CLOCK, LOW); //RADIO_CLOCK_PORT &= ~_BV(RADIO_CLOCK); // SCLK low
+      //shiftOut(RADIO_DATA,RADIO_CLOCK,MSBFIRST,byte_u8);
       delayMicroseconds(8);//_delay_loop_1(40);
-
     }
-    //digitalWrite(RADIO_CLOCK, LOW);
-    //shiftOut(RADIO_DATA,RADIO_CLOCK,MSBFIRST,byte_u8);
 
-    display_byte_counter_u8++;
-
-    TCCR2B |= _BV(CS22); // prescaler = 64 -> 1 timer clock tick is 4us long
   }
-  else
-  {
+  counter_to_send_packet = _700US;
+
+  display_byte_counter_u8++;
+
+  if (display_byte_counter_u8==8)
+  {//after 50ms
     display_byte_counter_u8 = 0;
-    TIMSK2 &= ~_BV(OCIE2A); // disable output compare interrupt on timer2
+    counter_to_send_packet = _50MS;
   }
 }
 
+ISR(TIMER2_COMPA_vect) //100us
+{
 
+  TCNT2=0;
+  
+  counter_50ms--;
 
+  if (counter_to_send_packet>0) counter_to_send_packet--; //if we are under = we sending something out...
+
+  if (counter_50ms == 0)
+
+  {
+
+    counter_50ms = _50MS;
+
+    flag_50ms = TRUE; 
+    
+
+  }
+
+  if (counter_to_send_packet == 0)
+
+  {
+    counter_to_send_packet--; //make it -1 to stop counting..
+    OutputPacket();
+
+  }
+
+}
 //-----------------------------------------------------------------------------
 /*!
   \brief     ISR(TIMER0_COMP_vect)
@@ -565,34 +595,33 @@ ISR(TIMER2_COMPA_vect)
   \return     void
 */
 //-----------------------------------------------------------------------------
-
-#if defined(__AVR_ATmega8__) || defined(__AVR_ATmega128__)
-
-ISR(TIMER0_OVF_vect) {
-  counter_timer0_overflows++;
-  if (counter_timer0_overflows = _TIMER0_OVERFLOW_COUNTS )
-  {
-    counter_timer0_overflows = 0;
-    flag_50ms = TRUE;
-  }
-  TIFR &= ~(1 << TOV0);
-  TCNT0 = 5;// to get overflowed after 1000us 1024-(6x4us)=1000us  counting from 0... 0,1,2,3,4,5 = 6ticks
-}
-
-#else
-
-ISR(TIMER0_COMPA_vect)
-{
-  counter_10ms_u8++;
-  if (counter_10ms_u8 == 5)
-  {
-    counter_10ms_u8 = 0;
-    flag_50ms = TRUE;
-  }
-}
-
-#endif
-
+//
+//#if defined(__AVR_ATmega8__) || defined(__AVR_ATmega128__)
+//
+//ISR(TIMER0_OVF_vect) {
+//  counter_timer0_overflows++;
+//  if (counter_timer0_overflows = _TIMER0_OVERFLOW_COUNTS )
+//  {
+//    counter_timer0_overflows = 0;
+//    flag_50ms = TRUE;
+//  }
+//  TIFR &= ~(1 << TOV0);
+//  TCNT0 = 5;// to get overflowed after 1000us 1024-(6x4us)=1000us  counting from 0... 0,1,2,3,4,5 = 6ticks
+//}
+//
+//#else
+//
+//ISR(TIMER0_COMPA_vect)
+//{
+//  counter_10ms_u8++;
+//  if (counter_10ms_u8 == 5)
+//  {
+//    counter_10ms_u8 = 0;
+//    flag_50ms = TRUE;
+//  }
+//}
+//
+//#endif
 //-----------------------------------------------------------------------------
 /*!
   \brief     ISR(TIMER1_OVF_vect)
@@ -1141,70 +1170,56 @@ static void DecodeCommand(void)
   }
 }
 
-int main()
+
+
+void loop()
 {
-#ifdef BLUETOOTH
-  Serial.begin(115200);
-#else
-  Serial.begin(9600);
-#endif
-
-  Init_VWCDC();
-
 #ifdef DISC_TRACK_NUMBER_FROM_MPD
-  //start in idle mode
-  SetStateIdle();
-#endif
-
-  while (1)
-  {
-#ifdef DISC_TRACK_NUMBER_FROM_MPD
-    if (Serial.available() > 0) {
-      int r = Serial.read();
-      //r has new data
-      if (r <= 0xFF)
+  if (Serial.available() > 0) {
+    int r = Serial.read();
+    //r has new data
+    if (r <= 0xFF)
+    {
+      //send CD No.
+      if ((r & 0xF0) == 0xC0)
       {
-        //send CD No.
-        if ((r & 0xF0) == 0xC0)
+        if (r == 0xCA)
         {
-          if (r == 0xCA)
-          {
-            scan = TRUE;
-          }
-          else if (r == 0xCB)
-          {
-            mix = TRUE;
-          }
-          else if (r == 0xCC)
-          {
-            SetStatePlay();
-          }
-          else if (r == 0xCD)
-          {
-            mix = FALSE;
-            scan = FALSE;
-            playing = FALSE;
-            SetStateIdle();
-          }
-          else if (r == 0xCE)
-          {
-            mix = FALSE;
-          }
-          else if ((r & 0x0F) != ( disc & 0x0F))
-          {
-            disc = (r & 0x4F);
-          }
+          scan = TRUE;
         }
-        //send TR No.
-        else if (track != r)
-        { track = r;
-          ResetTime();
+        else if (r == 0xCB)
+        {
+          mix = TRUE;
+        }
+        else if (r == 0xCC)
+        {
+          SetStatePlay();
+        }
+        else if (r == 0xCD)
+        {
+          mix = FALSE;
+          scan = FALSE;
+          playing = FALSE;
+          SetStateIdle();
+        }
+        else if (r == 0xCE)
+        {
+          mix = FALSE;
+        }
+        else if ((r & 0x0F) != ( disc & 0x0F))
+        {
+          disc = (r & 0x4F);
         }
       }
+      //send TR No.
+      else if (track != r)
+      { track = r;
+        ResetTime();
+      }
     }
-#endif
-    CDC_Protocol();
   }
+#endif
+  CDC_Protocol();
 }
 
 
