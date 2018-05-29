@@ -82,7 +82,7 @@
 /*
  * read disc# track# status over serial line
  */
-#define DISC_TRACK_NUMBER_FROM_MPD
+//#define DISC_TRACK_NUMBER_FROM_MPD
 
 /* -- Includes ------------------------------------------------------------- */
 
@@ -2152,9 +2152,10 @@ int main()
 
   Init_VWCDC();
 
+#ifdef DISC_TRACK_NUMBER_FROM_MPD
   //start in idle mode
   SetStateIdle();
-
+#endif
   
 
   while (1)
