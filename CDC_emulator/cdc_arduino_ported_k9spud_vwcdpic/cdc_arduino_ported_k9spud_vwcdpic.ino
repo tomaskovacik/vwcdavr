@@ -177,6 +177,7 @@
 #define  Do_CHANGECD       0x14  // Change CD (changer ignores & no ACK)
 #define  Do_PREVCD         0x18  // PREVIOUS CD (Audi Concert head unit)
 #define  Do_CD5            0x2C  // CD 5
+#define  Do_TP             0x30  // TP info (TP button pressed)
 #define  Do_SEEKFORWARD_MK 0x38  // mk concert 1 LOAD CD (aka MINQUIRY).
 // Also means "Next CD" if no CD button pressed
 #define  Do_CD3            0x4C  // CD 3
@@ -206,7 +207,8 @@ enum STATES
   StatePlayLeadInEnd,
   StatePlayLeadInAnnounceCD,
   StateTrackLeadIn,
-  StatePlay
+  StatePlay,
+  StateTP
 };
 
 
@@ -1154,7 +1156,13 @@ static void DecodeCommand(void)
 #endif
       EnqueueString(sLIST6);
       break;
-
+    case Do_TP:
+      if (playing == TRUE) {
+        SetStateTP();
+      } else {
+        SetStateInitPlay();
+      }
+      break;
     default:
 
       /* if execution reaches here, we have verified that we got
