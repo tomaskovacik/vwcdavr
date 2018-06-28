@@ -409,6 +409,8 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 
 #define  Do_CD5            0x2C  // CD 5
 
+#define  Do_TP             0x30  // TP info (TP button pressed)
+
 #define  Do_SEEKFORWARD_MK 0x38  // mk concert 1 LOAD CD (aka MINQUIRY).
 
 // Also means "Next CD" if no CD button pressed
@@ -468,7 +470,8 @@ enum STATES
 
   StateTrackLeadIn,
 
-  StatePlay
+  StatePlay,
+  StateTP
 
 };
 
@@ -784,6 +787,8 @@ static void SetStatePlayLeadIn(void);
 
 static void SetStateTrackLeadIn(void);
 
+static void SetStateTP(void);
+
 static void SendDisplayBytes(void);
 
 static void SendDisplayBytesNoCD(void);
@@ -813,6 +818,8 @@ static void SendStateInitPlayEnd(void);
 static void SendStateInitPlayAnnounceCD(void);
 
 static void SendStatePlayLeadInAnnounceCD(void);
+
+static void SendStateTP(void);
 
 static void printstr_p(const char *s);
 

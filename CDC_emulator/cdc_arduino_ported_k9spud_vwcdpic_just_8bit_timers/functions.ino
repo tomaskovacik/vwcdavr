@@ -396,7 +396,11 @@ static void SetStateIdle(void)
 
 }
 
-
+static void SetStateTP(void)
+{
+  playing = FALSE;
+  BIDIstate = StateTP;
+}
 
 //-----------------------------------------------------------------------------
 
@@ -1220,7 +1224,14 @@ static void SendStateIdle(void)
 
 }
 
-
+static void SendStateTP(void)
+{ //B4 BE EF FE DB FF DF BC 
+  secondcount = SECONDWAIT; // stop display from ticking time
+  SendFrameByte(0x4B);//FF - 0x4b
+  SendDisplayBytes();
+  SendByte(0x20);
+  SendFrameByte(0x43);//FF - 0x7C
+}
 
 //-----------------------------------------------------------------------------
 
@@ -1479,7 +1490,9 @@ static void SendPacket(void)
 {
 
   switch (BIDIstate) {
-
+    case StateTP:
+      SendStateTP();
+      break;
   case StateIdle:
 
     SendStateIdle();
