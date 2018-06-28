@@ -1,30 +1,30 @@
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief    void ScanCommandBytes(void)
- 
- 
- 
- ScanCommandBytes - Looks in the command receive buffer and tries
- 
- to identify valid command codes.
- 
- 
- 
- \author     Koelling
- 
- \date       05.10.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     void
- 
- */
+
+  \brief    void ScanCommandBytes(void)
+
+
+
+  ScanCommandBytes - Looks in the command receive buffer and tries
+
+  to identify valid command codes.
+
+
+
+  \author     Koelling
+
+  \date       05.10.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     void
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -203,28 +203,28 @@ FourthByte:
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief    void DumpFullCommand(void)
- 
- 
- 
- dump all received command bytes
- 
- 
- 
- \author     Koelling
- 
- \date       06.10.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     void
- 
- */
+
+  \brief    void DumpFullCommand(void)
+
+
+
+  dump all received command bytes
+
+
+
+  \author     Koelling
+
+  \date       06.10.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     void
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -277,30 +277,30 @@ static void DumpFullCommand(void)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief    uint8_t GetCaptureByte(void)
- 
- 
- 
- checks wether a command byte is still in queue
- 
- 
- 
- \author     Koelling
- 
- \date       05.10.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     FALSE ->	no more bytes to collect
- 
- TRUE  -> scanbyte contains next byte
- 
- */
+
+  \brief    uint8_t GetCaptureByte(void)
+
+
+
+  checks wether a command byte is still in queue
+
+
+
+  \author     Koelling
+
+  \date       05.10.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     FALSE ->	no more bytes to collect
+
+  TRUE  -> scanbyte contains next byte
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -351,36 +351,36 @@ static uint8_t GetCaptureByte(void)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief    void SetStateIdle(void)
- 
- 
- 
- Idle State
- 
- 74 BE FE FF FF FF 8F 7C
- 
- 74 BE FE FF FF FF 8F 7C
- 
- ...
- 
- 
- 
- \author     Koelling
- 
- \date       06.10.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     none
- 
- 
- 
- */
+
+  \brief    void SetStateIdle(void)
+
+
+
+  Idle State
+
+  74 BE FE FF FF FF 8F 7C
+
+  74 BE FE FF FF FF 8F 7C
+
+  ...
+
+
+
+  \author     Koelling
+
+  \date       06.10.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     none
+
+
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -396,37 +396,42 @@ static void SetStateIdle(void)
 
 }
 
+static void SetStateTP(void)
+{
+  playing = FALSE;
+  BIDIstate = StateTP;
+}
 
 
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief     SetStateIdleThenPlay(void)
- 
- 
- 
- Real CD Changer doesn't really do this, but we're gonna do it to try
- 
- and make sure we unmute the audio even if the user didn't connect
- 
- the PW-TX pin properly.
- 
- 
- 
- \author     Koelling
- 
- \date       27.09.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     void
- 
- */
+
+  \brief     SetStateIdleThenPlay(void)
+
+
+
+  Real CD Changer doesn't really do this, but we're gonna do it to try
+
+  and make sure we unmute the audio even if the user didn't connect
+
+  the PW-TX pin properly.
+
+
+
+  \author     Koelling
+
+  \date       27.09.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     void
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -451,30 +456,30 @@ static void SetStateIdleThenPlay(void)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief    void (void)
- 
- 
- 
- set state to play mode
- 
- 
- 
- \author     Koelling
- 
- \date       06.10.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     none
- 
- 
- 
- */
+
+  \brief    void (void)
+
+
+
+  set state to play mode
+
+
+
+  \author     Koelling
+
+  \date       06.10.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     none
+
+
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -497,30 +502,30 @@ static void SetStatePlay(void)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief    void SetStateInitPlay(void)
- 
- 
- 
- Initiate Playing
- 
- 
- 
- \author     Koelling
- 
- \date       06.10.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     none
- 
- 
- 
- */
+
+  \brief    void SetStateInitPlay(void)
+
+
+
+  Initiate Playing
+
+
+
+  \author     Koelling
+
+  \date       06.10.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     none
+
+
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -547,46 +552,46 @@ static void SetStateInitPlay(void)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief    void SetStatePlayLeadIn(void)
- 
- 
- 
- 34 BE FE FF FF FF AE 3C (play lead-in)
- 
- 34 2E ED DE AF B7 FF 3C
- 
- 34 BE FE FF FF FF AE 3C
- 
- 34 2E ED DE AF B7 FF 3C
- 
- 34 BE FE FF FF FF AE 3C
- 
- 34 2E ED DE AF B7 FF 3C
- 
- 34 BE FE FF FF FF AE 3C
- 
- 34 2E ED DE AF B7 FF 3C
- 
- 34 BE FE FF FF FF AE 3C
- 
- 
- 
- \author     Koelling
- 
- \date       06.10.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     none
- 
- 
- 
- */
+
+  \brief    void SetStatePlayLeadIn(void)
+
+
+
+  34 BE FE FF FF FF AE 3C (play lead-in)
+
+  34 2E ED DE AF B7 FF 3C
+
+  34 BE FE FF FF FF AE 3C
+
+  34 2E ED DE AF B7 FF 3C
+
+  34 BE FE FF FF FF AE 3C
+
+  34 2E ED DE AF B7 FF 3C
+
+  34 BE FE FF FF FF AE 3C
+
+  34 2E ED DE AF B7 FF 3C
+
+  34 BE FE FF FF FF AE 3C
+
+
+
+  \author     Koelling
+
+  \date       06.10.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     none
+
+
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -611,62 +616,62 @@ static void SetStatePlayLeadIn(void)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief    void SetStateTrackLeadIn(void)
- 
- 
- 
- 34BEFEFFEEFFCF3C (playing)
- 
- n34BEFEFFEEFFCF3C
- 
- 14BEFDFFFFFFCF1C (ack)
- 
- 14BEFDFFFFFFAE1C (track lead in)
- 
- 14BEFDFFFFFFAE1C
- 
- 34BEFDFFFFFFAE3C
- 
- 34BEFDFFFFFFAE3C
- 
- 34BEFDFFFFFFAE3C
- 
- 34BEFDFFFFFFAE3C
- 
- 34BEFDFFFFFFAE3C
- 
- 34BEFDFFFFFFAE3C
- 
- 34BEFDFFFFFFAE3C
- 
- 34BEFDFFFFFFAE3C
- 
- 34BEFDFFFFFFAE3C
- 
- 34BEFDFFFFFFAE3C
- 
- 34BEFDFFFFFFCF3C (playing)
- 
- 34BEFDFFFFFFCF3C
- 
- 
- 
- \author     Koelling
- 
- \date       06.10.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     none
- 
- 
- 
- */
+
+  \brief    void SetStateTrackLeadIn(void)
+
+
+
+  34BEFEFFEEFFCF3C (playing)
+
+  n34BEFEFFEEFFCF3C
+
+  14BEFDFFFFFFCF1C (ack)
+
+  14BEFDFFFFFFAE1C (track lead in)
+
+  14BEFDFFFFFFAE1C
+
+  34BEFDFFFFFFAE3C
+
+  34BEFDFFFFFFAE3C
+
+  34BEFDFFFFFFAE3C
+
+  34BEFDFFFFFFAE3C
+
+  34BEFDFFFFFFAE3C
+
+  34BEFDFFFFFFAE3C
+
+  34BEFDFFFFFFAE3C
+
+  34BEFDFFFFFFAE3C
+
+  34BEFDFFFFFFAE3C
+
+  34BEFDFFFFFFAE3C
+
+  34BEFDFFFFFFCF3C (playing)
+
+  34BEFDFFFFFFCF3C
+
+
+
+  \author     Koelling
+
+  \date       06.10.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     none
+
+
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -711,30 +716,30 @@ static void SetStateTrackLeadIn(void)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief    void SendDisplayBytes(void)
- 
- 
- 
- send display bytes to head unit
- 
- 
- 
- \author     Koelling
- 
- \date       06.10.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     none
- 
- 
- 
- */
+
+  \brief    void SendDisplayBytes(void)
+
+
+
+  send display bytes to head unit
+
+
+
+  \author     Koelling
+
+  \date       06.10.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     none
+
+
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -757,28 +762,28 @@ static void SendDisplayBytes(void)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief    void SendDisplayBytesNoCD(void)
- 
- 
- 
- 
- 
- \author     Koelling
- 
- \date       06.10.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     none
- 
- 
- 
- */
+
+  \brief    void SendDisplayBytesNoCD(void)
+
+
+
+
+
+  \author     Koelling
+
+  \date       06.10.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     none
+
+
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -835,34 +840,34 @@ static void SendDisplayBytesNoCD(void)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief    void SendDisplayBytesInitCD(void)
- 
- 
- 
- When sending an "init cd" packet, we need to send it the number of
- 
- tracks and whatnot available on the CD. Required on Audi Concert II so
- 
- that track up/dn buttons work.
- 
- 
- 
- \author     Koelling
- 
- \date       06.10.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     none
- 
- 
- 
- */
+
+  \brief    void SendDisplayBytesInitCD(void)
+
+
+
+  When sending an "init cd" packet, we need to send it the number of
+
+  tracks and whatnot available on the CD. Required on Audi Concert II so
+
+  that track up/dn buttons work.
+
+
+
+  \author     Koelling
+
+  \date       06.10.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     none
+
+
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -891,36 +896,36 @@ static void SendDisplayBytesInitCD(void)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief    void SendFrameByte(uint8_t byte_u8)
- 
- 
- 
- SendFrameByte - sends a framing byte to head unit (first and last bytes).
- 
- 
- 
- If the ACK flag is set, we modify the send byte to send an
- 
- acknowledgement.
- 
- 
- 
- \author     Koelling
- 
- \date       06.10.2007
- 
- 
- 
- \param[in]  byte_u8 -> byte to send
- 
- \param[out] none
- 
- \return     none
- 
- 
- 
- */
+
+  \brief    void SendFrameByte(uint8_t byte_u8)
+
+
+
+  SendFrameByte - sends a framing byte to head unit (first and last bytes).
+
+
+
+  If the ACK flag is set, we modify the send byte to send an
+
+  acknowledgement.
+
+
+
+  \author     Koelling
+
+  \date       06.10.2007
+
+
+
+  \param[in]  byte_u8 -> byte to send
+
+  \param[out] none
+
+  \return     none
+
+
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -959,32 +964,32 @@ static void SendFrameByte(uint8_t byte_u8)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief    void SendFrameByte(uint8_t byte_u8)
- 
- 
- 
- SendByte - sends a byte to head unit.
- 
- 
- 
- 
- 
- \author     Koelling
- 
- \date       06.10.2007
- 
- 
- 
- \param[in]  byte_u8 -> byte to send
- 
- \param[out] none
- 
- \return     none
- 
- 
- 
- */
+
+  \brief    void SendFrameByte(uint8_t byte_u8)
+
+
+
+  SendByte - sends a byte to head unit.
+
+
+
+
+
+  \author     Koelling
+
+  \date       06.10.2007
+
+
+
+  \param[in]  byte_u8 -> byte to send
+
+  \param[out] none
+
+  \return     none
+
+
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -1023,30 +1028,30 @@ static void SendByte(uint8_t byte_u8)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief     void EnqueueString(const uint8_t addr PROGMEM)
- 
- 
- 
- EnqueueString - Adds a new string pointer into the outgoing serial string
- 
- queue.
- 
- 
- 
- \author     Koelling
- 
- \date       02.10.2007
- 
- 
- 
- \param[in]  const uint8_t addr PROGMEM -> start address of string to display
- 
- \param[out] none
- 
- \return     void
- 
- */
+
+  \brief     void EnqueueString(const uint8_t addr PROGMEM)
+
+
+
+  EnqueueString - Adds a new string pointer into the outgoing serial string
+
+  queue.
+
+
+
+  \author     Koelling
+
+  \date       02.10.2007
+
+
+
+  \param[in]  const uint8_t addr PROGMEM -> start address of string to display
+
+  \param[out] none
+
+  \return     void
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -1077,28 +1082,28 @@ static void EnqueueString(const uint8_t *addr PROGMEM)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief     void EnqueueHex(uint8_t hexbyte_u8)
- 
- 
- 
- The byte is converted to a two byte ASCII hexidecimal string
- 
- 
- 
- \author     Koelling
- 
- \date       05.10.2007
- 
- 
- 
- \param[in]  uint8_t hexbyte -> hexbyte to display
- 
- \param[out] none
- 
- \return     void
- 
- */
+
+  \brief     void EnqueueHex(uint8_t hexbyte_u8)
+
+
+
+  The byte is converted to a two byte ASCII hexidecimal string
+
+
+
+  \author     Koelling
+
+  \date       05.10.2007
+
+
+
+  \param[in]  uint8_t hexbyte -> hexbyte to display
+
+  \param[out] none
+
+  \return     void
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -1133,28 +1138,28 @@ static void EnqueueHex(uint8_t hexbyte_u8)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief     ResetTime(void)
- 
- 
- 
- reset time information
- 
- 
- 
- \author     Koelling
- 
- \date       27.09.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     void
- 
- */
+
+  \brief     ResetTime(void)
+
+
+
+  reset time information
+
+
+
+  \author     Koelling
+
+  \date       27.09.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     void
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -1177,28 +1182,28 @@ static void ResetTime(void)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief     void SendStateIdle(void)
- 
- 
- 
- send data for idle state
- 
- 
- 
- \author     Koelling
- 
- \date       29.09.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     void
- 
- */
+
+  \brief     void SendStateIdle(void)
+
+
+
+  send data for idle state
+
+
+
+  \author     Koelling
+
+  \date       29.09.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     void
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -1220,33 +1225,41 @@ static void SendStateIdle(void)
 
 }
 
+static void SendStateTP(void)
+{ //B4 BE EF FE DB FF DF BC 
+  secondcount = SECONDWAIT; // stop display from ticking time
+  SendFrameByte(0x4B);//FF - 0x4b
+  SendDisplayBytes();
+  SendByte(0x20);
+  SendFrameByte(0x43);//FF - 0x7C
+}
 
 
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief     SendStatePlayLeadInEnd(void)
- 
- 
- 
- send data for state PlayLeadInEnd
- 
- 
- 
- \author     Koelling
- 
- \date       29.09.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     void
- 
- */
+
+  \brief     SendStatePlayLeadInEnd(void)
+
+
+
+  send data for state PlayLeadInEnd
+
+
+
+  \author     Koelling
+
+  \date       29.09.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     void
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -1275,28 +1288,28 @@ static void SendStatePlayLeadInEnd(void)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief     SendStateInitPlayEnd(void)
- 
- 
- 
- send data for state StateInitPlayEnd
- 
- 
- 
- \author     Koelling
- 
- \date       06.10.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     void
- 
- */
+
+  \brief     SendStateInitPlayEnd(void)
+
+
+
+  send data for state StateInitPlayEnd
+
+
+
+  \author     Koelling
+
+  \date       06.10.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     void
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -1327,28 +1340,28 @@ static void SendStateInitPlayEnd(void)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief     SendStateInitPlayAnnounceCD(void)
- 
- 
- 
- send data for state StateInitPlayAnnounceCD
- 
- 
- 
- \author     Koelling
- 
- \date       06.10.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     void
- 
- */
+
+  \brief     SendStateInitPlayAnnounceCD(void)
+
+
+
+  send data for state StateInitPlayAnnounceCD
+
+
+
+  \author     Koelling
+
+  \date       06.10.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     void
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -1399,28 +1412,28 @@ static void SendStateInitPlayAnnounceCD(void)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief     SendStatePlayLeadInAnnounceCD(void)
- 
- 
- 
- send data for state StatePlayLeadInAnnounceCD
- 
- 
- 
- \author     Koelling
- 
- \date       06.10.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     void
- 
- */
+
+  \brief     SendStatePlayLeadInAnnounceCD(void)
+
+
+
+  send data for state StatePlayLeadInAnnounceCD
+
+
+
+  \author     Koelling
+
+  \date       06.10.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     void
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -1447,28 +1460,28 @@ static void SendStatePlayLeadInAnnounceCD(void)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief     void SendPacket(void)
- 
- 
- 
- depending on BIDIstate data packet will be sent
- 
- 
- 
- \author     Koelling
- 
- \date       27.09.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     void
- 
- */
+
+  \brief     void SendPacket(void)
+
+
+
+  depending on BIDIstate data packet will be sent
+
+
+
+  \author     Koelling
+
+  \date       27.09.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     void
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -1479,38 +1492,41 @@ static void SendPacket(void)
 {
 
   switch (BIDIstate) {
+    case StateTP:
+      SendStateTP();
+      break;
 
-  case StateIdle:
-
-    SendStateIdle();
-
-    break;
-
-
-
-  case StateIdleThenPlay:
-
-    BIDIcount++;
-
-    if (BIDIcount == 0)
-
-    {
-
-      SetStateInitPlay();
+    case StateIdle:
 
       SendStateIdle();
 
-    }
+      break;
 
-    else
 
-    {
 
-      SendStateIdle();
+    case StateIdleThenPlay:
 
-    }
+      BIDIcount++;
 
-    break;
+      if (BIDIcount == 0)
+
+      {
+
+        SetStateInitPlay();
+
+        SendStateIdle();
+
+      }
+
+      else
+
+      {
+
+        SendStateIdle();
+
+      }
+
+      break;
 
 
 
@@ -1540,240 +1556,240 @@ static void SendPacket(void)
 
 
 
-  case StateInitPlay:
+    case StateInitPlay:
 
-    secondcount = SECONDWAIT; // stop display from ticking time
+      secondcount = SECONDWAIT; // stop display from ticking time
 
-    SendFrameByte(0xCB);//0xFF - 0x34
+      SendFrameByte(0xCB);//0xFF - 0x34
 
-    if ((BIDIcount & 0x01) == 0)
+      if ((BIDIcount & 0x01) == 0)
 
-    {
+      {
+
+        SendStateInitPlayAnnounceCD();
+
+        break;
+
+      }
+
+      SendDisplayBytes();
+
+      SendByte(0x10);//0xFF - 0xEF
+
+
+
+    case StateInitPlayEnd:
+
+      SendStateInitPlayEnd();
+
+      break;
+
+
+
+    case StateInitPlayAnnounceCD:
 
       SendStateInitPlayAnnounceCD();
 
       break;
 
-    }
-
-    SendDisplayBytes();
-
-    SendByte(0x10);//0xFF - 0xEF
 
 
+    case StatePlayLeadIn:
 
-  case StateInitPlayEnd:
+      // 34 BE FE FF FF FF AE 3C (play lead-in)
 
-    SendStateInitPlayEnd();
+      // 34 2E ED DE AF B7 FF 3C
 
-    break;
+      // 34 BE FE FF FF FF AE 3C
 
+      // 34 2E ED DE AF B7 FF 3C
 
+      // 34 BE FE FF FF FF AE 3C
 
-  case StateInitPlayAnnounceCD:
+      // 34 2E ED DE AF B7 FF 3C
 
-    SendStateInitPlayAnnounceCD();
+      // 34 BE FE FF FF FF AE 3C
 
-    break;
+      // 34 2E ED DE AF B7 FF 3C
 
+      // 34 BE FE FF FF FF AE 3C
 
+      secondcount = SECONDWAIT; // stop display from ticking time
 
-  case StatePlayLeadIn:
-
-    // 34 BE FE FF FF FF AE 3C (play lead-in)
-
-    // 34 2E ED DE AF B7 FF 3C
-
-    // 34 BE FE FF FF FF AE 3C
-
-    // 34 2E ED DE AF B7 FF 3C
-
-    // 34 BE FE FF FF FF AE 3C
-
-    // 34 2E ED DE AF B7 FF 3C
-
-    // 34 BE FE FF FF FF AE 3C
-
-    // 34 2E ED DE AF B7 FF 3C
-
-    // 34 BE FE FF FF FF AE 3C
-
-    secondcount = SECONDWAIT; // stop display from ticking time
-
-    SendFrameByte(0xCB);//0xFF - 0x34
+      SendFrameByte(0xCB);//0xFF - 0x34
 
 
 
-    if ((BIDIcount & 0x01) == 0)
+      if ((BIDIcount & 0x01) == 0)
 
-    {
+      {
+
+        SendStatePlayLeadInAnnounceCD();
+
+        break;
+
+      }
+
+      SendDisplayBytes();
+
+      SendByte(0x51);//0xFF - 0xAE
+
+
+
+    case StatePlayLeadInEnd:
+
+      SendStatePlayLeadInEnd();
+
+      break;
+
+
+
+    case StatePlayLeadInAnnounceCD:
 
       SendStatePlayLeadInAnnounceCD();
 
       break;
 
-    }
-
-    SendDisplayBytes();
-
-    SendByte(0x51);//0xFF - 0xAE
 
 
+    case StateTrackLeadIn:
 
-  case StatePlayLeadInEnd:
+      secondcount = SECONDWAIT; // stop display from ticking time
 
-    SendStatePlayLeadInEnd();
+      SendFrameByte(0xCB);//0xFF - 0x34
 
-    break;
+      SendDisplayBytes();
 
+      SendByte(0x51);//0xFF - 0xAE
 
+      SendFrameByte(0xC3);//0xFF - 0x3C
 
-  case StatePlayLeadInAnnounceCD:
-
-    SendStatePlayLeadInAnnounceCD();
-
-    break;
+      BIDIcount++;
 
 
 
-  case StateTrackLeadIn:
+      if (BIDIcount == 0)
 
-    secondcount = SECONDWAIT; // stop display from ticking time
+      {
 
-    SendFrameByte(0xCB);//0xFF - 0x34
+        break;
 
-    SendDisplayBytes();
+      }
 
-    SendByte(0x51);//0xFF - 0xAE
-
-    SendFrameByte(0xC3);//0xFF - 0x3C
-
-    BIDIcount++;
-
-
-
-    if (BIDIcount == 0)
-
-    {
+      SetStatePlay();
 
       break;
 
-    }
-
-    SetStatePlay();
-
-    break;
 
 
+    case StatePlay:
 
-  case StatePlay:
+      SendFrameByte(0xCB);//0xFF - 0x34
 
-    SendFrameByte(0xCB);//0xFF - 0x34
+      SendDisplayBytes();
 
-    SendDisplayBytes();
+      SendByte(0x30);//0xFF - 0xCF
 
-    SendByte(0x30);//0xFF - 0xCF
+      SendFrameByte(0xC3);//FF - 0x3C
 
-    SendFrameByte(0xC3);//FF - 0x3C
+      break;
 
-    break;
+    default:
 
-  default:
-
-    break;
+      break;
 
   }
 
 }
 
 
-static void android_buttons(){
+static void android_buttons() {
 
-  
+
 #ifdef ANDROID_HEADPHONES
 
-    //android headphone control, this is fired every 50ms
-    //play button
+  //android headphone control, this is fired every 50ms
+  //play button
 
-    if(play_count > 0){
-      Serial.println("play");
-  Serial.println(play_count);
-  Serial.println(next_count);
-  Serial.println(prev_count);
-      play_count--;
+  if (play_count > 0) {
+    Serial.println("play");
+    Serial.println(play_count);
+    Serial.println(next_count);
+    Serial.println(prev_count);
+    play_count--;
 
-      ANDROID_PLAY_PORT |= (1<<ANDROID_PLAY); //high
-      
-      
-    } else {
-  
-      ANDROID_PLAY_PORT &= ~_BV(ANDROID_PLAY); //low
+    ANDROID_PLAY_PORT |= (1 << ANDROID_PLAY); //high
+
+
+  } else {
+
+    ANDROID_PLAY_PORT &= ~_BV(ANDROID_PLAY); //low
 
 #ifdef ANDROID_HEADPHONES_ONE_BUTTON
 
-      if(play_count_delay > 0 ){ //counting delay low
+    if (play_count_delay > 0 ) { //counting delay low
 
-        play_count_delay--;
+      play_count_delay--;
 
-	if(play_count_delay==0 && play_count_push>0){
+      if (play_count_delay == 0 && play_count_push > 0) {
 
-          play_count = ANDROID_PUSH_COUNT;
-          
-          play_count_delay=ANDROID_DELAY_COUNT;
-          
-          if (play_count_push>0) play_count_push--;
-        }
+        play_count = ANDROID_PUSH_COUNT;
+
+        play_count_delay = ANDROID_DELAY_COUNT;
+
+        if (play_count_push > 0) play_count_push--;
       }
+    }
 
 #endif
 
-    }
+  }
 
 #ifndef ANDROID_HEADPHONES_ONE_BUTTON
 
-    //next button
+  //next button
 
-    if(next_count > 0){
-      Serial.println("next");
-  Serial.println(play_count);
-  Serial.println(next_count);
-  Serial.println(prev_count);
-      next_count--;
+  if (next_count > 0) {
+    Serial.println("next");
+    Serial.println(play_count);
+    Serial.println(next_count);
+    Serial.println(prev_count);
+    next_count--;
 
-      ANDROID_NEXT_PORT |= _BV(ANDROID_NEXT); //high
+    ANDROID_NEXT_PORT |= _BV(ANDROID_NEXT); //high
 
-    } else {
+  } else {
 
-      ANDROID_NEXT_PORT &= ~_BV(ANDROID_NEXT); //low
-    }
+    ANDROID_NEXT_PORT &= ~_BV(ANDROID_NEXT); //low
+  }
 
-    //prev button, double push, head unit goes to previous song, no to start of the song
-    if(prev_count > 0){
-      Serial.println("prev");
-  Serial.println(play_count);
-  Serial.println(next_count);
-  Serial.println(prev_count);
-      prev_count--;
-      
-      ANDROID_PREV_PORT |= _BV(ANDROID_PREV); //high
+  //prev button, double push, head unit goes to previous song, no to start of the song
+  if (prev_count > 0) {
+    Serial.println("prev");
+    Serial.println(play_count);
+    Serial.println(next_count);
+    Serial.println(prev_count);
+    prev_count--;
 
-    } else {
-      //wait between pushes
+    ANDROID_PREV_PORT |= _BV(ANDROID_PREV); //high
 
-      ANDROID_PREV_PORT &= ~_BV(ANDROID_PREV); //low
+  } else {
+    //wait between pushes
+
+    ANDROID_PREV_PORT &= ~_BV(ANDROID_PREV); //low
 
 
-      if(prev_count_delay > 0 ){ //we ended first push and do not finished second push
+    if (prev_count_delay > 0 ) { //we ended first push and do not finished second push
 
-        prev_count_delay--;
+      prev_count_delay--;
 
-	if(prev_count_delay==0) //we are at last run of delay loop
+      if (prev_count_delay == 0) //we are at last run of delay loop
 
-          prev_count = ANDROID_PUSH_COUNT;
-
-      }
+        prev_count = ANDROID_PUSH_COUNT;
 
     }
+
+  }
 
 #endif
 
