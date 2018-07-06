@@ -1,0 +1,1938 @@
+12V ON
+A4 BE FE FF FF FF 6F BC                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+B4 2C 0 FF FF FF FF BC                  CD: 93 track: FF   min: 0 sek: 0 mode: FF
+B4 BE FE FF FF FF 6F B8                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+B4 2D 0 FF FF FF FF BC                  CD: 92 track: FF   min: 0 sek: 0 mode: FF
+B4 2C 0 FF FF FF FF BC                  CD: 93 track: FF   min: 0 sek: 0 mode: FF
+B4 BE FE FF FF FF 2B FF                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+B4 BC FE FF FF FF 6F BC                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+B4 2A 0 0 0 B4 FF BC                  CD: 95 track: FF   min: FF sek: FF mode: B4
+B4 29 0 FF FF FF FF BC                  CD: 96 track: FF   min: 0 sek: 0 mode: FF
+B4 2E 0 FF FF FF FF BC                  CD: 91 track: FF   min: 0 sek: 0 mode: FF
+B4 BE FE FF FF FF 6F BC                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+B4 2C 0 FF FF FF FF BC                  CD: 93 track: FF   min: 0 sek: 0 mode: FF
+B4 BE FE FF FF FF 6F BC                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+B4 2B 0 FF FF FF FF BC                  CD: 94 track: FF   min: 0 sek: 0 mode: FF
+B4 BE FE FF B4 FF FF BC                  CD: 1 track: 1   min: 0 sek: 4B mode: FF
+B4 29 0 FF FF FF FF 7C                  CD: 96 track: FF   min: 0 sek: 0 mode: FF
+B4 BE FE FF FF FF 6F BC                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+B4 2E 0 FF FF FF FF BC                  CD: 91 track: FF   min: 0 sek: 0 mode: FF
+B4 2D 0 FF FF FF FF BC                  CD: 92 track: FF   min: 0 sek: 0 mode: FF
+B4 BE FE FF FF 0 B4 FF                  CD: 1 track: 1   min: 0 sek: 0 mode: 0
+B4 BE FE FF FF FF 6F BC                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+B4 2B 0 FF 0 0 BE FF                  CD: 94 track: FF   min: 0 sek: FF mode: 0
+B4 BE FE FF FF FF 6F BC                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+B4 29 0 FF FF FF FF BC                  CD: 96 track: FF   min: 0 sek: 0 mode: FF
+B4 BE FE FF FF FF 6F BC                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+B4 2D 0 FF FF FF FF BC                  CD: 92 track: FF   min: 0 sek: 0 mode: FF
+B4 BE FE FF FF FF 6F BC                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+B4 2C 0 FF FF FF FF BC                  CD: 93 track: FF   min: 0 sek: 0 mode: FF
+B4 BE FE FF FF B4 0 FF                  CD: 1 track: 1   min: 0 sek: 0 mode: B4
+B4 2A 0 FF FF FF FF BC                  CD: 95 track: FF   min: 0 sek: 0 mode: FF
+B4 BE FE FF FF FF 6F BC                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+B4 29 0 FF FF FF FF BC                  CD: 96 track: FF   min: 0 sek: 0 mode: FF
+B4 FF BC FF FF FF FF BC                  CD: 40 track: 43   min: 0 sek: 0 mode: FF
+B4 2D 0 FF FF FF FF BC                  CD: 92 track: FF   min: 0 sek: 0 mode: FF
+B4 BE FE FF FF FF 6F BC                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+B4 2C 0 FF FF FF BE FF                  CD: 93 track: FF   min: 0 sek: 0 mode: FF
+B4 BE FE FF FF FF 6F BC                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+69 BF FF DB 0 FF FF BC                  CD: 0 track: 0   min: 24 sek: FF mode: FF
+B4 BE FE FF FF FF 6F BC                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+B4 FF BC FF FF FF 6F BC                  CD: 40 track: 43   min: 0 sek: 0 mode: FF
+B4 2E 0 FF FF FF FF 5A                  CD: 91 track: FF   min: 0 sek: 0 mode: FF
+B4 2D 0 FF FF FF FF BC                  CD: 92 track: FF   min: 0 sek: 0 mode: FF
+B4 BE FE FF FF 2C FF BC                  CD: 1 track: 1   min: 0 sek: 0 mode: 2C
+B4 2B 0 FF FF FF FF BC                  CD: 94 track: FF   min: 0 sek: 0 mode: FF
+B4 BE FE FF FF FF 6F BC                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+B4 2A 0 FF FF FF FF BC                  CD: 95 track: FF   min: 0 sek: 0 mode: FF
+B4 FF BC FF FF FF FF BC                  CD: 40 track: 43   min: 0 sek: 0 mode: FF
+B4 BE FE FF FF FF 6F 2E                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+B4 2E 0 FF FF FF FF BC                  CD: 91 track: FF   min: 0 sek: 0 mode: FF
+68 40 3F FF FF 34 FF BC                  CD: FF track: C0   min: 0 sek: 0 mode: 34
+A5 F7 F7 FF FF FB 7D E5                  CD: 48 track: 8   min: 0 sek: 0 mode: FB
+B4 FE FF 2B FF FF FF BC                  CD: 41 track: 0   min: D4 sek: 0 mode: FF
+B4 2A 0 FF FF FF FF BC                  CD: 95 track: FF   min: 0 sek: 0 mode: FF
+B4 BE FE FF FF FF 6F BC                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+B4 29 0 FF FF FF B4 FF                  CD: 96 track: FF   min: 0 sek: 0 mode: FF
+B4 BE FE FF FF FF 6F BC                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+69 7F 7F FF 16 FF FF BC                  CD: C0 track: 80   min: 0 sek: E9 mode: FF
+B4 BD FE FF FF FF 6F BC                  CD: 2 track: 1   min: 0 sek: 0 mode: FF
+B4 FF BC FF FF FF 6F BC                  CD: 40 track: 43   min: 0 sek: 0 mode: FF
+BD FE FF FF FF 6F BC 0                  CD: 41 track: 0   min: 0 sek: 0 mode: 6F
+FF BC B4 BD FE FF FF FF                  CD: 3 track: 4B   min: 42 sek: 1 mode: FF
+6F BC B4 29 0 FF FF FF                  CD: 3 track: 4B   min: D6 sek: FF mode: FF
+B4 BD FE FF FF FF 6F BC                  CD: 2 track: 1   min: 0 sek: 0 mode: FF
+B4 2E CE BC FE FF 6F BC                  CD: 91 track: 31   min: 43 sek: 1 mode: FF
+B4 BD FE FF FF FF 6F BC                  CD: 2 track: 1   min: 0 sek: 0 mode: FF
+69 FF FE DF 79 FF FF BC                  CD: 40 track: 1   min: 20 sek: 86 mode: FF
+B4 BD FE FF FF DE 2B FF                  CD: 2 track: 1   min: 0 sek: 0 mode: DE
+B4 2A 0 FF FF FF FF BC                  CD: 95 track: FF   min: 0 sek: 0 mode: FF
+B4 BD FE FF FF FF 6F BC                  CD: 2 track: 1   min: 0 sek: 0 mode: FF
+B4 29 0 FF FF FF FF BC                  CD: 96 track: FF   min: 0 sek: 0 mode: FF
+B4 0 0 B4 CE DC FF BC                  CD: BF track: FF   min: 4B sek: 31 mode: DC
+B4 2E EC CE AD DC FF BC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+B4 BD FE FF FF FF 6F BC                  CD: 2 track: 1   min: 0 sek: 0 mode: FF
+B4 2C 0 FF 0 0 B4 FF                  CD: 93 track: FF   min: 0 sek: FF mode: 0
+B4 BD FE FF FF FF 6F BC                  CD: 2 track: 1   min: 0 sek: 0 mode: FF
+B4 2A 0 FF FF FF FF BC                  CD: 95 track: FF   min: 0 sek: 0 mode: FF
+B4 BD FE FF FF FF 6F BC                  CD: 2 track: 1   min: 0 sek: 0 mode: FF
+B4 0 FF FE FF FF 6F BC                  CD: BF track: 0   min: 1 sek: 0 mode: FF
+FE FF FF FF 6F BC B4 2E                  CD: 40 track: 0   min: 0 sek: 90 mode: BC
+B4 2D 0 FF FF FF FF BC                  CD: 92 track: FF   min: 0 sek: 0 mode: FF
+B4 BD FE FF FF 0 C FF                  CD: 2 track: 1   min: 0 sek: 0 mode: 0
+B4 2B 0 FF FF FF FF BC                  CD: 94 track: FF   min: 0 sek: 0 mode: FF
+B4 BD FE FF FF FF 6F BC                  CD: 2 track: 1   min: 0 sek: 0 mode: FF
+B4 2A 0 FF FF FF FF BC                  CD: 95 track: FF   min: 0 sek: 0 mode: FF
+B4 FF 6F 0 FF FF FF BC                  CD: 40 track: 90   min: FF sek: 0 mode: FF
+B4 BC FE FF FF FF 6F BC                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+B4 CE DC FF BC FF 6F BC                  CD: 71 track: 23   min: 0 sek: 43 mode: FF
+FF 6F BC B4 6D 0 34 FF                  CD: D0 track: 43   min: 4B sek: 92 mode: 0
+69 79 FD FF FF FE DF 79                  CD: C6 track: 2   min: 0 sek: 0 mode: FE
+B4 BC FE FF FF FF 6F BC                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+B4 2A 0 FF FF FF FF BC                  CD: 95 track: FF   min: 0 sek: 0 mode: FF
+B4 BC FE FF FF FF 6F BC                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+B4 29 0 FF FF FF FF BC                  CD: 96 track: FF   min: 0 sek: 0 mode: FF
+B4 BC FE FF FF FF 6F BC                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+69 3F BF FF EF 0 FF BC                  CD: 80 track: 40   min: 0 sek: 10 mode: 0
+B4 BC FE FF FF FF 6F BC                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+B4 0 0 0 B4 FF 6F BC                  CD: BF track: FF   min: FF sek: 4B mode: FF
+B4 BC FE FF FF FF 6F BC                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+69 FF 79 FF FF FF FF BC                  CD: 40 track: 86   min: 0 sek: 0 mode: FF
+B4 BC FE FF FF FF BC 0                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+B4 2E EC CE AD DC FF BC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+B4 BC FE FF FF FF 6F BC                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+B4 6D 0 FF FF FF FF BC                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+B4 FF BC 2C FF FF FF BC                  CD: 40 track: 43   min: D3 sek: 0 mode: FF
+B4 2B 0 FF FF FF FF BC                  CD: 94 track: FF   min: 0 sek: 0 mode: FF
+B4 BC FE FF FF FF 6F BC                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+B4 2A 0 FF FF 0 BC FF                  CD: 95 track: FF   min: 0 sek: 0 mode: 0
+B4 BC FE FF FF FF 6F BC                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+E8 2E EC CE AD DC FF BC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+B4 BC FE FF FF FF 6F BC                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+B4 FF BC FF FF FF 6F BC                  CD: 40 track: 43   min: 0 sek: 0 mode: FF
+B4 2C 0 FF FF FF FF FE                  CD: 93 track: FF   min: 0 sek: 0 mode: FF
+B4 2B 0 FF FF FF FF B8                  CD: 94 track: FF   min: 0 sek: 0 mode: FF
+B4 BC FE FF 0 0 FF BC                  CD: 3 track: 1   min: 0 sek: FF mode: 0
+BC BC FE FF FF FF 6F BC                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+B4 29 0 0 B4 FF 6F BC                  CD: 96 track: FF   min: FF sek: 4B mode: FF
+B4 2E EC CE AD DC FF BC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+B4 6D 0 FF FF FF FF BC                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+B4 BC FE FF FF FF B4 FF                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+B4 2C 0 FF FF FF FF BC                  CD: 93 track: FF   min: 0 sek: 0 mode: FF
+68 80 7F FF DE FE FF BC                  CD: 3F track: 80   min: 0 sek: 21 mode: FE
+B4 2A 0 FF FF FF FF BC                  CD: 95 track: FF   min: 0 sek: 0 mode: FF
+B4 29 0 FF FF FF FF BC                  CD: 96 track: FF   min: 0 sek: 0 mode: FF
+B4 BC FE FF FF FF 6F B4                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+B4 6D 0 FF FF FF FF BC                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+B4 BC FE FF FF FF 6F BC                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+B4 2C 0 FF FF FF FF BC                  CD: 93 track: FF   min: 0 sek: 0 mode: FF
+B4 BC FE 0 0 0 FF BC                  CD: 3 track: 1   min: FF sek: FF mode: 0
+B4 2B 0 FF FF FF FF BC                  CD: 94 track: FF   min: 0 sek: 0 mode: FF
+B4 FF FF FE FF FF 6F BC                  CD: 40 track: 0   min: 1 sek: 0 mode: FF
+B4 29 0 FF FF FF FF BC                  CD: 96 track: FF   min: 0 sek: 0 mode: FF
+B4 FE FF FF FF 6F BC BC                  CD: 41 track: 0   min: 0 sek: 0 mode: 6F
+B4 6D 0 FF FF FF FF BC                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+B4 BC FE FF FF FF 6F BC                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+B4 2C 0 FF BC FF FF BC                  CD: 93 track: FF   min: 0 sek: 43 mode: FF
+B4 BC FE FF FF FF 6F BC                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+69 FF DF FF FF FF FF BC                  CD: 40 track: 20   min: 0 sek: 0 mode: FF
+B4 BC FE FF FF FF 6F B                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+B4 FF FF FF FF BC 6F BC                  CD: 40 track: 0   min: 0 sek: 0 mode: BC
+B4 2E EC CE AD FF FE FF                  CD: 91 track: 13   min: 31 sek: 52 mode: FF
+B4 6D 0 FF FF FF FF BC                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+B4 FE FF 2C FF FF FF BC                  CD: 41 track: 0   min: D3 sek: 0 mode: FF
+B4 2B 0 FF FF FF FF BC                  CD: 94 track: FF   min: 0 sek: 0 mode: FF
+B4 BC FE FF FF FF 6F BC                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+B4 2A 0 FF FF FF 0 B4                  CD: 95 track: FF   min: 0 sek: 0 mode: FF
+B4 BC FE FF FF FF 6F BC                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+B4 2E EC CE AD DC FF BC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+B4 BC FE FF FF FF 6F BC                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+B4 FF F7 FE FF FF 6F BC                  CD: 40 track: 8   min: 1 sek: 0 mode: FF
+B4 2C E8 8E 98 CE FF BC                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+B4 2B 0 FF FF FF FF BC                  CD: 94 track: FF   min: 0 sek: 0 mode: FF
+B4 BC FE FF FF BC 0 FF                  CD: 3 track: 1   min: 0 sek: 0 mode: BC
+B4 2A 0 FF FF FF FF BC                  CD: 95 track: FF   min: 0 sek: 0 mode: FF
+68 80 FF DE FF FF 6F BC                  CD: 3F track: 0   min: 21 sek: 0 mode: FF
+B4 2E EC CE AD DC FF BC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+B4 FB FF FF FD BE F3 BC                  CD: 44 track: 0   min: 0 sek: 2 mode: BE
+B4 2C E8 8E 98 CE FF BC                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+B4 2B FF FF FE FF 6F BC                  CD: 94 track: 0   min: 0 sek: 1 mode: FF
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+69 FF DF FF FF FF FF BC                  CD: 40 track: 20   min: 0 sek: 0 mode: FF
+B4 BB FE FF FF FF 6F 2E                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+B4 2E EC CE AD DC FF BC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+B4 6D 0 0 0 BB FF BC                  CD: D2 track: FF   min: FF sek: FF mode: BB
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+B4 2B 0 FF FF FF FF BC                  CD: 94 track: FF   min: 0 sek: 0 mode: FF
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+B4 FF FF FF BC FF 6F BC                  CD: 40 track: 0   min: 0 sek: 43 mode: FF
+B4 29 0 FF FF FF 0 BF                  CD: 96 track: FF   min: 0 sek: 0 mode: FF
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+69 FF 7F FF DE FF FF BC                  CD: 40 track: 80   min: 0 sek: 21 mode: FF
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+B4 2B 0 FF FF FF FF BC                  CD: 94 track: FF   min: 0 sek: 0 mode: FF
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+B4 2A 0 FF FF FF FF BC                  CD: 95 track: FF   min: 0 sek: 0 mode: FF
+B4 BB FE FF FF BC 0 FF                  CD: 4 track: 1   min: 0 sek: 0 mode: BC
+B4 2E EC CE AD DC FF BC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+B4 6D 0 FF FF FF FF BC                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+B4 FF BC E8 98 CE FF BC                  CD: 40 track: 43   min: 17 sek: 67 mode: CE
+2C E8 8E 98 CE FF 34 FF                  CD: 57 track: 71   min: 67 sek: 31 mode: FF
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+B4 2A 0 FF BC FD 6F BC                  CD: 95 track: FF   min: 0 sek: 43 mode: FD
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+69 FF DF CE AD DC FF BC                  CD: 40 track: 20   min: 31 sek: 52 mode: DC
+B4 BB FE FF FF FF BC 6D                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+B4 6D 0 FF FF FF FF BC                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+B4 2B 0 FF FF FF FF BC                  CD: 94 track: FF   min: 0 sek: 0 mode: FF
+B4 0 0 B4 FF FF FF BC                  CD: BF track: FF   min: 4B sek: 0 mode: FF
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+B4 BB FE FF FF FF CF BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+B4 2E F8 CE AD D8 0 BB                  CD: 91 track: 7   min: 31 sek: 52 mode: D8
+B4 6D 0 FF FF FF FF BC                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+B4 BB FE FF 6F 2C CE BC                  CD: 4 track: 1   min: 0 sek: 90 mode: 2C
+B4 2C E8 8E 98 CE FF BC                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+68 FF FF FF FF FF 6F BC                  CD: 40 track: 0   min: 0 sek: 0 mode: FF
+FE FF FF FF 6F BC B4 34                  CD: 40 track: 0   min: 0 sek: 90 mode: BC
+69 77 FD FF FF FE DF 79                  CD: C8 track: 2   min: 0 sek: 0 mode: FE
+A1 76 67 56 EE 7F DE 54                  CD: C9 track: 98   min: A9 sek: 11 mode: 7F
+B4 6D 0 FF FF FF FF BC                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+B4 2C E8 8E 98 CE FF BC                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+69 FF 7F FF FF DE 0 FF                  CD: 40 track: 80   min: 0 sek: 0 mode: DE
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+B4 29 0 0 0 BB FF BC                  CD: 96 track: FF   min: FF sek: FF mode: BB
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+3F FF FF FF EF 2D 2E FF                  CD: 40 track: 0   min: 0 sek: 10 mode: 2D
+B0 2C E8 8E 98 CE FF BC                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+B4 2B 0 FF BC DF FF BC                  CD: 94 track: FF   min: 0 sek: 43 mode: DF
+B4 BB FC FF FF FF 6F BC                  CD: 4 track: 3   min: 0 sek: 0 mode: FF
+2E FF DE 0 FF FF FF BC                  CD: 40 track: 21   min: FF sek: 0 mode: FF
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+B4 6D 0 FF FF FF FF BC                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+B4 2C E8 8E 98 CE FF BC                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+B4 BB FF BC 1F FF FF BC                  CD: 4 track: 0   min: 43 sek: E0 mode: FF
+B4 2A 0 FF FF FF FF BC                  CD: 95 track: FF   min: 0 sek: 0 mode: FF
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+B4 29 0 FF FF FF FF FE                  CD: 96 track: FF   min: 0 sek: 0 mode: FF
+B4 2E EC CE AD DC FF BC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+B4 BB FE FF BC FF FF BC                  CD: 4 track: 1   min: 0 sek: 43 mode: FF
+B4 2C E8 8E 98 CE FF BC                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+B4 2B E6 6E 87 D7 FF BB                  CD: 94 track: 19   min: 91 sek: 78 mode: D7
+B4 BB FE FF FF FF 6F BC                  CD: 4 track: 1   min: 0 sek: 0 mode: FF
+D2 FF 7F FF DE FF FF BC                  CD: 40 track: 80   min: 0 sek: 21 mode: FF
+D0 A4 3 FF FF FF FE F2                  CD: 1B track: FC   min: 0 sek: 0 mode: FF
+B4 BA FE FF FF FF 6F BC                  CD: 5 track: 1   min: 0 sek: 0 mode: FF
+B4 6D 0 FF FF FF FF BC                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+B4 FF FF FF 6F BC FF BC                  CD: 40 track: 0   min: 0 sek: 90 mode: BC
+FF BC B4 BA FE FF E6 D7                  CD: 3 track: 4B   min: 45 sek: 1 mode: FF
+B4 2B E6 6E 87 D7 FF BC                  CD: 94 track: 19   min: 91 sek: 78 mode: D7
+68 7F FF BA FF FF 6F BC                  CD: C0 track: 0   min: 45 sek: 0 mode: FF
+B4 29 0 FF FF FF FF BC                  CD: 96 track: FF   min: 0 sek: 0 mode: FF
+B4 FE FF FF FF 6F BC BC                  CD: 41 track: 0   min: 0 sek: 0 mode: 6F
+B4 6D 0 FF FF FF FF BC                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+B4 BA FE FF FF FF 6F BC                  CD: 5 track: 1   min: 0 sek: 0 mode: FF
+B4 2C 0 0 B4 FF 6F BC                  CD: 93 track: FF   min: FF sek: 4B mode: FF
+B4 BA FE FF FF FF 6F BC                  CD: 5 track: 1   min: 0 sek: 0 mode: FF
+B4 2A 0 FF FF FF FF BC                  CD: 95 track: FF   min: 0 sek: 0 mode: FF
+B4 BA FE FF FF FF 6F 29                  CD: 5 track: 1   min: 0 sek: 0 mode: FF
+B4 29 0 FF FF FF FF BC                  CD: 96 track: FF   min: 0 sek: 0 mode: FF
+B4 BA FE FF FF FF 6F BC                  CD: 5 track: 1   min: 0 sek: 0 mode: FF
+AC 6D 0 FF FF FF FF BC                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+B0 BA 0 0 0 2C 98 BC                  CD: 5 track: FF   min: FF sek: FF mode: 2C
+B4 2C E8 8E 98 CE FF BC                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+B4 BA FE FF FF FF 6F BC                  CD: 5 track: 1   min: 0 sek: 0 mode: FF
+B4 22 0 FF FF FF FF BA                  CD: 9D track: FF   min: 0 sek: 0 mode: FF
+B4 BA FE FF FF FF 6F BC                  CD: 5 track: 1   min: 0 sek: 0 mode: FF
+D2 7F 7F FF B7 2E AD BC                  CD: C0 track: 80   min: 0 sek: 48 mode: 2E
+A1 77 66 75 6E E7 FD E5                  CD: C8 track: 99   min: 8A sek: 91 mode: E7
+B4 BA FE FF FF FF 6F BC                  CD: 5 track: 1   min: 0 sek: 0 mode: FF
+B4 2C E8 8E 98 CE FF B4                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+B4 2B E6 6E 87 D7 FF BC                  CD: 94 track: 19   min: 91 sek: 78 mode: D7
+B4 BA FF FF 15 FF FF BC                  CD: 5 track: 0   min: 0 sek: EA mode: FF
+B4 2A 0 FF FF FF FF BC                  CD: 95 track: FF   min: 0 sek: 0 mode: FF
+68 FF 79 FF FF FF 6F BC                  CD: 40 track: 86   min: 0 sek: 0 mode: FF
+BA FE FF FF FF 6F BC B4                  CD: 41 track: 0   min: 0 sek: 0 mode: 6F
+69 7F 7F FF FF B7 DE 74                  CD: C0 track: 80   min: 0 sek: 0 mode: B7
+D0 74 47 4C 67 7F DE 54                  CD: CB track: B8   min: B3 sek: 98 mode: 7F
+B4 2B E6 6E 87 D7 FF BC                  CD: 94 track: 19   min: 91 sek: 78 mode: D7
+B4 BA FE FF FF FF 0 2A                  CD: 5 track: 1   min: 0 sek: 0 mode: FF
+B4 29 0 FF FF FF FF BC                  CD: 96 track: FF   min: 0 sek: 0 mode: FF
+74 BA FE FF FF FF 6F BC                  CD: 5 track: 1   min: 0 sek: 0 mode: FF
+B4 2E EC CE AD DC FF BC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+B4 0 0 0 B4 FF FF BC                  CD: BF track: FF   min: FF sek: 4B mode: FF
+B4 6D 0 FF FF FF FF BC                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+B4 BE FE FF FF FF 6F BC                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+B4 2B E6 6E 87 D7 BC FE                  CD: 94 track: 19   min: 91 sek: 78 mode: D7
+B4 BA FE FF FF FF 6F BC                  CD: 5 track: 1   min: 0 sek: 0 mode: FF
+69 7F 7F DB 85 FF FF BC                  CD: C0 track: 80   min: 24 sek: 7A mode: FF
+B4 BA FE FF FF FF 6F BC                  CD: 5 track: 1   min: 0 sek: 0 mode: FF
+B4 AD BC FF FF FF 6F BC                  CD: 12 track: 43   min: 0 sek: 0 mode: FF
+B4 6D 0 FF FF FF FF BA                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+B4 2C E8 8E 98 CE FF BC                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+B4 BA FE FF 2B 87 FF BC                  CD: 5 track: 1   min: 0 sek: D4 mode: 87
+B4 2A 0 FF FF FF FF BC                  CD: 95 track: FF   min: 0 sek: 0 mode: FF
+B4 BA FE FF FF FF 6F BC                  CD: 5 track: 1   min: 0 sek: 0 mode: FF
+B4 29 0 FF FF FF FF BC                  CD: 96 track: FF   min: 0 sek: 0 mode: FF
+B4 BF BF FF FF DB EF 3C                  CD: 0 track: 40   min: 0 sek: 0 mode: DB
+B4 6D 0 FF FF FF FF BC                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+B4 BA FE FF FF FF 6F BC                  CD: 5 track: 1   min: 0 sek: 0 mode: FF
+B4 2C E8 CE B4 FF 6F BC                  CD: 93 track: 17   min: 31 sek: 4B mode: FF
+B4 BA FE FF FF FF 6F BC                  CD: 5 track: 1   min: 0 sek: 0 mode: FF
+B4 29 0 FF FF FF FF BC                  CD: 96 track: FF   min: 0 sek: 0 mode: FF
+B4 BA FE FF FF FF 6F BC                  CD: 5 track: 1   min: 0 sek: 0 mode: FF
+B4 2E EC CE AD DC FF FC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+B4 BA FE FF FF 6F 6D FF                  CD: 5 track: 1   min: 0 sek: 0 mode: 6F
+B4 2C E8 8E 98 CE FF BC                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+B4 BA FE FF FF FF 6F BC                  CD: 5 track: 1   min: 0 sek: 0 mode: FF
+B4 2B E6 6E 87 D7 FF BC                  CD: 94 track: 19   min: 91 sek: 78 mode: D7
+B4 2A 0 FF FF FF FF BC                  CD: 95 track: FF   min: 0 sek: 0 mode: FF
+B4 BA FE FF FF FF 29 FF                  CD: 5 track: 1   min: 0 sek: 0 mode: FF
+B4 2E EC CE AD DC FF BC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+B4 BA FE FF FF FF 6F BC                  CD: 5 track: 1   min: 0 sek: 0 mode: FF
+B4 6D 0 FF FF FF FF BC                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+B4 2C E8 8E 98 CE FF F8                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+B4 BA FE FF FF FF 0 2B                  CD: 5 track: 1   min: 0 sek: 0 mode: FF
+B4 B9 FE FF FF FF 6F BC                  CD: 6 track: 1   min: 0 sek: 0 mode: FF
+B4 2A EA AE DA B4 FF 6F                  CD: 95 track: 15   min: 51 sek: 25 mode: B4
+B4 29 0 FF FF FF FF BC                  CD: 96 track: FF   min: 0 sek: 0 mode: FF
+B4 0 0 0 EC DC FF BC                  CD: BF track: FF   min: FF sek: 13 mode: DC
+B4 2E EC CE AD DC FF BC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+68 DA 1 FF FF FF FF 79                  CD: 65 track: FE   min: 0 sek: 0 mode: FF
+B4 B9 FE FF FF FF 6F BC                  CD: 6 track: 1   min: 0 sek: 0 mode: FF
+B4 2B E6 6E 87 D7 FF BC                  CD: 94 track: 19   min: 91 sek: 78 mode: D7
+B4 FF FF B4 9A DA FF BC                  CD: 40 track: 0   min: 4B sek: 65 mode: DA
+B4 29 0 FF FF FF FF BC                  CD: 96 track: FF   min: 0 sek: 0 mode: FF
+B4 B9 FE FF FF FF 6F BC                  CD: 6 track: 1   min: 0 sek: 0 mode: FF
+B4 2E EC CE AD FF B9 FF                  CD: 91 track: 13   min: 31 sek: 52 mode: FF
+B4 B9 FE FF FF FF 6F BC                  CD: 6 track: 1   min: 0 sek: 0 mode: FF
+B4 2C E8 8E 98 CE FF BC                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+B4 B9 FE FF FF FF 6F BC                  CD: 6 track: 1   min: 0 sek: 0 mode: FF
+B4 2A EA AE 9A DA FF BC                  CD: 95 track: 15   min: 51 sek: 65 mode: DA
+B4 B9 FE FF FF FF 6F BC                  CD: 6 track: 1   min: 0 sek: 0 mode: FF
+B4 29 0 FF FF FF FF BC                  CD: 96 track: FF   min: 0 sek: 0 mode: FF
+B4 B9 0 0 0 2E AD BC                  CD: 6 track: FF   min: FF sek: FF mode: 2E
+B4 2E EC CE AD DC FF BC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+68 FF 79 FF FF FF 6F BC                  CD: 40 track: 86   min: 0 sek: 0 mode: FF
+B4 2C E8 8E 98 CE BC B9                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+B4 B9 FE FF FF FF 6F BC                  CD: 6 track: 1   min: 0 sek: 0 mode: FF
+A5 FF 7F B7 74 9A FF BC                  CD: 40 track: 80   min: 48 sek: 8B mode: 9A
+B4 B9 FE FF FF FF 6F BC                  CD: 6 track: 1   min: 0 sek: 0 mode: FF
+B4 2E EC CE AD DC FF BC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+B4 B9 FE FF FF FF 6F BC                  CD: 6 track: 1   min: 0 sek: 0 mode: FF
+B0 6D 0 FF FF FF FF BC                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+B4 B9 FE FF BC E8 CE BC                  CD: 6 track: 1   min: 0 sek: 43 mode: E8
+B4 2C E8 8E 98 CE FF BC                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+D0 1F F2 FF FF FF 6F BC                  CD: A0 track: D   min: 0 sek: 0 mode: FF
+FF FF FF 6F BC B4 2A B9                  CD: 40 track: 0   min: 90 sek: 43 mode: B4
+69 73 FD FF FF FE DF 79                  CD: CC track: 2   min: 0 sek: 0 mode: FE
+B4 2E EC CE AD DC FF BC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+B4 B9 FE FF FF FF 6F BC                  CD: 6 track: 1   min: 0 sek: 0 mode: FF
+B4 2C E8 8E 98 CC FF BC                  CD: 93 track: 17   min: 71 sek: 67 mode: CC
+BC B9 FE FF FF FF 6F BC                  CD: 6 track: 1   min: 0 sek: 0 mode: FF
+B4 2B E6 6E 87 D7 FF BC                  CD: 94 track: 19   min: 91 sek: 78 mode: D7
+B4 B9 0 0 0 3A FF BC                  CD: 6 track: FF   min: FF sek: FF mode: 3A
+B4 29 0 FF FF FF FF BC                  CD: 96 track: FF   min: 0 sek: 0 mode: FF
+B4 B9 FE FF FF FF 6F BC                  CD: 6 track: 1   min: 0 sek: 0 mode: FF
+B4 2E EC CE AD DC FF BC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+B4 B9 FE FF FF FF 6F BC                  CD: 6 track: 1   min: 0 sek: 0 mode: FF
+69 FF 7F FF FF DE E8 CE                  CD: 40 track: 80   min: 0 sek: 0 mode: DE
+B4 B9 FE FF FF FF 6F BC                  CD: 6 track: 1   min: 0 sek: 0 mode: FF
+B4 2B 6E BC FE FF 6F BC                  CD: 94 track: 91   min: 43 sek: 1 mode: FF
+B4 2A EA AE 9C DA FF BC                  CD: 95 track: 15   min: 51 sek: 63 mode: DA
+B4 FE FF FF FF 6F BC BC                  CD: 41 track: 0   min: 0 sek: 0 mode: 6F
+B4 2E EC CE AD DC FF BC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+B4 B9 FE FF FF FF 6F BC                  CD: 6 track: 1   min: 0 sek: 0 mode: FF
+B4 6D FF BC FF FF 6F BC                  CD: D2 track: 0   min: 43 sek: 0 mode: FF
+B4 B9 FE FF FF FF 6F BC                  CD: 6 track: 1   min: 0 sek: 0 mode: FF
+69 FF DF 79 87 D7 FF BC                  CD: 40 track: 20   min: 86 sek: 78 mode: D7
+B4 B9 FE FF FF 6F 2A 9A                  CD: 6 track: 1   min: 0 sek: 0 mode: 6F
+B4 2A EA AE 9A DA FF BC                  CD: 95 track: 15   min: 51 sek: 65 mode: DA
+B4 29 0 0 B9 FF 6F BC                  CD: 96 track: FF   min: FF sek: 46 mode: FF
+B4 B9 FE FF FF FF 6F BC                  CD: 6 track: 1   min: 0 sek: 0 mode: FF
+B4 6D 0 FF FF FF FF BC                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+B4 B9 FC FF FF FF 6F 2C                  CD: 6 track: 3   min: 0 sek: 0 mode: FF
+B4 2C E8 8E 98 CE FF BC                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+68 F3 37 EB 74 FF 6F BC                  CD: 4C track: C8   min: 14 sek: 8B mode: FF
+B4 2A EA AE 9A DA FF BC                  CD: 95 track: 15   min: 51 sek: 65 mode: DA
+B4 29 0 FF FF FF FF BC                  CD: 96 track: FF   min: 0 sek: 0 mode: FF
+B4 B9 FE FF FF FF 0 77                  CD: 6 track: 1   min: 0 sek: 0 mode: FF
+B4 2E EC CE AD DC FF BC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+B4 6D 0 FF B4 FF 6F BC                  CD: D2 track: FF   min: 0 sek: 4B mode: FF
+B4 2C E8 8E 98 CE FF BC                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+B4 FF FF 6F BC D7 FF BC                  CD: 40 track: 0   min: 90 sek: 43 mode: D7
+D7 FF BC B4 B9 FE 2A DA                  CD: 40 track: 43   min: 4B sek: 46 mode: FE
+68 55 D5 5D 35 B5 FF 79                  CD: EA track: 2A   min: A2 sek: CA mode: B5
+B4 8E BC FE FF FF 6F BC                  CD: 31 track: 43   min: 1 sek: 0 mode: FF
+B9 FE FF FF FF 6F BC B4                  CD: 41 track: 0   min: 0 sek: 0 mode: 6F
+69 FD FF FF FE DF 79 BC                  CD: 42 track: 0   min: 0 sek: 1 mode: DF
+B4 B9 FE FF FF BC E8 98                  CD: 6 track: 1   min: 0 sek: 0 mode: BC
+B4 2C E8 8E 98 CE FF BC                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+B4 2B 0 0 0 0 0 0                  CD: 94 track: FF   min: FF sek: FF mode: 0
+ACC ON
+7A 5F 7F 7F FF FF C7 FE                  CD: E0 track: 80   min: 80 sek: 0 mode: FF
+F4 2E EC CE AD DC FF FC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+F4 BE FE FF FF FF 8F FC                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+F4 6D 0 FF FF 0 BE FF                  CD: D2 track: FF   min: 0 sek: 0 mode: 0
+F4 2C E8 8E 98 CE FF FC                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+F4 0 0 0 E6 87 FF FC                  CD: BF track: FF   min: FF sek: 19 mode: 87
+F4 2B E6 6E 87 D7 FF FC                  CD: 94 track: 19   min: 91 sek: 78 mode: D7
+F4 BE FE FF FF FF 8F FC                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+F4 29 E8 8E 86 0 F4 FF                  CD: 96 track: 17   min: 71 sek: 79 mode: 0
+F4 BE FE FF FF FF 8F FC                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+E9 7F 7F FF 74 CE FF FC                  CD: C0 track: 80   min: 0 sek: 8B mode: CE
+F4 BC FE FF FF FF 8F FC                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+F4 CE FF FF FF FF 8F FC                  CD: 71 track: 0   min: 0 sek: 0 mode: FF
+F4 BE FE FF FF FF 8F FC                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+74 BE FE FF FF FF 8F 7C                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+70 BE FE FF FF FF 8F 7C                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+74 BE FE FF FF FF 8F 7C                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+74 BE FC FF FF FF 8F 7C                  CD: 1 track: 3   min: 0 sek: 0 mode: FF
+74 BE FE FF FF FF 8F 7C                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+74 BE FC FF FF FF 8F 7C                  CD: 1 track: 3   min: 0 sek: 0 mode: FF
+74 BE FE FF FF FF 8F 7C                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+78 BE FE FF FF FF 8F 7C                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+74 BE FE FF FF FF 8F 7C                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+74 BE FC FF FF FF 8F 7C                  CD: 1 track: 3   min: 0 sek: 0 mode: FF
+74 BE FE FF FF FF 8F 7C                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+74 BE FE FF FF FF 8F 78                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+74 BE FE FF FF FF 8F 7C                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+F4 BE FE FF FF FF 8F 7C                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+74 BE FE FF FF FF 8F 7C                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+70 BE FE FF FF FF 8F 7C                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+74 BC FE FF FF FF 8F 7C                  CD: 3 track: 1   min: 0 sek: 0 mode: FF
+74 BE FE FF FF FF 8F 7C                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+74 BE FC FF FF FF 8F 7C                  CD: 1 track: 3   min: 0 sek: 0 mode: FF
+74 BE FE FF FF FF 8F 7C                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+play
+---------------------------------------------
+532CE41B
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+0 E8 BE FE 7F FF FF C7                  CD: 57 track: 41   min: 1 sek: 80 mode: FF
+B4 BE FE FF FF FF EF BC                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+B4 2C E8 8E 98 FF BE FF                  CD: 93 track: 17   min: 71 sek: 67 mode: FF
+B8 2B E6 6E 87 D7 FF BC                  CD: 94 track: 19   min: 91 sek: 78 mode: D7
+B4 2A EA AE 9A DA FF BC                  CD: 95 track: 15   min: 51 sek: 65 mode: DA
+34 BE FE FF FF FF EF 34                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+34 29 E8 8E 86 CF FF 3C                  CD: 96 track: 17   min: 71 sek: 79 mode: CF
+68 76 67 56 7F BE FF 3C                  CD: C9 track: 98   min: A9 sek: 80 mode: BE
+D2 FB FB FF FF FF BC F0                  CD: 44 track: 4   min: 0 sek: 0 mode: FF
+34 FF F3 8E 98 CE FF 3C                  CD: 40 track: C   min: 71 sek: 67 mode: CE
+2C E8 8E 98 CE FF 3C A1                  CD: 57 track: 71   min: 67 sek: 31 mode: FF
+34 2B E6 6E 87 D7 FF 3C                  CD: 94 track: 19   min: 91 sek: 78 mode: D7
+68 BA B6 CF FF FF EF 3C                  CD: 5 track: 49   min: 30 sek: 0 mode: FF
+34 29 E8 8E 86 CF FF 3C                  CD: 96 track: 17   min: 71 sek: 79 mode: CF
+34 2E EC CE AD DC FF 3C                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+34 BE FE FF FF 34 FF FF                  CD: 1 track: 1   min: 0 sek: 0 mode: 34
+34 6D 0 FF FF FF FF 3C                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+34 2C 98 34 FF FF EF 3C                  CD: 93 track: 67   min: CB sek: 0 mode: FF
+34 BE FE FF FF FF EF 3C                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+9A DA FF 3C 34 BE FE FF                  CD: 65 track: 0   min: C3 sek: CB mode: BE
+34 29 E8 8E 86 CF FF 3C                  CD: 96 track: 17   min: 71 sek: 79 mode: CF
+34 BE FE FF FF FF EF 3C                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+34 2E 0 0 34 FF EF 3C                  CD: 91 track: FF   min: FF sek: CB mode: FF
+34 BE FE FF FF FF EF 3C                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+98 CE FF 3C 34 BE FE FF                  CD: 71 track: 0   min: C3 sek: CB mode: BE
+FF FF EF 3C 34 2B E6 6E                  CD: 40 track: 10   min: C3 sek: CB mode: 2B
+87 D7 FF 3C 34 BE FE FF                  CD: 68 track: 0   min: C3 sek: CB mode: BE
+34 EA 9A 34 FF FF EF 3C                  CD: 55 track: 65   min: CB sek: 0 mode: FF
+34 BE FE FF FF FF EF 3C                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+DC FF 3C 34 BE FE FF FF                  CD: 40 track: C3   min: CB sek: 41 mode: FE
+FF EF 3C 34 6D 0 FF FF                  CD: 50 track: C3   min: CB sek: 92 mode: 0
+FF FF 3C 34 BE FE FF FF                  CD: 40 track: C3   min: CB sek: 41 mode: FE
+34 8E 3C BE FF FF AE 3C                  CD: 31 track: C3   min: 41 sek: 0 mode: FF
+34 BE FE FF FF FF AE 34                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+34 2E EC CE AD DC FF 3C                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+34 BE FE FF AE 2E CE 3C                  CD: 1 track: 1   min: 0 sek: 51 mode: 2E
+34 2E EC CE AD DC FF 3C                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+34 BE FE FF FF FF AE 3C                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+34 BE FE FF FF FF CF 3C                  CD: 1 track: 1   min: 0 sek: 0 mode: FF
+34 BE FE FF FE FF CF 3C                  CD: 1 track: 1   min: 0 sek: 1 mode: FF
+34 BE FE FF FE FF CF 38                  CD: 1 track: 1   min: 0 sek: 1 mode: FF
+34 BE FE FF FE FF CF 3C                  CD: 1 track: 1   min: 0 sek: 1 mode: FF
+34 BE FE FF FD FF CF 3C                  CD: 1 track: 1   min: 0 sek: 2 mode: FF
+34 BE FC FF FD FF CF 3C                  CD: 1 track: 3   min: 0 sek: 2 mode: FF
+34 BE FE FF FD FF CF 3C                  CD: 1 track: 1   min: 0 sek: 2 mode: FF
+34 BE FE FF FC FF CF 3C                  CD: 1 track: 1   min: 0 sek: 3 mode: FF
+34 FE FE FF FC FF CF 3C                  CD: 41 track: 1   min: 0 sek: 3 mode: FF
+34 BE FE FF FC FF CF 3C                  CD: 1 track: 1   min: 0 sek: 3 mode: FF
+34 BE FE FF FB FF CF 3C                  CD: 1 track: 1   min: 0 sek: 4 mode: FF
+34 BE FE FF FA FF CF 3C                  CD: 1 track: 1   min: 0 sek: 5 mode: FF
+34 BE FE FF F9 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 6 mode: FF
+34 BE FE FF F8 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 7 mode: FF
+34 BE FE FF F8 FF CF 38                  CD: 1 track: 1   min: 0 sek: 7 mode: FF
+34 BE FE FF F8 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 7 mode: FF
+30 BE FE FF F8 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 7 mode: FF
+34 BE FE FF F8 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 7 mode: FF
+34 BE FE FF F7 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 8 mode: FF
+34 BE FE FF F7 FF CF 38                  CD: 1 track: 1   min: 0 sek: 8 mode: FF
+34 BE FE FF F7 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 8 mode: FF
+34 BE FE FF F6 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 9 mode: FF
+34 BE FE FF EF FF CF 3C                  CD: 1 track: 1   min: 0 sek: 10 mode: FF
+34 BE FE FF EE FF CF 3C                  CD: 1 track: 1   min: 0 sek: 11 mode: FF
+34 BE FE FF ED FF CF 3C                  CD: 1 track: 1   min: 0 sek: 12 mode: FF
+34 BE FE FF ED FF CF 38                  CD: 1 track: 1   min: 0 sek: 12 mode: FF
+34 BE FE FF ED FF CF 3C                  CD: 1 track: 1   min: 0 sek: 12 mode: FF
+34 BE FE FF EC FF CF 3C                  CD: 1 track: 1   min: 0 sek: 13 mode: FF
+34 BE FE FF EB FF CF 3C                  CD: 1 track: 1   min: 0 sek: 14 mode: FF
+34 BE FC FF EB FF CF 3C                  CD: 1 track: 3   min: 0 sek: 14 mode: FF
+34 BE FE FF EB FF CF 3C                  CD: 1 track: 1   min: 0 sek: 14 mode: FF
+34 BE FE FF EA FF CF 3C                  CD: 1 track: 1   min: 0 sek: 15 mode: FF
+34 BE FE FF E9 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 16 mode: FF
+34 BE FE FF E8 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 17 mode: FF
+34 BE FE FF E7 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 18 mode: FF
+34 BE FE FF E6 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 19 mode: FF
+34 BE FE FF DF FF CF 3C                  CD: 1 track: 1   min: 0 sek: 20 mode: FF
+34 BE FE FF DE FF CF 3C                  CD: 1 track: 1   min: 0 sek: 21 mode: FF
+34 BE FE FF DD FF CF 3C                  CD: 1 track: 1   min: 0 sek: 22 mode: FF
+34 BE FE FF DC FF CF 3C                  CD: 1 track: 1   min: 0 sek: 23 mode: FF
+34 BC FE FF DC FF CF 3C                  CD: 3 track: 1   min: 0 sek: 23 mode: FF
+34 BE FE FF DC FF CF 3C                  CD: 1 track: 1   min: 0 sek: 23 mode: FF
+34 BE FE FF DB FF CF 3C                  CD: 1 track: 1   min: 0 sek: 24 mode: FF
+34 BE FE FF DA FF CF 3C                  CD: 1 track: 1   min: 0 sek: 25 mode: FF
+34 BE FE FF D9 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 26 mode: FF
+3C BE FE FF D9 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 26 mode: FF
+34 BE FE FF D9 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 26 mode: FF
+34 BE FE FF D8 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 27 mode: FF
+34 BE FC FF D8 FF CF 3C                  CD: 1 track: 3   min: 0 sek: 27 mode: FF
+34 BE FE FF D8 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 27 mode: FF
+34 BE FE FF D7 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 28 mode: FF
+34 BE FE FF D6 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 29 mode: FF
+34 BE FE FF CF FF CF 3C                  CD: 1 track: 1   min: 0 sek: 30 mode: FF
+34 BE FE FF CE FF CF 3C                  CD: 1 track: 1   min: 0 sek: 31 mode: FF
+34 BE FE FF CD FF CF 3C                  CD: 1 track: 1   min: 0 sek: 32 mode: FF
+34 BE FE FF CD FF CF 38                  CD: 1 track: 1   min: 0 sek: 32 mode: FF
+34 BE FE FF CC FF CF 3C                  CD: 1 track: 1   min: 0 sek: 33 mode: FF
+34 BE FC FF CC FF CF 3C                  CD: 1 track: 3   min: 0 sek: 33 mode: FF
+34 BE FE FF CC FF CF 3C                  CD: 1 track: 1   min: 0 sek: 33 mode: FF
+34 BE FE FF CB FF CF 3C                  CD: 1 track: 1   min: 0 sek: 34 mode: FF
+34 BE FE FF CA FF CF 3C                  CD: 1 track: 1   min: 0 sek: 35 mode: FF
+30 BE FE FF CA FF CF 3C                  CD: 1 track: 1   min: 0 sek: 35 mode: FF
+34 BE FE FF CA FF CF 3C                  CD: 1 track: 1   min: 0 sek: 35 mode: FF
+34 BE FE FF C9 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 36 mode: FF
+34 BE FE FF C8 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 37 mode: FF
+34 BE FE FF C7 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 38 mode: FF
+34 BE FE FF C6 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 39 mode: FF
+34 BE FE FF BF FF CF 3C                  CD: 1 track: 1   min: 0 sek: 40 mode: FF
+34 BE FE FF BE FF CF 3C                  CD: 1 track: 1   min: 0 sek: 41 mode: FF
+34 BE FE FF BD FF CF 3C                  CD: 1 track: 1   min: 0 sek: 42 mode: FF
+34 BE FE FF BF FF CF 3C                  CD: 1 track: 1   min: 0 sek: 40 mode: FF
+34 BE FE FF BD FF CF 3C                  CD: 1 track: 1   min: 0 sek: 42 mode: FF
+34 BE FE FF BC FF CF 3C                  CD: 1 track: 1   min: 0 sek: 43 mode: FF
+34 BE FE FF BB FF CF 3C                  CD: 1 track: 1   min: 0 sek: 44 mode: FF
+34 BE FE FF BA FF CF 3C                  CD: 1 track: 1   min: 0 sek: 45 mode: FF
+34 BE FE FF B6 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 49 mode: FF
+34 BE FE FF B9 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 46 mode: FF
+24 BE FE FF B9 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 46 mode: FF
+34 BE FE FF B9 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 46 mode: FF
+34 BE FC FF B9 FF CF 3C                  CD: 1 track: 3   min: 0 sek: 46 mode: FF
+34 BE FE FF B9 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 46 mode: FF
+34 BE FE FF B8 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 47 mode: FF
+34 BE FC FF B8 FF CF 3C                  CD: 1 track: 3   min: 0 sek: 47 mode: FF
+34 BE FE FF B8 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 47 mode: FF
+34 FE FE FF B7 FF CF 3C                  CD: 41 track: 1   min: 0 sek: 48 mode: FF
+34 BE FE FF B7 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 48 mode: FF
+34 BE FE FF B6 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 49 mode: FF
+34 BE FE FF AF FF CF 3C                  CD: 1 track: 1   min: 0 sek: 50 mode: FF
+34 BE FE FF AE FF CF 3C                  CD: 1 track: 1   min: 0 sek: 51 mode: FF
+34 BE FE FF AD FF CF 3C                  CD: 1 track: 1   min: 0 sek: 52 mode: FF
+34 BE FE FF AC FF CF 3C                  CD: 1 track: 1   min: 0 sek: 53 mode: FF
+34 BE FE FF AB FF CF 3C                  CD: 1 track: 1   min: 0 sek: 54 mode: FF
+34 BE FE FF AA FF CF 3C                  CD: 1 track: 1   min: 0 sek: 55 mode: FF
+3C BE FE FF AA FF CF 3C                  CD: 1 track: 1   min: 0 sek: 55 mode: FF
+34 BE FE FF AA FF CF 3C                  CD: 1 track: 1   min: 0 sek: 55 mode: FF
+34 BE FE FF A9 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 56 mode: FF
+34 BE FC FF A9 FF CF 3C                  CD: 1 track: 3   min: 0 sek: 56 mode: FF
+34 BE FE FF A9 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 56 mode: FF
+34 BE FE FF A8 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 57 mode: FF
+34 BE FE FF A7 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 58 mode: FF
+34 BE FE FF A6 FF CF 3C                  CD: 1 track: 1   min: 0 sek: 59 mode: FF
+34 BE FE FE FF FF CF 3C                  CD: 1 track: 1   min: 1 sek: 0 mode: FF
+34 BE FE FC FF FF CF 3C                  CD: 1 track: 1   min: 3 sek: 0 mode: FF
+34 BE FE FE FF FF CF 3C                  CD: 1 track: 1   min: 1 sek: 0 mode: FF
+34 BC FE FE FF FF CF 3C                  CD: 3 track: 1   min: 1 sek: 0 mode: FF
+34 BE FE FE FF FF CF 3C                  CD: 1 track: 1   min: 1 sek: 0 mode: FF
+34 BE FE FE FE FF CF 3C                  CD: 1 track: 1   min: 1 sek: 1 mode: FF
+34 BE FE FE FD FF CF 3C                  CD: 1 track: 1   min: 1 sek: 2 mode: FF
+34 BE FE FE FD FF CF 38                  CD: 1 track: 1   min: 1 sek: 2 mode: FF
+34 BE FE FE FD FF CF 3C                  CD: 1 track: 1   min: 1 sek: 2 mode: FF
+30 BE FE FE FD FF CF 3C                  CD: 1 track: 1   min: 1 sek: 2 mode: FF
+28 BE FE FE FD FF CF 34                  CD: 1 track: 1   min: 1 sek: 2 mode: FF
+34 BE FE FE FD FF CF 3C                  CD: 1 track: 1   min: 1 sek: 2 mode: FF
+34 BE FE FE FB FF CF 3C                  CD: 1 track: 1   min: 1 sek: 4 mode: FF
+34 BE FE FE FD FF CF 3C                  CD: 1 track: 1   min: 1 sek: 2 mode: FF
+34 BE FE FE FD FF CF 38                  CD: 1 track: 1   min: 1 sek: 2 mode: FF
+34 BE FE FE FD FF CF 3C                  CD: 1 track: 1   min: 1 sek: 2 mode: FF
+34 BE FE FE FC FF CF 3C                  CD: 1 track: 1   min: 1 sek: 3 mode: FF
+34 BE FE FE FB FF CF 3C                  CD: 1 track: 1   min: 1 sek: 4 mode: FF
+34 BC FE FE FB FF CF 3C                  CD: 3 track: 1   min: 1 sek: 4 mode: FF
+34 BE FE FE FB FF CF 3C                  CD: 1 track: 1   min: 1 sek: 4 mode: FF
+34 BE FE FE FA FF DF 3C                  CD: 1 track: 1   min: 1 sek: 5 mode: FF
+34 BE FE FE FA FF CF 3C                  CD: 1 track: 1   min: 1 sek: 5 mode: FF
+34 BE FE FE F9 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 6 mode: FF
+34 BE FE FE F8 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 7 mode: FF
+34 BE FE FE F8 FF 8F 3C                  CD: 1 track: 1   min: 1 sek: 7 mode: FF
+34 BE FE FE F8 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 7 mode: FF
+34 BE FE FE F7 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 8 mode: FF
+34 BE FE FC F7 FF CF 3C                  CD: 1 track: 1   min: 3 sek: 8 mode: FF
+34 BE FE FE F7 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 8 mode: FF
+34 BE FE FE F6 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 9 mode: FF
+34 BE FC FE F6 FF CF 3C                  CD: 1 track: 3   min: 1 sek: 9 mode: FF
+34 BE FE FE F6 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 9 mode: FF
+34 BC FE FE F6 FF CF 3C                  CD: 3 track: 1   min: 1 sek: 9 mode: FF
+34 BE FE FE F6 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 9 mode: FF
+34 BE FE FE EF FF CF 3C                  CD: 1 track: 1   min: 1 sek: 10 mode: FF
+34 BE FE FE EE FF CF 3C                  CD: 1 track: 1   min: 1 sek: 11 mode: FF
+TP-INFO
+---------------------------------------------
+532C30CF
+---------------------------------------------
+34 FE 7F E7 9E FF DF 9C                  CD: 41 track: 80   min: 18 sek: 61 mode: FF
+FF DF 9C 94 BE FE BE DD                  CD: 60 track: 63   min: 6B sek: 41 mode: FE
+94 BE FE FE DD FF DF 9C                  CD: 1 track: 1   min: 1 sek: 22 mode: FF
+B4 FE FF BC FE FF DF BC                  CD: 41 track: 0   min: 43 sek: 1 mode: FF
+B4 BE FE FE BB FF DF BC                  CD: 1 track: 1   min: 1 sek: 44 mode: FF
+B4 BE FE FE DD FF DF BC                  CD: 1 track: 1   min: 1 sek: 22 mode: FF
+B4 BC FE FE DD FF DF BC                  CD: 3 track: 1   min: 1 sek: 22 mode: FF
+B4 BE FE FE DD FF DF BC                  CD: 1 track: 1   min: 1 sek: 22 mode: FF
+TP-INFO
+---------------------------------------------
+532C30CF
+---------------------------------------------
+0 B 42 FB F9 FC DD FF                  CD: B4 track: BD   min: 4 sek: 6 mode: FC
+29 FD 9E FE DD FF CF 1C                  CD: 42 track: 61   min: 1 sek: 22 mode: FF
+BE FE FE DD FF CF 1C 34                  CD: 41 track: 1   min: 22 sek: 0 mode: CF
+34 BE FE FE DD FF CF 3C                  CD: 1 track: 1   min: 1 sek: 22 mode: FF
+A5 BF BF B7 7F C FE FF                  CD: 0 track: 40   min: 48 sek: 80 mode: C
+97 DF DF DB BF F9 E7 86                  CD: 60 track: 20   min: 24 sek: 40 mode: F9
+34 BE FE FE DD FF CF 3C                  CD: 1 track: 1   min: 1 sek: 22 mode: FF
+34 BE FE FE DC FF CF 3C                  CD: 1 track: 1   min: 1 sek: 23 mode: FF
+34 BE FE FE DC FF CF 38                  CD: 1 track: 1   min: 1 sek: 23 mode: FF
+34 BE FE FE DC FF CF 3C                  CD: 1 track: 1   min: 1 sek: 23 mode: FF
+34 BE FE FE DB FF CF 3C                  CD: 1 track: 1   min: 1 sek: 24 mode: FF
+34 BE FE FE D7 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 28 mode: FF
+34 BE FE FE DB FF CF 3C                  CD: 1 track: 1   min: 1 sek: 24 mode: FF
+34 BE FE FE DA FF CF 3C                  CD: 1 track: 1   min: 1 sek: 25 mode: FF
+34 BE FE FE DA FF CF 38                  CD: 1 track: 1   min: 1 sek: 25 mode: FF
+34 BE FE FE DA FF CF 3C                  CD: 1 track: 1   min: 1 sek: 25 mode: FF
+3C BE FE FE D9 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 26 mode: FF
+34 BE FE FE D9 FF 6 FE                  CD: 1 track: 1   min: 1 sek: 26 mode: FF
+34 BE FE FE D1 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 2E mode: FF
+34 BE FE FE D9 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 26 mode: FF
+34 BE FE FE D8 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 27 mode: FF
+34 BE FE FE D8 FF DF 3C                  CD: 1 track: 1   min: 1 sek: 27 mode: FF
+34 BE FE FE D8 FF CF 7C                  CD: 1 track: 1   min: 1 sek: 27 mode: FF
+34 BE FE FE D8 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 27 mode: FF
+34 BE FE FE D7 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 28 mode: FF
+34 BE FE FE D6 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 29 mode: FF
+34 BE FE FE CF FF CF 3C                  CD: 1 track: 1   min: 1 sek: 30 mode: FF
+34 BE FE FE CE FF CF 3C                  CD: 1 track: 1   min: 1 sek: 31 mode: FF
+34 BE FE FE CD FF CF 3C                  CD: 1 track: 1   min: 1 sek: 32 mode: FF
+34 BE FE FE CD FF DF 3C                  CD: 1 track: 1   min: 1 sek: 32 mode: FF
+34 BE FE FE CD FF CF 3C                  CD: 1 track: 1   min: 1 sek: 32 mode: FF
+34 BE FE FE CC FF CF 3C                  CD: 1 track: 1   min: 1 sek: 33 mode: FF
+34 BE FE FE CB FF CF 3C                  CD: 1 track: 1   min: 1 sek: 34 mode: FF
+3C BE FE FE CB FF CF 3C                  CD: 1 track: 1   min: 1 sek: 34 mode: FF
+34 BE FE FE CB FF CF 3C                  CD: 1 track: 1   min: 1 sek: 34 mode: FF
+34 BE FE FE CA FF CF 3C                  CD: 1 track: 1   min: 1 sek: 35 mode: FF
+34 BC FE FE CA FF CF 3C                  CD: 3 track: 1   min: 1 sek: 35 mode: FF
+34 BE FE FE CA FF CF 3C                  CD: 1 track: 1   min: 1 sek: 35 mode: FF
+34 BE FE FE C9 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 36 mode: FF
+34 BE FE FE C8 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 37 mode: FF
+34 BE FE FE C7 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 38 mode: FF
+TP-INFO
+---------------------------------------------
+532C30CF
+---------------------------------------------
+0 0 D 17 CF E7 F6 3F                  CD: BF track: F2   min: E8 sek: 30 mode: E7
+29 7F 7F 5C CE FE FF 9C                  CD: C0 track: 80   min: A3 sek: 31 mode: FE
+B4 BE FE FE B9 FF DF BC                  CD: 1 track: 1   min: 1 sek: 46 mode: FF
+B4 BE FE FE BB FF DF BC                  CD: 1 track: 1   min: 1 sek: 44 mode: FF
+B4 BE FE FE B9 FF DF BC                  CD: 1 track: 1   min: 1 sek: 46 mode: FF
+B4 BE FE FE BB FF DF BC                  CD: 1 track: 1   min: 1 sek: 44 mode: FF
+A4 BE FE FE B9 FF DF BC                  CD: 1 track: 1   min: 1 sek: 46 mode: FF
+B4 BE FE FE B9 FF DF BC                  CD: 1 track: 1   min: 1 sek: 46 mode: FF
+B4 BE FC FE B9 FF DF BC                  CD: 1 track: 3   min: 1 sek: 46 mode: FF
+B4 BE FE FE B9 FF DF BC                  CD: 1 track: 1   min: 1 sek: 46 mode: FF
+B4 BC FE FE B9 FF DF BC                  CD: 3 track: 1   min: 1 sek: 46 mode: FF
+B4 BE FE FE B9 FF DF BC                  CD: 1 track: 1   min: 1 sek: 46 mode: FF
+B4 BE FE FC B9 FF DF BC                  CD: 1 track: 1   min: 3 sek: 46 mode: FF
+B4 BE FE FE B9 FF DF BC                  CD: 1 track: 1   min: 1 sek: 46 mode: FF
+B4 BC FE FE B9 FF DF BC                  CD: 3 track: 1   min: 1 sek: 46 mode: FF
+B4 BE FE B9 BC FE FF BC                  CD: 1 track: 1   min: 46 sek: 43 mode: FE
+B4 BE FE FE BB FF DF BC                  CD: 1 track: 1   min: 1 sek: 44 mode: FF
+B4 BE FE FE B9 FF DF BC                  CD: 1 track: 1   min: 1 sek: 46 mode: FF
+B4 BE FE FC B9 FF DF BC                  CD: 1 track: 1   min: 3 sek: 46 mode: FF
+B4 BE FE FE B9 FF DF BC                  CD: 1 track: 1   min: 1 sek: 46 mode: FF
+TP-INFO
+---------------------------------------------
+532C30CF
+---------------------------------------------
+0 B 45 F3 F8 FE 2E 1C                  CD: B4 track: BA   min: C sek: 7 mode: FE
+1C 14 BE FE B9 14 FE CF                  CD: AB track: 41   min: 1 sek: 46 mode: 14
+34 BE FE FE B9 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 46 mode: FF
+34 BC FE FE B9 FF CF 3C                  CD: 3 track: 1   min: 1 sek: 46 mode: FF
+34 BE FE FE B9 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 46 mode: FF
+34 BE FE FC B9 FF CF 3C                  CD: 1 track: 1   min: 3 sek: 46 mode: FF
+64 BE FE FE B9 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 46 mode: FF
+34 BE FE FE B9 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 46 mode: FF
+34 BE FE FE B8 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 47 mode: FF
+34 BE FE FE B0 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 4F mode: FF
+34 BE FE FE B8 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 47 mode: FF
+34 BE FE FE B7 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 48 mode: FF
+play
+---------------------------------------------
+532CE41B
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+0 34 BE 7F 3F 96 FF F9                  CD: 8B track: 41   min: 80 sek: C0 mode: 96
+34 BE FE FE B7 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 48 mode: FF
+34 BE FE FE B6 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 49 mode: FF
+34 BE FE FE AF FF CF 3C                  CD: 1 track: 1   min: 1 sek: 50 mode: FF
+34 BE FE FE AE FF CF 3C                  CD: 1 track: 1   min: 1 sek: 51 mode: FF
+pause
+---------------------------------------------
+532C10EF
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+1 A5 F3 F9 FC AE 7F E7                  CD: 1A track: C   min: 6 sek: 3 mode: AE
+E9 FD FD 5D FF 1E F8 7C                  CD: 42 track: 2   min: A2 sek: 0 mode: 1E
+7C 74 BE FE FE 8F FE 8F                  CD: CB track: 41   min: 1 sek: 1 mode: 8F
+74 BE FE FE AE FF 8F 7C                  CD: 1 track: 1   min: 1 sek: 51 mode: FF
+F4 BE FE FE AE FF 8F FC                  CD: 1 track: 1   min: 1 sek: 51 mode: FF
+74 BE FE FE AE FF 8F 7C                  CD: 1 track: 1   min: 1 sek: 51 mode: FF
+play
+---------------------------------------------
+532CE41B
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+3A 5F 7F EF FE AE AE BC                  CD: E0 track: 80   min: 10 sek: 1 mode: AE
+B4 BE FE FE AE FF AE BC                  CD: 1 track: 1   min: 1 sek: 51 mode: FF
+AE FF AE BC B4 BE FE FE                  CD: 40 track: 51   min: 43 sek: 4B mode: BE
+B4 BE FE FE AE FF AE BC                  CD: 1 track: 1   min: 1 sek: 51 mode: FF
+B4 BC FE FE AE FF AE BC                  CD: 3 track: 1   min: 1 sek: 51 mode: FF
+34 BE AE AE BE 7F AE 3C                  CD: 1 track: 51   min: 51 sek: 41 mode: 7F
+30 BE FE FE AE FF AE 3C                  CD: 1 track: 1   min: 1 sek: 51 mode: FF
+34 BE FE FE AE FF AE 3C                  CD: 1 track: 1   min: 1 sek: 51 mode: FF
+34 BE FE FE AE FF CF 3C                  CD: 1 track: 1   min: 1 sek: 51 mode: FF
+TP-INFO
+---------------------------------------------
+532C30CF
+---------------------------------------------
+0 0 D1 7C FE 7F 57 3F                  CD: BF track: 2E   min: 83 sek: 1 mode: 7F
+94 FE FF 2F FE FF DF 9C                  CD: 41 track: 0   min: D0 sek: 1 mode: FF
+B4 BE FE FE AE FF DF BC                  CD: 1 track: 1   min: 1 sek: 51 mode: FF
+B4 BC FE FE AE FF DF BC                  CD: 3 track: 1   min: 1 sek: 51 mode: FF
+B4 BE FE FE AE FF DF BC                  CD: 1 track: 1   min: 1 sek: 51 mode: FF
+TP-INFO
+---------------------------------------------
+532C30CF
+---------------------------------------------
+0 1 68 BE 3F 9F CA EF                  CD: BE track: 97   min: 41 sek: C0 mode: 9F
+14 FE AE 14 FE FF CF 1C                  CD: 41 track: 51   min: EB sek: 1 mode: FF
+34 BE FE FE AE FF CF 3C                  CD: 1 track: 1   min: 1 sek: 51 mode: FF
+34 BE FE FC AE FF CF 3C                  CD: 1 track: 1   min: 3 sek: 51 mode: FF
+34 BE FE FE AE FF CF 3C                  CD: 1 track: 1   min: 1 sek: 51 mode: FF
+34 BE FC FE AE FF CF 3C                  CD: 1 track: 3   min: 1 sek: 51 mode: FF
+34 BE FE FE AE FF 0 34                  CD: 1 track: 1   min: 1 sek: 51 mode: FF
+34 BE FE FE AD FF CF 3C                  CD: 1 track: 1   min: 1 sek: 52 mode: FF
+34 BE FE FE AC FF CF 3C                  CD: 1 track: 1   min: 1 sek: 53 mode: FF
+power on                o
+change cd               c
+next track button       =
+previous track button   -
+next CD                 ]
+previous CD             [
+play/stop               p
+CD1                     1
+CD2                     2
+CD3                     3
+CD4                     4
+CD5                     5
+CD6                     6
+CD7                     7
+CD6                     8
+CD9                     9
+TP                      t
+seek forward            f
+seek rewind             r
+scan mode               s
+shuffle 1cd             l
+shuffle 6cd             k
+help                    h
+0 0 0 0 0 0 0 34                  CD: BF track: FF   min: FF sek: FF mode: 0
+34 BE FE FE AB FF CF 3C                  CD: 1 track: 1   min: 1 sek: 54 mode: FF
+34 BE FE FC AB FF CF 3C                  CD: 1 track: 1   min: 3 sek: 54 mode: FF
+34 BE FE FE AB FF CF 3C                  CD: 1 track: 1   min: 1 sek: 54 mode: FF
+34 BE FE FE AA FF CF 3C                  CD: 1 track: 1   min: 1 sek: 55 mode: FF
+30 BE FE FE AA FF CF 3C                  CD: 1 track: 1   min: 1 sek: 55 mode: FF
+34 BE FE FE AA FF CF 3C                  CD: 1 track: 1   min: 1 sek: 55 mode: FF
+34 BE FE FE A9 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 56 mode: FF
+74 BE FE FE A9 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 56 mode: FF
+34 BE FE FE A9 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 56 mode: FF
+34 BE FE FE AB FF CF 3C                  CD: 1 track: 1   min: 1 sek: 54 mode: FF
+34 BE FE FE A8 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 57 mode: FF
+34 3E FE FE A8 FF CF 3C                  CD: 81 track: 1   min: 1 sek: 57 mode: FF
+34 BE FE FE A8 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 57 mode: FF
+34 BE FE FC A8 FF CF 3C                  CD: 1 track: 1   min: 3 sek: 57 mode: FF
+34 BE FE 0 34 EA CF 3C                  CD: 1 track: 1   min: FF sek: CB mode: EA
+34 BE FE FE A7 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 58 mode: FF
+34 BE FE FC A7 FF CF 3C                  CD: 1 track: 1   min: 3 sek: 58 mode: FF
+34 BE FE FE A7 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 58 mode: FF
+34 BE FE FC A7 FF CF 3C                  CD: 1 track: 1   min: 3 sek: 58 mode: FF
+34 BE FE FE A7 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 58 mode: FF
+34 BE FE FE A6 FF CF 3C                  CD: 1 track: 1   min: 1 sek: 59 mode: FF
+seek forward
+---------------------------------------------
+532CD827
+---------------------------------------------
+0 0 1A 2F BF 9F CA 67                  CD: BF track: E5   min: D0 sek: 40 mode: 9F
+29 BF BF 37 C7 FE FF 1C                  CD: 0 track: 40   min: C8 sek: 38 mode: FE
+A5 F7 F7 F5 37 FD F8 E1                  CD: 48 track: 8   min: A sek: C8 mode: FD
+69 FD 7E 78 FF FF BF 3C                  CD: 42 track: 81   min: 87 sek: 0 mode: FF
+34 BE FE FD FE BF BE FC                  CD: 1 track: 1   min: 2 sek: 1 mode: BF
+34 BE FE FD FB FF BF 3C                  CD: 1 track: 1   min: 2 sek: 4 mode: FF
+34 BE FE FA BF BE F9 3C                  CD: 1 track: 1   min: 5 sek: 40 mode: BE
+34 BE FE FD F9 FF BF 3C                  CD: 1 track: 1   min: 2 sek: 6 mode: FF
+34 FD BF BE F6 FF BF 3C                  CD: 42 track: 40   min: 41 sek: 9 mode: FF
+34 BE FE FD F6 FF BF 3C                  CD: 1 track: 1   min: 2 sek: 9 mode: FF
+34 FD EE FF BF 3C BF 3C                  CD: 42 track: 11   min: 0 sek: 40 mode: 3C
+BF 3C 34 BE FE 34 FD BF                  CD: 83 track: CB   min: 41 sek: 1 mode: 34
+34 BE FE FD EA FF BF 3C                  CD: 1 track: 1   min: 2 sek: 15 mode: FF
+34 FE FF 34 FD FF BF 3C                  CD: 41 track: 0   min: CB sek: 2 mode: FF
+34 BE FE FD E6 FF BF 3C                  CD: 1 track: 1   min: 2 sek: 19 mode: FF
+34 BE FE FD DE FF BF 3C                  CD: 1 track: 1   min: 2 sek: 21 mode: FF
+34 BE FE FD DC FF 34 FD                  CD: 1 track: 1   min: 2 sek: 23 mode: FF
+69 7F 7E EC FF DF 9E 34                  CD: C0 track: 81   min: 13 sek: 0 mode: DF
+A5 7F 7E EC 7F DF 9E 14                  CD: C0 track: 81   min: 13 sek: 80 mode: DF
+34 BE FE FD D6 FF BF 3C                  CD: 1 track: 1   min: 2 sek: 29 mode: FF
+34 BE FE FD CF FF BF 34                  CD: 1 track: 1   min: 2 sek: 30 mode: FF
+34 FD CE FF BF 3C BF 3C                  CD: 42 track: 31   min: 0 sek: 40 mode: 3C
+34 BE FE FD FF 34 FD BF                  CD: 1 track: 1   min: 2 sek: 0 mode: 34
+34 BE FE FD C9 FF BF 3C                  CD: 1 track: 1   min: 2 sek: 36 mode: FF
+34 BE FD BF BE FF BF 3C                  CD: 1 track: 2   min: 40 sek: 41 mode: FF
+34 BE FE FD C7 FF BF 3C                  CD: 1 track: 1   min: 2 sek: 38 mode: FF
+34 BE FE FD BD FF BF 3C                  CD: 1 track: 1   min: 2 sek: 42 mode: FF
+34 BE FE FD BC FF BF 3C                  CD: 1 track: 1   min: 2 sek: 43 mode: FF
+34 BE FE FD BA FF BF 3C                  CD: 1 track: 1   min: 2 sek: 45 mode: FF
+34 BE FE FD B8 FF BF 3C                  CD: 1 track: 1   min: 2 sek: 47 mode: FF
+34 BE FE FD B7 FF BF 3C                  CD: 1 track: 1   min: 2 sek: 48 mode: FF
+34 BE FE FD AF FF BF 3C                  CD: 1 track: 1   min: 2 sek: 50 mode: FF
+34 BE FE FD AE FF BF 3C                  CD: 1 track: 1   min: 2 sek: 51 mode: FF
+34 FE FD AD FF BF 3C 3C                  CD: 41 track: 2   min: 52 sek: 0 mode: BF
+3C 34 BE FE FD 0 34 FD                  CD: 8B track: 41   min: 1 sek: 2 mode: 0
+69 7D FD FB 55 FF 7E 78                  CD: C2 track: 2   min: 4 sek: AA mode: FF
+34 BE A7 3C FE FF BF 3C                  CD: 1 track: 58   min: C3 sek: 1 mode: FF
+69 BF BF 3F BF EF CF 14                  CD: 0 track: 40   min: C0 sek: 40 mode: EF
+34 BE FE FC FB FF BF 3C                  CD: 1 track: 1   min: 3 sek: 4 mode: FF
+34 BE FE FC FA FF BF 3C                  CD: 1 track: 1   min: 3 sek: 5 mode: FF
+34 BE FE FC F9 FF BF 3C                  CD: 1 track: 1   min: 3 sek: 6 mode: FF
+34 BE FE FC F8 FF BF 3C                  CD: 1 track: 1   min: 3 sek: 7 mode: FF
+34 BE FD FF FE FF BF BE                  CD: 1 track: 2   min: 0 sek: 1 mode: FF
+34 FD FF FD FF BF 3C 3C                  CD: 42 track: 0   min: 2 sek: 0 mode: BF
+3C 34 BE FD FF BE FB 3C                  CD: 8B track: 41   min: 2 sek: 0 mode: BE
+34 BE FD FF FB FF BF 3C                  CD: 1 track: 2   min: 0 sek: 4 mode: FF
+69 7E 7F D2 FF FF BF 3C                  CD: C1 track: 80   min: 2D sek: 0 mode: FF
+D2 FB F7 FF DF FE FC F0                  CD: 44 track: 8   min: 0 sek: 20 mode: FE
+69 FF DB FF 7E 78 BF 3C                  CD: 40 track: 24   min: 0 sek: 81 mode: 78
+34 BE FD FF FF 34 FD BF                  CD: 1 track: 2   min: 0 sek: 0 mode: 34
+34 BE FD FF EA FF BF 3C                  CD: 1 track: 2   min: 0 sek: 15 mode: FF
+34 BE 0 0 34 FF FB 3C                  CD: 1 track: FF   min: FF sek: CB mode: FF
+34 BE FD FF E8 FF BF 3C                  CD: 1 track: 2   min: 0 sek: 17 mode: FF
+69 FB 7E FF DF FF BF 3C                  CD: 44 track: 81   min: 0 sek: 20 mode: FF
+FD FF DF FF BF 3C 5F BE                  CD: 40 track: 20   min: 0 sek: 40 mode: 3C
+34 BE FD FF DD FF BF 3C                  CD: 1 track: 2   min: 0 sek: 22 mode: FF
+34 BE FD DA BF BE FF 3C                  CD: 1 track: 2   min: 25 sek: 40 mode: BE
+34 BE FD FF D9 FF BF 3C                  CD: 1 track: 2   min: 0 sek: 26 mode: FF
+34 BE FD FF CF FF BF 3C                  CD: 1 track: 2   min: 0 sek: 30 mode: FF
+34 BE FD FF CE FF BF 34                  CD: 1 track: 2   min: 0 sek: 31 mode: FF
+34 BE FD FF CD FF BF 3C                  CD: 1 track: 2   min: 0 sek: 32 mode: FF
+34 BE FD FF 0 0 BE CA                  CD: 1 track: 2   min: 0 sek: FF mode: 0
+34 BE FD FF CA FF BF 3C                  CD: 1 track: 2   min: 0 sek: 35 mode: FF
+69 7E FF 7F BE C7 BF 3C                  CD: C1 track: 0   min: 80 sek: 41 mode: C7
+34 BE FD FF C6 FF BF 3C                  CD: 1 track: 2   min: 0 sek: 39 mode: FF
+34 FF 3C FF BE FF BF 3C                  CD: 40 track: C3   min: 0 sek: 41 mode: FF
+34 BE FD FF BC FF 0 BE                  CD: 1 track: 2   min: 0 sek: 43 mode: FF
+34 BE FD FF BA FF BF 3C                  CD: 1 track: 2   min: 0 sek: 45 mode: FF
+34 BE FD FF BF FD FF 3C                  CD: 1 track: 2   min: 0 sek: 40 mode: FD
+34 BE FD FF B7 FF BF 3C                  CD: 1 track: 2   min: 0 sek: 48 mode: FF
+34 0 0 34 FF FF BF 3C                  CD: BF track: FF   min: CB sek: 0 mode: FF
+34 BE FD FF AF FF BF 3C                  CD: 1 track: 2   min: 0 sek: 50 mode: FF
+69 FF 5B FF 7E 78 BF 3C                  CD: 40 track: A4   min: 0 sek: 81 mode: 78
+34 BE FD FF FF 34 FF BF                  CD: 1 track: 2   min: 0 sek: 0 mode: 34
+34 BE FD FF A8 FF BF 3C                  CD: 1 track: 2   min: 0 sek: 57 mode: FF
+34 BE FF BF BE FF BF 3C                  CD: 1 track: 0   min: 40 sek: 41 mode: FF
+34 BE FD FE FF FF BF 3C                  CD: 1 track: 2   min: 1 sek: 0 mode: FF
+34 BE FD FE FD FF BF 3C                  CD: 1 track: 2   min: 1 sek: 2 mode: FF
+34 BE FD FE FC FF BF 34                  CD: 1 track: 2   min: 1 sek: 3 mode: FF
+34 BE FD FE F8 FF BF 3C                  CD: 1 track: 2   min: 1 sek: 7 mode: FF
+34 BE FD FE F7 BF 34 FE                  CD: 1 track: 2   min: 1 sek: 8 mode: BF
+34 BE FD FE F6 FF BF 3C                  CD: 1 track: 2   min: 1 sek: 9 mode: FF
+34 BE FD FF 3C FE FF 3C                  CD: 1 track: 2   min: 0 sek: C3 mode: FE
+34 BE FD FE ED FF BF 3C                  CD: 1 track: 2   min: 1 sek: 12 mode: FF
+34 FE FF BE EA FF BF 3C                  CD: 41 track: 0   min: 41 sek: 15 mode: FF
+BE FD FE EA FF BF 3C BE                  CD: 42 track: 1   min: 15 sek: 0 mode: BF
+69 7D FB FD D3 FF 7E 78                  CD: C2 track: 4   min: 2 sek: 2C mode: FF
+69 BF 7F B9 EF 97 DF 3C                  CD: 0 track: 80   min: 46 sek: 10 mode: 97
+A5 F7 EF F6 FF FD F9 E1                  CD: 48 track: 10   min: 9 sek: 0 mode: FD
+69 FB FF FE DC FF BF 3C                  CD: 44 track: 0   min: 1 sek: 23 mode: FF
+play
+---------------------------------------------
+532CE41B
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+34 BE FD FE DB BF 34 D8                  CD: 1 track: 2   min: 1 sek: 24 mode: BF
+34 BE FD FE D8 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 27 mode: FF
+34 BE FD FE B8 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 47 mode: FF
+34 BE FD FE D8 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 27 mode: FF
+34 BE FD FE D7 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 28 mode: FF
+34 BE FD FE D6 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 29 mode: FF
+34 BE FD FE CF FF CF 3C                  CD: 1 track: 2   min: 1 sek: 30 mode: FF
+34 BE FD FE CE FF CF 3C                  CD: 1 track: 2   min: 1 sek: 31 mode: FF
+34 BE FD FE CD FF CF 3C                  CD: 1 track: 2   min: 1 sek: 32 mode: FF
+34 BE FD FE CC FF CF 3C                  CD: 1 track: 2   min: 1 sek: 33 mode: FF
+34 BE FF FE CC FF CF 3C                  CD: 1 track: 0   min: 1 sek: 33 mode: FF
+34 BE FD FE CC FF CF 3C                  CD: 1 track: 2   min: 1 sek: 33 mode: FF
+34 BE FD FC CC FF CF 3C                  CD: 1 track: 2   min: 3 sek: 33 mode: FF
+34 BE FD FE CC FF CF 3C                  CD: 1 track: 2   min: 1 sek: 33 mode: FF
+34 BE FD FE CB FF CF 3C                  CD: 1 track: 2   min: 1 sek: 34 mode: FF
+34 BE FD FE CA FF CF 3C                  CD: 1 track: 2   min: 1 sek: 35 mode: FF
+34 BE FD FE C9 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 36 mode: FF
+34 FE FD FE C9 FF CF 3C                  CD: 41 track: 2   min: 1 sek: 36 mode: FF
+34 BE FD FE C9 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 36 mode: FF
+34 BE FD FE C8 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 37 mode: FF
+34 BE FD FE C7 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 38 mode: FF
+34 BE FD FE C7 FF DF 3C                  CD: 1 track: 2   min: 1 sek: 38 mode: FF
+34 BE FD FE C7 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 38 mode: FF
+34 BE FD FE C6 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 39 mode: FF
+34 BE FD FE BF FF CF 3C                  CD: 1 track: 2   min: 1 sek: 40 mode: FF
+24 BE FD FE BF FF CF 3C                  CD: 1 track: 2   min: 1 sek: 40 mode: FF
+34 BE FD FE BF FF CF 3C                  CD: 1 track: 2   min: 1 sek: 40 mode: FF
+34 BE FD FE BF FF CF 7C                  CD: 1 track: 2   min: 1 sek: 40 mode: FF
+34 BE FD FE BF FF CF 3C                  CD: 1 track: 2   min: 1 sek: 40 mode: FF
+34 BE FD FE BE FF CF 3C                  CD: 1 track: 2   min: 1 sek: 41 mode: FF
+34 BE FD FE BD FF CF 3C                  CD: 1 track: 2   min: 1 sek: 42 mode: FF
+34 BE FD FE BC FF CF 3C                  CD: 1 track: 2   min: 1 sek: 43 mode: FF
+34 BE FD FE BB FF CF 3C                  CD: 1 track: 2   min: 1 sek: 44 mode: FF
+34 BC FD FE BB FF CF 3C                  CD: 3 track: 2   min: 1 sek: 44 mode: FF
+34 BE FD FE BB FF CF 3C                  CD: 1 track: 2   min: 1 sek: 44 mode: FF
+34 BE FB FE BB FF CF 3C                  CD: 1 track: 4   min: 1 sek: 44 mode: FF
+34 BE FD FE BB FF CF 3C                  CD: 1 track: 2   min: 1 sek: 44 mode: FF
+34 BE FD FE BA FF CF 3C                  CD: 1 track: 2   min: 1 sek: 45 mode: FF
+34 BE FD FE BA FF CF 38                  CD: 1 track: 2   min: 1 sek: 45 mode: FF
+34 BE FD FE BA FF CF 3C                  CD: 1 track: 2   min: 1 sek: 45 mode: FF
+34 BE FD FE B9 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 46 mode: FF
+34 BE FF FE B8 FF CF 3C                  CD: 1 track: 0   min: 1 sek: 47 mode: FF
+34 BE FD FE B8 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 47 mode: FF
+34 BE FD FE B8 FF DF 3C                  CD: 1 track: 2   min: 1 sek: 47 mode: FF
+34 BE FD FE B8 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 47 mode: FF
+34 BE FD FE B7 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 48 mode: FF
+34 BE FD FE B6 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 49 mode: FF
+34 BE FD FE AF FF CF 3C                  CD: 1 track: 2   min: 1 sek: 50 mode: FF
+34 BE FD FE AF FF CF 38                  CD: 1 track: 2   min: 1 sek: 50 mode: FF
+34 BE FD FE AF FF CF 3C                  CD: 1 track: 2   min: 1 sek: 50 mode: FF
+34 BE FD FE AE FF CF 3C                  CD: 1 track: 2   min: 1 sek: 51 mode: FF
+34 BE FF FE AE FF CF 3C                  CD: 1 track: 0   min: 1 sek: 51 mode: FF
+34 BE FD FE AE FF CF 3C                  CD: 1 track: 2   min: 1 sek: 51 mode: FF
+34 BE FD FE 8E FF CF 3C                  CD: 1 track: 2   min: 1 sek: 71 mode: FF
+34 BE FD FE AE FF CF 3C                  CD: 1 track: 2   min: 1 sek: 51 mode: FF
+34 BE FD FE AD FF CF 3C                  CD: 1 track: 2   min: 1 sek: 52 mode: FF
+2C BE FD FE AD FF CF 3C                  CD: 1 track: 2   min: 1 sek: 52 mode: FF
+34 BE FD FE AD FF CF 3C                  CD: 1 track: 2   min: 1 sek: 52 mode: FF
+34 BE FD FE AC FF CF 3C                  CD: 1 track: 2   min: 1 sek: 53 mode: FF
+34 BE FD FE AB FF CF 3C                  CD: 1 track: 2   min: 1 sek: 54 mode: FF
+34 BC FD FE AB FF CF 3C                  CD: 3 track: 2   min: 1 sek: 54 mode: FF
+34 BE FD FE AB FF CF 3C                  CD: 1 track: 2   min: 1 sek: 54 mode: FF
+34 BE FD FE AA FF CF 3C                  CD: 1 track: 2   min: 1 sek: 55 mode: FF
+34 BE FF FE AA FF CF 3C                  CD: 1 track: 0   min: 1 sek: 55 mode: FF
+34 BE FD FE AA FF CF 3C                  CD: 1 track: 2   min: 1 sek: 55 mode: FF
+34 BE FD FE A9 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 56 mode: FF
+34 BE FD FE A9 FF DF 3C                  CD: 1 track: 2   min: 1 sek: 56 mode: FF
+34 BE FD FE A9 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 56 mode: FF
+34 BE FD FE A8 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 57 mode: FF
+34 BC FD FE A8 FF CF 3C                  CD: 3 track: 2   min: 1 sek: 57 mode: FF
+34 BE FD FE A8 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 57 mode: FF
+34 BE FD FE A7 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 58 mode: FF
+34 BE FD FE A7 FF CF 38                  CD: 1 track: 2   min: 1 sek: 58 mode: FF
+34 BE FD FE A7 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 58 mode: FF
+34 BE FD FE A6 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 59 mode: FF
+34 BE FD FE A6 FF CF 38                  CD: 1 track: 2   min: 1 sek: 59 mode: FF
+34 BE FD FE A6 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 59 mode: FF
+34 FE FD FE A6 FF CF 3C                  CD: 41 track: 2   min: 1 sek: 59 mode: FF
+34 BE FD FE A6 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 59 mode: FF
+34 BE FD FE A4 FF CF 3C                  CD: 1 track: 2   min: 1 sek: 5B mode: FF
+34 BE FD FD FF FF CF 3C                  CD: 1 track: 2   min: 2 sek: 0 mode: FF
+34 BE FD FD FE FF CF 3C                  CD: 1 track: 2   min: 2 sek: 1 mode: FF
+34 BE FD FD FD FF CF 3C                  CD: 1 track: 2   min: 2 sek: 2 mode: FF
+34 BE FD FD FD FF CF 7C                  CD: 1 track: 2   min: 2 sek: 2 mode: FF
+34 BE FD FD FD FF CF 3C                  CD: 1 track: 2   min: 2 sek: 2 mode: FF
+34 BE FD FD FC FF CF 3C                  CD: 1 track: 2   min: 2 sek: 3 mode: FF
+34 BE FD FD FB FF CF 3C                  CD: 1 track: 2   min: 2 sek: 4 mode: FF
+34 BE FD FD FA FF CF 3C                  CD: 1 track: 2   min: 2 sek: 5 mode: FF
+34 BE FD FD F9 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 6 mode: FF
+2C BE FD FD F9 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 6 mode: FF
+34 BE FD FD F9 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 6 mode: FF
+34 BE FD FD F8 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 7 mode: FF
+34 BC FD FD F8 FF CF 3C                  CD: 3 track: 2   min: 2 sek: 7 mode: FF
+34 BE FD FD F8 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 7 mode: FF
+34 BE FD FD F7 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 8 mode: FF
+34 BE FD FD F6 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 9 mode: FF
+34 BE FD FD F6 FF CF 7C                  CD: 1 track: 2   min: 2 sek: 9 mode: FF
+34 BE FD FD F6 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 9 mode: FF
+34 BE FD FB F6 FF CF 3C                  CD: 1 track: 2   min: 4 sek: 9 mode: FF
+34 BE FD FD F6 FF CF 1                  CD: 1 track: 2   min: 2 sek: 9 mode: FF
+CF 3C 34 BE FD FD F6 FF                  CD: 83 track: CB   min: 41 sek: 2 mode: FD
+34 BE FD FD F6 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 9 mode: FF
+34 BE FD FD EF FF CF 3C                  CD: 1 track: 2   min: 2 sek: 10 mode: FF
+34 BE FD FD EE FF CF 3C                  CD: 1 track: 2   min: 2 sek: 11 mode: FF
+34 BE FD FD EC FF CF 3C                  CD: 1 track: 2   min: 2 sek: 13 mode: FF
+34 BE FD FD EE FF CF 3C                  CD: 1 track: 2   min: 2 sek: 11 mode: FF
+34 BE FD FD ED FF CF 3C                  CD: 1 track: 2   min: 2 sek: 12 mode: FF
+34 BE FD FD ED FF CF 38                  CD: 1 track: 2   min: 2 sek: 12 mode: FF
+34 BE FD FD ED FF CF 3C                  CD: 1 track: 2   min: 2 sek: 12 mode: FF
+34 BE FD FD EC FF CF 3C                  CD: 1 track: 2   min: 2 sek: 13 mode: FF
+34 BE FD FD EC FF CF 7C                  CD: 1 track: 2   min: 2 sek: 13 mode: FF
+34 BE FD FD EC FF CF 3C                  CD: 1 track: 2   min: 2 sek: 13 mode: FF
+34 BE FD FD EB FF CF 3C                  CD: 1 track: 2   min: 2 sek: 14 mode: FF
+34 BE FD FD EA FF CF 3C                  CD: 1 track: 2   min: 2 sek: 15 mode: FF
+34 BE FD FB EA FF CF 3C                  CD: 1 track: 2   min: 4 sek: 15 mode: FF
+34 BE FD FD EA FF CF 3C                  CD: 1 track: 2   min: 2 sek: 15 mode: FF
+34 BE FD FD E9 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 16 mode: FF
+34 BE FD FD E8 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 17 mode: FF
+34 BC FD FD E8 FF CF 3C                  CD: 3 track: 2   min: 2 sek: 17 mode: FF
+34 BE FD FD E8 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 17 mode: FF
+34 BE FD FD E7 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 18 mode: FF
+34 BE FD FD E6 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 19 mode: FF
+34 BE FD FD DF FF CF 3C                  CD: 1 track: 2   min: 2 sek: 20 mode: FF
+34 BE FD FD DE FF CF 3C                  CD: 1 track: 2   min: 2 sek: 21 mode: FF
+34 BE FD FD DD FF CF 3C                  CD: 1 track: 2   min: 2 sek: 22 mode: FF
+34 FE FD FD DD FF CF 3C                  CD: 41 track: 2   min: 2 sek: 22 mode: FF
+34 BE FD FD DD FF CF 3C                  CD: 1 track: 2   min: 2 sek: 22 mode: FF
+34 BE FD FD DC FF CF 3C                  CD: 1 track: 2   min: 2 sek: 23 mode: FF
+34 FE FD FD DC FF CF 3C                  CD: 41 track: 2   min: 2 sek: 23 mode: FF
+34 BE FD FD DC FF CF 3C                  CD: 1 track: 2   min: 2 sek: 23 mode: FF
+34 BE FB FD DC FF CF 3C                  CD: 1 track: 4   min: 2 sek: 23 mode: FF
+34 BE FD FD DB FF CF 3C                  CD: 1 track: 2   min: 2 sek: 24 mode: FF
+34 BE FD FD DA FF CF 3C                  CD: 1 track: 2   min: 2 sek: 25 mode: FF
+34 BE FF FD DA FF CF 3C                  CD: 1 track: 0   min: 2 sek: 25 mode: FF
+34 BE FD FD DA FF CF 3C                  CD: 1 track: 2   min: 2 sek: 25 mode: FF
+34 BE FD FD D9 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 26 mode: FF
+69 7E FE EC FF E7 9E 34                  CD: C1 track: 1   min: 13 sek: 0 mode: E7
+D2 7E FE EC FF EF 9E 14                  CD: C1 track: 1   min: 13 sek: 0 mode: EF
+34 BE FD FD D9 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 26 mode: FF
+34 BE FD FD D8 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 27 mode: FF
+34 BE FD FD D7 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 28 mode: FF
+34 BE FD FD D7 FF CF 38                  CD: 1 track: 2   min: 2 sek: 28 mode: FF
+34 BE FD FD D7 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 28 mode: FF
+34 BE FD FD D6 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 29 mode: FF
+34 BE FF FD CF FF CF 3C                  CD: 1 track: 0   min: 2 sek: 30 mode: FF
+34 BE FD FD CF FF CF 3C                  CD: 1 track: 2   min: 2 sek: 30 mode: FF
+34 BE FD FB CF FF CF 3C                  CD: 1 track: 2   min: 4 sek: 30 mode: FF
+34 BE FD FD CF FF CF 3C                  CD: 1 track: 2   min: 2 sek: 30 mode: FF
+34 BE FD FD CE FF CF 3C                  CD: 1 track: 2   min: 2 sek: 31 mode: FF
+34 BE FD FD CD FF CF 3C                  CD: 1 track: 2   min: 2 sek: 32 mode: FF
+34 BE FD FD C9 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 36 mode: FF
+28 BE FD FD CD FF CF 3C                  CD: 1 track: 2   min: 2 sek: 32 mode: FF
+34 BE FD FD CD FF CF 3C                  CD: 1 track: 2   min: 2 sek: 32 mode: FF
+34 BE FD FD CC FF CF 3C                  CD: 1 track: 2   min: 2 sek: 33 mode: FF
+34 BE FD FD CC FF CF 38                  CD: 1 track: 2   min: 2 sek: 33 mode: FF
+34 BE FD FD CC FF CF 3C                  CD: 1 track: 2   min: 2 sek: 33 mode: FF
+34 BE FD FD CB FF CF 3C                  CD: 1 track: 2   min: 2 sek: 34 mode: FF
+20 BE FD FD CB FF CF 3C                  CD: 1 track: 2   min: 2 sek: 34 mode: FF
+34 BE FD FD CB FF CF 3C                  CD: 1 track: 2   min: 2 sek: 34 mode: FF
+34 BE FD FD CA FF CF 3C                  CD: 1 track: 2   min: 2 sek: 35 mode: FF
+34 BE FD FD C9 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 36 mode: FF
+34 BE FD FD C8 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 37 mode: FF
+34 BE FD FD C7 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 38 mode: FF
+34 FE FD FD C6 FF CF 3C                  CD: 41 track: 2   min: 2 sek: 39 mode: FF
+34 BE FD FD C6 FF CF 3C                  CD: 1 track: 2   min: 2 sek: 39 mode: FF
+34 BE FD FD BF FF CF 3C                  CD: 1 track: 2   min: 2 sek: 40 mode: FF
+34 BE FB FD BF FF CF 3C                  CD: 1 track: 4   min: 2 sek: 40 mode: FF
+34 BE FD FD BF FF CF 3C                  CD: 1 track: 2   min: 2 sek: 40 mode: FF
+34 BE FD FD BE FF CF 3C                  CD: 1 track: 2   min: 2 sek: 41 mode: FF
+34 BE FD FD FE FF CF 3C                  CD: 1 track: 2   min: 2 sek: 1 mode: FF
+34 BE FD FD BE FF CF 3C                  CD: 1 track: 2   min: 2 sek: 41 mode: FF
+34 BE FD FD BD FF CF 38                  CD: 1 track: 2   min: 2 sek: 42 mode: FF
+34 BE FD FD BD FF CF 3C                  CD: 1 track: 2   min: 2 sek: 42 mode: FF
+34 BE FD FD BC FF CF 3C                  CD: 1 track: 2   min: 2 sek: 43 mode: FF
+34 BE FD FD BB FF CF 3C                  CD: 1 track: 2   min: 2 sek: 44 mode: FF
+seek forward
+---------------------------------------------
+532CD827
+---------------------------------------------
+0 D1 7D FB FB 77 FF 9E                  CD: 6E track: 82   min: 4 sek: 4 mode: 77
+29 FB 77 FF 7E 38 BF 1C                  CD: 44 track: 88   min: 0 sek: 81 mode: 38
+BF 1C 34 BE 0 0 FD FF                  CD: A3 track: CB   min: 41 sek: FF mode: 0
+69 7D FB FB 77 FF 7E 78                  CD: C2 track: 4   min: 4 sek: 88 mode: FF
+34 FD FF 2F B8 FF BF 3C                  CD: 42 track: 0   min: D0 sek: 47 mode: FF
+34 BE FD FD B8 FF BF 3C                  CD: 1 track: 2   min: 2 sek: 47 mode: FF
+34 FD FD AE FF BF 3C 3C                  CD: 42 track: 2   min: 51 sek: 0 mode: BF
+3C 34 BE FD FD 34 AB BF                  CD: 8B track: 41   min: 2 sek: 2 mode: 34
+34 BE FD FD AB FF BF 3C                  CD: 1 track: 2   min: 2 sek: 54 mode: FF
+34 FD FF 3C FD FF BF 3C                  CD: 42 track: 0   min: C3 sek: 2 mode: FF
+34 BE FD FD A8 FF BF 3C                  CD: 1 track: 2   min: 2 sek: 57 mode: FF
+34 BE FD FC FF FF BF 3C                  CD: 1 track: 2   min: 3 sek: 0 mode: FF
+34 BE FD FC FE FF 0 BE                  CD: 1 track: 2   min: 3 sek: 1 mode: FF
+34 BE FD FC FD FF BF 3C                  CD: 1 track: 2   min: 3 sek: 2 mode: FF
+D2 7E FE 7D FF BE FC BF                  CD: C1 track: 1   min: 82 sek: 0 mode: BE
+D2 FB F7 F3 EB FE FC F0                  CD: 44 track: 8   min: C sek: 14 mode: FE
+34 0 0 0 FD F7 BF 3C                  CD: BF track: FF   min: FF sek: 2 mode: F7
+34 BE FD FC F7 FF BF 3C                  CD: 1 track: 2   min: 3 sek: 8 mode: FF
+69 FB FF 7E 78 FF BF 3C                  CD: 44 track: 0   min: 81 sek: 87 mode: FF
+34 BE FD FC EB 7E BE EA                  CD: 1 track: 2   min: 3 sek: 14 mode: 7E
+34 BE FD FC EA FF BF 3C                  CD: 1 track: 2   min: 3 sek: 15 mode: FF
+34 BE FD EF 34 FC BF 3C                  CD: 1 track: 2   min: 10 sek: CB mode: FC
+34 BE FD FC E6 FF BF 3C                  CD: 1 track: 2   min: 3 sek: 19 mode: FF
+34 BE FD FC DF FF BF 3C                  CD: 1 track: 2   min: 3 sek: 20 mode: FF
+34 BE FD FC DD FF BF 34                  CD: 1 track: 2   min: 3 sek: 22 mode: FF
+34 BE FC FF FF FF BF 3C                  CD: 1 track: 3   min: 0 sek: 0 mode: FF
+34 BE FC FF FE FF BF 3C                  CD: 1 track: 3   min: 0 sek: 1 mode: FF
+34 BE FC FF FD FF BF 3C                  CD: 1 track: 3   min: 0 sek: 2 mode: FF
+34 BE FC FF FC FF 0 BE                  CD: 1 track: 3   min: 0 sek: 3 mode: FF
+34 BE FC FF FA FF BF 3C                  CD: 1 track: 3   min: 0 sek: 5 mode: FF
+34 BE FC FF FF 34 FF BF                  CD: 1 track: 3   min: 0 sek: 0 mode: 34
+34 BE FC FF F8 FF BF 3C                  CD: 1 track: 3   min: 0 sek: 7 mode: FF
+34 BE FF BF BE EE BF 3C                  CD: 1 track: 0   min: 40 sek: 41 mode: EE
+34 BE FC FF EE FF BF 3C                  CD: 1 track: 3   min: 0 sek: 11 mode: FF
+34 BE FC FF EB FF BF 3C                  CD: 1 track: 3   min: 0 sek: 14 mode: FF
+34 BE FC FF EA FF BF 34                  CD: 1 track: 3   min: 0 sek: 15 mode: FF
+34 BE FC FF E9 FF BF 3C                  CD: 1 track: 3   min: 0 sek: 16 mode: FF
+34 BE FC FF 3C FC FF 3C                  CD: 1 track: 3   min: 0 sek: C3 mode: FC
+34 BE FC FF DE FF BF 3C                  CD: 1 track: 3   min: 0 sek: 21 mode: FF
+34 FF BF BE DC FF BF 3C                  CD: 40 track: 40   min: 41 sek: 23 mode: FF
+34 BE FC FF DC FF BF 3C                  CD: 1 track: 3   min: 0 sek: 23 mode: FF
+34 FC FF DA FF BF 3C 3C                  CD: 43 track: 0   min: 25 sek: 0 mode: BF
+3C 34 BE FC D7 34 FF EF                  CD: 8B track: 41   min: 3 sek: 28 mode: 34
+34 BE FC FF CF FF BF 3C                  CD: 1 track: 3   min: 0 sek: 30 mode: FF
+34 0 0 0 BE CD BF 3C                  CD: BF track: FF   min: FF sek: 41 mode: CD
+34 BE FC FF CD FF BF 3C                  CD: 1 track: 3   min: 0 sek: 32 mode: FF
+play
+---------------------------------------------
+532CE41B
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+34 FB F3 FF 2F FE FC F0                  CD: 44 track: C   min: 0 sek: D0 mode: FE
+D 2F BF 3F 3F BE C8 3C                  CD: 90 track: 40   min: C0 sek: C0 mode: BE
+34 BE FC FF C8 FF CF 3C                  CD: 1 track: 3   min: 0 sek: 37 mode: FF
+34 BE F8 FF C8 FF CF 3C                  CD: 1 track: 7   min: 0 sek: 37 mode: FF
+34 BE FC FF C8 FF CF 3C                  CD: 1 track: 3   min: 0 sek: 37 mode: FF
+34 BE FC FF C7 FF CF 3C                  CD: 1 track: 3   min: 0 sek: 38 mode: FF
+34 BE FC FF C6 FF CF 3C                  CD: 1 track: 3   min: 0 sek: 39 mode: FF
+seek forward
+---------------------------------------------
+532CD827
+---------------------------------------------
+14 BE FC FF C6 FF BF 1C                  CD: 1 track: 3   min: 0 sek: 39 mode: FF
+34 BE FC FF C6 FF BF 3C                  CD: 1 track: 3   min: 0 sek: 39 mode: FF
+34 BE FC FF BE FF BF 3C                  CD: 1 track: 3   min: 0 sek: 41 mode: FF
+34 BE FC FF BD FF BF 3C                  CD: 1 track: 3   min: 0 sek: 42 mode: FF
+34 BE FC FF BC FF BF 3C                  CD: 1 track: 3   min: 0 sek: 43 mode: FF
+34 BE FC FF BB FF 34 BA                  CD: 1 track: 3   min: 0 sek: 44 mode: FF
+34 BE FC FF BA FF BF 3C                  CD: 1 track: 3   min: 0 sek: 45 mode: FF
+34 BE FC B7 3C FC BF 3C                  CD: 1 track: 3   min: 48 sek: C3 mode: FC
+34 BE FC FF B6 FF BF 3C                  CD: 1 track: 3   min: 0 sek: 49 mode: FF
+34 AE BF FF AD FF BF 3C                  CD: 11 track: 40   min: 0 sek: 52 mode: FF
+FC FF AD FF BF 3C BE FC                  CD: 40 track: 52   min: 0 sek: 40 mode: 3C
+34 BE FC FF AB FF BF 3C                  CD: 1 track: 3   min: 0 sek: 54 mode: FF
+34 BE FC A9 3C FC BF 3C                  CD: 1 track: 3   min: 56 sek: C3 mode: FC
+34 BE FC FF A6 FF BF 3C                  CD: 1 track: 3   min: 0 sek: 59 mode: FF
+play
+---------------------------------------------
+532CE41B
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+34 BF BF 3C FC FF CF 3C                  CD: 0 track: 40   min: C3 sek: 3 mode: FF
+FC FF CF 3C 34 BE FE FC                  CD: 40 track: 30   min: C3 sek: CB mode: BE
+34 BE FC FE FC FF CF 3C                  CD: 1 track: 3   min: 1 sek: 3 mode: FF
+34 BE FC FE FB FF CF 3C                  CD: 1 track: 3   min: 1 sek: 4 mode: FF
+34 BE FC FE FB FF CF 38                  CD: 1 track: 3   min: 1 sek: 4 mode: FF
+34 BE FC FE FB FF CF 3C                  CD: 1 track: 3   min: 1 sek: 4 mode: FF
+34 BE FC FE FA FF CF 3C                  CD: 1 track: 3   min: 1 sek: 5 mode: FF
+34 BE FC FE F9 FF CF 3C                  CD: 1 track: 3   min: 1 sek: 6 mode: FF
+34 BC FC FE F9 FF CF 3C                  CD: 3 track: 3   min: 1 sek: 6 mode: FF
+34 BE FC FE F9 FF CF 3C                  CD: 1 track: 3   min: 1 sek: 6 mode: FF
+seek forward
+---------------------------------------------
+532CD827
+---------------------------------------------
+FF BF 1C 14 BE FC FE F9                  CD: 0 track: E3   min: EB sek: 41 mode: FC
+14 BE FC FE F9 FF BF 1C                  CD: 1 track: 3   min: 1 sek: 6 mode: FF
+34 BE FC FE F9 FF BF 3C                  CD: 1 track: 3   min: 1 sek: 6 mode: FF
+34 BE FC FE F7 FF BF 3C                  CD: 1 track: 3   min: 1 sek: 8 mode: FF
+34 BE FC FE F6 FF BF 3C                  CD: 1 track: 3   min: 1 sek: 9 mode: FF
+34 FE FF 34 EE FF BF 3C                  CD: 41 track: 0   min: CB sek: 11 mode: FF
+34 BE FC FE EE FF BF 3C                  CD: 1 track: 3   min: 1 sek: 11 mode: FF
+34 FC FE EB FF BF 3C 3C                  CD: 43 track: 1   min: 14 sek: 0 mode: BF
+3C 34 BE FC E9 34 E8 3C                  CD: 8B track: 41   min: 3 sek: 16 mode: 34
+34 BE FC FE E7 FF BF 3C                  CD: 1 track: 3   min: 1 sek: 18 mode: FF
+34 FE BF BE DF FF BF 3C                  CD: 41 track: 40   min: 41 sek: 20 mode: FF
+34 BE FC FE DE FF BF 34                  CD: 1 track: 3   min: 1 sek: 21 mode: FF
+play
+---------------------------------------------
+532CE41B
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+34 BE FC FE DD FF BF 3C                  CD: 1 track: 3   min: 1 sek: 22 mode: FF
+34 BE FC D9 E1 FC FF 3C                  CD: 1 track: 3   min: 26 sek: 1E mode: FC
+34 BE F8 FE D9 FF CF 3C                  CD: 1 track: 7   min: 1 sek: 26 mode: FF
+3C BE FC FE D9 FF CF 3C                  CD: 1 track: 3   min: 1 sek: 26 mode: FF
+34 BE FC FE D1 FF CF 3C                  CD: 1 track: 3   min: 1 sek: 2E mode: FF
+34 BE FC FE D8 FF 0 BE                  CD: 1 track: 3   min: 1 sek: 27 mode: FF
+34 BE FC FE D7 FF CF 3C                  CD: 1 track: 3   min: 1 sek: 28 mode: FF
+seek rewind
+---------------------------------------------
+532C58A7
+---------------------------------------------
+0 0 69 7C FC 7F 35 FF                  CD: BF track: 96   min: 83 sek: 3 mode: 7F
+14 BE ED 1C FC 7F BF 1C                  CD: 1 track: 12   min: E3 sek: 3 mode: 7F
+34 BE FC FE D8 FF BF 3C                  CD: 1 track: 3   min: 1 sek: 27 mode: FF
+34 BE FC FE D9 FF BF 3C                  CD: 1 track: 3   min: 1 sek: 26 mode: FF
+34 BE FC FE DB FF BF 3C                  CD: 1 track: 3   min: 1 sek: 24 mode: FF
+34 BE FC FE DC FF BF 3C                  CD: 1 track: 3   min: 1 sek: 23 mode: FF
+34 BE FC B7 BF BE DF 3C                  CD: 1 track: 3   min: 48 sek: 40 mode: BE
+34 BE FC FE E6 FF BF 3C                  CD: 1 track: 3   min: 1 sek: 19 mode: FF
+34 FD CF FC E8 FF BF 3C                  CD: 42 track: 30   min: 3 sek: 17 mode: FF
+D2 FB F3 FB A3 FE FC F0                  CD: 44 track: C   min: 4 sek: 5C mode: FE
+69 7D F9 FD D5 FF 7E 78                  CD: C2 track: 6   min: 2 sek: 2A mode: FF
+34 BE FC FE FF BE EC 3C                  CD: 1 track: 3   min: 1 sek: 0 mode: BE
+34 BE FC FE EF FF BF 3C                  CD: 1 track: 3   min: 1 sek: 10 mode: FF
+34 BE FC FE F7 FF BF 3C                  CD: 1 track: 3   min: 1 sek: 8 mode: FF
+play
+---------------------------------------------
+532CE41B
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+1A 5F 7E 3F 9F 34 FE FF                  CD: E0 track: 81   min: C0 sek: 60 mode: 34
+34 BE FC FE FB FF CF 3C                  CD: 1 track: 3   min: 1 sek: 4 mode: FF
+34 BE FC FE FA FF CF 3C                  CD: 1 track: 3   min: 1 sek: 5 mode: FF
+34 BE FC FE FC FF CF 3C                  CD: 1 track: 3   min: 1 sek: 3 mode: FF
+34 BE FC FE FA FF CF 3C                  CD: 1 track: 3   min: 1 sek: 5 mode: FF
+34 BE FC FC FA FF CF 3C                  CD: 1 track: 3   min: 3 sek: 5 mode: FF
+34 BE FC FE FA FF CF BE                  CD: 1 track: 3   min: 1 sek: 5 mode: FF
+seek rewind
+---------------------------------------------
+532C58A7
+---------------------------------------------
+0 D 17 CF CF E3 EB FF                  CD: B2 track: E8   min: 30 sek: 30 mode: E3
+14 FE FF FE FA FF BF 1C                  CD: 41 track: 0   min: 1 sek: 5 mode: FF
+FE FA FF BF 1C 34 BE BE                  CD: 45 track: 0   min: 40 sek: E3 mode: 34
+34 BE FC FE FA FF BF 3C                  CD: 1 track: 3   min: 1 sek: 5 mode: FF
+69 BF 3F BF 3F BE FD 3C                  CD: 0 track: C0   min: 40 sek: C0 mode: BE
+A5 F7 E7 F7 EF FD F9 E1                  CD: 48 track: 18   min: 8 sek: 10 mode: FD
+34 BE FC FE FF FF BF 3C                  CD: 1 track: 3   min: 1 sek: 0 mode: FF
+34 BE FC FF A8 FF BF 0                  CD: 1 track: 3   min: 0 sek: 57 mode: FF
+34 FC FF A9 FF BF 3C 3C                  CD: 43 track: 0   min: 56 sek: 0 mode: BF
+34 BE FC FF AA 3C FC FF                  CD: 1 track: 3   min: 0 sek: 55 mode: 3C
+34 BE FC FF AC FF BF 3C                  CD: 1 track: 3   min: 0 sek: 53 mode: FF
+34 BE AE 3C 9F FF BF 3C                  CD: 1 track: 51   min: C3 sek: 60 mode: FF
+34 BE FC FF B7 FF BF 3C                  CD: 1 track: 3   min: 0 sek: 48 mode: FF
+34 BE FC FF B8 FF BF 3C                  CD: 1 track: 3   min: 0 sek: 47 mode: FF
+34 BE FC FF BA FF BF 3C                  CD: 1 track: 3   min: 0 sek: 45 mode: FF
+34 BE FC FF BC FF BF 3C                  CD: 1 track: 3   min: 0 sek: 43 mode: FF
+34 BE FC 0 0 BE BE BF                  CD: 1 track: 3   min: FF sek: FF mode: BE
+34 BE FC FF BE FF BF 3C                  CD: 1 track: 3   min: 0 sek: 41 mode: FF
+34 FC BF BE C7 FF BF 3C                  CD: 43 track: 40   min: 41 sek: 38 mode: FF
+34 BE FC FF C7 FF BF F7                  CD: 1 track: 3   min: 0 sek: 38 mode: FF
+34 BE FC FF C9 FF BF 3C                  CD: 1 track: 3   min: 0 sek: 36 mode: FF
+34 BE FC FF 0 0 BE CD                  CD: 1 track: 3   min: 0 sek: FF mode: 0
+play
+---------------------------------------------
+532CE41B
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+34 BE FC FF CD FF BF 3C                  CD: 1 track: 3   min: 0 sek: 32 mode: FF
+34 BE D6 34 FF FF CF 3C                  CD: 1 track: 29   min: CB sek: 0 mode: FF
+69 BF 3F F5 BF F3 CF 14                  CD: 0 track: C0   min: A sek: 40 mode: F3
+A5 7E 7F EB 7F E7 9E 14                  CD: C1 track: 80   min: 14 sek: 80 mode: E7
+34 BE FC FF D6 FF CF 3C                  CD: 1 track: 3   min: 0 sek: 29 mode: FF
+34 BE F8 FF D6 FF CF 3C                  CD: 1 track: 7   min: 0 sek: 29 mode: FF
+34 BE FC FF D6 FF CF 3C                  CD: 1 track: 3   min: 0 sek: 29 mode: FF
+34 BE FC FF CF FF CF 38                  CD: 1 track: 3   min: 0 sek: 30 mode: FF
+34 BE FC FF CF FF 0 FC                  CD: 1 track: 3   min: 0 sek: 30 mode: FF
+34 BE FC FF CE FF CF 3C                  CD: 1 track: 3   min: 0 sek: 31 mode: FF
+34 BC FC FF CE FF CF 3C                  CD: 3 track: 3   min: 0 sek: 31 mode: FF
+34 BE FC FF CE FF CF 3C                  CD: 1 track: 3   min: 0 sek: 31 mode: FF
+seek rewind
+---------------------------------------------
+532C58A7
+---------------------------------------------
+1A 5F 7F E7 14 FF BF 1C                  CD: E0 track: 80   min: 18 sek: EB mode: FF
+14 BE FC FF CE FF BF 1C                  CD: 1 track: 3   min: 0 sek: 31 mode: FF
+34 BE FC FF CE FF BF 3C                  CD: 1 track: 3   min: 0 sek: 31 mode: FF
+34 BE FC FF CF FF BF 3C                  CD: 1 track: 3   min: 0 sek: 30 mode: FF
+34 BE FC FF D7 FF BF 3C                  CD: 1 track: 3   min: 0 sek: 28 mode: FF
+34 BE FC FF D8 FF BF 3C                  CD: 1 track: 3   min: 0 sek: 27 mode: FF
+34 BE FC FF D9 FF BF 3C                  CD: 1 track: 3   min: 0 sek: 26 mode: FF
+34 FF BF FC DC FF BF 3C                  CD: 40 track: 40   min: 3 sek: 23 mode: FF
+34 BE FC FF DD FF BF 34                  CD: 1 track: 3   min: 0 sek: 22 mode: FF
+34 BE FC FF DE FF BF 3C                  CD: 1 track: 3   min: 0 sek: 21 mode: FF
+34 BE FC FF FF BE DF BF                  CD: 1 track: 3   min: 0 sek: 0 mode: BE
+34 BE FC FF E9 FF BF 3C                  CD: 1 track: 3   min: 0 sek: 16 mode: FF
+34 BE FC FF EA FF BF 3C                  CD: 1 track: 3   min: 0 sek: 15 mode: FF
+34 BE FC FF ED FF BF 3C                  CD: 1 track: 3   min: 0 sek: 12 mode: FF
+34 BE FC FF EE FF BF 3C                  CD: 1 track: 3   min: 0 sek: 11 mode: FF
+34 BC FC FF EE FF 34 FC                  CD: 3 track: 3   min: 0 sek: 11 mode: FF
+34 BE FC FF F7 FF BF 3C                  CD: 1 track: 3   min: 0 sek: 8 mode: FF
+34 BE FC FF 0 0 FC F9                  CD: 1 track: 3   min: 0 sek: FF mode: 0
+34 BE FC FF F9 FF BF 3C                  CD: 1 track: 3   min: 0 sek: 6 mode: FF
+34 BE 0 0 0 BE FD 3C                  CD: 1 track: FF   min: FF sek: FF mode: BE
+34 BE FC FF FD FF BF 3C                  CD: 1 track: 3   min: 0 sek: 2 mode: FF
+34 FF FF FC FE FF BF 3C                  CD: 40 track: 0   min: 3 sek: 1 mode: FF
+seek rewind
+---------------------------------------------
+532C58A7
+---------------------------------------------
+34 BE FD FC FF 3C FC CF                  CD: 1 track: 2   min: 3 sek: 0 mode: 3C
+14 BE FD FC DD FF CF 1C                  CD: 1 track: 2   min: 3 sek: 22 mode: FF
+34 BE FD FC DD FF CF 3C                  CD: 1 track: 2   min: 3 sek: 22 mode: FF
+34 BE FD FC DD FF 8F 3C                  CD: 1 track: 2   min: 3 sek: 22 mode: FF
+34 BE FD FC DD FF CF 3C                  CD: 1 track: 2   min: 3 sek: 22 mode: FF
+34 BE FD FC DC FF CF 3C                  CD: 1 track: 2   min: 3 sek: 23 mode: FF
+34 BE FD FC DB FF CF 3C                  CD: 1 track: 2   min: 3 sek: 24 mode: FF
+34 BC FD FC DB FF CF 3C                  CD: 3 track: 2   min: 3 sek: 24 mode: FF
+34 BE FD FC DB FF CF 3C                  CD: 1 track: 2   min: 3 sek: 24 mode: FF
+34 BE FF FC DA FF CF 3C                  CD: 1 track: 0   min: 3 sek: 25 mode: FF
+34 BE FD FC DA FF CF 3C                  CD: 1 track: 2   min: 3 sek: 25 mode: FF
+24 BE FD FC DA FF CF 3C                  CD: 1 track: 2   min: 3 sek: 25 mode: FF
+34 BE FD FC DA FF CF 3C                  CD: 1 track: 2   min: 3 sek: 25 mode: FF
+34 BE FD FC D9 FF CF 3C                  CD: 1 track: 2   min: 3 sek: 26 mode: FF
+34 FE FD FC D9 FF CF 3C                  CD: 41 track: 2   min: 3 sek: 26 mode: FF
+34 BE FC FF FF FF CF 3C                  CD: 1 track: 3   min: 0 sek: 0 mode: FF
+seek forward
+---------------------------------------------
+532CD827
+---------------------------------------------
+0 1A 2F 9F 8F FF E3 FF                  CD: A5 track: D0   min: 60 sek: 70 mode: FF
+29 FF 7E 38 FE FF BF 1C                  CD: 40 track: 81   min: C7 sek: 1 mode: FF
+FE FF BF 1C 34 FF BE FE                  CD: 40 track: 40   min: E3 sek: CB mode: FF
+34 BE FC FF FE FF BF 3C                  CD: 1 track: 3   min: 0 sek: 1 mode: FF
+34 BE FF 3C FC FF BF 3C                  CD: 1 track: 0   min: C3 sek: 3 mode: FF
+34 BE FC FF FB FF BF 3C                  CD: 1 track: 3   min: 0 sek: 4 mode: FF
+34 FA 3C FF F9 FF BF 3C                  CD: 45 track: C3   min: 0 sek: 6 mode: FF
+34 BE FC FF F7 FF 34 FF                  CD: 1 track: 3   min: 0 sek: 8 mode: FF
+34 BE FC FF EF FF BF 3C                  CD: 1 track: 3   min: 0 sek: 10 mode: FF
+34 BE FC FF 0 34 FF BF                  CD: 1 track: 3   min: 0 sek: FF mode: 34
+34 BE FC FF EC FF BF 3C                  CD: 1 track: 3   min: 0 sek: 13 mode: FF
+34 BE 0 0 BE E9 BF 3C                  CD: 1 track: FF   min: FF sek: 41 mode: E9
+34 BE FC FF E9 FF BF 3C                  CD: 1 track: 3   min: 0 sek: 16 mode: FF
+69 FF 7E FF E6 FF BF 3C                  CD: 40 track: 81   min: 0 sek: 19 mode: FF
+FF E6 FF BF 3C 34 34 FC                  CD: 59 track: 0   min: 40 sek: C3 mode: 34
+34 BE FC FF DE FF BF 3C                  CD: 1 track: 3   min: 0 sek: 21 mode: FF
+34 BE FF BF FC FF BF 3C                  CD: 1 track: 0   min: 40 sek: 3 mode: FF
+34 BE FC FF D9 FF BF 3C                  CD: 1 track: 3   min: 0 sek: 26 mode: FF
+34 BE FC FF D7 FF BF 3C                  CD: 1 track: 3   min: 0 sek: 28 mode: FF
+seek forward
+---------------------------------------------
+532CD827
+---------------------------------------------
+34 BE F3 DF 14 FF CF 1C                  CD: 1 track: C   min: 20 sek: EB mode: FF
+14 BE FC FF CE FF CF 1C                  CD: 1 track: 3   min: 0 sek: 31 mode: FF
+69 9D 9E FF CE FF CF 3C                  CD: 22 track: 61   min: 0 sek: 31 mode: FF
+FF CE FF CF 3C 34 0 FC                  CD: 71 track: 0   min: 30 sek: C3 mode: 34
+34 BE FC FF CE FF CF 3C                  CD: 1 track: 3   min: 0 sek: 31 mode: FF
+34 BE FC FF CD FF CF 3C                  CD: 1 track: 3   min: 0 sek: 32 mode: FF
+34 BE FC FF CF FF CF 3C                  CD: 1 track: 3   min: 0 sek: 30 mode: FF
+34 BE FC FF CD FF CF 3C                  CD: 1 track: 3   min: 0 sek: 32 mode: FF
+34 BE FC FF CC FF CF 3C                  CD: 1 track: 3   min: 0 sek: 33 mode: FF
+34 BE FC FF CB FF CF 3C                  CD: 1 track: 3   min: 0 sek: 34 mode: FF
+34 BE FC FF CB FF DF 3C                  CD: 1 track: 3   min: 0 sek: 34 mode: FF
+34 BE FC FF CB FF CF 3C                  CD: 1 track: 3   min: 0 sek: 34 mode: FF
+34 BE FC FF CA FF CF 3C                  CD: 1 track: 3   min: 0 sek: 35 mode: FF
+power on                o
+change cd               c
+next track button       =
+previous track button   -
+next CD                 ]
+previous CD             [
+play/stop               p
+CD1                     1
+CD2                     2
+CD3                     3
+CD4                     4
+CD5                     5
+CD6                     6
+CD7                     7
+CD6                     8
+CD9                     9
+TP                      t
+seek forward            f
+seek rewind             r
+scan mode               s
+shuffle 1cd             l
+shuffle 6cd             k
+help                    h
+34 BE FC FF C9 FF CF 3C                  CD: 1 track: 3   min: 0 sek: 36 mode: FF
+34 BE FC FF C8 FF CF 3C                  CD: 1 track: 3   min: 0 sek: 37 mode: FF
+34 BE FC FF C7 FF CF 3C                  CD: 1 track: 3   min: 0 sek: 38 mode: FF
+34 BE F8 FF C7 FF CF 3C                  CD: 1 track: 7   min: 0 sek: 38 mode: FF
+28 BE FC FF C7 FF CF 3C                  CD: 1 track: 3   min: 0 sek: 38 mode: FF
+34 BE FC FF C7 FF CF 3C                  CD: 1 track: 3   min: 0 sek: 38 mode: FF
+34 BE FC FF C7 0 0 FC                  CD: 1 track: 3   min: 0 sek: 38 mode: 0
+34 BE FC FF C7 FF CF 3C                  CD: 1 track: 3   min: 0 sek: 38 mode: FF
+34 BE FC FF C7 FF CF 38                  CD: 1 track: 3   min: 0 sek: 38 mode: FF
+34 BE FC FF C7 FF CF 3C                  CD: 1 track: 3   min: 0 sek: 38 mode: FF
+34 BE FC FF C6 FF CF 3C                  CD: 1 track: 3   min: 0 sek: 39 mode: FF
+34 BE FC FF BF FF CF 3C                  CD: 1 track: 3   min: 0 sek: 40 mode: FF
+34 BE FC FF BE FF CF 3C                  CD: 1 track: 3   min: 0 sek: 41 mode: FF
+2C BE FC FF BE FF CF 3C                  CD: 1 track: 3   min: 0 sek: 41 mode: FF
+34 BE FC FF BC FF CF 3C                  CD: 1 track: 3   min: 0 sek: 43 mode: FF
+34 BE FC FF BE FF CF 3C                  CD: 1 track: 3   min: 0 sek: 41 mode: FF
+toogle shuffle all cd
+---------------------------------------------
+532CE01F
+---------------------------------------------
+0 1 A2 F9 F9 FF 7C FF                  CD: BE track: 5D   min: 6 sek: 6 mode: FF
+52 7E DF 8E FC FB CF 1C                  CD: C1 track: 20   min: 71 sek: 3 mode: FB
+A5 F7 E7 FD F7 DE 78 E1                  CD: 48 track: 18   min: 2 sek: 8 mode: DE
+69 FF 7D F7 9E 78 CF 3C                  CD: 40 track: 82   min: 8 sek: 61 mode: 78
+CF 3C 24 BE FF 34 FF F3                  CD: 83 track: DB   min: 41 sek: 0 mode: 34
+34 BE FC FF BD FB CF 3C                  CD: 1 track: 3   min: 0 sek: 42 mode: FB
+34 BE FC FF BC FB CF 3C                  CD: 1 track: 3   min: 0 sek: 43 mode: FB
+34 BE FC FF BB FB CF 3C                  CD: 1 track: 3   min: 0 sek: 44 mode: FB
+34 BE FC FF BA FB CF 3C                  CD: 1 track: 3   min: 0 sek: 45 mode: FB
+34 BE FC FF B9 FB CF 3C                  CD: 1 track: 3   min: 0 sek: 46 mode: FB
+34 BE F8 FF B8 FB CF 3C                  CD: 1 track: 7   min: 0 sek: 47 mode: FB
+34 BE FC FF B8 FB CF 3C                  CD: 1 track: 3   min: 0 sek: 47 mode: FB
+34 BE FC FF B8 FB DF 3C                  CD: 1 track: 3   min: 0 sek: 47 mode: FB
+34 BE FC FF B8 CF BE 8F                  CD: 1 track: 3   min: 0 sek: 47 mode: CF
+34 BE FC FF B7 FB CF 3C                  CD: 1 track: 3   min: 0 sek: 48 mode: FB
+34 BE FC FF B7 FF CF 3C                  CD: 1 track: 3   min: 0 sek: 48 mode: FF
+34 BE FC FF B7 FB CF 3C                  CD: 1 track: 3   min: 0 sek: 48 mode: FB
+34 BE FC FF B6 FB CF 3C                  CD: 1 track: 3   min: 0 sek: 49 mode: FB
+previous track
+---------------------------------------------
+532C7887
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+0 6 8B E7 E3 FE DB FF                  CD: B9 track: 74   min: 18 sek: 1C mode: FE
+34 FF FB 9F FF FB AE 3C                  CD: 40 track: 4   min: 60 sek: 0 mode: FB
+FC FF FF FB AE 3C 34 34                  CD: 40 track: 0   min: 4 sek: 51 mode: 3C
+34 BE FC FF FF FB AE 3C                  CD: 1 track: 3   min: 0 sek: 0 mode: FB
+34 BE FC FF 0 0 FC FB                  CD: 1 track: 3   min: 0 sek: FF mode: 0
+30 BE FC FF FF FB CF 3C                  CD: 1 track: 3   min: 0 sek: 0 mode: FB
+34 BE FC FF FF FB CF 3C                  CD: 1 track: 3   min: 0 sek: 0 mode: FB
+34 BE FC FF FE FB CF 3C                  CD: 1 track: 3   min: 0 sek: 1 mode: FB
+34 BE FC FF FD FB CF 3C                  CD: 1 track: 3   min: 0 sek: 2 mode: FB
+34 BE FC FF FC FB CF 3C                  CD: 1 track: 3   min: 0 sek: 3 mode: FB
+34 BE FC FF FB FB CF 3C                  CD: 1 track: 3   min: 0 sek: 4 mode: FB
+34 BE FC FF FA FB CF 3C                  CD: 1 track: 3   min: 0 sek: 5 mode: FB
+34 BE FC FF F2 FB CF 3C                  CD: 1 track: 3   min: 0 sek: D mode: FB
+34 BE FC FF FA FB CF 3C                  CD: 1 track: 3   min: 0 sek: 5 mode: FB
+34 BE FC FF F9 FB CF 3C                  CD: 1 track: 3   min: 0 sek: 6 mode: FB
+next track
+---------------------------------------------
+532CF87
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+0 1 A2 F9 F9 FF F3 F7                  CD: BE track: 5D   min: 6 sek: 6 mode: FF
+34 BE FF AE BE FF AE 3C                  CD: 1 track: 0   min: 51 sek: 41 mode: FF
+34 BE FB FF FF FB CF 3C                  CD: 1 track: 4   min: 0 sek: 0 mode: FB
+34 BE FB FF FE FB CF 3C                  CD: 1 track: 4   min: 0 sek: 1 mode: FB
+next track
+---------------------------------------------
+532CF87
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+1A 5F 7D 7D 9E EF AE 3C                  CD: E0 track: 82   min: 82 sek: 61 mode: EF
+34 BE EF FF FF FB AE 3C                  CD: 1 track: 10   min: 0 sek: 0 mode: FB
+FF FD D7 1E 1A 5F 77 FF                  CD: 42 track: 28   min: E1 sek: E5 mode: 5F
+FF FD D7 1E 1A 5F 77 FF                  CD: 42 track: 28   min: E1 sek: E5 mode: 5F
+FF FF 75 C7 86 97 DD FF                  CD: 40 track: 8A   min: 38 sek: 79 mode: 97
+34 FF AE BE FF FB AE 3C                  CD: 40 track: 51   min: 41 sek: 0 mode: FB
+34 BE EF FF FF FB CF 3C                  CD: 1 track: 10   min: 0 sek: 0 mode: FB
+34 BE EF FF FE FB CF 3C                  CD: 1 track: 10   min: 0 sek: 1 mode: FB
+34 BE EF FF FD FB CF 3C                  CD: 1 track: 10   min: 0 sek: 2 mode: FB
+next track
+---------------------------------------------
+532CF87
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+1A 5F 1D FF FF E7 EE FB                  CD: E0 track: E2   min: 0 sek: 0 mode: E7
+34 BE EE FF FF FB AE 3C                  CD: 1 track: 11   min: 0 sek: 0 mode: FB
+34 BE EE FF FF FB CF 3C                  CD: 1 track: 11   min: 0 sek: 0 mode: FB
+34 BE EE FF FE FB CF 3C                  CD: 1 track: 11   min: 0 sek: 1 mode: FB
+toogle shuffle all cd
+---------------------------------------------
+532CE01F
+---------------------------------------------
+1A 5F FF 14 FF FF CF 1C                  CD: E0 track: 0   min: EB sek: 0 mode: FF
+14 BE EE FF FE FF CF 1C                  CD: 1 track: 11   min: 0 sek: 1 mode: FF
+34 BE EE FF FE FF CF 3C                  CD: 1 track: 11   min: 0 sek: 1 mode: FF
+34 BC EE FF FE FF CF 3C                  CD: 3 track: 11   min: 0 sek: 1 mode: FF
+34 BE EE FF FE FF CF 3C                  CD: 1 track: 11   min: 0 sek: 1 mode: FF
+34 BE EE FF FD FF CF 3C                  CD: 1 track: 11   min: 0 sek: 2 mode: FF
+34 BE EE FF FC FF CF 3C                  CD: 1 track: 11   min: 0 sek: 3 mode: FF
+34 BE EE FF FB FF CF 3C                  CD: 1 track: 11   min: 0 sek: 4 mode: FF
+toogle shuffle all cd
+---------------------------------------------
+532CE01F
+---------------------------------------------
+0 1A 5F 1D CF FF BF FC                  CD: A5 track: A0   min: E2 sek: 30 mode: FF
+29 FF F5 F7 9E 38 CF 1C                  CD: 40 track: A   min: 8 sek: 61 mode: 38
+CF 1C 34 BE EE 0 34 EE                  CD: A3 track: CB   min: 41 sek: 11 mode: 0
+D2 FB BB FF EB EF 3C F0                  CD: 44 track: 44   min: 0 sek: 14 mode: EF
+34 FF CF BE FA FB CF 3C                  CD: 40 track: 30   min: 41 sek: 5 mode: FB
+34 BE EE FF F9 FB CF 3C                  CD: 1 track: 11   min: 0 sek: 6 mode: FB
+toogle shuffle all cd
+---------------------------------------------
+532CE01F
+---------------------------------------------
+F9 FF CF 1C 14 BE EE FF                  CD: 40 track: 30   min: E3 sek: EB mode: BE
+34 BE EE FF F9 FF CF 3C                  CD: 1 track: 11   min: 0 sek: 6 mode: FF
+34 BE EE FF F8 FF CF 3C                  CD: 1 track: 11   min: 0 sek: 7 mode: FF
+34 BE EE FF F7 FF CF 3C                  CD: 1 track: 11   min: 0 sek: 8 mode: FF
+34 BE EE FF F6 FF CF 3C                  CD: 1 track: 11   min: 0 sek: 9 mode: FF
+toogle shuffle 1 cd
+---------------------------------------------
+532C609F
+---------------------------------------------
+0 0 D 17 DD CF FF 67                  CD: BF track: F2   min: E8 sek: 22 mode: CF
+14 BE EE FF F6 DF CF 1C                  CD: 1 track: 11   min: 0 sek: 9 mode: DF
+34 BE EE FF F6 DF CF 3C                  CD: 1 track: 11   min: 0 sek: 9 mode: DF
+34 BE EE FF EF DF CF 3C                  CD: 1 track: 11   min: 0 sek: 10 mode: DF
+34 BE EE FF EE DF CF 3C                  CD: 1 track: 11   min: 0 sek: 11 mode: DF
+34 BE EE FF ED DF CF 3C                  CD: 1 track: 11   min: 0 sek: 12 mode: DF
+34 BE EE FF EC DF CF 3C                  CD: 1 track: 11   min: 0 sek: 13 mode: DF
+next track
+---------------------------------------------
+532CF87
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+0 34 5F 3B 9F FD 9B F9                  CD: 8B track: A0   min: C4 sek: 60 mode: FD
+69 FF BF 5C 78 DF AE 3C                  CD: 40 track: 40   min: A3 sek: 87 mode: DF
+34 BE EF FF FF 3C EF DF                  CD: 1 track: 10   min: 0 sek: 0 mode: 3C
+34 BE EF FF FF DF CF 3C                  CD: 1 track: 10   min: 0 sek: 0 mode: DF
+3C BE EF FF FF DF CF 3C                  CD: 1 track: 10   min: 0 sek: 0 mode: DF
+34 BE EF FF FF DF CF 3C                  CD: 1 track: 10   min: 0 sek: 0 mode: DF
+34 BE EF FF FE DF CF 3C                  CD: 1 track: 10   min: 0 sek: 1 mode: DF
+next track
+---------------------------------------------
+532CF87
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+34 BE FA FF FF DF AE 3C                  CD: 1 track: 5   min: 0 sek: 0 mode: DF
+34 BE FA FF FF DF CF 3C                  CD: 1 track: 5   min: 0 sek: 0 mode: DF
+next track
+---------------------------------------------
+532CF87
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+BE F7 FF FF DF AE 3C 34                  CD: 48 track: 0   min: 0 sek: 20 mode: AE
+BE F7 FF FF DF AE 3C F7                  CD: 48 track: 0   min: 0 sek: 20 mode: AE
+BE F7 FF FF DF AE 3C 34                  CD: 48 track: 0   min: 0 sek: 20 mode: AE
+34 BE F7 FF 0 BE FF AE                  CD: 1 track: 8   min: 0 sek: FF mode: BE
+34 BE F7 FF FF DF CF 3C                  CD: 1 track: 8   min: 0 sek: 0 mode: DF
+next track
+---------------------------------------------
+532CF87
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+1A 5F 7B FF EF 9E FF AE                  CD: E0 track: 84   min: 0 sek: 10 mode: 9E
+34 BE EC FF FF DF AE 3C                  CD: 1 track: 13   min: 0 sek: 0 mode: DF
+69 7F 1E BE FF DF AE 3C                  CD: C0 track: E1   min: 41 sek: 0 mode: DF
+D2 FB B3 FF FF 7E B8 34                  CD: 44 track: 4C   min: 0 sek: 0 mode: 7E
+69 7D D9 FF FF BF 5C 78                  CD: C2 track: 26   min: 0 sek: 0 mode: BF
+34 BE EC FF FF DF AE 3C                  CD: 1 track: 13   min: 0 sek: 0 mode: DF
+34 BE EC FF FF DF CF 3C                  CD: 1 track: 13   min: 0 sek: 0 mode: DF
+next track
+---------------------------------------------
+532CF87
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+34 EC BF FC FF DF AE 3C                  CD: 53 track: 40   min: 3 sek: 0 mode: DF
+BE FC FF FF DF AE 3C 1A                  CD: 43 track: 0   min: 0 sek: 20 mode: AE
+34 FF FF DF AE 3C AE 3C                  CD: 40 track: 0   min: 20 sek: 51 mode: 3C
+AE 3C 34 BE FF DF 9F AE                  CD: 83 track: CB   min: 41 sek: 0 mode: DF
+34 BE FC FF FF DF AE 3C                  CD: 1 track: 3   min: 0 sek: 0 mode: DF
+34 BE FC FF FF DF CF 3C                  CD: 1 track: 3   min: 0 sek: 0 mode: DF
+34 BE FC FF FE DF CF 3C                  CD: 1 track: 3   min: 0 sek: 1 mode: DF
+34 BE FC FF FD DF CF 3C                  CD: 1 track: 3   min: 0 sek: 2 mode: DF
+34 3E FC FF FD FF CF 3C                  CD: 81 track: 3   min: 0 sek: 2 mode: FF
+34 BE FC FF FD DF CF 3C                  CD: 1 track: 3   min: 0 sek: 2 mode: DF
+30 BE FC FF FD DF CF 3C                  CD: 1 track: 3   min: 0 sek: 2 mode: DF
+34 BE FC FF FD DF CF 38                  CD: 1 track: 3   min: 0 sek: 2 mode: DF
+next track
+---------------------------------------------
+532CF87
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+34 BE FC FF FD DF CF 3C                  CD: 1 track: 3   min: 0 sek: 2 mode: DF
+34 BE F6 FF AE F6 FF 3C                  CD: 1 track: 9   min: 0 sek: 51 mode: F6
+34 BC F6 FF FF DF AE 3C                  CD: 3 track: 9   min: 0 sek: 0 mode: DF
+34 BE F6 FF FF DF AE 3C                  CD: 1 track: 9   min: 0 sek: 0 mode: DF
+34 BE F6 FF FF DF CF 3C                  CD: 1 track: 9   min: 0 sek: 0 mode: DF
+next cd
+---------------------------------------------
+532C38C7
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+1A 5F 7B 7F FF 9E E6 D7                  CD: E0 track: 84   min: 80 sek: 0 mode: 9E
+B4 2B E6 6E 87 D7 FF BC                  CD: 94 track: 19   min: 91 sek: 78 mode: D7
+68 AE FF FF FF DF 6F BC                  CD: 11 track: 0   min: 0 sek: 0 mode: DF
+B4 29 E8 8E 86 CF FF B4                  CD: 96 track: 17   min: 71 sek: 79 mode: CF
+B4 2E EC CE AD DC FF BC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+B4 BC F8 0 0 6D FF BC                  CD: 3 track: 7   min: FF sek: FF mode: 6D
+B4 6D 0 FF FF FF FF BC                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+68 A6 DE BC FF DF 6F BC                  CD: 19 track: 21   min: 43 sek: 0 mode: DF
+D2 F3 E3 FF FF 7D BE B4                  CD: 4C track: 1C   min: 0 sek: 0 mode: 7D
+B4 2A EA AE 9A DA FF BC                  CD: 95 track: 15   min: 51 sek: 65 mode: DA
+B4 BC F8 0 0 29 86 BC                  CD: 3 track: 7   min: FF sek: FF mode: 29
+B4 29 E8 8E 86 CF FF BC                  CD: 96 track: 17   min: 71 sek: 79 mode: CF
+68 9D 79 FF FF DF 6F BC                  CD: 22 track: 86   min: 0 sek: 0 mode: DF
+BC F8 FF FF DF 6F BC 34                  CD: 47 track: 0   min: 0 sek: 20 mode: 6F
+69 79 E1 FF FF BE DF 79                  CD: C6 track: 1E   min: 0 sek: 0 mode: BE
+B4 BC F8 FF 6F 2B 87 BC                  CD: 3 track: 7   min: 0 sek: 90 mode: 2B
+B4 2B E6 6E 87 D7 FF BC                  CD: 94 track: 19   min: 91 sek: 78 mode: D7
+B4 EA BF BC FF DF 6F BC                  CD: 55 track: 40   min: 43 sek: 0 mode: DF
+B4 29 E8 8E 86 CF B4 F8                  CD: 96 track: 17   min: 71 sek: 79 mode: CF
+B4 BC F8 FF FF DF 6F BC                  CD: 3 track: 7   min: 0 sek: 0 mode: DF
+B4 6D 0 FF FF FF FF BC                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+B4 BC F8 FF FF DF 6F BC                  CD: 3 track: 7   min: 0 sek: 0 mode: DF
+B4 2B E6 6E 87 D7 FF BC                  CD: 94 track: 19   min: 91 sek: 78 mode: D7
+B4 BC F8 FF FF DF 6F BC                  CD: 3 track: 7   min: 0 sek: 0 mode: DF
+B4 2A EA AE 9A DA FF BC                  CD: 95 track: 15   min: 51 sek: 65 mode: DA
+B4 BC F8 FF BC 8E CF BC                  CD: 3 track: 7   min: 0 sek: 43 mode: 8E
+B4 29 E8 8E 86 CF FF BC                  CD: 96 track: 17   min: 71 sek: 79 mode: CF
+B4 75 BC FF FF DF 6F BC                  CD: CA track: 43   min: 0 sek: 0 mode: DF
+B4 6D 0 FF FF FF FD BC                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+B4 BC F8 FF FF DF 6F BC                  CD: 3 track: 7   min: 0 sek: 0 mode: DF
+B4 2B E6 6E 87 D7 FF BC                  CD: 94 track: 19   min: 91 sek: 78 mode: D7
+B4 BC F8 FF FF DF 6F BC                  CD: 3 track: 7   min: 0 sek: 0 mode: DF
+B4 AE FF B8 FF DF 6F BC                  CD: 11 track: 0   min: 47 sek: 0 mode: DF
+B4 29 E8 8E 86 CF FF BC                  CD: 96 track: 17   min: 71 sek: 79 mode: CF
+B4 2E EC CE AD DC FF BC                  CD: 91 track: 13   min: 31 sek: 52 mode: DC
+B4 BC F8 ED 6D FF FF BC                  CD: 3 track: 7   min: 12 sek: 92 mode: FF
+B4 BC F8 FF FF DF EF BC                  CD: 3 track: 7   min: 0 sek: 0 mode: DF
+A8 BC F8 FF FF DF EF BC                  CD: 3 track: 7   min: 0 sek: 0 mode: DF
+B4 2B C6 6E 87 D7 FF BC                  CD: 94 track: 39   min: 91 sek: 78 mode: D7
+B4 2A EA AE 9A DA FF BC                  CD: 95 track: 15   min: 51 sek: 65 mode: DA
+B4 BC F8 0 0 E8 CF BC                  CD: 3 track: 7   min: FF sek: FF mode: E8
+B4 29 E8 9E 86 CF FF BC                  CD: 96 track: 17   min: 61 sek: 79 mode: CF
+34 BC F8 FF FF DF EF 3C                  CD: 3 track: 7   min: 0 sek: 0 mode: DF
+34 6D 0 FF FF FF FF 3C                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+34 2C E8 8E 98 CE FF 3C                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+34 BC F8 FF EF 2B 87 3C                  CD: 3 track: 7   min: 0 sek: 10 mode: 2B
+34 2B E6 6E 87 D7 FF 3C                  CD: 94 track: 19   min: 91 sek: 78 mode: D7
+D0 BA FC FF FF DF EF 3C                  CD: 5 track: 3   min: 0 sek: 0 mode: DF
+BC F8 FF FF DF EF 3C 34                  CD: 47 track: 0   min: 0 sek: 20 mode: EF
+34 79 F1 FF FF BF DE 78                  CD: C6 track: E   min: 0 sek: 0 mode: BF
+34 6D 0 FF FF FF FF 3C                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+34 BC F8 FF FF DF EF 3C                  CD: 3 track: 7   min: 0 sek: 0 mode: DF
+34 2C 98 3C BC FF EF 3C                  CD: 93 track: 67   min: C3 sek: 43 mode: FF
+34 2B E6 6E 87 D7 FF 3C                  CD: 94 track: 19   min: 91 sek: 78 mode: D7
+34 FF FF DF EF 3C FF 3C                  CD: 40 track: 0   min: 20 sek: 10 mode: 3C
+FF 3C 34 BC FF 34 8E FF                  CD: 83 track: CB   min: 43 sek: 0 mode: 34
+34 29 E8 8E 86 CF FF 3C                  CD: 96 track: 17   min: 71 sek: 79 mode: CF
+34 BC F8 FF FF DF EF 3C                  CD: 3 track: 7   min: 0 sek: 0 mode: DF
+34 6D 0 FF FF FF FF 34                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+34 2C E8 8E 98 CE FF 3C                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+34 BC F8 FF DF 2B 87 3C                  CD: 3 track: 7   min: 0 sek: 20 mode: 2B
+34 2B E6 6E 87 D7 FF 3C                  CD: 94 track: 19   min: 91 sek: 78 mode: D7
+34 AE FF FF FF DF EF 3C                  CD: 11 track: 0   min: 0 sek: 0 mode: DF
+34 29 E8 8E 86 CF FF 3C                  CD: 96 track: 17   min: 71 sek: 79 mode: CF
+34 BC F8 FF FF DF EF 3C                  CD: 3 track: 7   min: 0 sek: 0 mode: DF
+34 6D 0 FF FF FF FF 3C                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+34 BC F8 FF FF DF EF 3C                  CD: 3 track: 7   min: 0 sek: 0 mode: DF
+34 E8 CE 34 FF DF EF 3C                  CD: 57 track: 31   min: CB sek: 0 mode: DF
+34 2B E6 6E 87 D7 FF 3C                  CD: 94 track: 19   min: 91 sek: 78 mode: D7
+34 F8 FF FF DF EF 3C 3C                  CD: 47 track: 0   min: 0 sek: 20 mode: EF
+3C 34 BC F8 DF 29 86 3C                  CD: 8B track: 43   min: 7 sek: 20 mode: 29
+34 BC F8 FF FF DF EF 3C                  CD: 3 track: 7   min: 0 sek: 0 mode: DF
+34 2C 0 0 BC FF AE 38                  CD: 93 track: FF   min: FF sek: 43 mode: FF
+34 BC F8 FF FF DF AE 38                  CD: 3 track: 7   min: 0 sek: 0 mode: DF
+34 FF DF AE 3C CE FF 3C                  CD: 40 track: 20   min: 51 sek: C3 mode: CE
+CE FF 3C 34 BC FF E8 CE                  CD: 40 track: C3   min: CB sek: 43 mode: FF
+30 2C E8 8E 98 CE FF 3C                  CD: 93 track: 17   min: 71 sek: 67 mode: CE
+34 0 0 34 FF DF AE 3C                  CD: BF track: FF   min: CB sek: 0 mode: DF
+34 BC F8 FF FF DF AE 34                  CD: 3 track: 7   min: 0 sek: 0 mode: DF
+34 BC F8 FF FF DF CF 3C                  CD: 3 track: 7   min: 0 sek: 0 mode: DF
+34 BC F8 FF FE DF CF 3C                  CD: 3 track: 7   min: 0 sek: 1 mode: DF
+34 BC F8 FF FD DF CF 3C                  CD: 3 track: 7   min: 0 sek: 2 mode: DF
+34 BC F8 FF FC DF CF 3C                  CD: 3 track: 7   min: 0 sek: 3 mode: DF
+34 BC F8 FF FB DF CF 3C                  CD: 3 track: 7   min: 0 sek: 4 mode: DF
+28 BC F8 FF FB DF CF 3C                  CD: 3 track: 7   min: 0 sek: 4 mode: DF
+34 BC F8 FF F3 DF CF 3C                  CD: 3 track: 7   min: 0 sek: C mode: DF
+34 BC F8 FF FB DF CF 3C                  CD: 3 track: 7   min: 0 sek: 4 mode: DF
+34 BC F8 FF F7 DF CF BC                  CD: 3 track: 7   min: 0 sek: 8 mode: DF
+34 BC F8 FF FB DF CF 3C                  CD: 3 track: 7   min: 0 sek: 4 mode: DF
+34 BC F8 FF FA DF CF 3C                  CD: 3 track: 7   min: 0 sek: 5 mode: DF
+34 BC F8 FF F9 DF CF 3C                  CD: 3 track: 7   min: 0 sek: 6 mode: DF
+34 BC F8 FF F8 DF CF 3C                  CD: 3 track: 7   min: 0 sek: 7 mode: DF
+3C BC F8 FF F8 DF CF 3C                  CD: 3 track: 7   min: 0 sek: 7 mode: DF
+34 BC F8 FF F8 DF CF 3C                  CD: 3 track: 7   min: 0 sek: 7 mode: DF
+toogle shuffle all cd
+---------------------------------------------
+532CE01F
+---------------------------------------------
+29 3E 3F FE 3E F3 C7 14                  CD: 81 track: C0   min: 1 sek: C1 mode: F3
+A5 3E 3F FE 3E F3 C7 C                  CD: 81 track: C0   min: 1 sek: C1 mode: F3
+34 BC F8 FF F8 FB CF 3C                  CD: 3 track: 7   min: 0 sek: 7 mode: FB
+34 BC F8 FF F7 FB CF 3C                  CD: 3 track: 7   min: 0 sek: 8 mode: FB
+F7 FB CF 3C 34 BC F8 FF                  CD: 44 track: 30   min: C3 sek: CB mode: BC
+34 BC F8 FF F7 FB CF 3C                  CD: 3 track: 7   min: 0 sek: 8 mode: FB
+34 BC F8 FF F6 FB CF 3C                  CD: 3 track: 7   min: 0 sek: 9 mode: FB
+34 BC F8 FF F6 FB DF 3C                  CD: 3 track: 7   min: 0 sek: 9 mode: FB
+34 BC F8 FF F6 FB CF 3C                  CD: 3 track: 7   min: 0 sek: 9 mode: FB
+34 BC F8 FF EF FB CF 3C                  CD: 3 track: 7   min: 0 sek: 10 mode: FB
+34 BC F8 FF EE FB CF 3C                  CD: 3 track: 7   min: 0 sek: 11 mode: FB
+34 BC F8 FF ED FB CF 3C                  CD: 3 track: 7   min: 0 sek: 12 mode: FB
+34 BC F8 FF EC FB CF 3C                  CD: 3 track: 7   min: 0 sek: 13 mode: FB
+toogle shuffle all cd
+---------------------------------------------
+532CE01F
+---------------------------------------------
+0 6 8B C7 C7 FF 67 DE                  CD: B9 track: 74   min: 38 sek: 38 mode: FF
+29 FF 9E FF EB FF CF 1C                  CD: 40 track: 61   min: 0 sek: 14 mode: FF
+F8 FF EB FF CF 1C BC F8                  CD: 40 track: 14   min: 0 sek: 30 mode: 1C
+34 BC F8 FF EB FF CF 3C                  CD: 3 track: 7   min: 0 sek: 14 mode: FF
+2C BC F8 FF EB FF CF 3C                  CD: 3 track: 7   min: 0 sek: 14 mode: FF
+34 BC F8 FF EB FF CF 3C                  CD: 3 track: 7   min: 0 sek: 14 mode: FF
+24 BC F8 FF EB FF CF 3C                  CD: 3 track: 7   min: 0 sek: 14 mode: FF
+34 BC F8 FF EA FF CF 3C                  CD: 3 track: 7   min: 0 sek: 15 mode: FF
+toogle shuffle 1 cd
+---------------------------------------------
+532C609F
+---------------------------------------------
+0 6 8B C7 C3 FF A9 FF                  CD: B9 track: 74   min: 38 sek: 3C mode: FF
+29 D3 9E F8 E9 DF CF 1C                  CD: 6C track: 61   min: 7 sek: 16 mode: DF
+BC F8 FF E9 DF CF 1C 34                  CD: 47 track: 0   min: 16 sek: 20 mode: CF
+D2 F3 E3 FF A7 7F 3C F0                  CD: 4C track: 1C   min: 0 sek: 58 mode: 7F
+34 BC F8 E9 3C F8 DF 3C                  CD: 3 track: 7   min: 16 sek: C3 mode: F8
+34 BC F8 FF E8 DF CF 3C                  CD: 3 track: 7   min: 0 sek: 17 mode: DF
+toogle shuffle 1 cd
+---------------------------------------------
+532C609F
+---------------------------------------------
+1A 5E 7C F4 9E FF CF 1C                  CD: E1 track: 83   min: B sek: 61 mode: FF
+14 BC F8 FF E7 FF CF 1C                  CD: 3 track: 7   min: 0 sek: 18 mode: FF
+34 E7 3C FF E7 FF CF 3C                  CD: 58 track: C3   min: 0 sek: 18 mode: FF
+FF E7 FF CF 3C 34 BC F8                  CD: 58 track: 0   min: 30 sek: C3 mode: 34
+34 BC F8 FF E7 FF CF 3C                  CD: 3 track: 7   min: 0 sek: 18 mode: FF
+34 BC F8 FF E6 FF CF 3C                  CD: 3 track: 7   min: 0 sek: 19 mode: FF
+34 BC F8 FF DF FF CF 3C                  CD: 3 track: 7   min: 0 sek: 20 mode: FF
+34 BC F8 FF BF FF CF 3C                  CD: 3 track: 7   min: 0 sek: 40 mode: FF
+34 BC F8 FF DF FF CF 3C                  CD: 3 track: 7   min: 0 sek: 20 mode: FF
+34 BC F8 FF DE FF CF 3C                  CD: 3 track: 7   min: 0 sek: 21 mode: FF
+toogle shuffle 1 cd
+---------------------------------------------
+532C609F
+---------------------------------------------
+1A 7C EF 9E F8 DF CF 1C                  CD: C3 track: 10   min: 61 sek: 7 mode: DF
+toogle shuffle 1 cd
+---------------------------------------------
+532C609F
+---------------------------------------------
+14 BC DE 14 FF FF CF 1C                  CD: 3 track: 21   min: EB sek: 0 mode: FF
+34 BC F8 FF DE FF CF 1C                  CD: 3 track: 7   min: 0 sek: 21 mode: FF
+14 FF DE FF CF 18 CF 3C                  CD: 40 track: 21   min: 0 sek: 30 mode: 18
+34 BC F8 FF DE CF 34 DD                  CD: 3 track: 7   min: 0 sek: 21 mode: CF
+34 BC F8 FF DD FF CF 3C                  CD: 3 track: 7   min: 0 sek: 22 mode: FF
+34 BC F8 FF DC FF CF 3C                  CD: 3 track: 7   min: 0 sek: 23 mode: FF
+34 BC F8 FF D8 FF CF 3C                  CD: 3 track: 7   min: 0 sek: 27 mode: FF
+34 BC F8 FF DC FF CF 3C                  CD: 3 track: 7   min: 0 sek: 23 mode: FF
+34 BC F0 FF DC FF CF 3C                  CD: 3 track: F   min: 0 sek: 23 mode: FF
+34 BC F8 FF DC FF CF 3C                  CD: 3 track: 7   min: 0 sek: 23 mode: FF
+34 BC F8 FF DB FF CF 3C                  CD: 3 track: 7   min: 0 sek: 24 mode: FF
+3C BC F8 FF FB FF CF 3C                  CD: 3 track: 7   min: 0 sek: 4 mode: FF
+34 BC F8 FF DB FF CF 3C                  CD: 3 track: 7   min: 0 sek: 24 mode: FF
+34 BC F8 FF F3 FF CF 3C                  CD: 3 track: 7   min: 0 sek: C mode: FF
+34 BC F8 FF DB FF CF 3C                  CD: 3 track: 7   min: 0 sek: 24 mode: FF
+toogle shuffle 1 cd
+---------------------------------------------
+532C609F
+---------------------------------------------
+1 A5 E1 F0 FF DB FF 14                  CD: 1A track: 1E   min: F sek: 0 mode: DB
+29 F1 FF B5 BF 9E 38 1C                  CD: 4E track: 0   min: 4A sek: 40 mode: 9E
+34 BC F8 FF CF BC DA 3C                  CD: 3 track: 7   min: 0 sek: 30 mode: BC
+D2 3E 3F F6 B7 F3 CF 14                  CD: 81 track: C0   min: 9 sek: 48 mode: F3
+34 BC F8 FF DA DF CF 3C                  CD: 3 track: 7   min: 0 sek: 25 mode: DF
+34 BC F8 FF D9 DF CF 3C                  CD: 3 track: 7   min: 0 sek: 26 mode: DF
+34 BC F8 FF D8 DF CF 3C                  CD: 3 track: 7   min: 0 sek: 27 mode: DF
+34 BC F8 FF D7 DF CF 3C                  CD: 3 track: 7   min: 0 sek: 28 mode: DF
+34 B8 F8 FF D7 DF CF 3C                  CD: 7 track: 7   min: 0 sek: 28 mode: DF
+34 BC F8 FF D7 DF CF 3C                  CD: 3 track: 7   min: 0 sek: 28 mode: DF
+34 BC F8 FF D6 DF CF 3C                  CD: 3 track: 7   min: 0 sek: 29 mode: DF
+power on                o
+change cd               c
+next track button       =
+previous track button   -
+next CD                 ]
+previous CD             [
+play/stop               p
+CD1                     1
+CD2                     2
+CD3                     3
+CD4                     4
+CD5                     5
+CD6                     6
+CD7                     7
+CD6                     8
+CD9                     9
+TP                      t
+seek forward            f
+seek rewind             r
+scan mode               s
+shuffle 1cd             l
+shuffle 6cd             k
+help                    h
+5E F8 FF CF DF CF 3C 34                  CD: 47 track: 0   min: 30 sek: 20 mode: CF
+BC F8 FF CF DF CF 3C 34                  CD: 47 track: 0   min: 30 sek: 20 mode: CF
+BC F8 FF CF DF CF 3C 24                  CD: 47 track: 0   min: 30 sek: 20 mode: CF
+BC F8 FF CF DF CF 3C 34                  CD: 47 track: 0   min: 30 sek: 20 mode: CF
+34 BC F8 FF CF DF CF 3C                  CD: 3 track: 7   min: 0 sek: 30 mode: DF
+34 B8 F8 FF CF DF CF 3C                  CD: 7 track: 7   min: 0 sek: 30 mode: DF
+34 BC F8 FF CF DF CF 3C                  CD: 3 track: 7   min: 0 sek: 30 mode: DF
+34 BC F8 FF CE DF CF 3C                  CD: 3 track: 7   min: 0 sek: 31 mode: DF
+34 BC F8 FF CD DF CF 3C                  CD: 3 track: 7   min: 0 sek: 32 mode: DF
+3C BC F8 FF CD DF CF 3C                  CD: 3 track: 7   min: 0 sek: 32 mode: DF
+34 B8 F8 FF CD DF CF 3C                  CD: 7 track: 7   min: 0 sek: 32 mode: DF
+34 BC F8 FF CD DF CF 3C                  CD: 3 track: 7   min: 0 sek: 32 mode: DF
+34 BC F8 FF CC DF CF 3C                  CD: 3 track: 7   min: 0 sek: 33 mode: DF
+power on
+---------------------------------------------
+532CA45B
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+1A 5E 7F E7 6D FF FF 3C                  CD: E1 track: 80   min: 18 sek: 92 mode: FF
+34 6D 0 FF FF FF FF 3C                  CD: D2 track: FF   min: 0 sek: 0 mode: FF
+34 8E FF 3C CB DF CF 3C                  CD: 31 track: 0   min: C3 sek: 34 mode: DF
+34 2B E6 6E 87 D7 0 F8                  CD: 94 track: 19   min: 91 sek: 78 mode: D7
+34 BC F8 FF CB DF CF 3C                  CD: 3 track: 7   min: 0 sek: 34 mode: DF
+34 29 E8 8E 86 CF FF 3C                  CD: 96 track: 17   min: 71 sek: 79 mode: CF
+34 BC F8 FF CB DF CF 3C                  CD: 3 track: 7   min: 0 sek: 34 mode: DF
+34 8F F9 F3 CB DF CF 3C                  CD: 30 track: 6   min: C sek: 34 mode: DF
+BD FC F3 C3 4B 8F 34 CB                  CD: 43 track: C   min: 3C sek: B4 mode: 8F
+34 BC F8 FF CB DF CF 3C                  CD: 3 track: 7   min: 0 sek: 34 mode: DF
+34 BC F8 FF CA DF CF 3C                  CD: 3 track: 7   min: 0 sek: 35 mode: DF
+34 BC F8 FF CA DF CF 38                  CD: 3 track: 7   min: 0 sek: 35 mode: DF
+34 B8 F8 FF CA DF CF 3C                  CD: 7 track: 7   min: 0 sek: 35 mode: DF
+34 BC F8 FF CA DF CF 3C                  CD: 3 track: 7   min: 0 sek: 35 mode: DF
+34 BC F8 FF C9 DF CF 3C                  CD: 3 track: 7   min: 0 sek: 36 mode: DF
+34 BC F8 FF C8 DF CF 3C                  CD: 3 track: 7   min: 0 sek: 37 mode: DF
+34 BC F8 FF C8 FF CF 3C                  CD: 3 track: 7   min: 0 sek: 37 mode: FF
+34 BC F8 FF C8 DF CF 3C                  CD: 3 track: 7   min: 0 sek: 37 mode: DF
+28 BC F8 FF C8 DF CF 3C                  CD: 3 track: 7   min: 0 sek: 37 mode: DF
+34 BC F8 FF C8 DF 34 FF                  CD: 3 track: 7   min: 0 sek: 37 mode: DF
+34 BC F8 FF C0 DF CF 3C                  CD: 3 track: 7   min: 0 sek: 3F mode: DF
+34 BC F8 FF CF BC C7 3C                  CD: 3 track: 7   min: 0 sek: 30 mode: BC
+34 BC F8 FF C7 DF CF 3C                  CD: 3 track: 7   min: 0 sek: 38 mode: DF
+34 BC F8 FF C7 DF DF 3C                  CD: 3 track: 7   min: 0 sek: 38 mode: DF
+34 BC F8 FF C7 DF CF 3C                  CD: 3 track: 7   min: 0 sek: 38 mode: DF
+power on                o
+change cd               c
+next track button       =
+previous track button   -
+next CD                 ]
+previous CD             [
+play/stop               p
+CD1                     1
+CD2                     2
+CD3                     3
+CD4                     4
+CD5                     5
+CD6                     6
+CD7                     7
+CD6                     8
+CD9                     9
+TP                      t
+seek forward            f
+seek rewind             r
+scan mode               s
+shuffle 1cd             l
+shuffle 6cd             k
+help                    h
+34 BC F8 FF C6 DF CF 3C                  CD: 3 track: 7   min: 0 sek: 39 mode: DF
+34 BC F8 FF BF DF CF 3C                  CD: 3 track: 7   min: 0 sek: 40 mode: DF
+34 BC F8 FF BE DF CF 3C                  CD: 3 track: 7   min: 0 sek: 41 mode: DF
+34 BC F8 FF BD DF CF 3C                  CD: 3 track: 7   min: 0 sek: 42 mode: DF
+change cd
+---------------------------------------------
+532C1FE
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+34 BC F8 FF BC DF CF 3C                  CD: 3 track: 7   min: 0 sek: 43 mode: DF
+34 BC F8 FF BB DF CF 3C                  CD: 3 track: 7   min: 0 sek: 44 mode: DF
+30 BC F8 FF BB DF CF 3C                  CD: 3 track: 7   min: 0 sek: 44 mode: DF
+34 BC F8 FF BB DF CF 3C                  CD: 3 track: 7   min: 0 sek: 44 mode: DF
+34 BC F8 FF BA DF CF 3C                  CD: 3 track: 7   min: 0 sek: 45 mode: DF
+toogle shuffle all cd
+---------------------------------------------
+532CE01F
+---------------------------------------------
+1A 5E 7C 1F F7 F3 F8 FB                  CD: E1 track: 83   min: E0 sek: 8 mode: F3
+14 BC F8 FF BA FB CF 1C                  CD: 3 track: 7   min: 0 sek: 45 mode: FB
+34 0 0 0 34 FF CF 3C                  CD: BF track: FF   min: FF sek: CB mode: FF
+2F 3E 3F EE 7E F3 CF D                  CD: 81 track: C0   min: 11 sek: 81 mode: F3
+34 BC F8 FF B9 FB CF 3C                  CD: 3 track: 7   min: 0 sek: 46 mode: FB
+34 BC F8 FF B8 FB CF 3C                  CD: 3 track: 7   min: 0 sek: 47 mode: FB
+34 BC F8 FF B7 FB CF 3C                  CD: 3 track: 7   min: 0 sek: 48 mode: FB
+34 BC F8 FF B6 FB CF 3C                  CD: 3 track: 7   min: 0 sek: 49 mode: FB
+change cd
+---------------------------------------------
+532C1FE
+---------------------------------------------
+---------------------------------------------
+532C14EB
+---------------------------------------------
+1A 5E DB 9E F8 FB CF 3C                  CD: E1 track: 24   min: 61 sek: 7 mode: FB
+34 BC F8 FF B6 FB CF 3C                  CD: 3 track: 7   min: 0 sek: 49 mode: FB
+34 BC F8 FF AF FB CF 3C                  CD: 3 track: 7   min: 0 sek: 50 mode: FB
+34 BC F8 FF DF FB CF 3C                  CD: 3 track: 7   min: 0 sek: 20 mode: FB
+34 BC F8 FF AF FB CF 3C                  CD: 3 track: 7   min: 0 sek: 50 mode: FB
+34 BC F8 FF AE FB CF 3C                  CD: 3 track: 7   min: 0 sek: 51 mode: FB
+34 BC F8 FF AD FB CF 3C                  CD: 3 track: 7   min: 0 sek: 52 mode: FB
+34 BC F8 FF AC FB CF 3C                  CD: 3 track: 7   min: 0 sek: 53 mode: FB
