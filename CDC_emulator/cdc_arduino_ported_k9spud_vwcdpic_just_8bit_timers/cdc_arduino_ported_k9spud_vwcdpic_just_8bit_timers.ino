@@ -84,10 +84,11 @@
    select attiny25/45/85 board from tools-> board -> (ATTinyCore) ATtiny25/45/85
    select attiny85 from tools->chip->ATtiny85
    select internal 8Mhz from tools->Clock -> 8MHz (internal)
-   
+
+   to use digispark uncoment line //#define DIGISPARK
 
  *****************************************************************************/
-
+#define DIGISPARK
 
 
 #if defined(__AVR_ATmega8__) || defined(__AVR_ATmega128__)
@@ -189,18 +190,19 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 // S: ~4.57ms
 
 
-
+#ifdef DIGISPARK
+// one tick is 0.25µs cose 16Mhz
+#define STARTTHRESHOLD  2*6400            // greater than this signifies START bit
+#define HIGHTHRESHOLD   2*2496       // greater than this signifies 1 bit.
+#define LOWTHRESHOLD    2*512        // greater than this signifies 0 bit.
+#else
 // one tick is 0.5µs
-
 #define STARTTHRESHOLD  6400            // greater than this signifies START bit
-
 #define HIGHTHRESHOLD   2496       // greater than this signifies 1 bit.
-
-#define LOWTHRESHOLD     512        // greater than this signifies 0 bit.
+#define LOWTHRESHOLD    512        // greater than this signifies 0 bit.
+#endif
 
 #define PKTSIZE          -32            // command packets are 32 bits long.
-
-
 
 // do not refresh head unit faster than 5.5ms (currently not implemented)
 
@@ -914,7 +916,11 @@ void Init_VWCDC(void)
   TCCR0A = 0x00; // Normal port operation, OC0 disconnected
   TCCR0A |= _BV(WGM01); // CTC mode
   TCCR0B |= _BV(CS01);// prescaler = 8 -> 1 timer clock tick is 1us long
+#ifdef DIGISPARK
+  OCR0A = 200;//run compare rutine every 100us; digispark is 16Mhz
+#else
   OCR0A = 100;//run compare rutine every 100us;
+#endif
   TCNT0 = 0;
   TIMSK |= _BV(OCIE0A); // enable output compare interrupt A on timer0
 #else
