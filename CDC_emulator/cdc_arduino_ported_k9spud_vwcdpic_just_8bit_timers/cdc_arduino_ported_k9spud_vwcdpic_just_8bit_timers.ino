@@ -1,81 +1,91 @@
 /*****************************************************************************
- * 
- * 
- * Audi/Volkswagen Audi Interface
- * 
- * Target: arduino atmega328(tested)
- *         attinu85 (tested)
- * 
- * 
- * Author: Vincent
- * 
- * Date: January, 2011
- * 
- * Version: 0.01
- * 
- * 
- * 
- * Originally ported from VWCDPIC Project:
- * 
- * http://www.k9spud.com/vwcdpic/
- * 
- * 
- * 
- * Ported from Matthias Koelling's AVR Code: 
- * 
- * www.mikrocontroller.net/attachment/31279/vwcdc.c
- * 
- * ---------------------------------
- * 16. Mar 2015:
- * 
- * https://github.com/tomaskovacik/
- * arduino duemilanove works:
- * 
- * UNO,Duemilanove,nanoe ... atmegax8 base boards:
- * RADIO PIN -> arduino pin 
- * 
- * DataOut   -> digital 2 (INT0)
- * DataIn    -> digital 11(PB3)
- * Clock     -> digital 13(PB5)
- *
- * PC PIN    -> arduino pin
- * Serial TX -> digital 0 (PD0)
- * Serial RX -> digital 1 (PD1)
- *
- * ANDROID support:
- * PREVIOUS BUTTON -> digital 7 (PD7)
- * PLAY BUTTON -> digital 6 (PD6)
- * NEXT BUTTON -> digital 5 (PD5)  
- *
- * to enable android remote control over headphone buttons emulation uncoment #define ANDROID_HEADPHONES
- * for one button control (SONY) uncoment #define ANDROID_HEADPHONES_ONE_BUTTON
- *
- * ATTINYx5 version:
- *
- * RADIO PIN -> ATTINYx5 PIN
- * DataOut   -> 7 (INT0)
- * DataIn    -> 6 (PB1)
- * Clock     -> 5 (PB0)
- * 
- * PC PIN    -> ATTINYx5 PIN
- * Serial TX -> 2 (PB3) using tinydebug lib
- * Serial RX -> not connected
- * 
- * android headphone support, pinout:
- * play button control:arduino pin 5 (chip pin 11)
- * previous button control: arduino pin 9 (chip pin 15)
- * next button control: arduino pin 6 (chip pin 12)
- *
- * 6. Aug 2015  tomaskovacik
- *  - 2 8-bit timers used
- *  - INT0 is used
- *  - attiny85 pinout
- *  - merge with attiny85 port
- *
- * 8. Oct 2015 tomas
- *  - init support for arduino 3-button remote control over headphone mic line
- *  - init support got sony single buttone remote control on headphone mic line
- *
+
+
+   Audi/Volkswagen Audi Interface
+
+   Target: arduino atmega328(tested)
+           attinu85 (tested)
+
+
+   Author: Vincent
+
+   Date: January, 2011
+
+   Version: 0.01
+
+
+
+   Originally ported from VWCDPIC Project:
+
+   http://www.k9spud.com/vwcdpic/
+
+
+
+   Ported from Matthias Koelling's AVR Code:
+
+   www.mikrocontroller.net/attachment/31279/vwcdc.c
+
+   ---------------------------------
+   16. Mar 2015:
+
+   https://github.com/tomaskovacik/
+   arduino duemilanove works:
+
+   UNO,Duemilanove,nanoe ... atmegax8 base boards:
+   RADIO PIN -> arduino pin
+
+   DataOut   -> digital 2 (INT0)
+   DataIn    -> digital 11(PB3)
+   Clock     -> digital 13(PB5)
+
+   PC PIN    -> arduino pin
+   Serial TX -> digital 0 (PD0)
+   Serial RX -> digital 1 (PD1)
+
+   ANDROID support:
+   PREVIOUS BUTTON -> digital 7 (PD7)
+   PLAY BUTTON -> digital 6 (PD6)
+   NEXT BUTTON -> digital 5 (PD5)
+
+   to enable android remote control over headphone buttons emulation uncoment #define ANDROID_HEADPHONES
+   for one button control (SONY) uncoment #define ANDROID_HEADPHONES_ONE_BUTTON
+
+   android headphone support, pinout:
+   play button control:arduino pin 5 (chip pin 11)
+   previous button control: arduino pin 9 (chip pin 15)
+   next button control: arduino pin 6 (chip pin 12)
+
+   6. Aug 2015  tomaskovacik
+    - 2 8-bit timers used
+    - INT0 is used
+    - attiny85 pinout
+    - merge with attiny85 port
+
+   8. Oct 2015 tomas
+    - init support for arduino 3-button remote control over headphone mic line
+    - init support for sony single buttone remote control on headphone mic line
+
+
+   ATTINYx5 version:
+
+   RADIO PIN -> ATTINYx5 PIN
+   DataOut   -> 7 (INT0)
+   DataIn    -> 6 (PB1)
+   Clock     -> 5 (PB0)
+
+   PC PIN    -> ATTINYx5 PIN
+   Serial TX -> 2 (PB3) using tinydebug lib
+   Serial RX -> not connected
+
+   what you need  to install: 
+   ATTinycore: https://github.com/SpenceKonde/ATTinyCore (supported directly in arduino(from version 1.6.3) via board manager )
+   TinyDebugSerial from: https://github.com/jscrane/TinyDebugSerial (download and extract into libraries Arduino folder)
+
+   select attiny25/45/85 board from tools-> board -> (ATTinyCore) ATtiny25/45/85
+   select attiny85 from tools->chip->ATtiny85
+   select internal 8Mhz from tools->Clock -> 8MHz (internal)
+   
+
  *****************************************************************************/
 
 
@@ -107,30 +117,30 @@
 //#define PJRC
 
 /* enable hex control command on Serial line to control mpd control
- * script with shyd.de control script
- */
+   script with shyd.de control script
+*/
 //#define JUST_HEX_TO_SERIAL
 
 /* enable bluetooth module control over Serial line
- * XS3868
- */
+   XS3868
+*/
 //#define BLUETOOTH
 
 /*
- * read disc# track# status over serial line
- */
+   read disc# track# status over serial line
+*/
 //#define DISC_TRACK_NUMBER_FROM_MPD
 
 /*
- * ANDROID HEADPRONES SUPPORT
- * HTC: 3buttons, 220ohm previous|0ohm play/pause|470ohm next
- */
+   ANDROID HEADPRONES SUPPORT
+   HTC: 3buttons, 220ohm previous|0ohm play/pause|470ohm next
+*/
 //#define ANDROID_HEADPHONES
 
 /*
- * ANDROID HEADPHONES SUPORT
- * SONY: 1button mode: 1xpush play/pause;2xpush previous;3xpush next
- */
+   ANDROID HEADPHONES SUPORT
+   SONY: 1button mode: 1xpush play/pause;2xpush previous;3xpush next
+*/
 //#define ANDROID_HEADPHONES_ONE_BUTTON
 
 #ifdef ANDROID_HEADPHONES_ONE_BUTTON //just to be shure
@@ -149,7 +159,7 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 #else
 #include <HardwareSerial.h>
 #endif
- 
+
 
 
 /* -- Includes ------------------------------------------------------------- */
@@ -261,7 +271,7 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 
 #if defined(__AVR_ATtiny85__)
 
-#define RADIO_COMMAND      PB2 
+#define RADIO_COMMAND      PB2
 
 #define RADIO_COMMAND_DDR  DDRB
 
@@ -269,13 +279,13 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 
 #define RADIO_COMMAND_INPUT_PIN_ADDRESS PINB
 
-#define RADIO_CLOCK        PB1 
+#define RADIO_CLOCK        PB1
 
 #define RADIO_CLOCK_DDR    DDRB
 
 #define RADIO_CLOCK_PORT    PORTB
 
-#define RADIO_DATA         PB0 
+#define RADIO_DATA         PB0
 
 #define RADIO_DATA_DDR     DDRB
 
@@ -610,9 +620,9 @@ uint8_t disc;
 
 uint8_t track;
 
-uint8_t minute=0;
+uint8_t minute = 0;
 
-uint8_t second=0;
+uint8_t second = 0;
 
 
 
@@ -754,7 +764,7 @@ int8_t play_count = 0;
 //next button: tested: next button pushed for 100ms = 10 cycles of 10ms counter
 #ifndef ANDROID_HEADPHONES_ONE_BUTTON
 int8_t next_count = 0;
-//prev button: tested: prev button pushed twise for 100ms = 2x20 cycles of 10ms counter, 
+//prev button: tested: prev button pushed twise for 100ms = 2x20 cycles of 10ms counter,
 uint8_t prev_count = 0;
 #endif
 //test: 10m between updates
@@ -843,28 +853,28 @@ static void android_buttons();
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief     Init_VWCDC
- 
- 
- 
- initialization for cdc protocol
- 
- 
- 
- \author     Koelling
- 
- \date       26.09.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     void
- 
- */
+
+  \brief     Init_VWCDC
+
+
+
+  initialization for cdc protocol
+
+
+
+  \author     Koelling
+
+  \date       26.09.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     void
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -875,11 +885,11 @@ void Init_VWCDC(void)
 {
   cli();
   //on arduino timer0 is used for millis(), we change prescaler, but also need to disable overflow interrupt
-  #if defined(__AVR_ATtiny85__)
-    TIMSK = 0x00;
-  #else
-    TIMSK0 = 0x00;
-  #endif
+#if defined(__AVR_ATtiny85__)
+  TIMSK = 0x00;
+#else
+  TIMSK0 = 0x00;
+#endif
 
   RADIO_CLOCK_DDR |= _BV(RADIO_CLOCK);
 
@@ -892,27 +902,27 @@ void Init_VWCDC(void)
 #ifdef ANDROID_HEADPHONES
 
   ANDROID_PLAY_DDR |= _BV(ANDROID_PLAY);
-  ANDROID_NEXT_DDR |= _BV(ANDROID_NEXT); 
+  ANDROID_NEXT_DDR |= _BV(ANDROID_NEXT);
   ANDROID_PREV_DDR |= _BV(ANDROID_PREV);
   ANDROID_PREV_PORT &= ~_BV(ANDROID_PREV);
   ANDROID_PLAY_PORT &= ~_BV(ANDROID_PLAY);
   ANDROID_NEXT_PORT &= ~_BV(ANDROID_NEXT);
 
-  
+
 #endif
 
   //attinx5 - > timer1, atmegax8 -> timer0
 #if defined(__AVR_ATtiny85__)
-  TCCR1=0x00;
-  TCNT1=0;
-  TIMSK=0x00;
+  TCCR1 = 0x00;
+  TCNT1 = 0;
+  TIMSK = 0x00;
   TCCR1 |= _BV(CS11) | _BV(CS10); //prescaler 4 @ 8MHz tick ever 0.5us but we have 8bit timer, need to catch overflows
   TIMSK |= _BV(TOIE1); //enable execution of overflow interrupt handling vector
 #else //atmega chips .. timer0 is used for 100us ticks to time 700us between packet to head unit and for second (50ms mark)
-  TCCR0A=0x00;
-  TCCR0B=0x00;
-  TCNT0=0;
-  TIMSK0=0x00;
+  TCCR0A = 0x00;
+  TCCR0B = 0x00;
+  TCNT0 = 0;
+  TIMSK0 = 0x00;
   TCCR0B |= _BV(CS01); //prescaler 8 @ 16MHz tick ever 0.5us but we have 8bit timer, need to catch overflows
   TIMSK0 |= _BV(TOIE0); //enable execution of overflow interrupt handling vector
 #endif
@@ -925,7 +935,7 @@ void Init_VWCDC(void)
   TCCR0A |= _BV(WGM01); // CTC mode
   TCCR0B |= _BV(CS01);// prescaler = 8 -> 1 timer clock tick is 1us long
   OCR0A = 100;//run compare rutine every 100us;
-  TCNT0=0;
+  TCNT0 = 0;
   TIMSK |= _BV(OCIE0A); // enable output compare interrupt A on timer0
 #else
   TCCR2A = 0x00; // Normal port operation, OC0 disconnected
@@ -933,7 +943,7 @@ void Init_VWCDC(void)
   TCCR2A |= _BV(WGM21); // CTC mode
   TCCR2B |= _BV(CS21);// prescaler = 8 -> 1 timer clock tick is 0.5us long @ 16Mhz
   OCR2A = 200;//run compare rutine every 100us, 0.5x200
-  TCNT2=0;
+  TCNT2 = 0;
   TIMSK2 |= _BV(OCIE2A); // enable output compare interrupt A on timer0
 #endif
 
@@ -977,7 +987,7 @@ void Init_VWCDC(void)
 
 #ifdef DUMPMODE
 
-    startbit = FALSE;
+  startbit = FALSE;
 
 #endif
 
@@ -1017,32 +1027,32 @@ void Init_VWCDC(void)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief    ISR(TIMER2_COMPA_vect)
- 
- 
- 
- Timer2 ensures 700µs timing between display package bytes
- 
- Shift bytes out to head unit
- 
- 
- 
- \author     Koelling
- 
- \date       06.10.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     none
- 
- 
- 
- */
+
+  \brief    ISR(TIMER2_COMPA_vect)
+
+
+
+  Timer2 ensures 700µs timing between display package bytes
+
+  Shift bytes out to head unit
+
+
+
+  \author     Koelling
+
+  \date       06.10.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     none
+
+
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -1067,7 +1077,7 @@ void OutputPacket(void)
 
     Serial.print("|");
 
-    Serial.print(byte_u8,HEX);
+    Serial.print(byte_u8, HEX);
 
     Serial.print("|");
 
@@ -1113,8 +1123,8 @@ void OutputPacket(void)
 
   display_byte_counter_u8++;
 
-  if (display_byte_counter_u8==8)
-  {//wait 50ms
+  if (display_byte_counter_u8 == 8)
+  { //wait 50ms
     display_byte_counter_u8 = 0;
     counter_to_send_packet = _50MS;
   }
@@ -1125,32 +1135,32 @@ void OutputPacket(void)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief     ISR(TIMER0_COMP_vect)
- 
- *on atmega8 overflow is used
- 
- 
- 
- timer0 output compare interrupt service routine for cdc protocol
- 
- radio display update
- 
- 
- 
- \author     Koelling
- 
- \date       04.10.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     void
- 
- */
+
+  \brief     ISR(TIMER0_COMP_vect)
+
+  on atmega8 overflow is used
+
+
+
+  timer0 output compare interrupt service routine for cdc protocol
+
+  radio display update
+
+
+
+  \author     Koelling
+
+  \date       04.10.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     void
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -1158,16 +1168,16 @@ void OutputPacket(void)
 ISR(TIM0_COMPA_vect)
 {
 
-  TCNT0=0;
+  TCNT0 = 0;
 #else
 ISR(TIMER2_COMPA_vect) //100us
 {
 
-  TCNT2=0;
+  TCNT2 = 0;
 #endif
   counter_50ms--;
 
-  if (counter_to_send_packet>0) counter_to_send_packet--; //if we are under = we sending something out...
+  if (counter_to_send_packet > 0) counter_to_send_packet--; //if we are under = we sending something out...
 
   if (counter_50ms == 0)
 
@@ -1175,9 +1185,9 @@ ISR(TIMER2_COMPA_vect) //100us
 
     counter_50ms = _50MS;
 
-    flag_50ms = TRUE; 
+    flag_50ms = TRUE;
 #ifdef ANDROID_HEADPHONES
-    android_buttons();  
+    android_buttons();
 #endif
   }
 
@@ -1195,28 +1205,28 @@ ISR(TIMER2_COMPA_vect) //100us
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief     ISR(TIMER1_OVF_vect)
- 
- 
- 
- timer1 overflow interrupt service routine for cdc protocol
- 
- 
- 
- \author     Koelling
- 
- \date       26.09.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     void
- 
- */
+
+  \brief     ISR(TIMER1_OVF_vect)
+
+
+
+  timer1 overflow interrupt service routine for cdc protocol
+
+
+
+  \author     Koelling
+
+  \date       26.09.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     void
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -1230,74 +1240,74 @@ ISR(TIMER0_OVF_vect)
 {
   /*
 
-   has 8bit timer, max value=255
-   
-   pulses are: 4500 us startbit = 9000 pulses = 35*255+75
-   550 us logic 1  = 1100 pulses = 4*255+80
-   1700 us logic 0  = 3400 pulses = 13*255+85
-   
-   */
+    has 8bit timer, max value=255
+
+    pulses are: 4500 us startbit = 9000 pulses = 35*255+75
+    550 us logic 1  = 1100 pulses = 4*255+80
+    1700 us logic 0  = 3400 pulses = 13*255+85
+
+  */
 
 
-  captime_ovf=captime_ovf+0xFF;
+  captime_ovf = captime_ovf + 0xFF;
 
   if (captime_ovf > 65000)//35*255= 8925, 65536 = REAL OVERFLOW
   {
-    captime_ovf=0; 
+    captime_ovf = 0;
   }
 
-//    capbusy = FALSE; // set flag signifying packet capture done
-//
-//    if (capbit > -8) // are we already capturing on a blank byte?
-//
-//    {
-//
-//      dataerr = TRUE;
-//
-//      // Note: This should never happen on normal head unit sending 32 bit
-//
-//      //        command strings with error free data.
-//
-//      //
-//
-//      // if the capture bits were not a complete 8 bits, we need to finish
-//
-//      // rotating the bits upward so that the data is nicely formatted
-//
-//
-//
-//      while (capbit != 0) // have we finished rotating all bits up?
-//
-//      {
-//
-//        capbuffer[capptr] <<= 1; // rotate in 0 bit
-//
-//        capbit++;
-//
-//      }
-//
-//      capbit = -8;
-//
-//      capptr++; // move to new capture byte
-//
-//      if (capptr == CAP_BUFFER_END) // have we gone past the end of the
-//
-//      { // capture buffer?
-//
-//        capptr = 0; // yes, roll over to beginning
-//
-//      }
-//
-//      if (capptr == scanptr) // have we overflowed the capture queue?
-//
-//      {
-//
-//        overflow = TRUE; // yes, set error flag
-//
-//      }
-//
-//    }
-//  }
+  //    capbusy = FALSE; // set flag signifying packet capture done
+  //
+  //    if (capbit > -8) // are we already capturing on a blank byte?
+  //
+  //    {
+  //
+  //      dataerr = TRUE;
+  //
+  //      // Note: This should never happen on normal head unit sending 32 bit
+  //
+  //      //        command strings with error free data.
+  //
+  //      //
+  //
+  //      // if the capture bits were not a complete 8 bits, we need to finish
+  //
+  //      // rotating the bits upward so that the data is nicely formatted
+  //
+  //
+  //
+  //      while (capbit != 0) // have we finished rotating all bits up?
+  //
+  //      {
+  //
+  //        capbuffer[capptr] <<= 1; // rotate in 0 bit
+  //
+  //        capbit++;
+  //
+  //      }
+  //
+  //      capbit = -8;
+  //
+  //      capptr++; // move to new capture byte
+  //
+  //      if (capptr == CAP_BUFFER_END) // have we gone past the end of the
+  //
+  //      { // capture buffer?
+  //
+  //        capptr = 0; // yes, roll over to beginning
+  //
+  //      }
+  //
+  //      if (capptr == scanptr) // have we overflowed the capture queue?
+  //
+  //      {
+  //
+  //        overflow = TRUE; // yes, set error flag
+  //
+  //      }
+  //
+  //    }
+  //  }
 
 }
 
@@ -1306,28 +1316,28 @@ ISR(TIMER0_OVF_vect)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief     ISR(INT0_vect)
- 
- 
- 
- input capture interrupt service routine for cdc protocol
- 
- 
- 
- \author     Koelling
- 
- \date       26.09.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     void
- 
- */
+
+  \brief     ISR(INT0_vect)
+
+
+
+  input capture interrupt service routine for cdc protocol
+
+
+
+  \author     Koelling
+
+  \date       26.09.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     void
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -1335,7 +1345,7 @@ ISR(TIMER0_OVF_vect)
 
 ISR(INT0_vect)
 {
-  
+
 #if defined(__AVR_ATtiny85__)
   captime = captime_ovf + TCNT1;
   TCNT1 = 0; //clear timer1
@@ -1344,7 +1354,7 @@ ISR(INT0_vect)
   TCNT0 = 0; // clear timer0
 #endif
 
-  captime_ovf=0;
+  captime_ovf = 0;
 
   if ((RADIO_COMMAND_INPUT_PIN_ADDRESS & _BV(RADIO_COMMAND)) == 0)
 
@@ -1362,7 +1372,7 @@ ISR(INT0_vect)
     TIFR0  |= _BV(TOV0); // clear time0 overflow flag
     TIMSK0 |= _BV(TOIE0); // enable timer0 interrupt on overflow
     EICRA |= _BV(ISC01) | _BV(ISC00); // change input capture to rising edge
-    EIFR  |= _BV(INTF0); // clear input  interrupt request flag   
+    EIFR  |= _BV(INTF0); // clear input  interrupt request flag
 #endif
   }
 
@@ -1384,7 +1394,7 @@ ISR(INT0_vect)
     MCUCR |= _BV(ISC01);
     MCUCR &= ~_BV(ISC00);// change input capture to falling edge
     GIFR  |= _BV(INTF0); // clear input  interrupt request flag
-    
+
     if (TIMSK & _BV(TOIE1)) // are we trying to capture data?
 #else
     EICRA |= _BV(ISC01);
@@ -1546,28 +1556,28 @@ ISR(INT0_vect)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief     CDC_Protocol(void)
- 
- 
- 
- cyclic called main program for cdc protocol (50ms?)
- 
- 
- 
- \author     Koelling
- 
- \date       26.09.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     void
- 
- */
+
+  \brief     CDC_Protocol(void)
+
+
+
+  cyclic called main program for cdc protocol (50ms?)
+
+
+
+  \author     Koelling
+
+  \date       26.09.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     void
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -1752,100 +1762,100 @@ void CDC_Protocol(void)
 //-----------------------------------------------------------------------------
 
 /*!
- 
- \brief    void DecodeCommand(void)
- 
- 
- 
- decode cmdcode and do required actions
- 
- 
- 
- ;--------------------------------------------------------------------------
- 
- ; Button Push Packets
- 
- ;--------------------------------------------------------------------------
- 
- ; 532C609F Mix 1
- 
- ; 532CE01F Mix 6
- 
- ; 532CA05F Scan
- 
- ;     Note: Blaupunkt Gamma V head unit will continue to send scan key code
- 
- ;       unless display is switched into scan mode.
- 
- ;       (reported by tony.gilbert@orange.co.uk)
- 
- ; 532C10EF Head Unit mode change. Emitted at power up, power down, and
- 
- ;        any mode change. (disable playing)
- 
- ; 532C58A7 Seek Back Pressed
- 
- ; 532CD827 Seek Forward Pressed
- 
- ; 532C7887 Dn
- 
- ; 532CA857 Dn on Mk3 premium (Adam Yellen <adam@yellen.com>)
- 
- ; 532CF807 Up
- 
- ; 532C6897 Up on Mk3 premium (Adam Yellen)
- 
- ; 532C38C7 CD Change (third packet)
- 
- ; 532CE41B Seek Forward Released (enable playing)
- 
- ; 532CE41B Seek Back Released (enable playing)
- 
- ; 532CE41B CD Mode selected. Emitted at power up (if starting in CD
- 
- ;            mode), change to CD mode. (enable playing)
- 
- ; 532C14EB CD Change (second packet)
- 
- ; 532C0CF3 CD 1 (first packet)
- 
- ; 532C8C73 CD 2 (first packet)
- 
- ; 532C4CB3 CD 3 (first packet)
- 
- ; 532CCC33 CD 4 (first packet)
- 
- ; 532C2CD3 CD 5 (first packet)
- 
- ; 532CAC53 CD 6 (first packet)
- 
- ;
- 
- ; Monsoon State Changes:
- 
- ; 532CE41B enable playing (transition to State 2)
- 
- ; 532C38C7 disc loaded inquiry (transition to State 5)
- 
- ; 532C10EF disable playing (transition to State 1)
- 
- ;--------------------------------------------------------------------------
- 
- 
- 
- \author     Koelling
- 
- \date       05.10.2007
- 
- 
- 
- \param[in]  none
- 
- \param[out] none
- 
- \return     void
- 
- */
+
+  \brief    void DecodeCommand(void)
+
+
+
+  decode cmdcode and do required actions
+
+
+
+  ;--------------------------------------------------------------------------
+
+  ; Button Push Packets
+
+  ;--------------------------------------------------------------------------
+
+  ; 532C609F Mix 1
+
+  ; 532CE01F Mix 6
+
+  ; 532CA05F Scan
+
+  ;     Note: Blaupunkt Gamma V head unit will continue to send scan key code
+
+  ;       unless display is switched into scan mode.
+
+  ;       (reported by tony.gilbert@orange.co.uk)
+
+  ; 532C10EF Head Unit mode change. Emitted at power up, power down, and
+
+  ;        any mode change. (disable playing)
+
+  ; 532C58A7 Seek Back Pressed
+
+  ; 532CD827 Seek Forward Pressed
+
+  ; 532C7887 Dn
+
+  ; 532CA857 Dn on Mk3 premium (Adam Yellen <adam@yellen.com>)
+
+  ; 532CF807 Up
+
+  ; 532C6897 Up on Mk3 premium (Adam Yellen)
+
+  ; 532C38C7 CD Change (third packet)
+
+  ; 532CE41B Seek Forward Released (enable playing)
+
+  ; 532CE41B Seek Back Released (enable playing)
+
+  ; 532CE41B CD Mode selected. Emitted at power up (if starting in CD
+
+  ;            mode), change to CD mode. (enable playing)
+
+  ; 532C14EB CD Change (second packet)
+
+  ; 532C0CF3 CD 1 (first packet)
+
+  ; 532C8C73 CD 2 (first packet)
+
+  ; 532C4CB3 CD 3 (first packet)
+
+  ; 532CCC33 CD 4 (first packet)
+
+  ; 532C2CD3 CD 5 (first packet)
+
+  ; 532CAC53 CD 6 (first packet)
+
+  ;
+
+  ; Monsoon State Changes:
+
+  ; 532CE41B enable playing (transition to State 2)
+
+  ; 532C38C7 disc loaded inquiry (transition to State 5)
+
+  ; 532C10EF disable playing (transition to State 1)
+
+  ;--------------------------------------------------------------------------
+
+
+
+  \author     Koelling
+
+  \date       05.10.2007
+
+
+
+  \param[in]  none
+
+  \param[out] none
+
+  \return     void
+
+*/
 
 //-----------------------------------------------------------------------------
 
@@ -1863,506 +1873,506 @@ static void DecodeCommand(void)
 
   switch (cmdcode) {
 
-  case Do_CHANGECD:
+    case Do_CHANGECD:
 
-    // Head unit seems to send this after each CDx number change
+      // Head unit seems to send this after each CDx number change
 
-    // but the CD Changer seems to completely ignore (doesn't even ACK it).
+      // but the CD Changer seems to completely ignore (doesn't even ACK it).
 
-    ACKcount = 0; // do not ack this command
+      ACKcount = 0; // do not ack this command
 #ifdef PJRC
-    EnqueueString(sRANDOM);
+      EnqueueString(sRANDOM);
 #endif
 
-    break;
+      break;
 
 
 
-  case Do_ENABLE:
+    case Do_ENABLE:
 
-  case Do_ENABLE_MK:
+    case Do_ENABLE_MK:
 
-    mix = FALSE;
+      mix = FALSE;
 
-    if (playing == FALSE)
-
-    {
-
-      SetStateInitPlay(); // skip this if already playing
-
-    }
-
-    EnqueueString(sMENABLE);
-
-#ifdef ANDROID_HEADPHONES
-    play_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
-#endif
-
-    break;
-
-
-
-  case Do_LOADCD:
-
-    if (playing == TRUE)
-
-    {
-
-      SetStateInitPlay(); // skip this if we're in idle mode
-
-    }
-
-    ResetTime();
-
-    EnqueueString(sMINQUIRY);
-
-    break;
-
-
-
-  case Do_DISABLE:
-
-
-
-    SetStateIdle(); // skip this if we're already in idle mode
-
-    EnqueueString(sMDISABLE);
-
-    break;
-
-
-
-  case Do_SEEKBACK:
-
-  case Do_PREVCD:
-
-
-#ifndef DISC_TRACK_NUMBER_FROM_MPD
-
-    disc--;
-
-    track = 1;
-
-    ResetTime();
-    
-    if ((disc & 0x0F) == 0)
-
-    {
-
-      disc = 0x46; // set back to CD 1
-
-    }
-#endif
-
-    EnqueueString(sPRV_LIST);
-
-
-    
-    break;
-
-
-
-  case Do_SEEKFORWARD:    
-
-  case Do_SEEKFORWARD_MK:
-
-    
-
-    if (cd_button == FALSE) // mk don't increment when previous command was a cd button
-
-    {
-      EnqueueString(sNXT_LIST);
-
-#ifndef DISC_TRACK_NUMBER_FROM_MPD
-
-      ResetTime();
-
-      track = 1;
-
-      disc++;
-
-      if (disc > 0x46)
+      if (playing == FALSE)
 
       {
 
-        disc = 0x41;
+        SetStateInitPlay(); // skip this if already playing
 
       }
 
+      EnqueueString(sMENABLE);
+
+#ifdef ANDROID_HEADPHONES
+      play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
 #endif
 
-      // Going beyond CD9 displays hex codes on premium head unit.
-
-      // Examples: "CD A"
-
-      //           "CD B"
-
-      //           "CD C" etc...
-
-      //
-
-      // However, going beyond CD6 mutes audio on monsoon head unit, so we
-
-      // definitely don't want to do that.
-
-    }
-
-    else
-
-    {
-
-      cd_button = FALSE; // mk clear cd button flag
-
-    }
-
-    break;
+      break;
 
 
 
-  case Do_MIX:
+    case Do_LOADCD:
 
-  case Do_MIX_CD:
+      if (playing == TRUE)
+
+      {
+
+        SetStateInitPlay(); // skip this if we're in idle mode
+
+      }
+
+      ResetTime();
+
+      EnqueueString(sMINQUIRY);
+
+      break;
+
+
+
+    case Do_DISABLE:
+
+
+
+      SetStateIdle(); // skip this if we're already in idle mode
+
+      EnqueueString(sMDISABLE);
+
+      break;
+
+
+
+    case Do_SEEKBACK:
+
+    case Do_PREVCD:
+
+
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+
+      disc--;
+
+      track = 1;
+
+      ResetTime();
+
+      if ((disc & 0x0F) == 0)
+
+      {
+
+        disc = 0x46; // set back to CD 1
+
+      }
+#endif
+
+      EnqueueString(sPRV_LIST);
+
+
+
+      break;
+
+
+
+    case Do_SEEKFORWARD:
+
+    case Do_SEEKFORWARD_MK:
+
+
+
+      if (cd_button == FALSE) // mk don't increment when previous command was a cd button
+
+      {
+        EnqueueString(sNXT_LIST);
+
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+
+        ResetTime();
+
+        track = 1;
+
+        disc++;
+
+        if (disc > 0x46)
+
+        {
+
+          disc = 0x41;
+
+        }
+
+#endif
+
+        // Going beyond CD9 displays hex codes on premium head unit.
+
+        // Examples: "CD A"
+
+        //           "CD B"
+
+        //           "CD C" etc...
+
+        //
+
+        // However, going beyond CD6 mutes audio on monsoon head unit, so we
+
+        // definitely don't want to do that.
+
+      }
+
+      else
+
+      {
+
+        cd_button = FALSE; // mk clear cd button flag
+
+      }
+
+      break;
+
+
+
+    case Do_MIX:
+
+    case Do_MIX_CD:
 
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
       if (mix == FALSE)
 
-    {
+      {
 
-      mix = TRUE;
+        mix = TRUE;
 
-    }
+      }
 
-    else
+      else
 
-    {
+      {
 
-      mix = FALSE;
+        mix = FALSE;
 
-    }
+      }
 
 #endif
 
-    EnqueueString(sRANDOM);
+      EnqueueString(sRANDOM);
 
-    break;
+      break;
 
 
 
-  case Do_PLAY:
+    case Do_PLAY:
 
-    EnqueueString(sPLAY); // this will make the PJRC play/pause
+      EnqueueString(sPLAY); // this will make the PJRC play/pause
 
 #ifdef ANDROID_HEADPHONES
-    play_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+      play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
 #endif
 
-    break;
+      break;
 
 
 
-  case Do_SCAN:
+    case Do_SCAN:
 
 
 
-    scancount = SCANWAIT;
+      scancount = SCANWAIT;
 
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
-    if (scan == FALSE)
+      if (scan == FALSE)
 
-    {
+      {
 
-      scan = TRUE;
+        scan = TRUE;
 
-    }
+      }
 
-    else
+      else
 
-    {
+      {
 
-      scan = FALSE;
+        scan = FALSE;
 
-    }
+      }
 
 #endif
 
 #ifdef PJRC
-    EnqueueString(sPLAY); // this will make the PJRC play/pause
+      EnqueueString(sPLAY); // this will make the PJRC play/pause
 #else
-    EnqueueString(sSCAN); // 
+      EnqueueString(sSCAN); //
 #endif
 
 #ifdef ANDROID_HEADPHONES
-    play_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+      play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
 #endif
 
-    break;
+      break;
 
 
 
-  case Do_UP:
+    case Do_UP:
 
-  case Do_UP_MK3:
+    case Do_UP_MK3:
 
-    if (playing == TRUE) // skip track lead-in if not in play mode
+      if (playing == TRUE) // skip track lead-in if not in play mode
 
-    {
+      {
 
-      SetStateTrackLeadIn();
+        SetStateTrackLeadIn();
 
-    }
+      }
 
 
 
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
-    track++;
-    
-    ResetTime();
+      track++;
 
-    decimal_adjust_u8 = track & 0x0F; // skip past hexidecimal codes
+      ResetTime();
 
-    if (decimal_adjust_u8 == 0x0A) // are with at xA?
+      decimal_adjust_u8 = track & 0x0F; // skip past hexidecimal codes
 
-    {
+      if (decimal_adjust_u8 == 0x0A) // are with at xA?
 
-      track += 6; // yes, add 6 and we'll be at x0 instead
+      {
 
-    }
+        track += 6; // yes, add 6 and we'll be at x0 instead
 
-    if (track == 0xA0) // have we gone beyond Track 99?
+      }
 
-    { // yes, rollover to Track 01 so that jog wheels
+      if (track == 0xA0) // have we gone beyond Track 99?
 
-      track = 1; // can continue rolling (Audi Concert II)
+      { // yes, rollover to Track 01 so that jog wheels
 
-    }
+        track = 1; // can continue rolling (Audi Concert II)
+
+      }
 
 #endif
 
-    EnqueueString(sNEXT);
+      EnqueueString(sNEXT);
 
 #ifdef ANDROID_HEADPHONES
 #ifdef ANDROID_HEADPHONES_ONE_BUTTON
-   play_count_delay = ANDROID_DELAY_COUNT;
-   play_count_push = ANDROID_NEXT_COUNT;
+      play_count_delay = ANDROID_DELAY_COUNT;
+      play_count_push = ANDROID_NEXT_COUNT;
 #else
-    next_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_NEXT pin
+      next_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_NEXT pin
 #endif
 #endif
 
-    break;
+      break;
 
 
 
-  case Do_DOWN:
+    case Do_DOWN:
 
-  case Do_DOWN_MK3:
+    case Do_DOWN_MK3:
 
-    if (playing == TRUE) // skip track lead-in if not in play mode
+      if (playing == TRUE) // skip track lead-in if not in play mode
 
-    {
+      {
 
-      SetStateTrackLeadIn();
+        SetStateTrackLeadIn();
 
-    }
+      }
 
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
-    decimal_adjust_u8 = track & 0x0F; // skip past hexidecimal codes
+      decimal_adjust_u8 = track & 0x0F; // skip past hexidecimal codes
 
-    if (decimal_adjust_u8 == 0) // are we at x0?
+      if (decimal_adjust_u8 == 0) // are we at x0?
 
-    {
+      {
 
-      track -= 6; // yes, subtract 6 and we'll be at x9 instead
+        track -= 6; // yes, subtract 6 and we'll be at x9 instead
 
-    }
+      }
 
-    track--;
-    
-    ResetTime();
+      track--;
 
-    if (track == 0) // have we gone below Track 1?
+      ResetTime();
 
-    { // yes, rollover to Track 99 so that jog wheels
+      if (track == 0) // have we gone below Track 1?
 
-      track = 0x99; // can continue rolling (Audi Concert II)
+      { // yes, rollover to Track 99 so that jog wheels
 
-    }
+        track = 0x99; // can continue rolling (Audi Concert II)
+
+      }
 
 #endif
 
-    EnqueueString(sPREVIOUS);
+      EnqueueString(sPREVIOUS);
 
 #ifdef ANDROID_HEADPHONES
 #ifdef ANDROID_HEADPHONES_ONE_BUTTON
-   play_count_delay = ANDROID_DELAY_COUNT;
-   play_count_push = ANDROID_PREV_COUNT;
+      play_count_delay = ANDROID_DELAY_COUNT;
+      play_count_push = ANDROID_PREV_COUNT;
 #else
-    prev_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PREV pin
-    prev_count_delay=ANDROID_DELAY_COUNT; // 50ms high on ANDROID_PREV pin
+      prev_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PREV pin
+      prev_count_delay = ANDROID_DELAY_COUNT; // 50ms high on ANDROID_PREV pin
 #endif
 #endif
 
-    break;
+      break;
 
 
 
-  case Do_CD1:
+    case Do_CD1:
 
-    cd_button = TRUE; // mk store cd button pressed
+      cd_button = TRUE; // mk store cd button pressed
 
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
-    disc = 0x41; // set CD 1
-    
-    ResetTime();
+      disc = 0x41; // set CD 1
+
+      ResetTime();
 
 #endif
 
-    EnqueueString(sLIST1);
+      EnqueueString(sLIST1);
 
 #ifdef ANDROID_HEADPHONES
-    play_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+      play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
 #endif
 
-    break;
+      break;
 
 
 
-  case Do_CD2:
+    case Do_CD2:
 
 
-    cd_button = TRUE; // mk store cd button pressed
+      cd_button = TRUE; // mk store cd button pressed
 
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
-    disc = 0x42; // set CD 2
+      disc = 0x42; // set CD 2
 
-    ResetTime();
+      ResetTime();
 
 #endif
 
-    EnqueueString(sLIST2);
+      EnqueueString(sLIST2);
 
 #ifdef ANDROID_HEADPHONES
-    play_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+      play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
 #endif
 
-    break;
+      break;
 
 
 
-  case Do_CD3:
+    case Do_CD3:
 
-    cd_button = TRUE; // mk store cd button pressed
+      cd_button = TRUE; // mk store cd button pressed
 
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
-    disc = 0x43; // set CD 3
+      disc = 0x43; // set CD 3
 
-    ResetTime();
-    
+      ResetTime();
+
 #endif
 
-    EnqueueString(sLIST3);
+      EnqueueString(sLIST3);
 
 #ifdef ANDROID_HEADPHONES
-    play_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+      play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
 #endif
 
-    break;
+      break;
 
 
 
-  case Do_CD4:
+    case Do_CD4:
 
-    cd_button = TRUE; // mk store cd button pressed
+      cd_button = TRUE; // mk store cd button pressed
 
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
-    disc = 0x44; // set CD 4
-    
-    ResetTime();
+      disc = 0x44; // set CD 4
+
+      ResetTime();
 
 #endif
 
-    EnqueueString(sLIST4);
+      EnqueueString(sLIST4);
 
 #ifdef ANDROID_HEADPHONES
-    play_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+      play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
 #endif
 
-    break;
+      break;
 
 
 
-  case Do_CD5:
+    case Do_CD5:
 
-    cd_button = TRUE; // mk store cd button pressed
+      cd_button = TRUE; // mk store cd button pressed
 
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
-    disc = 0x45; // set CD 5
-    
-    ResetTime();
+      disc = 0x45; // set CD 5
+
+      ResetTime();
 
 #endif
 
-    EnqueueString(sLIST5);
+      EnqueueString(sLIST5);
 
 #ifdef ANDROID_HEADPHONES
-    play_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+      play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
 #endif
 
-    break;
+      break;
 
 
 
-  case Do_CD6:
+    case Do_CD6:
 
-    cd_button = TRUE; // mk store cd button pressed
+      cd_button = TRUE; // mk store cd button pressed
 
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
-    disc = 0x46; // set CD 6
-    
-    ResetTime();
+      disc = 0x46; // set CD 6
+
+      ResetTime();
 
 #endif
 
-    EnqueueString(sLIST6);
+      EnqueueString(sLIST6);
 
 #ifdef ANDROID_HEADPHONES
-    play_count=ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+      play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
 #endif
 
-    break;
+      break;
 
 
 
-  default:
+    default:
 
 
 
-    /* if execution reaches here, we have verified that we got
-     * a valid command packet, but the command code received is not
-     * one that we understand.
-     *
-     * Dump the unknown command code for the user to view.
-     */
+      /* if execution reaches here, we have verified that we got
+         a valid command packet, but the command code received is not
+         one that we understand.
+
+         Dump the unknown command code for the user to view.
+      */
 
 
 
-    EnqueueString(sDASH);
+      EnqueueString(sDASH);
 
-    EnqueueHex(cmdcode);
+      EnqueueHex(cmdcode);
 
-    EnqueueString(sNEWLINE);
+      EnqueueString(sNEWLINE);
 
-    break;
+      break;
 
   }
 
@@ -2392,10 +2402,10 @@ int main()
     if (Serial.available() > 0) {
       int r = Serial.read();
       //r has new data
-      if(r <= 0xFF)
+      if (r <= 0xFF)
       {
         //send CD No.
-        if((r & 0xF0) == 0xC0)
+        if ((r & 0xF0) == 0xC0)
         {
           if (r == 0xCA)
           {
@@ -2413,22 +2423,20 @@ int main()
           {
             mix = FALSE;
             scan = FALSE;
-            playing=FALSE;
+            playing = FALSE;
             SetStateIdle();
           }
           else if (r == 0xCE)
           {
             mix = FALSE;
-          }                                
-          else
-            if ((r & 0x0F) != ( disc & 0x0F))
-            { 
-              disc = (r & 0x4F);
-            }
+          }
+          else if ((r & 0x0F) != ( disc & 0x0F))
+          {
+            disc = (r & 0x4F);
+          }
         }
         //send TR No.
-        else 
-          if (track != r)
+        else if (track != r)
         {
           track = r;
           ResetTime();
