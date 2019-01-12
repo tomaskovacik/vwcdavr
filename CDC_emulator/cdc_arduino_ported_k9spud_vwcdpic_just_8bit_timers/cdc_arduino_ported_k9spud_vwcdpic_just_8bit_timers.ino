@@ -138,6 +138,7 @@
 #endif
 
 #if defined(__AVR_ATtiny85__)
+//https://github.com/jscrane/TinyDebugSerial
 #include <TinyDebugSerial.h>
 TinyDebugSerial mySerial = TinyDebugSerial();
 //tiny has only Rx, so by default we disable all features which use TX
@@ -1175,9 +1176,9 @@ ISR(TIMER2_COMPA_vect) //100us
     counter_50ms = _50MS;
 
     flag_50ms = TRUE; 
-    
+#ifdef ANDROID_HEADPHONES
     android_buttons();  
-
+#endif
   }
 
   if (counter_to_send_packet == 0)
@@ -2442,13 +2443,3 @@ int main()
 }
 
 // eof //
-
-
-
-
-
-
-
-
-
-
