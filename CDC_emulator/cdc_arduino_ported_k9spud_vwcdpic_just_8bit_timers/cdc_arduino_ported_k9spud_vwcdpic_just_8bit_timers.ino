@@ -269,7 +269,7 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 
 #define VER_PATCHLEVEL  'c'
 
-#if defined(__AVR_ATtiny85__)
+#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__)
 
 #define RADIO_COMMAND      PB2
 
@@ -885,7 +885,7 @@ void Init_VWCDC(void)
 {
   cli();
   //on arduino timer0 is used for millis(), we change prescaler, but also need to disable overflow interrupt
-#if defined(__AVR_ATtiny85__)
+#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__)
   TIMSK = 0x00;
 #else
   TIMSK0 = 0x00;
@@ -912,7 +912,7 @@ void Init_VWCDC(void)
 #endif
 
   //attinx5 - > timer1, atmegax8 -> timer0
-#if defined(__AVR_ATtiny85__)
+#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__)
   TCCR1 = 0x00;
   TCNT1 = 0;
   TIMSK = 0x00;
@@ -930,7 +930,7 @@ void Init_VWCDC(void)
 
   //Timer 2 init (timer0 on attin85)
   //Timer 2 used to make all 100us timing
-#if defined(__AVR_ATtiny85__)
+#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__)
   TCCR0A = 0x00; // Normal port operation, OC0 disconnected
   TCCR0A |= _BV(WGM01); // CTC mode
   TCCR0B |= _BV(CS01);// prescaler = 8 -> 1 timer clock tick is 1us long
@@ -948,7 +948,7 @@ void Init_VWCDC(void)
 #endif
 
 
-#if defined(__AVR_ATtiny85__)
+#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__)
   GIMSK |= _BV(INT0); //INT0 enable
   MCUCR |= _BV(ISC01);
   MCUCR &= ~_BV(ISC00);// falling edge fire interupt routine
@@ -1164,7 +1164,7 @@ void OutputPacket(void)
 
 //-----------------------------------------------------------------------------
 
-#if defined(__AVR_ATtiny85__)
+#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__)
 ISR(TIM0_COMPA_vect)
 {
 
@@ -1231,7 +1231,7 @@ ISR(TIMER2_COMPA_vect) //100us
 //-----------------------------------------------------------------------------
 
 
-#if defined(__AVR_ATtiny85__)
+#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__)
 ISR(TIMER1_OVF_vect)
 #else
 ISR(TIMER0_OVF_vect)
@@ -1346,7 +1346,7 @@ ISR(TIMER0_OVF_vect)
 ISR(INT0_vect)
 {
 
-#if defined(__AVR_ATtiny85__)
+#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__)
   captime = captime_ovf + TCNT1;
   TCNT1 = 0; //clear timer1
 #else
@@ -1363,7 +1363,7 @@ ISR(INT0_vect)
 
     // Low pulse length must be timed to determine bit value
 
-#if defined(__AVR_ATtiny85__)
+#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__)
     TIFR  |= _BV(TOV1); // clear timer1 overflow flag
     TIMSK |= _BV(TOIE1); // enable timer1 interrupt on overflow
     MCUCR |= _BV(ISC01) | _BV(ISC00); // change input capture to rising edge
@@ -1390,7 +1390,7 @@ ISR(INT0_vect)
 
 
 
-#if defined(__AVR_ATtiny85__)
+#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__)
     MCUCR |= _BV(ISC01);
     MCUCR &= ~_BV(ISC00);// change input capture to falling edge
     GIFR  |= _BV(INTF0); // clear input  interrupt request flag
@@ -1407,7 +1407,7 @@ ISR(INT0_vect)
 
       capbusy = TRUE;
 
-#if defined(__AVR_ATtiny85__)
+#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__)
       TIMSK &= ~_BV(TOIE1); // turn off capturing time for high pulse
 #else
       TIMSK0 &= ~_BV(TOIE0); // turn off capturing time for high pulse
