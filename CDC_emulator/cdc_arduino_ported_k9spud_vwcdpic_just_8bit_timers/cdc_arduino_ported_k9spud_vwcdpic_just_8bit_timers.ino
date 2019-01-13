@@ -77,7 +77,7 @@
    Serial TX -> 2 (PB3) using tinydebug lib
    Serial RX -> not connected
 
-   what you need  to install: 
+   what you need  to install:
    ATTinycore: https://github.com/SpenceKonde/ATTinyCore (supported directly in arduino(from version 1.6.3) via board manager )
    TinyDebugSerial from: https://github.com/jscrane/TinyDebugSerial (download and extract into libraries Arduino folder)
 
@@ -89,6 +89,10 @@
 
  *****************************************************************************/
 #define DIGISPARK
+
+#ifdef DIGISPARK
+#include <avr/power.h>
+#endif
 
 
 #if defined(__AVR_ATmega8__) || defined(__AVR_ATmega128__)
@@ -148,10 +152,17 @@
 #define ANDROID_HEADPHONES
 #endif
 
+
 #if defined(__AVR_ATtiny85__)
 //https://github.com/jscrane/TinyDebugSerial
+#ifdef DIGISPARK
+//no softwarserial in digispark ... 
 #include <TinyDebugSerial.h>
 TinyDebugSerial mySerial = TinyDebugSerial();
+#else
+#include <SoftwareSerial.h>
+SoftwareSerial mySerial(NULL, PB3);
+#endif
 //tiny has only Rx, so by default we disable all features which use TX
 #undef DISC_TRACK_NUMBER_FROM_MPD
 #undef ANDROID_HEADPHONES
@@ -190,17 +201,10 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 // S: ~4.57ms
 
 
-#ifdef DIGISPARK
-// one tick is 0.25µs cose 16Mhz
-#define STARTTHRESHOLD  2*6400            // greater than this signifies START bit
-#define HIGHTHRESHOLD   2*2496       // greater than this signifies 1 bit.
-#define LOWTHRESHOLD    2*512        // greater than this signifies 0 bit.
-#else
 // one tick is 0.5µs
 #define STARTTHRESHOLD  6400            // greater than this signifies START bit
 #define HIGHTHRESHOLD   2496       // greater than this signifies 1 bit.
 #define LOWTHRESHOLD    512        // greater than this signifies 0 bit.
-#endif
 
 #define PKTSIZE          -32            // command packets are 32 bits long.
 
@@ -861,11 +865,15 @@ static void android_buttons();
 //-----------------------------------------------------------------------------
 
 
-
+uint8_t port=0;
 void Init_VWCDC(void)
 
 {
-  cli();
+#ifdef DIGISPARK
+clock_prescale_set(clock_div_2);
+#endif
+
+cli();
   //on arduino timer0 is used for millis(), we change prescaler, but also need to disable overflow interrupt
 #if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__)
   TIMSK = 0x00;
@@ -916,11 +924,7 @@ void Init_VWCDC(void)
   TCCR0A = 0x00; // Normal port operation, OC0 disconnected
   TCCR0A |= _BV(WGM01); // CTC mode
   TCCR0B |= _BV(CS01);// prescaler = 8 -> 1 timer clock tick is 1us long
-#ifdef DIGISPARK
-  OCR0A = 200;//run compare rutine every 100us; digispark is 16Mhz
-#else
   OCR0A = 100;//run compare rutine every 100us;
-#endif
   TCNT0 = 0;
   TIMSK |= _BV(OCIE0A); // enable output compare interrupt A on timer0
 #else
@@ -1580,7 +1584,7 @@ void CDC_Protocol(void)
   if (flag_50ms == TRUE)
 
   {
-
+    
     flag_50ms = FALSE;
 
     SendPacket();
