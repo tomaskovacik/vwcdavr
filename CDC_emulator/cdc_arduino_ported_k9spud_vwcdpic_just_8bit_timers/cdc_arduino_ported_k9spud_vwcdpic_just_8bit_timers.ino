@@ -94,16 +94,6 @@
 #include <avr/power.h>
 #endif
 
-#include <avr/io.h>
-
-#include <avr/sfr_defs.h>
-
-#include <stdlib.h>
-
-#include <avr/interrupt.h>
-
-#include <avr/pgmspace.h>
-
 #if defined(__AVR_ATmega8__) || defined(__AVR_ATmega128__)
 #define TCCR2A TCCR2
 #define TCCR2B TCCR2
@@ -1252,7 +1242,24 @@ ISR(TIMER0_OVF_vect)
 
   if (captime_ovf > 20000)//35*255= 8925, 65536 = REAL OVERFLOW
   {
-    captime_ovf = captime = 0;
+    captime_ovf = 0;
+    captime = 0;
+    //disable timer:
+    
+    capbusy = FALSE;
+
+
+
+#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__)
+    MCUCR |= _BV(ISC01);
+    MCUCR &= ~_BV(ISC00);// change input capture to falling edge
+    GIFR  |= _BV(INTF0); // clear input  interrupt request flag
+#else
+    EICRA |= _BV(ISC01);
+    EICRA &= ~_BV(ISC00);// change input capture to falling edge
+    EIFR  |= _BV(INTF0); // clear input  interrupt request flag
+#endif
+    
   }
 
   //    capbusy = FALSE; // set flag signifying packet capture done
@@ -1373,6 +1380,7 @@ ISR(INT0_vect)
     EICRA |= _BV(ISC01) | _BV(ISC00); // change input capture to rising edge
     EIFR  |= _BV(INTF0); // clear input  interrupt request flag
 #endif
+
   }
 
   else
@@ -1432,8 +1440,6 @@ ISR(INT0_vect)
 
           dataerr = TRUE;
           
-          captime = captime_ovf=0;
-
           // Note: This should never happen on normal head unit sending 32 bit
 
           //       command strings with error free data.
@@ -1545,7 +1551,7 @@ ISR(INT0_vect)
         }
 
       }
-      captime = captime_ovf=0;
+      
 
     }
 
