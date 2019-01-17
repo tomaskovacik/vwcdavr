@@ -88,12 +88,21 @@
    to use digispark uncoment line //#define DIGISPARK
 
  *****************************************************************************/
-#define DIGISPARK
+//#define DIGISPARK
 
 #ifdef DIGISPARK
 #include <avr/power.h>
 #endif
 
+#include <avr/io.h>
+
+#include <avr/sfr_defs.h>
+
+#include <stdlib.h>
+
+#include <avr/interrupt.h>
+
+#include <avr/pgmspace.h>
 
 #if defined(__AVR_ATmega8__) || defined(__AVR_ATmega128__)
 #define TCCR2A TCCR2
@@ -155,14 +164,14 @@
 
 #if defined(__AVR_ATtiny85__)
 //https://github.com/jscrane/TinyDebugSerial
-#ifdef DIGISPARK
+//#ifdef DIGISPARK
 //no softwarserial in digispark ... 
 #include <TinyDebugSerial.h>
 TinyDebugSerial mySerial = TinyDebugSerial();
-#else
-#include <SoftwareSerial.h>
-SoftwareSerial mySerial(NULL, PB3);
-#endif
+//#else
+//#include <SoftwareSerial.h>
+//SoftwareSerial mySerial(NULL, PB3);
+//#endif
 //tiny has only Rx, so by default we disable all features which use TX
 #undef DISC_TRACK_NUMBER_FROM_MPD
 #undef ANDROID_HEADPHONES
@@ -1241,9 +1250,9 @@ ISR(TIMER0_OVF_vect)
 
   captime_ovf = captime_ovf + 0xFF;
 
-  if (captime_ovf > 65000)//35*255= 8925, 65536 = REAL OVERFLOW
+  if (captime_ovf > 20000)//35*255= 8925, 65536 = REAL OVERFLOW
   {
-    captime_ovf = 0;
+    captime_ovf = captime = 0;
   }
 
   //    capbusy = FALSE; // set flag signifying packet capture done
@@ -1422,6 +1431,8 @@ ISR(INT0_vect)
         {
 
           dataerr = TRUE;
+          
+          captime = captime_ovf=0;
 
           // Note: This should never happen on normal head unit sending 32 bit
 
@@ -1534,6 +1545,7 @@ ISR(INT0_vect)
         }
 
       }
+      captime = captime_ovf=0;
 
     }
 
