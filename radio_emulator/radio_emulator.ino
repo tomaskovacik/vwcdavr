@@ -25,7 +25,7 @@
   - emulate RADIO DataOut signals
   - receive and print CD changer responce to serial console
 
-  DataOut -> arduino pin 12
+  DataOut -> arduino pin 5
   Clk     -> arduino pin 3
   DataIn  -> arduino pin 4
 
@@ -127,8 +127,8 @@ void setup()
   digitalWrite(DataOut, LOW);
   pinMode(Clk, INPUT);
   pinMode(DataIn, INPUT);
-  pinMode(V12, INPUT);
-  pinMode(ACC, INPUT);
+//  pinMode(V12, INPUT);
+//  pinMode(ACC, INPUT);
   
   //  lcd.begin(16,2);
   //  lcd.home();
