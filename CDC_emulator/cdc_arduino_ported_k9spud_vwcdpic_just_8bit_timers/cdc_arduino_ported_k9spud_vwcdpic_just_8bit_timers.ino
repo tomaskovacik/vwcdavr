@@ -70,8 +70,8 @@
 
    RADIO PIN -> ATTINYx5 PIN
    DataOut   -> 7 (INT0)
-   DataIn    -> 6 (PB1)
-   Clock     -> 5 (PB0)
+   DataIn    -> 6 (PB0)
+   Clock     -> 5 (PB1)
 
    PC PIN    -> ATTINYx5 PIN
    Serial TX -> 2 (PB3) using tinydebug lib
@@ -86,9 +86,12 @@
    select internal 8Mhz from tools->Clock -> 8MHz (internal)
 
    to use digispark uncoment line //#define DIGISPARK
+   then use 16MHz-noUSB settings 
+   tested with ATTinyCore with Digispark support: https://github.com/tomaskovacik/ATTinyCore/
+   maybe will be merged in oficial ATTinyCore in the future
 
  *****************************************************************************/
-//#define DIGISPARK
+#define DIGISPARK
 
 #ifdef DIGISPARK
 #include <avr/power.h>
