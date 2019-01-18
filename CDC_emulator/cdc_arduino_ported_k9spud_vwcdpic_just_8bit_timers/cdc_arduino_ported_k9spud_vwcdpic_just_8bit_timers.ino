@@ -91,7 +91,7 @@
    maybe will be merged in oficial ATTinyCore in the future
 
  *****************************************************************************/
-#define DIGISPARK
+//#define DIGISPARK
 
 #ifdef DIGISPARK
 #include <avr/power.h>
