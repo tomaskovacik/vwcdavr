@@ -43,6 +43,9 @@
  * 19. Mar 2015  tomaskovacik
  * port to atmega8
  * 
+ * 27. Dec 2018 tomaskovacik
+ * port arduino mega (atmega2560)
+ * 
  *****************************************************************************/
 
 //#define DUMPMODE
@@ -723,7 +726,7 @@ void Init_VWCDC(void)
 
   RADIO_DATA_DDR  |= _BV(RADIO_DATA);
 
-  RADIO_COMMAND_DDR &= ~_BV(RADIO_COMMAND); // input capture as input
+   _DDR &= ~_BV(RADIO_COMMAND); // input capture as input
 
   RADIO_COMMAND_PORT |= _BV(RADIO_COMMAND); // enable pull up
 
