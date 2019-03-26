@@ -825,7 +825,7 @@ static void SendDisplayBytesNoCD(void)
 
   {
 
-    send_byte_u8 |= 0x10; // turn on scan display
+    send_byte_u8 |= 0x10; // turn on scan display //this probably cose mute for few microsec.
 
   }
 
@@ -1707,4 +1707,3 @@ static void SendPacket(void)
 
 
 }
-

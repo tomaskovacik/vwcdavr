@@ -179,7 +179,7 @@
 
 
 
-#define RADIO_COMMAND      PB0 
+#define RADIO_COMMAND      PB0
 
 #define RADIO_COMMAND_DDR  DDB0
 
@@ -533,7 +533,7 @@ uint8_t playing;
 
 uint8_t cd_button = 0;
 
-
+uint8_t mix_button = 0;
 
 // The ISR will set 'dataerr' flag if it detected a framing error
 
@@ -1745,7 +1745,7 @@ static void DecodeCommand(void)
       SetStateInitPlay(); // skip this if already playing
 
     }
- 
+if(!mix_button)
     EnqueueString(sMENABLE);
 
     break;
@@ -1869,6 +1869,7 @@ static void DecodeCommand(void)
 
   case Do_MIX_CD:
 
+  mix_button=1;
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
     if (mix == FALSE)
@@ -2254,10 +2255,3 @@ static void printstr_p(const char *s)
 }
 
 // eof //
-
-
-
-
-
-
-
