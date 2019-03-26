@@ -670,6 +670,7 @@ uint8_t playing;
 
 uint8_t cd_button = 0;
 
+uint8_t mix_button = 0;
 
 
 // The ISR will set 'dataerr' flag if it detected a framing error
@@ -1912,7 +1913,7 @@ static void DecodeCommand(void)
         SetStateInitPlay(); // skip this if already playing
 
       }
-
+if(!mix_button)
       EnqueueString(sMENABLE);
 
 #ifdef ANDROID_HEADPHONES
@@ -2043,6 +2044,8 @@ static void DecodeCommand(void)
     case Do_MIX:
 
     case Do_MIX_CD:
+
+  mix_button=1;
 
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
 
