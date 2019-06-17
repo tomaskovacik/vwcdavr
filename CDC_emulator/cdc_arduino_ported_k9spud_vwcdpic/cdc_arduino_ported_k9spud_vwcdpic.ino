@@ -43,6 +43,9 @@
  * 19. Mar 2015  tomaskovacik
  * port to atmega8
  * 
+ * 14.Jun 2019 kovo
+ * this compile fine against mega324(P/A/PA/PB)
+ * 
  *****************************************************************************/
 
 //#define DUMPMODE
@@ -177,19 +180,38 @@
 
 #define VER_PATCHLEVEL  'b'
 
-
-
-#define RADIO_COMMAND      PB0
-
-#define RADIO_COMMAND_DDR  DDB0
-
+#if defined(__AVR_ATmega328__) || defined(__AVR_ATmega328A__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega328PA__) || defined(__AVR_ATmega328PB__)
+#define RADIO_COMMAND      PB0 //ICP
+#define RADIO_COMMAND_DDR  DDRB
+#define RADIO_COMMAND_PORT  PORTB
+#define RADIO_COMMAND_PIN PINB
 #define RADIO_CLOCK        PB5
-
-#define RADIO_CLOCK_DDR    DDB5
-
+#define RADIO_CLOCK_DDR    DDRB
+#define RADIO_CLOCK_PORT  PORTB
 #define RADIO_DATA         PB3
+#define RADIO_DATA     DDB3
+#define RADIO_DATA_DDR     DDRB
+#define RADIO_DATA_PORT  PORTB
+#define RADIO_ACC 3 //PE5 (INT5)
 
-#define RADIO_DATA_DDR     DDB3
+#endif
+
+#if defined(__AVR_ATmega324__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__)
+#define RADIO_COMMAND      PD6 //ICP 
+#define RADIO_COMMAND_DDR  DDRD
+#define RADIO_COMMAND_PORT  PORTD
+#define RADIO_COMMAND_PIN PIND
+#define RADIO_CLOCK        PB7
+#define RADIO_CLOCK_DDR    DDRB
+#define RADIO_CLOCK_PORT  PORTB
+#define RADIO_DATA         PB5
+#define RADIO_DATA_DDR     DDRB
+#define RADIO_DATA_PORT  PORTB
+#define RADIO_ACC 3 
+
+#endif
+
+
 
 
 // Command Codes
@@ -475,6 +497,7 @@ uint8_t minute;
 
 uint8_t second;
 
+uint8_t leds=0;
 
 
 uint8_t scanptr; // pointer to command byte to inspect next
@@ -716,11 +739,13 @@ void Init_VWCDC(void)
 
   //  DDRA |= _BV(DDA6); // debug pin
 
-  DDRB |= _BV(RADIO_CLOCK_DDR) | _BV(RADIO_DATA_DDR);
+  RADIO_CLOCK_DDR |= _BV(RADIO_CLOCK);
 
-  DDRB &= ~_BV(RADIO_COMMAND_DDR); // input capture as input
+  RADIO_DATA_DDR  |= _BV(RADIO_DATA);
 
-  PORTB |= _BV(RADIO_COMMAND); // enable pull up
+  RADIO_COMMAND_DDR &= ~_BV(RADIO_COMMAND); // input capture as input
+
+  RADIO_COMMAND_PORT |= _BV(RADIO_COMMAND); // enable pull up
 
 
 
@@ -944,7 +969,7 @@ ISR(TIMER2_COMPA_vect)
 
     {
 
-      PORTB |= _BV(RADIO_CLOCK); // SCLK high
+      RADIO_CLOCK_PORT |= _BV(RADIO_CLOCK); // SCLK high
 
       _delay_loop_1(40);
 
@@ -952,7 +977,7 @@ ISR(TIMER2_COMPA_vect)
 
       {
 
-        PORTB |= _BV(RADIO_DATA); // DATA high
+        RADIO_CLOCK_PORT |= _BV(RADIO_DATA); // DATA high
 
       }
 
@@ -960,7 +985,7 @@ ISR(TIMER2_COMPA_vect)
 
       {
 
-        PORTB &= ~_BV(RADIO_DATA); // DATA low
+        RADIO_CLOCK_PORT &= ~_BV(RADIO_DATA); // DATA low
 
       }
 
@@ -968,7 +993,7 @@ ISR(TIMER2_COMPA_vect)
 
       byte_u8 <<= 1; // load the next bit
 
-      PORTB &= ~_BV(RADIO_CLOCK); // SCLK low
+      RADIO_CLOCK_PORT &= ~_BV(RADIO_CLOCK); // SCLK low
 
       _delay_loop_1(40);
 
@@ -1209,7 +1234,7 @@ ISR(TIMER1_CAPT_vect)
 
 
 
-  if ((PINB & _BV(RADIO_COMMAND)) == 0)
+  if ((RADIO_COMMAND_PIN & _BV(RADIO_COMMAND)) == 0)
 
   {
 
@@ -1452,6 +1477,7 @@ void CDC_Protocol(void)
       scancount = SCANWAIT;
 
       scan = FALSE; // turn off scan display
+      leds &= 0xEF;
 
     }
 
@@ -2157,10 +2183,23 @@ if(!mix_button)
 int main()
 
 {
-#ifdef BLUETOOTH
+
   Serial.begin(115200);
-#else
-  Serial.begin(9600);
+
+#ifdef BLUETOOTH 
+#if defined(__AVR_ATmega324__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__) || defined(__AVR_ATmega324PB__)
+  Serial1.begin(115200);
+//#else 8
+  //Serial.begin(115200);
+#endif
+#endif
+
+#ifdef DISC_TRACK_NUMBER_FROM_MPD
+#if defined(__AVR_ATmega324__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__) || defined(__AVR_ATmega324PB__)
+  Serial1.begin(115200);
+//#else 
+  //Serial.begin(115200);
+#endif
 #endif
 
   Init_VWCDC();
@@ -2176,8 +2215,8 @@ int main()
   {
 
 #ifdef DISC_TRACK_NUMBER_FROM_MPD
-  if (Serial.available() > 0) {
-                  int r = Serial.read();
+  if (Serial1.available() > 0) {
+                  int r = Serial1.read();
 		//r has new data
 		if(r <= 0xFF)
 		{

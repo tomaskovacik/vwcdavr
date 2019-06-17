@@ -183,13 +183,16 @@
 
 
 #define RADIO_COMMAND      PL0 //ICP4 - PL0 - arduino pin 49
+#define RADIO_COMMAND_DDb  DDL0
 #define RADIO_COMMAND_DDR  DDRL
 #define RADIO_COMMAND_PORT  PORTL
 #define RADIO_COMMAND_PIN PINL
 #define RADIO_CLOCK        PL7
+#define RADIO_CLOCK_DDb    DDL7
 #define RADIO_CLOCK_DDR    DDRL
 #define RADIO_CLOCK_PORT  PORTL
 #define RADIO_DATA         PL6
+#define RADIO_DATA_DDb     DDL6
 #define RADIO_DATA_DDR     DDRL
 #define RADIO_DATA_PORT  PORTL
 //#define RADIO_COMMAND 49 //PL0(ICP4)
@@ -721,12 +724,12 @@ void Init_VWCDC(void)
 
 
   //  DDRA |= _BV(DDA6); // debug pin
+  
+  RADIO_CLOCK_DDR |= _BV(RADIO_CLOCK_DDb);
 
-  RADIO_CLOCK_DDR |= _BV(RADIO_CLOCK);
+  RADIO_DATA_DDR  |= _BV(RADIO_DATA_DDb);
 
-  RADIO_DATA_DDR  |= _BV(RADIO_DATA);
-
-   _DDR &= ~_BV(RADIO_COMMAND); // input capture as input
+  RADIO_COMMAND_DDR &= ~_BV(RADIO_COMMAND_DDb); // input capture as input
 
   RADIO_COMMAND_PORT |= _BV(RADIO_COMMAND); // enable pull up
 
