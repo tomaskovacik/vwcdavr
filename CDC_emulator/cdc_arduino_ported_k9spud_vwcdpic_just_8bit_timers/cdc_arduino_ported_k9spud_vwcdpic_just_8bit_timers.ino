@@ -258,48 +258,47 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 #define VER_PATCHLEVEL  'c'
 
 #if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__)
-
 #define RADIO_COMMAND      PB2
-
 #define RADIO_COMMAND_DDR  DDRB
-
 #define RADIO_COMMAND_PORT PORTB
-
-#define RADIO_COMMAND_INPUT_PIN_ADDRESS PINB
-
+#define RADIO_COMMAND_PIN PINB
 #define RADIO_CLOCK        PB1
-
 #define RADIO_CLOCK_DDR    DDRB
-
 #define RADIO_CLOCK_PORT    PORTB
-
 #define RADIO_DATA         PB0
-
 #define RADIO_DATA_DDR     DDRB
-
 #define RADIO_DATA_PORT    PORTB
 
 #else
+#if defined(__AVR_ATmega328__) || defined(__AVR_ATmega328A__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega328PA__) || defined(__AVR_ATmega328PB__)
 //INT0 = PD2
 #define RADIO_COMMAND      PD2
-
 #define RADIO_COMMAND_DDR  DDRD
-
 #define RADIO_COMMAND_PORT PORTD
-
-#define RADIO_COMMAND_INPUT_PIN_ADDRESS PIND
-
+#define RADIO_COMMAND_PIN PIND
 #define RADIO_CLOCK        PB5
-
 #define RADIO_CLOCK_DDR    DDRB
-
 #define RADIO_CLOCK_PORT    PORTB
-
 #define RADIO_DATA        PB3
-
 #define RADIO_DATA_DDR     DDRB
-
 #define RADIO_DATA_PORT    PORTB
+#endif
+
+#if defined(__AVR_ATmega324__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__)
+//INT0 = PD2
+#define RADIO_COMMAND      PD2
+#define RADIO_COMMAND_DDR  DDRD
+#define RADIO_COMMAND_PORT PORTD
+#define RADIO_COMMAND_PIN PIND
+#define RADIO_CLOCK        PB7
+#define RADIO_CLOCK_DDb    DDB7
+#define RADIO_CLOCK_DDR    DDRB
+#define RADIO_CLOCK_PORT  PORTB
+#define RADIO_DATA         PB5
+#define RADIO_DATA_DDb     DDB5
+#define RADIO_DATA_DDR     DDRB
+#define RADIO_DATA_PORT  PORTB
+#endif
 #endif
 
 #ifdef ANDROID_HEADPHONES
@@ -1366,7 +1365,7 @@ ISR(INT0_vect)
 
   captime_ovf = 0;
 
-  if ((RADIO_COMMAND_INPUT_PIN_ADDRESS & _BV(RADIO_COMMAND)) == 0)
+  if ((RADIO_COMMAND_PIN & _BV(RADIO_COMMAND)) == 0)
 
   {
     // We have interrupted at beginning of low pulse (falling edge)
