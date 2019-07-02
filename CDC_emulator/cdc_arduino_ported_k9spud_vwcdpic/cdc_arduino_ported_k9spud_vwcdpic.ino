@@ -497,13 +497,13 @@ uint8_t sendbitcount; // Used in SendByte routine
 
 
 
-uint8_t disc;
+uint8_t disc=1;
 
-uint8_t track;
+uint8_t track=1;
 
-uint8_t minute;
+uint8_t minute=0;
 
-uint8_t second;
+uint8_t second=0;
 
 uint8_t leds=0;
 
