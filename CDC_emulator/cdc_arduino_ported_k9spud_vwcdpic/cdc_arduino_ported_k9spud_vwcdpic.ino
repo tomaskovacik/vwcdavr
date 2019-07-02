@@ -48,6 +48,14 @@
  * 
  *****************************************************************************/
 
+#include "IS2020.h"
+
+#define DEBUG 0
+#define RESET 4 //?
+#define BTSerial Serial1 //Serial1 => TX = 3, RX = 2
+
+IS2020 BT(&BTSerial);
+
 //#define DUMPMODE
 //#define DUMPMODE2
 
@@ -103,7 +111,7 @@
 
 
 
-#include <util/delay.h>
+//#include <util/delay.h>
 
 
 
@@ -761,7 +769,9 @@ void Init_VWCDC(void)
 
   TCCR1B |= _BV(CS11); // prescaler = 8 -> 1 timer clock tick is 0.5µs long
 
+  TIFR1 |= _BV(ICF1); // clear pending interrupt
 
+  TIMSK1 |= _BV(ICIE1); // enable input capture interrupt on timer1
 
 
 
@@ -836,9 +846,7 @@ void Init_VWCDC(void)
 
 
 
-  TIFR1 |= _BV(ICF1); // clear pending interrupt
 
-  TIMSK1 |= _BV(ICIE1); // enable input capture interrupt on timer1
 
 
   EnqueueString(sIDENTIFY);
@@ -971,7 +979,7 @@ ISR(TIMER2_COMPA_vect)
 
       RADIO_CLOCK_PORT |= _BV(RADIO_CLOCK); // SCLK high
 
-      _delay_loop_1(40);
+      //_delay_loop_1(40);
 
       if ((byte_u8 & 0x80) == 0) // mask highest bit and test if set
 
@@ -995,7 +1003,7 @@ ISR(TIMER2_COMPA_vect)
 
       RADIO_CLOCK_PORT &= ~_BV(RADIO_CLOCK); // SCLK low
 
-      _delay_loop_1(40);
+     //_delay_loop_1(40);
 
     }
 
