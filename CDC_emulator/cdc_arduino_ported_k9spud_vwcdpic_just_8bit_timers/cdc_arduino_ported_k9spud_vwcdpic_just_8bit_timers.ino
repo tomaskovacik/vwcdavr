@@ -89,6 +89,12 @@
    then use 16MHz-noUSB settings 
    tested with ATTinyCore with Digispark support: https://github.com/tomaskovacik/ATTinyCore/
    maybe will be merged in oficial ATTinyCore in the future
+   
+   kovo 1.jul 2019
+   - atmega324 using INT2 /on pins INT0 and INT1 is 2nd uart
+
+   kovo 3.ju l2019
+    - attiny167 using ICP1/digi10 for command and 0 and 1 for data/clk pins
 
  *****************************************************************************/
 //#define DIGISPARK
@@ -149,7 +155,7 @@
    SONY: 1button mode: 1xpush play/pause;2xpush previous;3xpush next
 */
 //#define ANDROID_HEADPHONES_ONE_BUTTON
-
+   
 #ifdef ANDROID_HEADPHONES_ONE_BUTTON //just to be shure
 #define ANDROID_HEADPHONES
 #endif
@@ -178,7 +184,7 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 
 /* -- Includes ------------------------------------------------------------- */
 
-#include <util/delay.h>
+//#include <util/delay.h>
 
 /* -- Configuration Parameters --------------------------------------------- */
 
@@ -203,7 +209,7 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 // S: ~4.57ms
 
 
-// one tick is 0.5µs
+// one tick is 0.5µs   
 #define STARTTHRESHOLD  6400            // greater than this signifies START bit
 #define HIGHTHRESHOLD   2496       // greater than this signifies 1 bit.
 #define LOWTHRESHOLD    512        // greater than this signifies 0 bit.
@@ -253,9 +259,9 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 
 #define VER_MAJOR       '1'
 
-#define VER_MINOR       '0'
+#define VER_MINOR       '1'
 
-#define VER_PATCHLEVEL  'c'
+#define VER_PATCHLEVEL  'd'
 
 #if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__)
 #define RADIO_COMMAND      PB2
@@ -269,8 +275,10 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 #define RADIO_DATA_DDR     DDRB
 #define RADIO_DATA_PORT    PORTB
 
-#else
-#if defined(__AVR_ATmega328__) || defined(__AVR_ATmega328A__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega328PA__) || defined(__AVR_ATmega328PB__)
+#elif defined(__AVR_ATmega328__) || defined(__AVR_ATmega328A__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega328PA__) || defined(__AVR_ATmega328PB__) || \
+      defined(__AVR_ATmega168__) || defined(__AVR_ATmega168A__) || defined(__AVR_ATmega168P__) || defined(__AVR_ATmega168PA__) || defined(__AVR_ATmega168PB__) || \
+       defined(__AVR_ATmega88__) ||  defined(__AVR_ATmega88A__) ||  defined(__AVR_ATmega88P__) ||  defined(__AVR_ATmega88PA__) ||  defined(__AVR_ATmega88PB__)
+
 //INT0 = PD2
 #define RADIO_COMMAND      PD2
 #define RADIO_COMMAND_DDR  DDRD
@@ -282,14 +290,14 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 #define RADIO_DATA        PB3
 #define RADIO_DATA_DDR     DDRB
 #define RADIO_DATA_PORT    PORTB
-#endif
 
-#if defined(__AVR_ATmega324__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__)
-//INT0 = PD2
-#define RADIO_COMMAND      PD2
-#define RADIO_COMMAND_DDR  DDRD
-#define RADIO_COMMAND_PORT PORTD
-#define RADIO_COMMAND_PIN PIND
+#elif defined(__AVR_ATmega324__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__)
+
+//INT2 = PD6
+#define RADIO_COMMAND      PB2 //PD
+#define RADIO_COMMAND_DDR  DDRB
+#define RADIO_COMMAND_PORT PORTB
+#define RADIO_COMMAND_PIN PINB
 #define RADIO_CLOCK        PB7
 #define RADIO_CLOCK_DDb    DDB7
 #define RADIO_CLOCK_DDR    DDRB
@@ -298,7 +306,22 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 #define RADIO_DATA_DDb     DDB5
 #define RADIO_DATA_DDR     DDRB
 #define RADIO_DATA_PORT  PORTB
-#endif
+
+#elif defined(__AVR_ATtiny167__)
+//ICP1 = PA4
+#define RADIO_COMMAND      PA4 //ICP1 10
+#define RADIO_COMMAND_DDR  DDRA
+#define RADIO_COMMAND_PORT PORTA
+#define RADIO_COMMAND_PIN PINA
+#define RADIO_CLOCK        PB1 //1
+#define RADIO_CLOCK_DDb    DDB1
+#define RADIO_CLOCK_DDR    DDRB
+#define RADIO_CLOCK_PORT  PORTB
+#define RADIO_DATA         PB0 //0
+#define RADIO_DATA_DDb     DDB0
+#define RADIO_DATA_DDR     DDRB
+#define RADIO_DATA_PORT  PORTB
+
 #endif
 
 #ifdef ANDROID_HEADPHONES
@@ -469,6 +492,7 @@ enum STATES
   StateTrackLeadIn,
 
   StatePlay,
+  
   StateTP
 
 };
@@ -580,6 +604,8 @@ const uint8_t sIDENTIFY[] PROGMEM = "Audi Concert I Multimedia Gateway Ver.";
 const uint8_t sNEWLINE[] PROGMEM = "\r\n";
 
 const uint8_t sDASH[] PROGMEM = "_";
+
+const uint8_t sTP[] PROGMEM = "TP\r\n";
 
 const uint8_t sHEX[] PROGMEM = {
 
@@ -786,8 +812,6 @@ static void SetStatePlayLeadIn(void);
 
 static void SetStateTrackLeadIn(void);
 
-static void SetStateTP(void);
-
 static void SendDisplayBytes(void);
 
 static void SendDisplayBytesNoCD(void);
@@ -805,6 +829,8 @@ static void EnqueueHex(uint8_t hexbyte_u8);
 static void ResetTime(void);
 
 static void SetStateIdleThenPlay(void);
+
+static void SetStateTP(void);
 
 static void SendStateIdle(void);
 
@@ -879,6 +905,9 @@ cli();
   //on arduino timer0 is used for millis(), we change prescaler, but also need to disable overflow interrupt
 #if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__)
   TIMSK = 0x00;
+#elif defined (__AVR_ATtiny167__)
+  TIMSK0 = 0x00;
+  TIMSK1 = 0x00;
 #else
   TIMSK0 = 0x00;
 #endif
@@ -891,6 +920,7 @@ cli();
 
   RADIO_COMMAND_PORT |= _BV(RADIO_COMMAND); // enable pull up
 
+  
 #ifdef ANDROID_HEADPHONES
 
   ANDROID_PLAY_DDR |= _BV(ANDROID_PLAY);
@@ -900,16 +930,20 @@ cli();
   ANDROID_PLAY_PORT &= ~_BV(ANDROID_PLAY);
   ANDROID_NEXT_PORT &= ~_BV(ANDROID_NEXT);
 
-
 #endif
 
-  //attinx5 - > timer1, atmegax8 -> timer0
+  //attinx5 - > timer1
+  //atmegax8 -> timer0
 #if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__)
   TCCR1 = 0x00;
   TCNT1 = 0;
   TIMSK = 0x00;
   TCCR1 |= _BV(CS11) | _BV(CS10); //prescaler 4 @ 8MHz tick ever 0.5us but we have 8bit timer, need to catch overflows
   TIMSK |= _BV(TOIE1); //enable execution of overflow interrupt handling vector
+#elif defined(__AVR_ATtiny167__) //digispark pro
+  TCCR1A = 0x00; // Normal port operation, OC1A/OC1B/OC1C disconnected
+  TCCR1B = _BV(ICNC1); // noise canceler, int on falling edge
+  TCCR1B |= _BV(CS11); // prescaler = 8 -> 1 timer clock tick is 0.5µs long
 #else //atmega chips .. timer0 is used for 100us ticks to time 700us between packet to head unit and for second (50ms mark)
   TCCR0A = 0x00;
   TCCR0B = 0x00;
@@ -929,6 +963,14 @@ cli();
   OCR0A = 100;//run compare rutine every 100us;
   TCNT0 = 0;
   TIMSK |= _BV(OCIE0A); // enable output compare interrupt A on timer0
+#elif defined(__AVR_ATtiny167__)
+  TCCR0A = 0x00; // Normal port operation, OC0 disconnected
+  TCCR0B = 0x00;
+  TCCR0A |= _BV(WGM01); // CTC mode
+  TCCR0B |= _BV(CS01);// prescaler = 8 -> 1 timer clock tick is 1us long
+  OCR0A = 100;//run compare rutine every 100us;
+  TCNT0 = 0;
+  TIMSK0 |= _BV(OCIE0A); // enable output compare interrupt A on timer0
 #else
   TCCR2A = 0x00; // Normal port operation, OC0 disconnected
   TCCR2B = 0x00; // Normal port operation, OC0 disconnected
@@ -944,6 +986,13 @@ cli();
   GIMSK |= _BV(INT0); //INT0 enable
   MCUCR |= _BV(ISC01);
   MCUCR &= ~_BV(ISC00);// falling edge fire interupt routine
+#elif defined(__AVR_ATtiny167__)
+  TIFR1 |= _BV(ICF1); // clear pending interrupt
+  TIMSK1 |= _BV(ICIE1); // enable input capture interrupt on timer1
+#elif defined(__AVR_ATmega324__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__)
+  EIMSK |= _BV(INT2); //INT0 enable
+  EICRA |= _BV(ISC21);
+  EICRA &= ~_BV(ISC20);// falling edge fire interupt routine
 #else
   EIMSK |= _BV(INT0); //INT0 enable
   EICRA |= _BV(ISC01);
@@ -1049,7 +1098,7 @@ cli();
 //-----------------------------------------------------------------------------
 
 
-
+  
 void OutputPacket(void)
 {
 
@@ -1082,7 +1131,7 @@ void OutputPacket(void)
 
       RADIO_CLOCK_PORT |= _BV(RADIO_CLOCK); // SCLK high
 
-      _delay_loop_1(40);
+      //_delay_loop_1(40);
 
       if ((byte_u8 & 0x80) == 0) // mask highest bit and test if set
 
@@ -1106,7 +1155,7 @@ void OutputPacket(void)
 
       RADIO_CLOCK_PORT &= ~_BV(RADIO_CLOCK); // SCLK low
 
-      _delay_loop_1(40);
+      //_delay_loop_1(40);
 
     }
 
@@ -1156,8 +1205,8 @@ void OutputPacket(void)
 
 //-----------------------------------------------------------------------------
 
-#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__)
-ISR(TIM0_COMPA_vect)
+#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny167__)
+ISR(TIMER0_COMPA_vect)
 {
 
   TCNT0 = 0;
@@ -1223,7 +1272,7 @@ ISR(TIMER2_COMPA_vect) //100us
 //-----------------------------------------------------------------------------
 
 
-#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__)
+#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny167__)
 ISR(TIMER1_OVF_vect)
 #else
 ISR(TIMER0_OVF_vect)
@@ -1240,8 +1289,9 @@ ISR(TIMER0_OVF_vect)
 
   */
 
-
+#if !defined(__AVR_ATtiny167__)
   captime_ovf = captime_ovf + 0xFF;
+#endif
 
   if (captime_ovf > 20000)//35*255= 8925, 65536 = REAL OVERFLOW
   {
@@ -1257,6 +1307,13 @@ ISR(TIMER0_OVF_vect)
     MCUCR |= _BV(ISC01);
     MCUCR &= ~_BV(ISC00);// change input capture to falling edge
     GIFR  |= _BV(INTF0); // clear input  interrupt request flag
+#elif defined(__AVR_ATtiny167__)
+    TIFR1 |= _BV(ICF1); // clear pending interrupt
+    TIMSK1 |= _BV(ICIE1); // enable input capture interrupt on timer1
+#elif defined(__AVR_ATmega324__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__)
+    EICRA |= _BV(ISC21);
+    EICRA &= ~_BV(ISC20);// change input capture to falling edge
+    EIFR  |= _BV(INTF2); // clear input  interrupt request flag
 #else
     EICRA |= _BV(ISC01);
     EICRA &= ~_BV(ISC00);// change input capture to falling edge
@@ -1264,59 +1321,6 @@ ISR(TIMER0_OVF_vect)
 #endif
     
   }
-
-  //    capbusy = FALSE; // set flag signifying packet capture done
-  //
-  //    if (capbit > -8) // are we already capturing on a blank byte?
-  //
-  //    {
-  //
-  //      dataerr = TRUE;
-  //
-  //      // Note: This should never happen on normal head unit sending 32 bit
-  //
-  //      //        command strings with error free data.
-  //
-  //      //
-  //
-  //      // if the capture bits were not a complete 8 bits, we need to finish
-  //
-  //      // rotating the bits upward so that the data is nicely formatted
-  //
-  //
-  //
-  //      while (capbit != 0) // have we finished rotating all bits up?
-  //
-  //      {
-  //
-  //        capbuffer[capptr] <<= 1; // rotate in 0 bit
-  //
-  //        capbit++;
-  //
-  //      }
-  //
-  //      capbit = -8;
-  //
-  //      capptr++; // move to new capture byte
-  //
-  //      if (capptr == CAP_BUFFER_END) // have we gone past the end of the
-  //
-  //      { // capture buffer?
-  //
-  //        capptr = 0; // yes, roll over to beginning
-  //
-  //      }
-  //
-  //      if (capptr == scanptr) // have we overflowed the capture queue?
-  //
-  //      {
-  //
-  //        overflow = TRUE; // yes, set error flag
-  //
-  //      }
-  //
-  //    }
-  //  }
 
 }
 
@@ -1351,12 +1355,20 @@ ISR(TIMER0_OVF_vect)
 //-----------------------------------------------------------------------------
 
 
-
+#if defined(__AVR_ATtiny167__)
+ISR(TIMER1_CAPT_vect)
+#elif defined(__AVR_ATmega324__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__)
+ISR(INT2_vect)
+#else
 ISR(INT0_vect)
+#endif
 {
 
 #if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__)
   captime = captime_ovf + TCNT1;
+  TCNT1 = 0; //clear timer1
+#elif defined(__AVR_ATtiny167__)
+  captime = ICR1;
   TCNT1 = 0; //clear timer1
 #else
   captime = captime_ovf + TCNT0;
@@ -1377,6 +1389,16 @@ ISR(INT0_vect)
     TIMSK |= _BV(TOIE1); // enable timer1 interrupt on overflow
     MCUCR |= _BV(ISC01) | _BV(ISC00); // change input capture to rising edge
     GIFR  |= _BV(INTF0); // clear input  interrupt request flag
+#elif defined(__AVR_ATtiny167__)
+    TIFR1 |= _BV(TOV1); // clear timer1 overflow flag
+    TIMSK1 |= _BV(TOIE1); // enable timer1 interrupt on overflow
+    TCCR1B |= _BV(ICES1); // change input capture to rising edge
+    TIFR1 |= _BV(ICF1); // clear input capture interrupt request flag
+#elif defined(__AVR_ATmega324__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__)
+    TIFR0  |= _BV(TOV0); // clear time0 overflow flag
+    TIMSK0 |= _BV(TOIE0); // enable timer0 interrupt on overflow
+    EICRA |= _BV(ISC21) | _BV(ISC20); // change input capture to rising edge
+    EIFR  |= _BV(INTF2); // clear input  interrupt request flag
 #else
     TIFR0  |= _BV(TOV0); // clear time0 overflow flag
     TIMSK0 |= _BV(TOIE0); // enable timer0 interrupt on overflow
@@ -1406,6 +1428,17 @@ ISR(INT0_vect)
     GIFR  |= _BV(INTF0); // clear input  interrupt request flag
 
     if (TIMSK & _BV(TOIE1)) // are we trying to capture data?
+#elif defined(__AVR_ATtiny167__)
+    TCCR1B &= ~_BV(ICES1); // change input capture to falling edge
+    TIFR1 |= _BV(ICF1); // clear input capture interrupt request flag
+    
+    if (TIMSK1 & _BV(TOIE1)) // are we trying to capture data?
+#elif defined(__AVR_ATmega324__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__)
+    EICRA |= _BV(ISC21);
+    EICRA &= ~_BV(ISC20);// change input capture to falling edge
+    EIFR  |= _BV(INTF2); // clear input  interrupt request flag
+
+    if (TIMSK0 & _BV(TOIE0)) // are we trying to capture data?
 #else
     EICRA |= _BV(ISC01);
     EICRA &= ~_BV(ISC00);// change input capture to falling edge
@@ -1419,6 +1452,8 @@ ISR(INT0_vect)
 
 #if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__)
       TIMSK &= ~_BV(TOIE1); // turn off capturing time for high pulse
+#elif defined(__AVR_ATtiny167__)
+     TIMSK1 &= ~_BV(TOIE1); // turn off capturing time for high pulse
 #else
       TIMSK0 &= ~_BV(TOIE0); // turn off capturing time for high pulse
 #endif
@@ -2364,7 +2399,17 @@ if(!mix_button)
 
       break;
 
+    case Do_TP:
+    
+      if (playing == TRUE) {
+        SetStateTP();
+      } else {
+        SetStateInitPlay();
+      }
+    
+       EnqueueString(sTP);
 
+    break;
 
     default:
 
@@ -2399,7 +2444,6 @@ int main()
 #else
   Serial.begin(9600);
 #endif
-
   Init_VWCDC();
 
   //start in idle mode
