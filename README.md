@@ -36,9 +36,10 @@ connectios:
 CDC_emulator: arduino based cd changer emulator for vw/audi/skoda/seat radios, based on avr port of vwcdpic(see header of file for more info)
 
 current status (see readme inside dir):
-- tested with my old audi concert 1 radio, and RCD300 (only enable 1CD, TODO: make all 6CD works)
+- tested with my old audi concert 1 radio
+- version for 2 8bit timers, has, but if it still works is questionable:
 - ARDUINO headphones support
 - ARDUINO headphones single button support
-- bluetooth support for modules with AT commands (ovc3860 based: XS3868, S3860M-S, BLK-MD-SPK-B) - one way only, no feedback from module - TODO
+- bluetooth support for modules with AT commands (ovc3860 based: XS3868, S3860M-S, BLK-MD-SPK-B), BK8000L - one way only, no feedback from module - TODO
 
 vw_cd_changer_sniffer - sniffer for radio comunication
