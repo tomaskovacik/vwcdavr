@@ -1707,3 +1707,33 @@ static void SendPacket(void)
 
 
 }
+
+static void cdButtonPushed(uint8_t cdnumber){
+  static uint8_t cd1pushed, cd2pushed, cd3pushed, cd4pushed, cd5pushed, cd6pushed = 0; //variable to cound how many times we pressed button for spectial actions
+  switch (cdnumber){
+    case 1:
+      cd1pushed++;
+      cd2pushed = cd3pushed = cd4pushed = cd5pushed = cd6pushed;
+    break;
+    case 2:
+      cd2pushed++;
+      cd1pushed = cd3pushed = cd4pushed = cd5pushed = cd6pushed;
+    break;
+    case 3:
+      cd3pushed++;
+      cd1pushed = cd2pushed = cd4pushed = cd5pushed = cd6pushed;
+    break;
+    case 4:
+      cd4pushed++;
+      cd1pushed = cd2pushed = cd3pushed = cd5pushed = cd6pushed;
+    break;
+    case 5:
+      cd5pushed++;
+      cd1pushed = cd2pushed = cd3pushed = cd4pushed = cd6pushed;
+    break;
+    case 6:
+      cd6pushed++;
+      cd1pushed = cd2pushed = cd3pushed = cd4pushed = cd5pushed;
+    break;
+  }
+}

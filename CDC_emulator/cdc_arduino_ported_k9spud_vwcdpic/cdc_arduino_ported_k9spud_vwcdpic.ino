@@ -237,6 +237,11 @@ enum STATES
 /* -- Extern Global Variables ---------------------------------------------- */
 
 #ifdef BLUETOOTH
+const uint8_t sBK8000L_PAIRING_INIT[] PROGMEM = "AT+CA\r\n"; //  pairing   AT+CA\r\n
+const uint8_t sBK8000L_PAIRING_EXIT[] PROGMEM = "AT+CB\r\n"; //  Exit pairing  AT+CB\r\n
+const uint8_t sBK8000L_CONNECT_LAST_DEVICE[] PROGMEM = "AT+CC\r\n"; //  The last paired device connected  AT+CC\r\n     what this should do? connect to last connected device?
+const uint8_t sBK8000L_DISCONNECT[] PROGMEM = "AT+CD\r\n";
+
 const uint8_t sDATAERR[] PROGMEM = "";
 const uint8_t sOVERFLOW[] PROGMEM = "";
 const uint8_t sMDISABLE[] PROGMEM = "AT#MA\r\n";
@@ -263,6 +268,10 @@ const uint8_t sDASH[] PROGMEM = "";
 const uint8_t sHEX[] PROGMEM = "";
 const uint8_t sVERSION[] PROGMEM = "";
 #else
+const uint8_t sBK8000L_PAIRING_INIT[] PROGMEM = "";
+const uint8_t sBK8000L_PAIRING_EXIT[] PROGMEM = "";
+const uint8_t sBK8000L_CONNECT_LAST_DEVICE[] PROGMEM = "";
+const uint8_t sBK8000L_DISCONNECT[] PROGMEM = "";
 const uint8_t sDATAERR[] PROGMEM = "dataerr\r\n";
 const uint8_t sOVERFLOW[] PROGMEM = "overflow\r\n";
 const uint8_t sMDISABLE[] PROGMEM = "MDISABLE\r\n";
@@ -397,6 +406,7 @@ static void SendStateInitPlayAnnounceCD(void);
 static void SendStatePlayLeadInAnnounceCD(void);
 static void SendStateTP(void);
 static void printstr_p(const char *s);
+static void cdButtonPushed(uint8_t cdnumber)
 #define TRUE 1
 #define FALSE 0
 
