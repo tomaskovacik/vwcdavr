@@ -540,7 +540,7 @@ ISR(TIMER2_COMPA_vect)
     for (sendbitcount = -8; sendbitcount != 0; sendbitcount++)
     {
       RADIO_CLOCK_PORT |= _BV(RADIO_CLOCK); // SCLK high
-      //_delay_loop_1(40);
+      _delay_loop_1(5);
       if ((byte_u8 & 0x80) == 0) // mask highest bit and test if set
       {
         RADIO_DATA_PORT |= _BV(RADIO_DATA); // DATA high
@@ -551,7 +551,7 @@ ISR(TIMER2_COMPA_vect)
       }
       byte_u8 <<= 1; // load the next bit
       RADIO_CLOCK_PORT &= ~_BV(RADIO_CLOCK); // SCLK low
-      //_delay_loop_1(40);
+      _delay_loop_1(5);
     }
 
     display_byte_counter_u8++;
