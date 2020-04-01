@@ -676,67 +676,38 @@ ISR(TIMER0_COMPA_vect)
 //-----------------------------------------------------------------------------
 
 ISR(TIMER1_OVF_vect)
-
 {
-
-  //Serial.println("TIMER1_OVF_vect");
-
   TIMSK1 &= ~_BV(TOIE1); // disable further timer 1 interrupts
-
   capbusy = FALSE; // set flag signifying packet capture done
 
-
-
   if (capbit > -8) // are we already capturing on a blank byte?
-
   {
-
     dataerr = TRUE;
-
     // Note: This should never happen on normal head unit sending 32 bit
-
     //        command strings with error free data.
-
     //
-
     // if the capture bits were not a complete 8 bits, we need to finish
-
     // rotating the bits upward so that the data is nicely formatted
 
-
-
     while (capbit != 0) // have we finished rotating all bits up?
-
     {
-
       capbuffer[capptr] <<= 1; // rotate in 0 bit
-
       capbit++;
-
     }
 
     capbit = -8;
-
     capptr++; // move to new capture byte
 
     if (capptr == CAP_BUFFER_END) // have we gone past the end of the
-
     { // capture buffer?
-
       capptr = 0; // yes, roll over to beginning
-
     }
 
     if (capptr == scanptr) // have we overflowed the capture queue?
-
     {
-
       overflow = TRUE; // yes, set error flag
-
     }
-
   }
-
 }
 
 
