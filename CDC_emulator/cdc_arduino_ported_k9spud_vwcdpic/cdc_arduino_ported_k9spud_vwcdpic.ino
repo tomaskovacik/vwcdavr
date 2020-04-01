@@ -634,9 +634,7 @@ ISR(TIMER0_OVF_vect) {
   if (counter_timer0_overflows = _TIMER0_OVERFLOW_COUNTS )
   {
     counter_timer0_overflows = 0;
-
     flag_50ms = TRUE;
-
   }
   TIFR &= ~(1 << TOV0);
   TCNT0 = 5;// to get overflowed after 1000us 1024-(6x4us)=1000us  counting from 0... 0,1,2,3,4,5 = 6ticks
@@ -645,21 +643,14 @@ ISR(TIMER0_OVF_vect) {
 #else
 
 ISR(TIMER0_COMPA_vect)
-
 {
-
   counter_10ms_u8++;
 
   if (counter_10ms_u8 == 5)
-
   {
-
     counter_10ms_u8 = 0;
-
     flag_50ms = TRUE;
-
   }
-
 }
 #endif
 
