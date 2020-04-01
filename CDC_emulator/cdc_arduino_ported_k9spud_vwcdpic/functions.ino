@@ -952,36 +952,23 @@ static void SendPacket(void)
     case StateTP:
       SendStateTP();
       break;
+    
     case StateIdle:
-
       SendStateIdle();
-
       break;
 
-
-
     case StateIdleThenPlay:
-
       BIDIcount++;
 
       if (BIDIcount == 0)
-
       {
-
         SetStateInitPlay();
-
         SendStateIdle();
-
       }
-
       else
-
       {
-
         SendStateIdle();
-
       }
-
       break;
 
     // 34 2E ED DE AF B7 FF 3C
@@ -998,45 +985,26 @@ static void SendPacket(void)
     // 34 BE FE FF FF FF EF 3C
 
     case StateInitPlay:
-
       secondcount = SECONDWAIT; // stop display from ticking time
-
       SendFrameByte(0xCB);//0xFF - 0x34
 
       if ((BIDIcount & 0x01) == 0)
-
       {
-
         SendStateInitPlayAnnounceCD();
-
         break;
-
       }
-
       SendDisplayBytes();
-
       SendByte(0x10);//0xFF - 0xEF
 
-
-
     case StateInitPlayEnd:
-
       SendStateInitPlayEnd();
-
       break;
-
-
 
     case StateInitPlayAnnounceCD:
-
       SendStateInitPlayAnnounceCD();
-
       break;
 
-
-
     case StatePlayLeadIn:
-
       // 34 BE FE FF FF FF AE 3C (play lead-in)
       // 34 2E ED DE AF B7 FF 3C
       // 34 BE FE FF FF FF AE 3C
@@ -1046,95 +1014,49 @@ static void SendPacket(void)
       // 34 BE FE FF FF FF AE 3C
       // 34 2E ED DE AF B7 FF 3C
       // 34 BE FE FF FF FF AE 3C
-
       secondcount = SECONDWAIT; // stop display from ticking time
-
       SendFrameByte(0xCB);//0xFF - 0x34
-
-
 
       if ((BIDIcount & 0x01) == 0)
-
       {
-
         SendStatePlayLeadInAnnounceCD();
-
         break;
-
       }
 
       SendDisplayBytes();
-
       SendByte(0x51);//0xFF - 0xAE
-
-
 
     case StatePlayLeadInEnd:
-
       SendStatePlayLeadInEnd();
-
       break;
-
-
 
     case StatePlayLeadInAnnounceCD:
-
       SendStatePlayLeadInAnnounceCD();
-
       break;
-
-
 
     case StateTrackLeadIn:
-
       secondcount = SECONDWAIT; // stop display from ticking time
-
       SendFrameByte(0xCB);//0xFF - 0x34
-
       SendDisplayBytes();
-
       SendByte(0x51);//0xFF - 0xAE
-
       SendFrameByte(0xC3);//0xFF - 0x3C
-
       BIDIcount++;
-
-
-
       if (BIDIcount == 0)
-
       {
-
         break;
-
       }
-
       SetStatePlay();
-
       break;
-
-
 
     case StatePlay:
-
       SendFrameByte(0xCB);//0xFF - 0x34
-
       SendDisplayBytes();
-
       SendByte(0x30);//0xFF - 0xCF
-
       SendFrameByte(0xC3);//FF - 0x3C
-
       break;
-
     default:
-
       break;
-
   }
-
-
-
 }
 
 static uint8_t cdButtonPushed(uint8_t cdnumber) {
