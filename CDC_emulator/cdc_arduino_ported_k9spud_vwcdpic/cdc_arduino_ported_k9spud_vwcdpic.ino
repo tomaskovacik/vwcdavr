@@ -138,10 +138,9 @@
 #define RADIO_CLOCK_DDR    DDRB
 #define RADIO_CLOCK_PORT  PORTB
 #define RADIO_DATA         PB3
-#define RADIO_DATA     DDB3
 #define RADIO_DATA_DDR     DDRB
 #define RADIO_DATA_PORT  PORTB
-#define RADIO_ACC 3 //PE5 (INT5)
+#define RADIO_ACC 3 // PD3 = INT1
 #endif
 
 
