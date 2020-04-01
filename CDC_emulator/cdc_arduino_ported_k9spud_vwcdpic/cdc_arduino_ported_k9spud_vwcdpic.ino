@@ -443,166 +443,81 @@ static uint8_t cdButtonPushed(uint8_t cdnumber);
 
 
 void Init_VWCDC(void)
-
 {
-  cli();
-  //on arduino timer0 is used for millis(), we change prescaler, but also need to disable overflow interrupt
-  TIMSK0 = 0x00;
-
-
-  //  DDRA |= _BV(DDA6); // debug pin
-
+  cli();  
+  TIMSK0 = 0x00; //on arduino timer0 is used for millis(), we change prescaler, but also need to disable overflow interrupt
   RADIO_CLOCK_DDR |= _BV(RADIO_CLOCK);
-
   RADIO_DATA_DDR  |= _BV(RADIO_DATA);
-
   RADIO_COMMAND_DDR &= ~_BV(RADIO_COMMAND); // input capture as input
-
   RADIO_COMMAND_PORT |= _BV(RADIO_COMMAND); // enable pull up
 
-
-
-
-
   //Timer1 init
-
   //Used for timing the incoming commands from headunit
-
   TCCR1A = 0x00; // Normal port operation, OC1A/OC1B/OC1C disconnected
-
   TCCR1B = _BV(ICNC1); // noise canceler, int on falling edge
-
   TCCR1B |= _BV(CS11); // prescaler = 8 -> 1 timer clock tick is 0.5µs long
-
   TIFR1 |= _BV(ICF1); // clear pending interrupt
-
   TIMSK1 |= _BV(ICIE1); // enable input capture interrupt on timer1
 
-
-
   //Timer 2 Init
-
   //Timer 2 used to time the intervals between package bytes
-
   OCR2A = 175; // 4µs x 175 = 700µs
-
   TCCR2A |= _BV(WGM21); // Timer2 in CTC Mode
-
   TCCR2B |= _BV(CS22); // prescaler = 64 -> 1 timer clock tick is 4us long
 
-
-
-
-
-
   capptr = 0; // indirect pointer to capture buffer
-
   scanptr = 0;
-
   capbit = -8;
-
   txinptr = 0; // queue pointers
-
   txoutptr = 0;
 
-
-
   capbusy = FALSE; // reset flags
-
   mix = FALSE;
-
   scan = FALSE;
-
   playing = FALSE;
-
   overflow = FALSE;
-
   dataerr = FALSE;
 
-
-
 #ifdef DUMPMODE
-
   startbit = FALSE;
-
 #endif
-
   ACKcount = 0;
 
-
-
   // these values can be set depending on the state of mp3
-
   // it has to be evaluated wether CD number can be grater than 6
-
   disc = 0x41; // CD 1
-
   track = 0x01; // track 1
-
-
 
   poweridentcount = POWERIDENTWAIT;
 
-
-
   ResetTime();
-
-  SetStateIdleThenPlay();
-
-
-
-
-
+  SetStateIdle(); //start at idle!!! no idle then play!!
 
   EnqueueString(sIDENTIFY);
-
   EnqueueString(sVERSION);
-
   EnqueueString(sNEWLINE);
-
   EnqueueString(sRING);
 
-
   //Timer 0 init
-
   //Timer 0 used to time the interval between each update
-
 #if defined(__AVR_ATmega8__) || defined(__AVR_ATmega128__)
-
-  //no CTc mode, we must overflow
-  TIMSK |= _BV(TOIE0);
-
-  TCCR0B |= _BV(CS00) + _BV(CS01); // prescaler = 64 -> timer clock tick is 4us long
-
+  TIMSK |= _BV(TOIE0); //no CTc mode, we must overflow
+  TCCR0B |= _BV(CS00) | _BV(CS01); // prescaler = 64 -> timer clock tick is 4us long
   //timer0 overflow after 256counts, oveflow interup routine is fired every 1024us (4*256)
   //we need 50 overflows to count to 50ms
 #define _TIMER0_OVERFLOW_COUNTS 50
 
 #else
-
   OCR0A = _10MS; // 10ms Intervall
-
   TCCR0A = 0x00; // Normal port operation, OC0 disconnected
-
   TCCR0A |= _BV(WGM01); // CTC mode
-
-  TCCR0B |= _BV(CS00) + _BV(CS02); // prescaler = 1024 -> 1 timer clock tick is 64us long
-
+  TCCR0B |= _BV(CS00) | _BV(CS02); // prescaler = 1024 -> 1 timer clock tick is 64us long
   TIMSK0 |= _BV(OCIE0A); // enable output compare interrupt on timer0
-
 #endif
 
-
-
-
-
-
   SendPacket(); // force first display update packet
-
-
   sei();
   //    SREG |= 0x80;   // enable interrupts
-
 }
 
 //-----------------------------------------------------------------------------
