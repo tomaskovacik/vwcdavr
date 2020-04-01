@@ -519,10 +519,11 @@ ISR(TIMER2_COMPA_vect)
 {
   static uint8_t display_byte_counter_u8 = 0;
   uint8_t byte_u8;
-  TCCR2B &= ~_BV(CS20); // stop Timer2
-  TCCR2B &= ~_BV(CS21);
-  TCNT2 = 0; // clear Timer2
-  TIFR2 |= _BV(OCF2A);
+  //TCCR2B &= ~_BV(CS20); //set to 0 already
+  //TCCR2B &= ~_BV(CS21); //set to 0 already
+  TCCR2B &= ~_BV(CS22); // stop Timer2, CS22 was set, prescaler 64
+  //TCNT2 = 0; // clear Timer2
+  //TIFR2 |= _BV(OCF2A); //no need to do this
 
   if (display_byte_counter_u8 < 8)
   {
@@ -540,13 +541,12 @@ ISR(TIMER2_COMPA_vect)
       //_delay_loop_1(40);
       if ((byte_u8 & 0x80) == 0) // mask highest bit and test if set
       {
-        RADIO_CLOCK_PORT |= _BV(RADIO_DATA); // DATA high
+        RADIO_DATA_PORT |= _BV(RADIO_DATA); // DATA high
       }
       else
       {
-        RADIO_CLOCK_PORT &= ~_BV(RADIO_DATA); // DATA low
+        RADIO_DATA_PORT &= ~_BV(RADIO_DATA); // DATA low
       }
-
       byte_u8 <<= 1; // load the next bit
       RADIO_CLOCK_PORT &= ~_BV(RADIO_CLOCK); // SCLK low
       //_delay_loop_1(40);
@@ -558,9 +558,12 @@ ISR(TIMER2_COMPA_vect)
     //TCCR2B |= _BV(CS20);
   }
   else
-  {
+  { //display_byte_counter_u8 is ==8
+#ifdef DUMPMODE2
+    Serial.println();
+#endif
     display_byte_counter_u8 = 0;
-    TIMSK2 &= ~_BV(OCIE2A); // disable output compare interrupt on timer2
+    //TIMSK2 &= ~_BV(OCIE2A); // disable output compare interrupt on timer2
   }
 }
 
