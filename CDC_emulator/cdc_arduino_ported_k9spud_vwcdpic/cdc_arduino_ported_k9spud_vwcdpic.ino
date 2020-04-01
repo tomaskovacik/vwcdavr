@@ -142,7 +142,6 @@
 #define RADIO_DATA_DDR     DDRB
 #define RADIO_DATA_PORT  PORTB
 #define RADIO_ACC 3 //PE5 (INT5)
-
 #endif
 
 #if defined(__AVR_ATmega324__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__)
@@ -157,7 +156,6 @@
 #define RADIO_DATA_DDR     DDRB
 #define RADIO_DATA_PORT  PORTB
 #define RADIO_ACC 3
-
 #endif
 
 
@@ -238,260 +236,132 @@ enum STATES
 /* -- Extern Global Variables ---------------------------------------------- */
 
 #ifdef BLUETOOTH
-
 const uint8_t sDATAERR[] PROGMEM = "\r\n";
-
 const uint8_t sOVERFLOW[] PROGMEM = "\r\n";
-
 const uint8_t sMDISABLE[] PROGMEM = "AT#MA\r\n";
-
 const uint8_t sMENABLE[] PROGMEM = "AT#MA\r\n";
-
 const uint8_t sMINQUIRY[] PROGMEM = "MINQUIRY\r\n";
-
 const uint8_t sPRV_LIST[] PROGMEM = "AT#MA\r\n";
-
 const uint8_t sNXT_LIST[] PROGMEM = "AT#MA\r\n";
-
 const uint8_t sLIST1[] PROGMEM = "AT#MA\r\n";
-
 const uint8_t sLIST2[] PROGMEM = "AT#MA\r\n";
-
 const uint8_t sLIST3[] PROGMEM = "AT#MA\r\n";
-
 const uint8_t sLIST4[] PROGMEM = "AT#MA\r\n";
-
 const uint8_t sLIST5[] PROGMEM = "AT#MA\r\n";
-
 const uint8_t sLIST6[] PROGMEM = "AT#MA\r\n";
-
 const uint8_t sRANDOM[] PROGMEM = "RANDOM\r\n";
-
 const uint8_t sPLAY[] PROGMEM = "AT#MA\r\n";
-
 const uint8_t sSCAN[] PROGMEM = "SCAN\r\n";
-
 const uint8_t sSTOP[] PROGMEM = "AT#MA\r\n";
-
 const uint8_t sNEXT[] PROGMEM = "AT#MD\r\n";
-
 const uint8_t sPREVIOUS[] PROGMEM = "AT#ME\r\n";
-
 const uint8_t sRING[] PROGMEM = "\r\n";
-
 const uint8_t sIDENTIFY[] PROGMEM = "\r\n";
-
 const uint8_t sNEWLINE[] PROGMEM = "\r\n";
-
 const uint8_t sDASH[] PROGMEM = "";
-
 const uint8_t sHEX[] PROGMEM = "";
-
 const uint8_t sVERSION[] PROGMEM = "";
-
 #else
-
 const uint8_t sDATAERR[] PROGMEM = "dataerr\r\n";
-
 const uint8_t sOVERFLOW[] PROGMEM = "overflow\r\n";
-
 const uint8_t sMDISABLE[] PROGMEM = "MDISABLE\r\n";
-
 const uint8_t sMENABLE[] PROGMEM = "MENABLE\r\n";
-
 const uint8_t sMINQUIRY[] PROGMEM = "MINQUIRY\r\n";
-
 const uint8_t sPRV_LIST[] PROGMEM = "PRV_LIST\r\n";
-
 const uint8_t sNXT_LIST[] PROGMEM = "NXT_LIST\r\n";
-
 const uint8_t sLIST1[] PROGMEM = "LIST1\r\n";
-
 const uint8_t sLIST2[] PROGMEM = "LIST2\r\n";
-
 const uint8_t sLIST3[] PROGMEM = "LIST3\r\n";
-
 const uint8_t sLIST4[] PROGMEM = "LIST4\r\n";
-
 const uint8_t sLIST5[] PROGMEM = "LIST5\r\n";
-
 const uint8_t sLIST6[] PROGMEM = "LIST6\r\n";
-
 const uint8_t sRANDOM[] PROGMEM = "RANDOM\r\n";
-
 const uint8_t sPLAY[] PROGMEM = "PLAY\r\n";
-
 const uint8_t sSCAN[] PROGMEM = "SCAN\r\n";
-
 const uint8_t sSTOP[] PROGMEM = "STOP\r\n";
-
 const uint8_t sNEXT[] PROGMEM = "NEXT\r\n";
-
 const uint8_t sPREVIOUS[] PROGMEM = "PREVIOUS\r\n";
-
 const uint8_t sRING[] PROGMEM = "RING\r\n";
-
 const uint8_t sIDENTIFY[] PROGMEM = "Audi Concert I Multimedia Gateway Ver.";
-
 const uint8_t sNEWLINE[] PROGMEM = "\r\n";
-
 const uint8_t sDASH[] PROGMEM = "_";
-
 const uint8_t sHEX[] PROGMEM = {
-
   '0', 0, '1', 0, '2', 0, '3', 0, '4', 0, '5', 0, '6', 0, '7', 0, '8', 0, '9', 0, 'A', 0, 'B', 0, 'C', 0, 'D', 0, 'E', 0, 'F', 0
-
 };
-
 const uint8_t sVERSION[] PROGMEM = {
-
   VER_MAJOR, '.', VER_MINOR, VER_PATCHLEVEL, 0
-
 };
 #endif
 
-
-
-
 uint8_t sendreg;
-
 uint8_t sendbitcount; // Used in SendByte routine
 
-
-
 uint8_t disc = 1;
-
 uint8_t track = 1;
-
 uint8_t minute = 0;
-
 uint8_t second = 0;
-
 uint8_t leds = 0;
-
-
 uint8_t scanptr; // pointer to command byte to inspect next
-
 uint8_t fsr;
-
 uint8_t scanbyte; // most recently retrieved command byte
-
 uint8_t cmdcode; // command code received from head unit (byte 3)
 
-
-
 // these storage bytes are for the ISR to save process state so that it
-
 // doesn't adversely affect the main loop code. you must -not- use these
-
 // variables for anything else, as the ISR -will- corrupt them.
 
-
-
 uint8_t intwsave;
-
 uint8_t intstatussave;
-
 uint8_t intfsrsave;
 
-
-
 // the 'capbusy' flag will be set when the ISR is busy capturing a command
-
 // packet from the head unit. The TMR0 ISR will clear it once the recieve
-
 // timeout has been exceeded or the PWTX capture ISR will clear it once
-
 // 32 bits have been captured (command packets are supposed to be 32 bits
-
 // long only).
-
-
 
 uint8_t capbusy;
 
-
-
 // 'mix' and 'scan' flags specify whether we want to light up the MIX light
-
 // or SCAN display on the head unit.
 
-
-
 uint8_t mix;
-
 uint8_t scan;
-
 uint8_t playing;
-
 uint8_t cd_button = 0;
-
 uint8_t mix_button = 0;
-
 // The ISR will set 'dataerr' flag if it detected a framing error
-
 // or 'overflow' if it overflowed the capture buffer queue.
-
 uint8_t overflow;
-
 uint8_t dataerr;
 
-
-
 #ifdef DUMPMODE
-
 // The ISR will set 'startbit' flag if it detected a start bit.
-
 uint8_t startbit;
-
 #endif
-
-
-
-
 
 
 
 uint16_t captime; // timer count of low pulse (temp)
-
 int8_t capbit; // bits left to capture for this byte
-
 int8_t capbitpacket; // bits left to capture for the entire packet
-
 uint8_t capptr; // pointer to packet capture buffer loc
 
-
-
 uint8_t BIDIstate; // pointer to the current state handler routine
-
 int8_t BIDIcount; // counts how long to stay in current state
-
 uint8_t ACKcount; // number of ACK bits to set.
-
 uint8_t discload; // next disc number to load
 
-
-
 int8_t poweridentcount; // counts down until we should send VWCDPICx.x
-
 uint8_t secondcount; // counts down until one second has passed
-
 int8_t scancount; // used to count down displaying SCAN mode
 
-
-
 uint8_t txinptr;
-
 uint8_t txoutptr;
-
 uint8_t display_byte_buffer_mau8[8]; // holds display bytes sent to the head unit
-
 uint8_t const *txbuffer[TX_BUFFER_END]; // 39-26-1 = 12 serial output strings queue
-
 uint8_t capbuffer[CAP_BUFFER_END]; // 64-39-1 = 24 bytes for head unit command
-
 uint8_t counter_10ms_u8 = 0; // counter for 10ms intervals
-
 uint8_t flag_50ms = false; // indicates that a period of 50ms isover
 #if defined(__AVR_ATmega8__) || defined(__AVR_ATmega128__)
 uint8_t counter_timer0_overflows = 0; //timer0 overflow counts to calc 10ms
@@ -499,75 +369,37 @@ uint8_t counter_timer0_overflows = 0; //timer0 overflow counts to calc 10ms
 
 /* -- Modul Global Function Prototypes ------------------------------------- */
 
-
-
 static void ScanCommandBytes(void);
-
 static void DumpFullCommand(void);
-
 static void DecodeCommand(void);
-
 static uint8_t GetCaptureByte(void);
-
 static void SetStateIdle(void);
-
 static void SetStatePlay(void);
-
 static void SetStateInitPlay(void);
-
 static void SetStatePlayLeadIn(void);
-
 static void SetStateTrackLeadIn(void);
-
 static void SendDisplayBytes(void);
-
 static void SendDisplayBytesNoCD(void);
-
 static void SendDisplayBytesInitCD(void);
-
 static void SendFrameByte(uint8_t byte_u8);
-
 static void SendByte(uint8_t byte_u8);
-
 static void EnqueueString(const uint8_t *addr PROGMEM);
-
 static void EnqueueHex(uint8_t hexbyte_u8);
-
 static void ResetTime(void);
-
 static void SetStateIdleThenPlay(void);
-
 static void SetStateTP(void);
-
 static void SendStateIdle(void);
-
 static void SendStatePlayLeadInEnd(void);
-
 static void SendPacket(void);
-
 static void SendStateInitPlayEnd(void);
-
 static void SendStateInitPlayAnnounceCD(void);
-
 static void SendStatePlayLeadInAnnounceCD(void);
-
 static void SendStateTP(void);
-
 static void printstr_p(const char *s);
-
 #define TRUE 1
-
 #define FALSE 0
 
-
-
-/* -- Makros --------------------------------------------------------------- */
-
-
-
 /* -- Implementation Functions --------------------------------------------- */
-
-
 
 //-----------------------------------------------------------------------------
 
