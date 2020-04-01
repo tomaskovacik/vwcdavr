@@ -48,14 +48,6 @@
 
  *****************************************************************************/
 
-#include "IS2020.h"
-
-#define DEBUG 0
-#define RESET 4 //?
-#define BTSerial Serial1 //Serial1 => TX = 3, RX = 2
-
-IS2020 BT(&BTSerial);
-
 //#define DUMPMODE
 //#define DUMPMODE2
 
