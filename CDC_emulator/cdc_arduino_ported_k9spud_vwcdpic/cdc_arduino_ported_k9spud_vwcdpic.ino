@@ -413,34 +413,16 @@ static uint8_t cdButtonPushed(uint8_t cdnumber);
 /* -- Implementation Functions --------------------------------------------- */
 
 //-----------------------------------------------------------------------------
-
 /*!
-
   \brief     Init_VWCDC
-
-
-
   initialization for cdc protocol
-
-
-
   \author     Koelling
-
   \date       26.09.2007
-
-
-
   \param[in]  none
-
   \param[out] none
-
   \return     void
-
 */
-
 //-----------------------------------------------------------------------------
-
-
 
 void Init_VWCDC(void)
 {
@@ -521,38 +503,17 @@ void Init_VWCDC(void)
 }
 
 //-----------------------------------------------------------------------------
-
 /*!
-
   \brief    ISR(TIMER2_COMPA_vect)
-
-
-
   Timer2 ensures 700µs timing between display package bytes
-
   Shift bytes out to head unit
-
-
-
   \author     Koelling
-
   \date       06.10.2007
-
-
-
   \param[in]  none
-
   \param[out] none
-
   \return     none
-
-
-
 */
-
 //-----------------------------------------------------------------------------
-
-
 
 ISR(TIMER2_COMPA_vect)
 
@@ -651,40 +612,19 @@ ISR(TIMER2_COMPA_vect)
 
 }
 
-
-
 //-----------------------------------------------------------------------------
-
 /*!
-
   \brief     ISR(TIMER0_COMP_vect)
-
   on atmega8 overflow is used
-
-
-
   timer0 output compare interrupt service routine for cdc protocol
-
   radio display update
-
-
-
   \author     Koelling
-
   \date       04.10.2007
-
-
-
   \param[in]  none
-
   \param[out] none
-
   \return     void
-
 */
-
 //-----------------------------------------------------------------------------
-
 
 #if defined(__AVR_ATmega8__) || defined(__AVR_ATmega128__)
 
@@ -723,36 +663,17 @@ ISR(TIMER0_COMPA_vect)
 }
 #endif
 
-
 //-----------------------------------------------------------------------------
-
 /*!
-
   \brief     ISR(TIMER1_OVF_vect)
-
-
-
   timer1 overflow interrupt service routine for cdc protocol
-
-
-
   \author     Koelling
-
   \date       26.09.2007
-
-
-
   \param[in]  none
-
   \param[out] none
-
   \return     void
-
 */
-
 //-----------------------------------------------------------------------------
-
-
 
 ISR(TIMER1_OVF_vect)
 
@@ -821,34 +742,16 @@ ISR(TIMER1_OVF_vect)
 
 
 //-----------------------------------------------------------------------------
-
 /*!
-
   \brief     ISR(TIMER1_CAPT_vect)
-
-
-
   input capture interrupt service routine for cdc protocol
-
-
-
   \author     Koelling
-
   \date       26.09.2007
-
-
-
   \param[in]  none
-
   \param[out] none
-
   \return     void
-
 */
-
 //-----------------------------------------------------------------------------
-
-
 
 ISR(TIMER1_CAPT_vect)
 
@@ -1048,37 +951,17 @@ ISR(TIMER1_CAPT_vect)
 
 }
 
-
-
 //-----------------------------------------------------------------------------
-
 /*!
-
   \brief     CDC_Protocol(void)
-
-
-
   cyclic called main program for cdc protocol (50ms?)
-
-
-
   \author     Koelling
-
   \date       26.09.2007
-
-
-
   \param[in]  none
-
   \param[out] none
-
   \return     void
-
 */
-
 //-----------------------------------------------------------------------------
-
-
 
 void CDC_Protocol(void)
 
@@ -1254,110 +1137,52 @@ void CDC_Protocol(void)
 
 }
 
-
-
-
 //-----------------------------------------------------------------------------
-
 /*!
-
   \brief    void DecodeCommand(void)
-
-
-
   decode cmdcode and do required actions
-
-
-
   ;--------------------------------------------------------------------------
-
   ; Button Push Packets
-
   ;--------------------------------------------------------------------------
-
   ; 532C609F Mix 1
-
   ; 532CE01F Mix 6
-
   ; 532CA05F Scan
-
   ;     Note: Blaupunkt Gamma V head unit will continue to send scan key code
-
   ;       unless display is switched into scan mode.
-
   ;       (reported by tony.gilbert@orange.co.uk)
-
   ; 532C10EF Head Unit mode change. Emitted at power up, power down, and
-
   ;        any mode change. (disable playing)
-
   ; 532C58A7 Seek Back Pressed
-
   ; 532CD827 Seek Forward Pressed
-
   ; 532C7887 Dn
-
   ; 532CA857 Dn on Mk3 premium (Adam Yellen <adam@yellen.com>)
-
   ; 532CF807 Up
-
   ; 532C6897 Up on Mk3 premium (Adam Yellen)
-
   ; 532C38C7 CD Change (third packet)
-
   ; 532CE41B Seek Forward Released (enable playing)
-
   ; 532CE41B Seek Back Released (enable playing)
-
   ; 532CE41B CD Mode selected. Emitted at power up (if starting in CD
-
   ;            mode), change to CD mode. (enable playing)
-
   ; 532C14EB CD Change (second packet)
-
   ; 532C0CF3 CD 1 (first packet)
-
   ; 532C8C73 CD 2 (first packet)
-
   ; 532C4CB3 CD 3 (first packet)
-
   ; 532CCC33 CD 4 (first packet)
-
   ; 532C2CD3 CD 5 (first packet)
-
   ; 532CAC53 CD 6 (first packet)
-
   ;
-
   ; Monsoon State Changes:
-
   ; 532CE41B enable playing (transition to State 2)
-
   ; 532C38C7 disc loaded inquiry (transition to State 5)
-
   ; 532C10EF disable playing (transition to State 1)
-
   ;--------------------------------------------------------------------------
-
-
-
   \author     Koelling
-
   \date       05.10.2007
-
-
-
   \param[in]  none
-
   \param[out] none
-
   \return     void
-
 */
-
 //-----------------------------------------------------------------------------
-
-
 
 static void DecodeCommand(void)
 {
