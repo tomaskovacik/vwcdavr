@@ -966,175 +966,99 @@ ISR(TIMER1_CAPT_vect)
 void CDC_Protocol(void)
 
 {
-
   uint8_t decimal_adjust_u8;
 
-
-
   if (flag_50ms == TRUE)
-
   {
-
     flag_50ms = FALSE;
-
     SendPacket();
-
     scancount++;
-
     if (scancount == 0)
-
     {
-
       scancount = SCANWAIT;
-
       scan = FALSE; // turn off scan display
       leds &= 0xEF;
-
     }
-
     secondcount++;
-
     if (secondcount == 0)
-
     {
-
       secondcount = SECONDWAIT;
-
       poweridentcount++;
 
-
       if (poweridentcount == 0)
-
       {
-
         poweridentcount = POWERIDENTWAIT;
-
         EnqueueString(sIDENTIFY);
-
         EnqueueString(sVERSION);
-
         EnqueueString(sNEWLINE);
-
       }
 
       second++; // increment the time display
-
       decimal_adjust_u8 = second & 0x0F; // skip past hexidecimal codes
-
       if (decimal_adjust_u8 == 0x0A) // are with at xA?
-
       {
-
         second += 6; // yes, add 6 and we'll be at x0 instead
-
       }
 
       if (second == 0x60)
-
       {
-
         second = 0;
-
         minute++;
-
         decimal_adjust_u8 = minute & 0x0F; // skip past hexidecimal codes
-
         if (decimal_adjust_u8 == 0x0A) // are with at xA?
-
         {
-
           minute += 6; // yes, add 6 and we'll be at x0 instead
-
         }
 
         if (minute == 0xA0) // have we gone beyond 99 minutes?
-
         {
-
           minute = 0;
-
         }
-
       }
-
     }
-
   }
 
-
-
   if (overflow == TRUE) // has the command receive code detected
-
   { // an overflow error?
-
     overflow = FALSE; // clear error flag
-
     EnqueueString(sOVERFLOW);
-
   }
 
   if (dataerr == TRUE) // has the command receive code detected
-
   { // a framing type data error?
-
     dataerr = FALSE; // clear error flag
-
     EnqueueString(sDATAERR);
-
   }
 
 #ifndef DUMPMODE
-
   ScanCommandBytes();
-
 #else
 
   if (startbit == TRUE) // have we just recieved a start bit?
-
   {
-
     startbit = FALSE;
-
     EnqueueString(sNEWLINE); // yes, start a new line
-
   }
 
   fsr = scanptr;
 
   while (GetCaptureByte() == TRUE)
-
   {
-
     scanptr = fsr;
-
     EnqueueHex(scanbyte);
-
   }
 
 #endif
 
-
-
-
-
   while (txoutptr != txinptr)
-
   {
-
     printstr_p((char*) txbuffer[txoutptr]);
-
     txoutptr++;
-
     if (txoutptr == TX_BUFFER_END)
-
     {
-
       txoutptr = 0;
-
     }
-
   }
-
 }
 
 //-----------------------------------------------------------------------------
