@@ -218,6 +218,7 @@
 #define  Do_MIX            0xE0  // MIX 6 (mix tracks across all discs)
 #define  Do_ENABLE         0xE4  // ENABLE
 #define  Do_UP             0xF8  // UP
+
 enum STATES
 {
   StateIdle,
@@ -236,8 +237,8 @@ enum STATES
 /* -- Extern Global Variables ---------------------------------------------- */
 
 #ifdef BLUETOOTH
-const uint8_t sDATAERR[] PROGMEM = "\r\n";
-const uint8_t sOVERFLOW[] PROGMEM = "\r\n";
+const uint8_t sDATAERR[] PROGMEM = "";
+const uint8_t sOVERFLOW[] PROGMEM = "";
 const uint8_t sMDISABLE[] PROGMEM = "AT#MA\r\n";
 const uint8_t sMENABLE[] PROGMEM = "AT#MA\r\n";
 const uint8_t sMINQUIRY[] PROGMEM = "MINQUIRY\r\n";
@@ -255,9 +256,9 @@ const uint8_t sSCAN[] PROGMEM = "SCAN\r\n";
 const uint8_t sSTOP[] PROGMEM = "AT#MA\r\n";
 const uint8_t sNEXT[] PROGMEM = "AT#MD\r\n";
 const uint8_t sPREVIOUS[] PROGMEM = "AT#ME\r\n";
-const uint8_t sRING[] PROGMEM = "\r\n";
-const uint8_t sIDENTIFY[] PROGMEM = "\r\n";
-const uint8_t sNEWLINE[] PROGMEM = "\r\n";
+const uint8_t sRING[] PROGMEM = "";
+const uint8_t sIDENTIFY[] PROGMEM = "";
+const uint8_t sNEWLINE[] PROGMEM = "";
 const uint8_t sDASH[] PROGMEM = "";
 const uint8_t sHEX[] PROGMEM = "";
 const uint8_t sVERSION[] PROGMEM = "";
