@@ -36,7 +36,7 @@
    DataIn    -> digital 11(PB3)
    Clock     -> digital 13(PB5)
 
-   compter -> arduino pin
+   computer -> arduino pin
    serial TX -> digital 0 (PD0)
    serial RX -> digital 1 (PD1)
 
