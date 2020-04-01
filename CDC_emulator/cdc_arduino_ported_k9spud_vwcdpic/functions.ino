@@ -1708,32 +1708,42 @@ static void SendPacket(void)
 
 }
 
-static void cdButtonPushed(uint8_t cdnumber){
+static uint8_t cdButtonPushed(uint8_t cdnumber) {
   static uint8_t cd1pushed, cd2pushed, cd3pushed, cd4pushed, cd5pushed, cd6pushed = 0; //variable to cound how many times we pressed button for spectial actions
-  switch (cdnumber){
+  switch (cdnumber) {
     case 1:
-      cd1pushed++;
       cd2pushed = cd3pushed = cd4pushed = cd5pushed = cd6pushed;
-    break;
+      if (++cd1pushed == 6)
+        cd1pushed = 0;
+      return cd1pushed;
     case 2:
-      cd2pushed++;
       cd1pushed = cd3pushed = cd4pushed = cd5pushed = cd6pushed;
-    break;
-    case 3:
-      cd3pushed++;
-      cd1pushed = cd2pushed = cd4pushed = cd5pushed = cd6pushed;
-    break;
-    case 4:
-      cd4pushed++;
-      cd1pushed = cd2pushed = cd3pushed = cd5pushed = cd6pushed;
-    break;
-    case 5:
-      cd5pushed++;
-      cd1pushed = cd2pushed = cd3pushed = cd4pushed = cd6pushed;
-    break;
-    case 6:
-      cd6pushed++;
-      cd1pushed = cd2pushed = cd3pushed = cd4pushed = cd5pushed;
-    break;
+      if (++cd2pushed == 6)
+        cd2pushed = 0;
+        return cd2pushed;
+
+      case 3:
+        cd1pushed = cd2pushed = cd4pushed = cd5pushed = cd6pushed;
+        if (++cd3pushed == 6)
+          cd3pushed = 0;
+        return cd3pushed;
+
+      case 4:
+        cd1pushed = cd2pushed = cd3pushed = cd5pushed = cd6pushed;
+        if (++cd4pushed == 6)
+          cd4pushed = 0;
+        return cd4pushed;
+
+      case 5:
+        cd1pushed = cd2pushed = cd3pushed = cd4pushed = cd6pushed;
+        if (++cd5pushed == 6)
+          cd5pushed = 0;
+        return cd5pushed;
+
+      case 6:
+        cd1pushed = cd2pushed = cd3pushed = cd4pushed = cd5pushed;
+        if (++cd6pushed == 6)
+          cd5pushed = 0;
+        return cd5pushed;
+      }
   }
-}

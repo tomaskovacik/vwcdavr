@@ -406,7 +406,7 @@ static void SendStateInitPlayAnnounceCD(void);
 static void SendStatePlayLeadInAnnounceCD(void);
 static void SendStateTP(void);
 static void printstr_p(const char *s);
-static void cdButtonPushed(uint8_t cdnumber)
+static uint8_t cdButtonPushed(uint8_t cdnumber);
 #define TRUE 1
 #define FALSE 0
 
@@ -1621,7 +1621,8 @@ static void DecodeCommand(void)
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
       disc = 0x41; // set CD 1
 #endif
-      EnqueueString(sLIST1);
+      if (cdButtonPushed(1))
+          EnqueueString(sLIST1);
       break;
 
     case Do_CD2:
@@ -1629,6 +1630,7 @@ static void DecodeCommand(void)
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
       disc = 0x42; // set CD 2
 #endif
+      if (cdButtonPushed(1))
       EnqueueString(sLIST2);
       break;
 
@@ -1637,7 +1639,8 @@ static void DecodeCommand(void)
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
       disc = 0x43; // set CD 3
 #endif
-      EnqueueString(sLIST3);
+      if (cdButtonPushed(3))
+          EnqueueString(sLIST3);
       break;
 
     case Do_CD4:
@@ -1645,7 +1648,8 @@ static void DecodeCommand(void)
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
       disc = 0x44; // set CD 4
 #endif
-      EnqueueString(sLIST4);
+      if (cdButtonPushed(4))
+          EnqueueString(sLIST4);
       break;
 
     case Do_CD5:
@@ -1653,7 +1657,8 @@ static void DecodeCommand(void)
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
       disc = 0x45; // set CD 5
 #endif
-      EnqueueString(sLIST5);
+      if (cdButtonPushed(5))
+          EnqueueString(sLIST5);
       break;
 
     case Do_CD6:
@@ -1661,7 +1666,8 @@ static void DecodeCommand(void)
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
       disc = 0x46; // set CD 6
 #endif
-      EnqueueString(sLIST6);
+      if (cdButtonPushed(6))
+          EnqueueString(sLIST6);
       break;
 
     case Do_TP:
