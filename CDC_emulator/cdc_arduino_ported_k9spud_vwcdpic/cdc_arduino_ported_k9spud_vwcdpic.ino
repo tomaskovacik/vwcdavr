@@ -754,201 +754,112 @@ ISR(TIMER1_OVF_vect)
 //-----------------------------------------------------------------------------
 
 ISR(TIMER1_CAPT_vect)
-
 {
-
   captime = ICR1; // save a copy of current TMR1 count
-
   // in case PWTXCaptureBit needs it
-
   TCNT1 = 0; // clear timer1
 
-
-
   if ((RADIO_COMMAND_PIN & _BV(RADIO_COMMAND)) == 0)
-
   {
-
     // We have interrupted at beginning of low pulse (falling edge)
-
     // Low pulse length must be timed to determine bit value
-
-
-
     TIFR1 |= _BV(TOV1); // clear timer1 overflow flag
-
     TIMSK1 |= _BV(TOIE1); // enable timer1 interrupt on overflow
-
     TCCR1B |= _BV(ICES1); // change input capture to rising edge
-
     TIFR1 |= _BV(ICF1); // clear input capture interrupt request flag
-
   }
-
   else
-
   {
-
     // We have interrupted at beginning of high pulse (rising edge)
-
     // High pulse length doesn't matter. We need to check out
-
     // captured low pulse width if we are capturing data at the moment
 
     capbusy = TRUE;
-
     TCCR1B &= ~_BV(ICES1); // change input capture to falling edge
-
     TIFR1 |= _BV(ICF1); // clear input capture interrupt request flag
 
-
-
     if (TIMSK1 & _BV(TOIE1)) // are we trying to capture data?
-
     {
-
       capbusy = TRUE;
-
       TIMSK1 &= ~_BV(TOIE1); // turn off capturing time for high pulse
 
-      //Serial.println(captime);
-
       if (captime > STARTTHRESHOLD)
-
       { // yes, start bit
-
 #ifdef DUMPMODE
-
         startbit = TRUE;
-
 #endif
-
         capbitpacket = PKTSIZE;
 
         // don't store start bits, just frame around them
-
         if (capbit > -8) // are we already capturing on a blank byte?
-
         {
-
           dataerr = TRUE;
-
           // Note: This should never happen on normal head unit sending 32 bit
-
           //       command strings with error free data.
-
           //
-
           // if the capture bits were not a complete 8 bits, we need to finish
-
           // rotating the bits upward so that the data is nicely formatted
 
-
-
           while (capbit != 0) // have we finished rotating all bits up?
-
           {
-
             capbuffer[capptr] <<= 1; // rotate in 0 bit
-
             capbit++;
-
           }
-
           capbit = -8;
-
           capptr++; // move to new capture byte
 
           if (capptr == CAP_BUFFER_END) // have we gone past the end of the
-
           { // capture buffer?
-
             capptr = 0; // yes, roll over to beginning
-
           }
 
           if (capptr == scanptr) // have we overflowed the capture queue?
-
           {
-
             overflow = TRUE; // yes, set error flag
-
           }
-
         }
-
       }
-
       else
-
       { // no, just a regular data bit
-
         if (captime > LOWTHRESHOLD)
-
         { // yes, go ahead and store this data
-
           capbuffer[capptr] <<= 1; // nope
 
-
-
           if (captime > HIGHTHRESHOLD)
-
           {
-
             capbuffer[capptr] |= 1;
-
           }
 
           capbitpacket++;
 
           if (capbitpacket == 0)
-
           {
-
             // we've received PKTSIZE number of bits, so let's assume that we're done
-
             // capturing bits for now.
-
             capbusy = FALSE; // clear capture busy flag
-
           }
 
           capbit++;
 
           if (capbit == 0) // have we collected all 8 bits?
-
           { // yep, get ready to capture next 8 bits
-
             capbit = -8;
-
             capptr++; // move to new capture byte
 
             if (capptr == CAP_BUFFER_END) // have we gone past the end of the
-
             { // capture buffer?
-
               capptr = 0; // yes, roll over to beginning
-
             }
 
             if (capptr == scanptr) // have we overflowed the capture queue?
-
             {
-
               overflow = TRUE; // yes, set error flag
-
             }
-
           }
-
         }
-
       }
-
     }
-
   }
-
 }
 
 //-----------------------------------------------------------------------------
