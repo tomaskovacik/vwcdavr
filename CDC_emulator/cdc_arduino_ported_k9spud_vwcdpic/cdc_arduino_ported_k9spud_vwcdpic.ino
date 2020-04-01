@@ -964,7 +964,6 @@ ISR(TIMER1_CAPT_vect)
 //-----------------------------------------------------------------------------
 
 void CDC_Protocol(void)
-
 {
   uint8_t decimal_adjust_u8;
 
