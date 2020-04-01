@@ -129,7 +129,7 @@
 #define VER_MINOR       '0'
 #define VER_PATCHLEVEL  'b'
 
-#if defined(__AVR_ATmega328__) || defined(__AVR_ATmega328A__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega328PA__) || defined(__AVR_ATmega328PB__)
+#if defined(__AVR_ATmega88__) || defined(__AVR_ATmega88A__) || defined(__AVR_ATmega328__) || defined(__AVR_ATmega328A__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega328PA__) || defined(__AVR_ATmega328PB__)
 #define RADIO_COMMAND      PB0 //ICP
 #define RADIO_COMMAND_DDR  DDRB
 #define RADIO_COMMAND_PORT  PORTB
