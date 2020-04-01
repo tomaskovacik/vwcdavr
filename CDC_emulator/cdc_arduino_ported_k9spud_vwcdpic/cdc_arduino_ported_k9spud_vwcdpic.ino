@@ -144,6 +144,8 @@
 #define RADIO_ACC 3 //PE5 (INT5)
 #endif
 
+
+
 #if defined(__AVR_ATmega324__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__)
 #define RADIO_COMMAND      PD6 //ICP 
 #define RADIO_COMMAND_DDR  DDRD
@@ -444,9 +446,10 @@ void Init_VWCDC(void)
   //Timer 2 Init
   //Timer 2 used to time the intervals between package bytes
   OCR2A = 175; // 4µs x 175 = 700µs
-  TCCR2A |= _BV(WGM21); // Timer2 in CTC Mode
-  TCCR2B |= _BV(CS22); // prescaler = 64 -> 1 timer clock tick is 4us long
-
+  TCCR2A = _BV(WGM21); // Timer2 in CTC Mode
+  TCCR2B = _BV(CS22); // prescaler = 64 -> 1 timer clock tick is 4us long
+  TIMSK2 |= _BV(OCIE2A);
+  
   capptr = 0; // indirect pointer to capture buffer
   scanptr = 0;
   capbit = -8;

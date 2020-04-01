@@ -656,7 +656,7 @@ static void SendByte(uint8_t byte_u8)
 
     display_byte_counter_u8 = 0;
     TCCR2B |= _BV(CS22); // prescaler = 64 -> 1 timer clock tick is 4us long
-    TIMSK2 |= _BV(OCIE2A); // enable output compare interrupt on timer2
+    //TIMSK2 |= _BV(OCIE2A); // enable output compare interrupt on timer2
 
   }
 
