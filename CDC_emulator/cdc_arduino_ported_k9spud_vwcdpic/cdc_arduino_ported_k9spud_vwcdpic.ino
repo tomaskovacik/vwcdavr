@@ -516,100 +516,52 @@ void Init_VWCDC(void)
 //-----------------------------------------------------------------------------
 
 ISR(TIMER2_COMPA_vect)
-
 {
-
   static uint8_t display_byte_counter_u8 = 0;
-
   uint8_t byte_u8;
-
   TCCR2B &= ~_BV(CS20); // stop Timer2
-
   TCCR2B &= ~_BV(CS21);
-
   TCNT2 = 0; // clear Timer2
-
   TIFR2 |= _BV(OCF2A);
 
-
-
-
-
   if (display_byte_counter_u8 < 8)
-
   {
-
     byte_u8 = display_byte_buffer_mau8[display_byte_counter_u8];
 
-
-
 #ifdef DUMPMODE2
-
     Serial.print("|");
-
     Serial.print(byte_u8, HEX);
-
     Serial.print("|");
-
 #endif
 
-
     for (sendbitcount = -8; sendbitcount != 0; sendbitcount++)
-
     {
-
       RADIO_CLOCK_PORT |= _BV(RADIO_CLOCK); // SCLK high
-
       //_delay_loop_1(40);
-
       if ((byte_u8 & 0x80) == 0) // mask highest bit and test if set
-
       {
-
         RADIO_CLOCK_PORT |= _BV(RADIO_DATA); // DATA high
-
       }
-
       else
-
       {
-
         RADIO_CLOCK_PORT &= ~_BV(RADIO_DATA); // DATA low
-
       }
-
-
 
       byte_u8 <<= 1; // load the next bit
-
       RADIO_CLOCK_PORT &= ~_BV(RADIO_CLOCK); // SCLK low
-
       //_delay_loop_1(40);
-
     }
 
     display_byte_counter_u8++;
 
     TCCR2B |= _BV(CS22); // prescaler = 64 -> 1 timer clock tick is 4us long
-
     //TCCR2B |= _BV(CS20);
-
-
-
   }
-
   else
-
   {
-
-
-
     display_byte_counter_u8 = 0;
-
     TIMSK2 &= ~_BV(OCIE2A); // disable output compare interrupt on timer2
-
   }
-
 }
 
 //-----------------------------------------------------------------------------
