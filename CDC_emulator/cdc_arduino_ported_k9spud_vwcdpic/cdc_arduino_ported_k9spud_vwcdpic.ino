@@ -1445,9 +1445,7 @@ void CDC_Protocol(void)
 
 
 static void DecodeCommand(void)
-
 {
-
   uint8_t decimal_adjust_u8 = 0;
 
 #ifdef JUST_HEX_TO_SERIAL
@@ -1455,409 +1453,215 @@ static void DecodeCommand(void)
 #endif
 
   switch (cmdcode) {
-
     case Do_CHANGECD:
-
       // Head unit seems to send this after each CDx number change
-
       // but the CD Changer seems to completely ignore (doesn't even ACK it).
-
       ACKcount = 0; // do not ack this command
 #ifdef PJRC
       EnqueueString(sRANDOM);
 #endif
-
       break;
 
-
-
     case Do_ENABLE:
-
     case Do_ENABLE_MK:
-
       mix = FALSE;
-
       if (playing == FALSE)
-
       {
-
         SetStateInitPlay(); // skip this if already playing
-
       }
       if (!mix_button)
         EnqueueString(sMENABLE);
-
       break;
-
-
 
     case Do_LOADCD:
-
       if (playing == TRUE)
-
       {
-
         SetStateInitPlay(); // skip this if we're in idle mode
-
       }
-
       ResetTime();
-
       EnqueueString(sMINQUIRY);
-
       break;
-
-
 
     case Do_DISABLE:
-
       SetStateIdle(); // skip this if we're already in idle mode
-
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
-
       //      disc = 0x41; // set back to CD 1
-
 #endif
-
       EnqueueString(sMDISABLE);
-
       break;
-
-
 
     case Do_SEEKBACK:
-
     case Do_PREVCD:
-
       ResetTime();
-
       EnqueueString(sPRV_LIST);
-
-
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
-
       disc--;
-
       if ((disc & 0x0F) == 0)
-
       {
-
         disc = 0x46; // set back to CD 1
-
       }
 #endif
       break;
-
-
 
     case Do_SEEKFORWARD:
-
     case Do_SEEKFORWARD_MK:
-
       ResetTime();
-
       if (cd_button == FALSE) // mk don't increment when previous command was a cd button
-
       {
-
         EnqueueString(sNXT_LIST);
-
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
-
         disc++;
-
         if (disc > 0x46)
-
         {
-
           disc = 0x41;
-
         }
-
 #endif
-
         // Going beyond CD9 displays hex codes on premium head unit.
-
         // Examples: "CD A"
-
         //           "CD B"
-
         //           "CD C" etc...
-
         //
-
         // However, going beyond CD6 mutes audio on monsoon head unit, so we
-
         // definitely don't want to do that.
-
       }
-
       else
-
       {
-
         cd_button = FALSE; // mk clear cd button flag
-
       }
-
       break;
-
-
 
     case Do_MIX:
-
     case Do_MIX_CD:
-
       mix_button = 1;
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
-
       if (mix == FALSE)
-
       {
-
         mix = TRUE;
-
       }
-
       else
-
       {
-
         mix = FALSE;
-
       }
-
 #endif
-
       EnqueueString(sRANDOM);
-
       break;
-
-
 
     case Do_PLAY:
-
       EnqueueString(sPLAY); // this will make the PJRC play/pause
-
       break;
-
-
 
     case Do_SCAN:
 
-
-
       scancount = SCANWAIT;
-
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
-
       if (scan == FALSE)
-
       {
-
         scan = TRUE;
-
       }
-
       else
-
       {
-
         scan = FALSE;
 
       }
-
 #endif
 
 #ifdef PJRC
       EnqueueString(sPLAY); // this will make the PJRC play/pause
 #else
-      EnqueueString(sSCAN); //
+      EnqueueString(sSCAN);
 #endif
       break;
-
-
 
     case Do_UP:
-
     case Do_UP_MK3:
-
       if (playing == TRUE) // skip track lead-in if not in play mode
-
       {
-
         SetStateTrackLeadIn();
-
       }
-
       ResetTime();
-
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
-
       track++;
-
       decimal_adjust_u8 = track & 0x0F; // skip past hexidecimal codes
-
       if (decimal_adjust_u8 == 0x0A) // are with at xA?
-
       {
-
         track += 6; // yes, add 6 and we'll be at x0 instead
-
       }
-
       if (track == 0xA0) // have we gone beyond Track 99?
-
       { // yes, rollover to Track 01 so that jog wheels
-
         track = 1; // can continue rolling (Audi Concert II)
-
       }
-
 #endif
-
       EnqueueString(sNEXT);
-
       break;
-
-
 
     case Do_DOWN:
-
     case Do_DOWN_MK3:
-
       if (playing == TRUE) // skip track lead-in if not in play mode
-
       {
-
         SetStateTrackLeadIn();
-
       }
-
       ResetTime();
-
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
-
       decimal_adjust_u8 = track & 0x0F; // skip past hexidecimal codes
-
       if (decimal_adjust_u8 == 0) // are we at x0?
-
       {
-
         track -= 6; // yes, subtract 6 and we'll be at x9 instead
-
       }
-
       track--;
-
       if (track == 0) // have we gone below Track 1?
-
       { // yes, rollover to Track 99 so that jog wheels
-
         track = 0x99; // can continue rolling (Audi Concert II)
-
       }
-
 #endif
-
       EnqueueString(sPREVIOUS);
-
       break;
-
-
 
     case Do_CD1:
-
       cd_button = TRUE; // mk store cd button pressed
-
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
-
       disc = 0x41; // set CD 1
-
 #endif
-
       EnqueueString(sLIST1);
-
       break;
-
-
 
     case Do_CD2:
-
       cd_button = TRUE; // mk store cd button pressed
-
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
-
       disc = 0x42; // set CD 2
-
 #endif
-
       EnqueueString(sLIST2);
-
       break;
-
-
 
     case Do_CD3:
-
       cd_button = TRUE; // mk store cd button pressed
-
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
-
       disc = 0x43; // set CD 3
-
 #endif
-
       EnqueueString(sLIST3);
-
       break;
-
-
 
     case Do_CD4:
-
       cd_button = TRUE; // mk store cd button pressed
-
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
-
       disc = 0x44; // set CD 4
-
 #endif
-
       EnqueueString(sLIST4);
-
       break;
-
-
 
     case Do_CD5:
-
       cd_button = TRUE; // mk store cd button pressed
-
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
-
       disc = 0x45; // set CD 5
-
 #endif
-
       EnqueueString(sLIST5);
-
       break;
 
-
-
     case Do_CD6:
-
       cd_button = TRUE; // mk store cd button pressed
-
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
-
       disc = 0x46; // set CD 6
-
 #endif
-
       EnqueueString(sLIST6);
-
       break;
 
     case Do_TP:
@@ -1867,10 +1671,7 @@ static void DecodeCommand(void)
         SetStateInitPlay();
       }
       break;
-
     default:
-
-
 
       /* if execution reaches here, we have verified that we got
          a valid command packet, but the command code received is not
@@ -1879,22 +1680,14 @@ static void DecodeCommand(void)
          Dump the unknown command code for the user to view.
       */
 
-
-
       EnqueueString(sDASH);
-
       EnqueueHex(cmdcode);
-
       EnqueueString(sNEWLINE);
-
       break;
-
   }
-
 }
 
 int main()
-
 {
 
   Serial.begin(115200);
@@ -1922,11 +1715,8 @@ int main()
   SetStateIdle();
 #endif
 
-
   while (1)
-
   {
-
 #ifdef DISC_TRACK_NUMBER_FROM_MPD
     if (Serial1.available() > 0) {
       int r = Serial1.read();
@@ -1972,36 +1762,20 @@ int main()
       }
     }
 #endif
-
     CDC_Protocol();
-
   }
-
-
-
 }
 
-
-
 static void printstr_p(const char *s)
-
 {
-
   char c;
 
-
-
   for (c = pgm_read_byte(s); c; ++s, c = pgm_read_byte(s))
-
   {
     Serial.print(c);
-
     if (c == '\n')
-
       break;
-
   }
-
 }
 
 // eof //
