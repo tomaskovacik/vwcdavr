@@ -1565,6 +1565,7 @@ static void SendPacket(void)
 
       SendByte(0x10);//0xFF - 0xEF
 
+      break;
 
 
     case StateInitPlayEnd:
@@ -1623,6 +1624,7 @@ static void SendPacket(void)
 
       SendByte(0x51);//0xFF - 0xAE
 
+      break;
 
 
     case StatePlayLeadInEnd:
