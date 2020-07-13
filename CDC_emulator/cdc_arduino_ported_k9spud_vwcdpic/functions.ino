@@ -995,7 +995,7 @@ static void SendPacket(void)
       }
       SendDisplayBytes();
       SendByte(0x10);//0xFF - 0xEF
-
+//no break here!!
     case StateInitPlayEnd:
       SendStateInitPlayEnd();
       break;
@@ -1025,7 +1025,7 @@ static void SendPacket(void)
 
       SendDisplayBytes();
       SendByte(0x51);//0xFF - 0xAE
-
+//no break here!!
     case StatePlayLeadInEnd:
       SendStatePlayLeadInEnd();
       break;
