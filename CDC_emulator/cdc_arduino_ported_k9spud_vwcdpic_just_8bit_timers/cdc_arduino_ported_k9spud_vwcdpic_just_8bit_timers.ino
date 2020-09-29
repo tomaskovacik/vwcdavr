@@ -234,6 +234,8 @@ TinyDebugSerial mySerial = TinyDebugSerial();
 
 #define _700US            7
 
+#define CLK_DELAY 5
+
 #define TX_BUFFER_END   12
 
 #define CAP_BUFFER_END	24
@@ -1131,7 +1133,7 @@ void OutputPacket(void)
 
       RADIO_CLOCK_PORT |= _BV(RADIO_CLOCK); // SCLK high
 
-      //_delay_loop_1(40);
+      _delay_loop_1(CLK_DELAY);
 
       if ((byte_u8 & 0x80) == 0) // mask highest bit and test if set
 
@@ -1155,7 +1157,7 @@ void OutputPacket(void)
 
       RADIO_CLOCK_PORT &= ~_BV(RADIO_CLOCK); // SCLK low
 
-      //_delay_loop_1(40);
+      _delay_loop_1(CLK_DELAY);
 
     }
 
