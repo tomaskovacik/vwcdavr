@@ -70,8 +70,8 @@
 
    RADIO PIN -> ATTINYx5 PIN
    DataOut   -> 7 (INT0)
-   DataIn    -> 6 (PB0)
-   Clock     -> 5 (PB1)
+   Clock     -> 6 (PB1)
+   DataIn    -> 5 (PB0)
 
    PC PIN    -> ATTINYx5 PIN
    Serial TX -> 2 (PB3) using tinydebug lib
