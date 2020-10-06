@@ -759,3 +759,562 @@ static void printstr_p(const char *s)
       break;
   }
 }
+
+//-----------------------------------------------------------------------------
+/*!
+  \brief    OutputByte //was: ISR(TIMER2_COMPA_vect)
+  runs every 700us Timer2 ensures 700µs timing between display package bytes
+  Shift bytes out to head unit
+  \author     Koelling
+  \date       06.10.2007
+  \param[in]  none
+  \param[out] none
+  \return     none
+*/
+//-----------------------------------------------------------------------------
+
+void OutputByte(void)
+{
+  static uint8_t display_byte_counter_u8 = 0;
+  uint8_t byte_u8;
+  if (display_byte_counter_u8 < 8)
+  {
+    byte_u8 = display_byte_buffer_mau8[display_byte_counter_u8];
+
+#ifdef DUMPMODE2
+    Serial.print("|");
+    Serial.print(byte_u8, HEX);
+    Serial.print("|");
+#endif
+
+    for (sendbitcount = -8; sendbitcount != 0; sendbitcount++)
+    {
+      RADIO_CLOCK_PORT |= _BV(RADIO_CLOCK); // SCLK high
+      //_delay_loop_1(CLK_DELAY);
+      _1us_delay=1;
+      while(_1us_delay);
+      if ((byte_u8 & 0x80) == 0) // mask highest bit and test if set
+      {
+        RADIO_DATA_PORT |= _BV(RADIO_DATA); // DATA high
+      }
+      else
+      {
+        RADIO_DATA_PORT &= ~_BV(RADIO_DATA); // DATA low
+      }
+      byte_u8 <<= 1; // load the next bit
+      RADIO_CLOCK_PORT &= ~_BV(RADIO_CLOCK); // SCLK low
+      //_delay_loop_1(CLK_DELAY);
+      _1us_delay=1;
+      while(_1us_delay);      
+    }
+  }
+  counter_to_send_packet = _700US;
+  display_byte_counter_u8++;
+  if (display_byte_counter_u8 == 8)
+  { //wait 50ms
+    display_byte_counter_u8 = 0;
+    counter_to_send_packet = _50MS;
+  }
+}
+
+//-----------------------------------------------------------------------------
+/*!
+  \brief     Init_VWCDC
+  initialization for cdc protocol
+  \author     Koelling
+  \date       26.09.2007
+  \param[in]  none
+  \param[out] none
+  \return     void
+*/
+//-----------------------------------------------------------------------------
+
+
+void Init_VWCDC(void)
+{
+#ifdef DIGISPARK
+  clock_prescale_set(clock_div_2);
+#endif
+
+  cli();
+
+  RADIO_CLOCK_DDR |= _BV(RADIO_CLOCK);
+  RADIO_DATA_DDR  |= _BV(RADIO_DATA);
+  RADIO_COMMAND_DDR &= ~_BV(RADIO_COMMAND); // input capture as input
+  RADIO_COMMAND_PORT |= _BV(RADIO_COMMAND); // enable pull up
+
+#ifdef ANDROID_HEADPHONES
+  ANDROID_PLAY_DDR |= _BV(ANDROID_PLAY);
+  ANDROID_NEXT_DDR |= _BV(ANDROID_NEXT);
+  ANDROID_PREV_DDR |= _BV(ANDROID_PREV);
+  ANDROID_PREV_PORT &= ~_BV(ANDROID_PREV);
+  ANDROID_PLAY_PORT &= ~_BV(ANDROID_PLAY);
+  ANDROID_NEXT_PORT &= ~_BV(ANDROID_NEXT);
+#endif
+
+  setup_timers();
+
+  capptr = 0; // indirect pointer to capture buffer
+  scanptr = 0;
+  capbit = -8;
+  txinptr = 0; // queue pointers
+  txoutptr = 0;
+
+  capbusy = FALSE; // reset flags
+  mix = FALSE;
+  scan = FALSE;
+  playing = FALSE;
+  overflow = FALSE;
+  dataerr = FALSE;
+
+#ifdef DUMPMODE
+  startbit = FALSE;
+#endif
+  ACKcount = 0;
+
+  // these values can be set depending on the state of mp3
+  // it has to be evaluated wether CD number can be grater than 6
+  disc = 0x41; // CD 1
+  track = 0x01 ; // track 1
+  poweridentcount = POWERIDENTWAIT;
+
+  ResetTime();
+  SetStateIdleThenPlay();
+  EnqueueString(sIDENTIFY);
+  EnqueueString(sVERSION);
+  EnqueueString(sNEWLINE);
+  EnqueueString(sRING);
+  SendPacket(); // force first display update packet
+  sei();
+}
+
+
+
+//-----------------------------------------------------------------------------
+/*!
+  \brief     CDC_Protocol(void)
+  cyclic called main program for cdc protocol (50ms?)
+  \author     Koelling
+  \date       26.09.2007
+  \param[in]  none
+  \param[out] none
+  \return     void
+*/
+//-----------------------------------------------------------------------------
+
+void CDC_Protocol(void)
+{
+  uint8_t decimal_adjust_u8;
+  if (flag_50ms == TRUE)
+  {
+    flag_50ms = FALSE;
+    SendPacket();
+    scancount++;
+    if (scancount == 0)
+    {
+      scancount = SCANWAIT;
+      scan = FALSE; // turn off scan display
+    }
+    secondcount++;
+    if (secondcount == 0)
+    {
+      secondcount = SECONDWAIT;
+      poweridentcount++;
+      if (poweridentcount == 0)
+      {
+        poweridentcount = POWERIDENTWAIT;
+        EnqueueString(sIDENTIFY);
+        EnqueueString(sVERSION);
+        EnqueueString(sNEWLINE);
+      }
+      second++; // increment the time display
+      decimal_adjust_u8 = second & 0x0F; // skip past hexidecimal codes
+      if (decimal_adjust_u8 == 0x0A) // are with at xA?
+      {
+        second += 6; // yes, add 6 and we'll be at x0 instead
+      }
+      if (second == 0x60)
+      {
+        second = 0;
+        minute++;
+        decimal_adjust_u8 = minute & 0x0F; // skip past hexidecimal codes
+        if (decimal_adjust_u8 == 0x0A) // are with at xA?
+        {
+          minute += 6; // yes, add 6 and we'll be at x0 instead
+        }
+        if (minute == 0xA0) // have we gone beyond 99 minutes?
+        {
+          minute = 0;
+        }
+      }
+    }
+  }
+  if (overflow == TRUE) // has the command receive code detected
+  { // an overflow error?
+    overflow = FALSE; // clear error flag
+    EnqueueString(sOVERFLOW);
+  }
+  if (dataerr == TRUE) // has the command receive code detected
+  { // a framing type data error?
+    dataerr = FALSE; // clear error flag
+    EnqueueString(sDATAERR);
+  }
+#ifndef DUMPMODE
+  ScanCommandBytes();
+#else
+  if (startbit == TRUE) // have we just recieved a start bit?
+  {
+    startbit = FALSE;
+    EnqueueString(sNEWLINE); // yes, start a new line
+  }
+  fsr = scanptr;
+  while (GetCaptureByte() == TRUE)
+  {
+    scanptr = fsr;
+    EnqueueHex(scanbyte);
+  }
+#endif
+
+  while (txoutptr != txinptr)
+  {
+    printstr_p((char*) txbuffer[txoutptr]);
+    txoutptr++;
+    if (txoutptr == TX_BUFFER_END)
+    {
+      txoutptr = 0;
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
+/*!
+  \brief    void DecodeCommand(void)
+  decode cmdcode and do required actions
+  ;--------------------------------------------------------------------------
+  ; Button Push Packets
+  ;--------------------------------------------------------------------------
+  ; 532C609F Mix 1
+  ; 532CE01F Mix 6
+  ; 532CA05F Scan
+  ;     Note: Blaupunkt Gamma V head unit will continue to send scan key code
+  ;       unless display is switched into scan mode.
+  ;       (reported by tony.gilbert@orange.co.uk)
+  ; 532C10EF Head Unit mode change. Emitted at power up, power down, and
+  ;        any mode change. (disable playing)
+  ; 532C58A7 Seek Back Pressed
+  ; 532CD827 Seek Forward Pressed
+  ; 532C7887 Dn
+  ; 532CA857 Dn on Mk3 premium (Adam Yellen <adam@yellen.com>)
+  ; 532CF807 Up
+  ; 532C6897 Up on Mk3 premium (Adam Yellen)
+  ; 532C38C7 CD Change (third packet)
+  ; 532CE41B Seek Forward Released (enable playing)
+  ; 532CE41B Seek Back Released (enable playing)
+  ; 532CE41B CD Mode selected. Emitted at power up (if starting in CD
+  ;            mode), change to CD mode. (enable playing)
+  ; 532C14EB CD Change (second packet)
+  ; 532C0CF3 CD 1 (first packet)
+  ; 532C8C73 CD 2 (first packet)
+  ; 532C4CB3 CD 3 (first packet)
+  ; 532CCC33 CD 4 (first packet)
+  ; 532C2CD3 CD 5 (first packet)
+  ; 532CAC53 CD 6 (first packet)
+  ;
+  ; Monsoon State Changes:
+  ; 532CE41B enable playing (transition to State 2)
+  ; 532C38C7 disc loaded inquiry (transition to State 5)
+  ; 532C10EF disable playing (transition to State 1)
+  ;--------------------------------------------------------------------------
+  \author     Koelling
+  \date       05.10.2007
+  \param[in]  none
+  \param[out] none
+  \return     void
+*/
+//-----------------------------------------------------------------------------
+
+static void DecodeCommand(void)
+{
+  uint8_t decimal_adjust_u8 = 0;
+#ifdef JUST_HEX_TO_SERIAL
+  Serial.write(cmdcode);
+#endif
+  switch (cmdcode) {
+    case Do_CHANGECD:
+      // Head unit seems to send this after each CDx number change
+      // but the CD Changer seems to completely ignore (doesn't even ACK it).
+      ACKcount = 0; // do not ack this command
+#ifdef PJRC
+      EnqueueString(sRANDOM);
+#endif
+      break;
+
+    case Do_ENABLE:
+    case Do_ENABLE_MK:
+      mix = FALSE;
+      if (playing == FALSE)
+      {
+        SetStateInitPlay(); // skip this if already playing
+      }
+      if (!mix_button)
+        EnqueueString(sMENABLE);
+#ifdef ANDROID_HEADPHONES
+      play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+#endif
+      break;
+
+    case Do_LOADCD:
+      if (playing == TRUE)
+      {
+        SetStateInitPlay(); // skip this if we're in idle mode
+      }
+      ResetTime();
+      EnqueueString(sMINQUIRY);
+      break;
+
+    case Do_DISABLE:
+      SetStateIdle(); // skip this if we're already in idle mode
+      EnqueueString(sMDISABLE);
+      break;
+
+    case Do_SEEKBACK:
+    case Do_PREVCD:
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+      disc--;
+      track = 1;
+      ResetTime();
+      if ((disc & 0x0F) == 0)
+      {
+        disc = 0x46; // set back to CD 1
+      }
+#endif
+      EnqueueString(sPRV_LIST);
+      break;
+
+    case Do_SEEKFORWARD:
+    case Do_SEEKFORWARD_MK:
+      if (cd_button == FALSE) // mk don't increment when previous command was a cd button
+      {
+        EnqueueString(sNXT_LIST);
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+        ResetTime();
+        track = 1;
+        disc++;
+        if (disc > 0x46)
+        {
+          disc = 0x41;
+        }
+#endif
+        // Going beyond CD9 displays hex codes on premium head unit.
+        // Examples: "CD A"
+        //           "CD B"
+        //           "CD C" etc...
+        //
+        // However, going beyond CD6 mutes audio on monsoon head unit, so we
+        // definitely don't want to do that.
+      }
+      else
+      {
+        cd_button = FALSE; // mk clear cd button flag
+      }
+      break;
+
+    case Do_MIX:
+    case Do_MIX_CD:
+      mix_button = 1;
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+      if (mix == FALSE)
+      {
+        mix = TRUE;
+      }
+      else
+      {
+        mix = FALSE;
+      }
+#endif
+      EnqueueString(sRANDOM);
+      break;
+
+    case Do_PLAY:
+      EnqueueString(sPLAY); // this will make the PJRC play/pause
+#ifdef ANDROID_HEADPHONES
+      play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+#endif
+      break;
+
+    case Do_SCAN:
+      scancount = SCANWAIT;
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+      if (scan == FALSE)
+      {
+        scan = TRUE;
+      }
+      else
+      {
+        scan = FALSE;
+      }
+#endif
+#ifdef PJRC
+      EnqueueString(sPLAY); // this will make the PJRC play/pause
+#else
+      EnqueueString(sSCAN); //
+#endif
+#ifdef ANDROID_HEADPHONES
+      play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+#endif
+      break;
+
+    case Do_UP:
+    case Do_UP_MK3:
+      if (playing == TRUE) // skip track lead-in if not in play mode
+      {
+        SetStateTrackLeadIn();
+      }
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+      track++;
+      ResetTime();
+      decimal_adjust_u8 = track & 0x0F; // skip past hexidecimal codes
+      if (decimal_adjust_u8 == 0x0A) // are with at xA?
+      {
+        track += 6; // yes, add 6 and we'll be at x0 instead
+      }
+      if (track == 0xA0) // have we gone beyond Track 99?
+      { // yes, rollover to Track 01 so that jog wheels
+        track = 1; // can continue rolling (Audi Concert II)
+      }
+#endif
+      EnqueueString(sNEXT);
+#ifdef ANDROID_HEADPHONES
+#ifdef ANDROID_HEADPHONES_ONE_BUTTON
+      play_count_delay = ANDROID_DELAY_COUNT;
+      play_count_push = ANDROID_NEXT_COUNT;
+#else
+      next_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_NEXT pin
+#endif
+#endif
+      break;
+
+    case Do_DOWN:
+    case Do_DOWN_MK3:
+      if (playing == TRUE) // skip track lead-in if not in play mode
+      {
+        SetStateTrackLeadIn();
+      }
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+      decimal_adjust_u8 = track & 0x0F; // skip past hexidecimal codes
+      if (decimal_adjust_u8 == 0) // are we at x0?
+      {
+        track -= 6; // yes, subtract 6 and we'll be at x9 instead
+      }
+      track--;
+      ResetTime();
+      if (track == 0) // have we gone below Track 1?
+      { // yes, rollover to Track 99 so that jog wheels
+        track = 0x99; // can continue rolling (Audi Concert II)
+      }
+#endif
+      EnqueueString(sPREVIOUS);
+#ifdef ANDROID_HEADPHONES
+#ifdef ANDROID_HEADPHONES_ONE_BUTTON
+      play_count_delay = ANDROID_DELAY_COUNT;
+      play_count_push = ANDROID_PREV_COUNT;
+#else
+      prev_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PREV pin
+      prev_count_delay = ANDROID_DELAY_COUNT; // 50ms high on ANDROID_PREV pin
+#endif
+#endif
+      break;
+
+    case Do_CD1:
+      cd_button = TRUE; // mk store cd button pressed
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+      disc = 0x41; // set CD 1
+      ResetTime();
+#endif
+      EnqueueString(sLIST1);
+#ifdef ANDROID_HEADPHONES
+      play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+#endif
+      break;
+
+    case Do_CD2:
+      cd_button = TRUE; // mk store cd button pressed
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+      disc = 0x42; // set CD 2
+      ResetTime();
+#endif
+      EnqueueString(sLIST2);
+#ifdef ANDROID_HEADPHONES
+      play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+#endif
+      break;
+
+    case Do_CD3:
+      cd_button = TRUE; // mk store cd button pressed
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+      disc = 0x43; // set CD 3
+      ResetTime();
+#endif
+      EnqueueString(sLIST3);
+#ifdef ANDROID_HEADPHONES
+      play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+#endif
+      break;
+
+    case Do_CD4:
+      cd_button = TRUE; // mk store cd button pressed
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+      disc = 0x44; // set CD 4
+      ResetTime();
+#endif
+      EnqueueString(sLIST4);
+#ifdef ANDROID_HEADPHONES
+      play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+#endif
+      break;
+
+    case Do_CD5:
+      cd_button = TRUE; // mk store cd button pressed
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+      disc = 0x45; // set CD 5
+      ResetTime();
+#endif
+      EnqueueString(sLIST5);
+#ifdef ANDROID_HEADPHONES
+      play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+#endif
+      break;
+
+    case Do_CD6:
+      cd_button = TRUE; // mk store cd button pressed
+#ifndef DISC_TRACK_NUMBER_FROM_MPD
+      disc = 0x46; // set CD 6
+      ResetTime();
+#endif
+      EnqueueString(sLIST6);
+#ifdef ANDROID_HEADPHONES
+      play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+#endif
+      break;
+
+    case Do_TP:
+      if (playing == TRUE) {
+        SetStateTP();
+      } else {
+        SetStateInitPlay();
+      }
+      EnqueueString(sTP);
+      break;
+
+    default:
+      /* if execution reaches here, we have verified that we got
+         a valid command packet, but the command code received is not
+         one that we understand.
+         Dump the unknown command code for the user to view.
+      */
+      EnqueueString(sDASH);
+      EnqueueHex(cmdcode);
+      EnqueueString(sNEWLINE);
+      break;
+  }
+}
