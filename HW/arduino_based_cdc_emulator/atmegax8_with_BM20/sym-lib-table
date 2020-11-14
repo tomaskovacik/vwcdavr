@@ -1,3 +1,0 @@
-(sym_lib_table
-  (lib (name atmegax8_with_BM20-rescue)(type Legacy)(uri ${KIPRJMOD}/atmegax8_with_BM20-rescue.lib)(options "")(descr ""))
-)
