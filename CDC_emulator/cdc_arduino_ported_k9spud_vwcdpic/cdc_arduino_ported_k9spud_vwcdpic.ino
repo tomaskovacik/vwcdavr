@@ -608,6 +608,7 @@ ISR(TIMER0_COMPA_vect)
   {
     counter_10ms_u8 = 0;
     flag_50ms = TRUE;
+    SendPacket();
   }
 }
 #endif
@@ -801,7 +802,7 @@ void CDC_Protocol(void)
   if (flag_50ms == TRUE)
   {
     flag_50ms = FALSE;
-    SendPacket();
+    
     scancount++;
     if (scancount == 0)
     {
