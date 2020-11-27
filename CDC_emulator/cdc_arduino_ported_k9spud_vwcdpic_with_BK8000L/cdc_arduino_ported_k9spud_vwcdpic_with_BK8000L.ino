@@ -1019,6 +1019,7 @@ static void DecodeCommand(void)
         SetStateInitPlay();
 #ifdef BLUETOOTH
         BT.musicTogglePlayPause();
+        BT.getMusicStatus();
 #endif
       }
       break;
