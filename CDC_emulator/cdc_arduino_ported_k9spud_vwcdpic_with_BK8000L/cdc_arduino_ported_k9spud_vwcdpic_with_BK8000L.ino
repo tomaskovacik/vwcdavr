@@ -875,7 +875,6 @@ static void DecodeCommand(void)
       {
         SetStateTrackLeadIn();
 #ifdef BLUETOOTH
-        BT.musicPreviousTrack();
         BT.musicNextTrack();
 #endif
       }
