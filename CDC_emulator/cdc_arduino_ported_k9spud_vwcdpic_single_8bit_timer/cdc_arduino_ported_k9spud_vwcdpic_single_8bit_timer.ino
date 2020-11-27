@@ -1112,7 +1112,7 @@ void OutputPacket(void)
 
     if (sendbitcount == -8) { // load next byte from buffer if we have to
       byte_u8 = display_byte_buffer_mau8[display_byte_counter_u8_out];
-      Serial.print(byte_u8, HEX);      Serial.print("|");
+      //Serial.print(byte_u8, HEX);      Serial.print("|");
     }
 
     if (sendbitcount < 0)
