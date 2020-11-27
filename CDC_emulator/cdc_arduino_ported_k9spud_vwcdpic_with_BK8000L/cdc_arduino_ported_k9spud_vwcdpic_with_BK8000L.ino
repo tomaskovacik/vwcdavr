@@ -777,6 +777,8 @@ static void DecodeCommand(void)
       {
         SetStateInitPlay(); // skip this if already playing
 #ifdef BLUETOOTH
+        BT.musicStop();//safe, we hear nothing anyway
+        BT.musicTogglePlayPause();
         BTplay = 1;
       }
       if (BT.BTState != BT.Connected) {
