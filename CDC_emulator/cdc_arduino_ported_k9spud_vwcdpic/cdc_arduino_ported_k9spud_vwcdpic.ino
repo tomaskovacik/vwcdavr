@@ -120,7 +120,8 @@
 #define SCANWAIT        -100             // wait 100 * 50ms to get 5sec (50ms*100 = 5000ms = 5s)
 #define _10MS           156
 #define _50MS            500
-#define _700US            7
+#define _700US            187//175
+#define CLK_DELAY 5
 
 #define TX_BUFFER_END   12
 #define CAP_BUFFER_END	24
@@ -444,7 +445,7 @@ void Init_VWCDC(void)
 
   //Timer 2 Init
   //Timer 2 used to time the intervals between package bytes
-  OCR2A = 175; // 4µs x 175 = 700µs
+  OCR2A = _700US; // 4µs x 175 = 700µs
   TCCR2A = _BV(WGM21); // Timer2 in CTC Mode
   TCCR2B = _BV(CS22); // prescaler = 64 -> 1 timer clock tick is 4us long
   TIMSK2 |= _BV(OCIE2A);
@@ -540,7 +541,7 @@ ISR(TIMER2_COMPA_vect)
     for (sendbitcount = -8; sendbitcount != 0; sendbitcount++)
     {
       RADIO_CLOCK_PORT |= _BV(RADIO_CLOCK); // SCLK high
-      _delay_loop_1(5);
+      _delay_loop_1(CLK_DELAY);
       if ((byte_u8 & 0x80) == 0) // mask highest bit and test if set
       {
         RADIO_DATA_PORT |= _BV(RADIO_DATA); // DATA high
@@ -551,7 +552,7 @@ ISR(TIMER2_COMPA_vect)
       }
       byte_u8 <<= 1; // load the next bit
       RADIO_CLOCK_PORT &= ~_BV(RADIO_CLOCK); // SCLK low
-      _delay_loop_1(5);
+      _delay_loop_1(CLK_DELAY);
     }
 
     display_byte_counter_u8++;
