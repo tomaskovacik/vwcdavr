@@ -965,7 +965,6 @@ static void DecodeCommand(void)
       //        EnqueueString(sLIST3);
 #ifdef BLUETOOTH
       BT.musicTogglePlayPause();
-      BT.getMusicStatus();
 #endif
       break;
 
