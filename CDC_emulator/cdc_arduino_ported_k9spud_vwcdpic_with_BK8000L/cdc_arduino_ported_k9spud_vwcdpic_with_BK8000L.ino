@@ -767,7 +767,7 @@ static void DecodeCommand(void)
       // Head unit seems to send this after each CDx number change
       // but the CD Changer seems to completely ignore (doesn't even ACK it).
       ACKcount = 0; // do not ack this command
-
+      BT.getMusicStatus();
       break;
 
     case Do_ENABLE:
