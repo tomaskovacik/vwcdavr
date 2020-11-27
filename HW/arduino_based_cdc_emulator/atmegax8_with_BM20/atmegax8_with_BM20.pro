@@ -1,4 +1,4 @@
-update=Po  9. november 2020, 22:29:13 CET
+update=Pi 27. november 2020, 16:19:46 CET
 version=1
 last_client=kicad
 [cvpcb]
@@ -24,7 +24,7 @@ LibDir=
 [SchematicFrame]
 version=1
 [sheetnames]
-1=cd995ab5-c788-468b-962d-2175eff7d7d7:
+1=0910ce7d-d083-4955-960a-fbb76ccc8808:
 [pcbnew]
 version=1
 PageLayoutDescrFile=
