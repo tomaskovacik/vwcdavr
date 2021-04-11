@@ -80,7 +80,7 @@
 /* enable bluetooth module control over serial line
    XS3868
 */
-//#define BLUETOOTH
+#define BLUETOOTH
 
 /*
    read disc# track# status over serial line
@@ -135,12 +135,12 @@
 #define RADIO_COMMAND_DDR  DDRB
 #define RADIO_COMMAND_PORT  PORTB
 #define RADIO_COMMAND_PIN PINB
-#define RADIO_CLOCK        PB5
-#define RADIO_CLOCK_DDR    DDRB
-#define RADIO_CLOCK_PORT  PORTB
-#define RADIO_DATA         PB3
-#define RADIO_DATA_DDR     DDRB
-#define RADIO_DATA_PORT  PORTB
+#define RADIO_CLOCK        PD4//PB5
+#define RADIO_CLOCK_DDR    DDRD//DDRB
+#define RADIO_CLOCK_PORT  PORTD//PORTB
+#define RADIO_DATA         PC3//PB3
+#define RADIO_DATA_DDR     DDRC//DDRB
+#define RADIO_DATA_PORT  PORTC//PORTB
 #define RADIO_ACC 3 // PD3 = INT1
 #endif
 
@@ -246,23 +246,23 @@ const uint8_t sBK8000L_DISCONNECT[] PROGMEM = "AT+CD\r\n";
 
 const uint8_t sDATAERR[] PROGMEM = "";
 const uint8_t sOVERFLOW[] PROGMEM = "";
-const uint8_t sMDISABLE[] PROGMEM = "AT#MA\r\n";
-const uint8_t sMENABLE[] PROGMEM = "AT#MA\r\n";
-const uint8_t sMINQUIRY[] PROGMEM = "MINQUIRY\r\n";
-const uint8_t sPRV_LIST[] PROGMEM = "AT#MA\r\n";
-const uint8_t sNXT_LIST[] PROGMEM = "AT#MA\r\n";
-const uint8_t sLIST1[] PROGMEM = "AT#MA\r\n";
-const uint8_t sLIST2[] PROGMEM = "AT#MA\r\n";
-const uint8_t sLIST3[] PROGMEM = "AT#MA\r\n";
-const uint8_t sLIST4[] PROGMEM = "AT#MA\r\n";
-const uint8_t sLIST5[] PROGMEM = "AT#MA\r\n";
-const uint8_t sLIST6[] PROGMEM = "AT#MA\r\n";
+const uint8_t sMDISABLE[] PROGMEM = "AT+MC\r\n";
+const uint8_t sMENABLE[] PROGMEM = "AT+MA\r\n";
+const uint8_t sMINQUIRY[] PROGMEM = "";
+const uint8_t sPRV_LIST[] PROGMEM = "AT+MA\r\n";
+const uint8_t sNXT_LIST[] PROGMEM = "AT+MA\r\n";
+const uint8_t sLIST1[] PROGMEM = "AT+MA\r\n";
+const uint8_t sLIST2[] PROGMEM = "AT+MA\r\n";
+const uint8_t sLIST3[] PROGMEM = "AT+MA\r\n";
+const uint8_t sLIST4[] PROGMEM = "AT+CD\r\nAT+CB\r\nAT+CA\r\nAT+CC\r\n";
+const uint8_t sLIST5[] PROGMEM = "AT+CE\r\n";
+const uint8_t sLIST6[] PROGMEM = "AT+CF\r\nAT+CG\r\n";
 const uint8_t sRANDOM[] PROGMEM = "RANDOM\r\n";
-const uint8_t sPLAY[] PROGMEM = "AT#MA\r\n";
+const uint8_t sPLAY[] PROGMEM = "AT+MA\r\n";
 const uint8_t sSCAN[] PROGMEM = "SCAN\r\n";
-const uint8_t sSTOP[] PROGMEM = "AT#MA\r\n";
-const uint8_t sNEXT[] PROGMEM = "AT#MD\r\n";
-const uint8_t sPREVIOUS[] PROGMEM = "AT#ME\r\n";
+const uint8_t sSTOP[] PROGMEM = "AT+MA\r\n";
+const uint8_t sNEXT[] PROGMEM = "AT+MD\r\n";
+const uint8_t sPREVIOUS[] PROGMEM = "AT+ME";
 const uint8_t sRING[] PROGMEM = "";
 const uint8_t sIDENTIFY[] PROGMEM = "";
 const uint8_t sNEWLINE[] PROGMEM = "";
@@ -608,6 +608,7 @@ ISR(TIMER0_COMPA_vect)
   {
     counter_10ms_u8 = 0;
     flag_50ms = TRUE;
+
   }
 }
 #endif
@@ -801,8 +802,7 @@ void CDC_Protocol(void)
   if (flag_50ms == TRUE)
   {
     flag_50ms = FALSE;
-    SendPacket();
-    
+        SendPacket()  ;
     scancount++;
     if (scancount == 0)
     {
@@ -1191,21 +1191,19 @@ static void DecodeCommand(void)
 int main()
 {
 
-  Serial.begin(115200);
-
 #ifdef BLUETOOTH
 #if defined(__AVR_ATmega324__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__) || defined(__AVR_ATmega324PB__)
-  Serial1.begin(115200);
-  //#else 8
-  //Serial.begin(115200);
+  Serial1.begin(9600);
+#else 
+Serial.begin(9600);
 #endif
 #endif
 
 #ifdef DISC_TRACK_NUMBER_FROM_MPD
 #if defined(__AVR_ATmega324__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__) || defined(__AVR_ATmega324PB__)
   Serial1.begin(115200);
-  //#else
-  //Serial.begin(115200);
+#else
+  Serial.begin(115200);
 #endif
 #endif
 
