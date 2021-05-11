@@ -120,8 +120,8 @@
 #define SCANWAIT        -100             // wait 100 * 50ms to get 5sec (50ms*100 = 5000ms = 5s)
 #define _10MS           156
 #define _50MS            500
-#define _700US            187//175
-#define CLK_DELAY 5
+#define _700US            187//175 //4µs x 175 = 700µs; 4*187=748
+#define CLK_DELAY 10 //40 //40:using _delay_loop_1 @16Mhz 1tick = .18750us ,40 => 7.5us  ; 10=>1.8us
 
 #define TX_BUFFER_END   12
 #define CAP_BUFFER_END	24
@@ -254,15 +254,15 @@ const uint8_t sNXT_LIST[] PROGMEM = "AT+MA\r\n";
 const uint8_t sLIST1[] PROGMEM = "AT+MA\r\n";
 const uint8_t sLIST2[] PROGMEM = "AT+MA\r\n";
 const uint8_t sLIST3[] PROGMEM = "AT+MA\r\n";
-const uint8_t sLIST4[] PROGMEM = "AT+CD\r\nAT+CB\r\nAT+CA\r\nAT+CC\r\n";
+const uint8_t sLIST4[] PROGMEM = "AT+MA\r\n";
 const uint8_t sLIST5[] PROGMEM = "AT+CE\r\n";
 const uint8_t sLIST6[] PROGMEM = "AT+CF\r\nAT+CG\r\n";
-const uint8_t sRANDOM[] PROGMEM = "RANDOM\r\n";
+const uint8_t sRANDOM[] PROGMEM = "\r\n";
 const uint8_t sPLAY[] PROGMEM = "AT+MA\r\n";
 const uint8_t sSCAN[] PROGMEM = "SCAN\r\n";
 const uint8_t sSTOP[] PROGMEM = "AT+MA\r\n";
 const uint8_t sNEXT[] PROGMEM = "AT+MD\r\n";
-const uint8_t sPREVIOUS[] PROGMEM = "AT+ME";
+const uint8_t sPREVIOUS[] PROGMEM = "AT+ME\r\n";
 const uint8_t sRING[] PROGMEM = "";
 const uint8_t sIDENTIFY[] PROGMEM = "";
 const uint8_t sNEWLINE[] PROGMEM = "";
@@ -550,6 +550,7 @@ ISR(TIMER2_COMPA_vect)
       {
         RADIO_DATA_PORT &= ~_BV(RADIO_DATA); // DATA low
       }
+      //_delay_loop_1(CLK_DELAY);
       byte_u8 <<= 1; // load the next bit
       RADIO_CLOCK_PORT &= ~_BV(RADIO_CLOCK); // SCLK low
       _delay_loop_1(CLK_DELAY);
