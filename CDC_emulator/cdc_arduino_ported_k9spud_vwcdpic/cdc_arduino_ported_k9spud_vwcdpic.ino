@@ -121,7 +121,7 @@
 #define _10MS           156
 #define _50MS            500
 #define _700US            187//175 //4µs x 175 = 700µs; 4*187=748
-#define CLK_DELAY 40 //40:using _delay_loop_1 @16Mhz 1tick = .18750us ,40 => 7.5us  ; 10=>1.8us
+#define CLK_DELAY 40 //40:using _delay_loop_1 @16Mhz 1tick = .18750us ,40 => 7.5us(8.5us@16MHz on scope)  ; 10=>1.8us
 
 #define TX_BUFFER_END   12
 #define CAP_BUFFER_END	24
