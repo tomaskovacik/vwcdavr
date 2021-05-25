@@ -447,7 +447,7 @@ void Init_VWCDC(void)
   //Timer 2 used to time the intervals between package bytes
   OCR2A = _700US; // 4µs x 175 = 700µs
   TCCR2A = _BV(WGM21); // Timer2 in CTC Mode
-  TCCR2B = _BV(CS22); // prescaler = 64 -> 1 timer clock tick is 4us long
+  TCCR2B |= _BV(CS22); // prescaler = 64 -> 1 timer clock tick is 4us long
   TIMSK2 |= _BV(OCIE2A);
   
   capptr = 0; // indirect pointer to capture buffer
