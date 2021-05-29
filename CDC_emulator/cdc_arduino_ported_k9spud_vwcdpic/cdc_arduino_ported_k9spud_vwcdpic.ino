@@ -33,7 +33,7 @@
    RADIO PIN -> arduino pin
 
    DataOut   -> digital 8 (ICP1)
-   DataIn    -> digital 11(PB3)
+   DataIn    -> digital 11(PB3) (10 for atmega328PB)
    Clock     -> digital 13(PB5)
 
    computer -> arduino pin
@@ -80,7 +80,7 @@
 /* enable bluetooth module control over serial line
    XS3868
 */
-#define BLUETOOTH
+//#define BLUETOOTH
 
 /*
    read disc# track# status over serial line
@@ -121,7 +121,7 @@
 #define _10MS           156
 #define _50MS            500
 #define _700US            187//175 //4µs x 175 = 700µs; 4*187=748
-#define CLK_DELAY 40 //40:using _delay_loop_1 @16Mhz 1tick = .18750us ,40 => 7.5us(8.5us@16MHz on scope)  ; 10=>1.8us
+#define CLK_DELAY 40//using _delay_loop_1 @16Mhz 1tick = .18750us ,40 => 7.5us(8.5us@16MHz on scope)  ; 10=>1.8us
 
 #define TX_BUFFER_END   12
 #define CAP_BUFFER_END	24
@@ -135,13 +135,18 @@
 #define RADIO_COMMAND_DDR  DDRB
 #define RADIO_COMMAND_PORT  PORTB
 #define RADIO_COMMAND_PIN PINB
-#define RADIO_CLOCK        PD4//PB5
-#define RADIO_CLOCK_DDR    DDRD//DDRB
-#define RADIO_CLOCK_PORT  PORTD//PORTB
-#define RADIO_DATA         PC3//PB3
-#define RADIO_DATA_DDR     DDRC//DDRB
-#define RADIO_DATA_PORT  PORTC//PORTB
-#define RADIO_ACC 3 // PD3 = INT1
+//standard pinout 8,11,13
+#define RADIO_CLOCK       PB5
+#define RADIO_CLOCK_DDR    DDRB
+#define RADIO_CLOCK_PORT  PORTB
+#if defined(__AVR_ATmega328PB__) //cannot use pb3 with serial1
+#define RADIO_DATA        PB2
+#else
+#define RADIO_DATA        PB3 
+#endif
+#define RADIO_DATA_DDR    DDRB
+#define RADIO_DATA_PORT  PORTB
+//#define RADIO_ACC 3 // PD3 = INT1
 #endif
 
 
@@ -412,6 +417,13 @@ static uint8_t cdButtonPushed(uint8_t cdnumber);
 #define TRUE 1
 #define FALSE 0
 
+
+//#define USETIMER2
+#define USETIMER3
+
+#define USETIMER0
+//#define USETIMER4
+
 /* -- Implementation Functions --------------------------------------------- */
 
 //-----------------------------------------------------------------------------
@@ -428,8 +440,8 @@ static uint8_t cdButtonPushed(uint8_t cdnumber);
 
 void Init_VWCDC(void)
 {
-  cli();  
-  TIMSK0 = 0x00; //on arduino timer0 is used for millis(), we change prescaler, but also need to disable overflow interrupt
+  cli();
+  TIMSK0 = TIMSK1 = TIMSK2 = TIMSK3 = TIMSK4 = 0x00; //on arduino timer0 is used for millis(), we change prescaler, but also need to disable overflow interrupt
   RADIO_CLOCK_DDR |= _BV(RADIO_CLOCK);
   RADIO_DATA_DDR  |= _BV(RADIO_DATA);
   RADIO_COMMAND_DDR &= ~_BV(RADIO_COMMAND); // input capture as input
@@ -437,19 +449,30 @@ void Init_VWCDC(void)
 
   //Timer1 init
   //Used for timing the incoming commands from headunit
-  TCCR1A = 0x00; // Normal port operation, OC1A/OC1B/OC1C disconnected
-  TCCR1B = _BV(ICNC1); // noise canceler, int on falling edge
+  TCCR1A = TCCR1B = 0; // Normal port operation, OC1A/OC1B/OC1C disconnected
+  TCCR1B |= _BV(ICNC1); // noise canceler, int on falling edge
   TCCR1B |= _BV(CS11); // prescaler = 8 -> 1 timer clock tick is 0.5µs long
   TIFR1 |= _BV(ICF1); // clear pending interrupt
   TIMSK1 |= _BV(ICIE1); // enable input capture interrupt on timer1
 
   //Timer 2 Init
   //Timer 2 used to time the intervals between package bytes
+#ifdef USETIMER2
+  TCCR2A = TCCR2B = 0;
   OCR2A = _700US; // 4µs x 175 = 700µs
-  TCCR2A = _BV(WGM21); // Timer2 in CTC Mode
+  TCCR2A |= _BV(WGM21); // Timer2 in CTC Mode
   TCCR2B |= _BV(CS22); // prescaler = 64 -> 1 timer clock tick is 4us long
   TIMSK2 |= _BV(OCIE2A);
-  
+#else
+#ifdef USETIMER3
+  TCCR3A = TCCR3B = 0;
+  OCR3A = _700US; // _700US = 175 => 4µs x 175 = 700µs
+  TCCR3B |= _BV(WGM32); // Timer3 in CTC Mode
+  TCCR3B |= _BV(CS30) | _BV(CS30); // prescaler = 64 -> 1 timer clock tick is 4us long
+  TIMSK3 |= _BV(OCIE3A); 
+#endif
+#endif
+
   capptr = 0; // indirect pointer to capture buffer
   scanptr = 0;
   capbit = -8;
@@ -493,11 +516,21 @@ void Init_VWCDC(void)
 #define _TIMER0_OVERFLOW_COUNTS 50
 
 #else
+#ifdef USETIMER0
   OCR0A = _10MS; // 10ms Intervall
-  TCCR0A = 0x00; // Normal port operation, OC0 disconnected
+  TCCR0A = TCCR0B = 0x00; // Normal port operation, OC0 disconnected
   TCCR0A |= _BV(WGM01); // CTC mode
   TCCR0B |= _BV(CS00) | _BV(CS02); // prescaler = 1024 -> 1 timer clock tick is 64us long
   TIMSK0 |= _BV(OCIE0A); // enable output compare interrupt on timer0
+#else
+#ifdef USETIMER4
+  OCR4A = _10MS; // 10ms Intervall
+  TCCR4A = TCCR4B = 0x00; // Normal port operation, OC0 disconnected
+  TCCR4B |= _BV(WGM42); // CTC mode
+  TCCR4B |= _BV(CS42) | _BV(CS40); // prescaler = 1024 -> 1 timer clock tick is 64us long
+  TIMSK4 |= _BV(OCIE4A); // enable output compare interrupt on timer0
+#endif
+#endif
 #endif
 
   SendPacket(); // force first display update packet
@@ -518,15 +551,26 @@ void Init_VWCDC(void)
 */
 //-----------------------------------------------------------------------------
 
+
+#ifdef USETIMER2
 ISR(TIMER2_COMPA_vect)
 {
+  TCCR2B &= ~_BV(CS22); // stop Timer2, CS22 was set, prescaler 64
+  TCNT2 = 0; // clear Timer2
+  TIFR2 |= _BV(OCF2A); //no need to do this
+#else
+#ifdef USETIMER3
+ISR(TIMER3_COMPA_vect)
+{
+  TCCR3B &= ~_BV(CS30); 
+  TCCR3B &= ~_BV(CS31);
+  TCNT3 = 0; // clear Timer2
+  TIFR3 |= _BV(OCF3A); //no need to do this
+#endif
+#endif
   static uint8_t display_byte_counter_u8 = 0;
   uint8_t byte_u8;
-  //TCCR2B &= ~_BV(CS20); //set to 0 already
-  //TCCR2B &= ~_BV(CS21); //set to 0 already
-  TCCR2B &= ~_BV(CS22); // stop Timer2, CS22 was set, prescaler 64
-  //TCNT2 = 0; // clear Timer2
-  //TIFR2 |= _BV(OCF2A); //no need to do this
+
 
   if (display_byte_counter_u8 < 8)
   {
@@ -550,7 +594,7 @@ ISR(TIMER2_COMPA_vect)
       {
         RADIO_DATA_PORT &= ~_BV(RADIO_DATA); // DATA low
       }
-      //_delay_loop_1(CLK_DELAY);
+      _delay_loop_1(CLK_DELAY);
       byte_u8 <<= 1; // load the next bit
       RADIO_CLOCK_PORT &= ~_BV(RADIO_CLOCK); // SCLK low
       _delay_loop_1(CLK_DELAY);
@@ -558,8 +602,13 @@ ISR(TIMER2_COMPA_vect)
 
     display_byte_counter_u8++;
 
+#ifdef USETIMER2
     TCCR2B |= _BV(CS22); // prescaler = 64 -> 1 timer clock tick is 4us long
-    //TCCR2B |= _BV(CS20);
+#else
+#ifdef USETIMER3
+    TCCR3B |= _BV(CS41)|_BV(CS40);
+#endif
+#endif
   }
   else
   { //display_byte_counter_u8 is ==8
@@ -567,7 +616,13 @@ ISR(TIMER2_COMPA_vect)
     Serial.println();
 #endif
     display_byte_counter_u8 = 0;
-    //TIMSK2 &= ~_BV(OCIE2A); // disable output compare interrupt on timer2
+#ifdef USETIMER2
+    TIMSK2 &= ~_BV(OCIE2A); // disable output compare interrupt on timer2
+#else
+#ifdef USETIMER3
+    TIMSK3 &= ~_BV(OCIE3A); // disable output compare interrupt on timer3
+#endif
+#endif
   }
 }
 
@@ -601,7 +656,13 @@ ISR(TIMER0_OVF_vect) {
 
 #else
 
+#ifdef USETIMER0
 ISR(TIMER0_COMPA_vect)
+#else
+#ifdef USETIMER4
+ISR(TIMER4_COMPA_vect)
+#endif
+#endif
 {
   counter_10ms_u8++;
 
@@ -660,8 +721,6 @@ ISR(TIMER1_OVF_vect)
     }
   }
 }
-
-
 
 //-----------------------------------------------------------------------------
 /*!
@@ -803,7 +862,7 @@ void CDC_Protocol(void)
   if (flag_50ms == TRUE)
   {
     flag_50ms = FALSE;
-        SendPacket()  ;
+    SendPacket()  ;
     scancount++;
     if (scancount == 0)
     {
@@ -1118,7 +1177,7 @@ static void DecodeCommand(void)
       disc = 0x41; // set CD 1
 #endif
       if (cdButtonPushed(1))
-          EnqueueString(sLIST1);
+        EnqueueString(sLIST1);
       break;
 
     case Do_CD2:
@@ -1127,7 +1186,7 @@ static void DecodeCommand(void)
       disc = 0x42; // set CD 2
 #endif
       if (cdButtonPushed(1))
-      EnqueueString(sLIST2);
+        EnqueueString(sLIST2);
       break;
 
     case Do_CD3:
@@ -1136,7 +1195,7 @@ static void DecodeCommand(void)
       disc = 0x43; // set CD 3
 #endif
       if (cdButtonPushed(3))
-          EnqueueString(sLIST3);
+        EnqueueString(sLIST3);
       break;
 
     case Do_CD4:
@@ -1145,7 +1204,7 @@ static void DecodeCommand(void)
       disc = 0x44; // set CD 4
 #endif
       if (cdButtonPushed(4))
-          EnqueueString(sLIST4);
+        EnqueueString(sLIST4);
       break;
 
     case Do_CD5:
@@ -1154,7 +1213,7 @@ static void DecodeCommand(void)
       disc = 0x45; // set CD 5
 #endif
       if (cdButtonPushed(5))
-          EnqueueString(sLIST5);
+        EnqueueString(sLIST5);
       break;
 
     case Do_CD6:
@@ -1163,7 +1222,7 @@ static void DecodeCommand(void)
       disc = 0x46; // set CD 6
 #endif
       if (cdButtonPushed(6))
-          EnqueueString(sLIST6);
+        EnqueueString(sLIST6);
       break;
 
     case Do_TP:
@@ -1191,12 +1250,11 @@ static void DecodeCommand(void)
 
 int main()
 {
-
-#ifdef BLUETOOTH
-#if defined(__AVR_ATmega324__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__) || defined(__AVR_ATmega324PB__)
+#ifdef BLUETOOTH 
+#if defined(__AVR_ATmega324__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__) || defined(__AVR_ATmega324PB__) || defined(__AVR_ATmega328PB__)
   Serial1.begin(9600);
-#else 
-Serial.begin(9600);
+#else
+  Serial.begin(9600);
 #endif
 #endif
 
@@ -1272,7 +1330,15 @@ static void printstr_p(const char *s)
 
   for (c = pgm_read_byte(s); c; ++s, c = pgm_read_byte(s))
   {
-    Serial.print(c);
+#ifdef BLUETOOTH
+#if defined(__AVR_ATmega324__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__) || defined(__AVR_ATmega324PB__) || defined(__AVR_ATmega328PB__)
+  Serial1.print(c);
+#else
+  Serial.print(c);
+#endif
+#else
+  Serial.print(c);
+#endif
     if (c == '\n')
       break;
   }
