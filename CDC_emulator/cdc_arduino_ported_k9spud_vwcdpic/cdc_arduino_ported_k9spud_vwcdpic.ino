@@ -80,7 +80,7 @@
 /* enable bluetooth module control over serial line
    XS3868
 */
-//#define BLUETOOTH
+#define BLUETOOTH
 
 /*
    read disc# track# status over serial line
@@ -136,16 +136,23 @@
 #define RADIO_COMMAND_PORT  PORTB
 #define RADIO_COMMAND_PIN PINB
 //standard pinout 8,11,13
-#define RADIO_CLOCK       PB5
-#define RADIO_CLOCK_DDR    DDRB
-#define RADIO_CLOCK_PORT  PORTB
-#if defined(__AVR_ATmega328PB__) //cannot use pb3 with serial1
-#define RADIO_DATA        PB2
-#else
-#define RADIO_DATA        PB3 
-#endif
-#define RADIO_DATA_DDR    DDRB
-#define RADIO_DATA_PORT  PORTB
+//#define RADIO_CLOCK       PB5
+//#define RADIO_CLOCK_DDR    DDRB
+//#define RADIO_CLOCK_PORT  PORTB
+//#if defined(__AVR_ATmega328PB__) //cannot use pb3 with serial1
+//#define RADIO_DATA        PB2
+//#else
+//#define RADIO_DATA        PB3 
+//#endif
+//#define RADIO_DATA_DDR    DDRB
+//#define RADIO_DATA_PORT  PORTB
+//my pinout, 8,6,A0
+#define RADIO_CLOCK        PD4
+#define RADIO_CLOCK_DDR    DDRD
+#define RADIO_CLOCK_PORT  PORTD
+#define RADIO_DATA         PC3
+#define RADIO_DATA_DDR     DDRC
+#define RADIO_DATA_PORT  PORTC
 //#define RADIO_ACC 3 // PD3 = INT1
 #endif
 
@@ -417,9 +424,9 @@ static uint8_t cdButtonPushed(uint8_t cdnumber);
 #define TRUE 1
 #define FALSE 0
 
-
-//#define USETIMER2
-#define USETIMER3
+//should be based on MCU capabilities
+#define USETIMER2
+//#define USETIMER3
 
 #define USETIMER0
 //#define USETIMER4
@@ -441,7 +448,7 @@ static uint8_t cdButtonPushed(uint8_t cdnumber);
 void Init_VWCDC(void)
 {
   cli();
-  TIMSK0 = TIMSK1 = TIMSK2 = TIMSK3 = TIMSK4 = 0x00; //on arduino timer0 is used for millis(), we change prescaler, but also need to disable overflow interrupt
+  TIMSK0 = TIMSK1 = TIMSK2 = 0;//TIMSK3 = TIMSK4 = 0x00; //on arduino timer0 is used for millis(), we change prescaler, but also need to disable overflow interrupt
   RADIO_CLOCK_DDR |= _BV(RADIO_CLOCK);
   RADIO_DATA_DDR  |= _BV(RADIO_DATA);
   RADIO_COMMAND_DDR &= ~_BV(RADIO_COMMAND); // input capture as input
@@ -1265,14 +1272,15 @@ int main()
   Serial.begin(115200);
 #endif
 #endif
-
+  //Serial.println("COM+SNAME+VWCDPIC1");
+  
   Init_VWCDC();
 
 #ifdef DISC_TRACK_NUMBER_FROM_MPD
   //start in idle mode
   SetStateIdle();
 #endif
-
+  //Serial.println("COM+TONEOFF");
   while (1)
   {
 #ifdef DISC_TRACK_NUMBER_FROM_MPD
