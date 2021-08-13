@@ -1170,6 +1170,7 @@ static void DecodeCommand(void)
       break;
 
     case Do_DISABLE:
+    has_enabled = false;
       SetStateIdle(); // skip this if we're already in idle mode
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
       //      disc = 0x41; // set back to CD 1
