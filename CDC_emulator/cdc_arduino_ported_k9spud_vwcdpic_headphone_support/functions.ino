@@ -12,171 +12,106 @@
 //-----------------------------------------------------------------------------
 
 static void ScanCommandBytes(void)
-
 {
-
-
-
   fsr = scanptr;
-
-
 
 FirstByteLoop:
 
   //printstr_p(PSTR("1"),DEBUG);
 
   if (GetCaptureByte() == FALSE)
-
   {
-
     return;
-
   }
-
-
 
 FirstByteTest:
 
   //printstr_p(PSTR("2"),DEBUG);
 
   if (scanbyte == 0x53)
-
   {
-
     goto SecondByte;
-
   }
 
   // this byte doesn't match the beginning of a normal command packet,
-
   EnqueueHex(scanbyte);
-
   scanptr = fsr; // save scanptr, won't look at this byte again
 
   goto FirstByteLoop;
-
-
 
 SecondByte:
 
   //printstr_p(PSTR("3"),DEBUG);
 
   if (GetCaptureByte() == FALSE)
-
   {
-
     return;
-
   }
 
   if (scanbyte == 0x2C) // verify that byte 2 is 0x2C)
-
   {
-
     goto ThirdByte;
-
   }
 
   // the first byte was a match, but the second byte failed.
-
   // dump first byte and then see if this one is the real first byte.
-
   EnqueueHex(0x53);
-
   goto FirstByteTest;
-
-
 
 ThirdByte:
 
   //printstr_p(PSTR("4"),DEBUG);
 
   if (GetCaptureByte() == FALSE)
-
   {
-
     return;
-
   }
 
   cmdcode = scanbyte; // save command code for later use.
-
-
 
 FourthByte:
 
   //printstr_p(PSTR("5"),DEBUG);
 
   if (GetCaptureByte() == FALSE)
-
   {
-
     return;
-
   }
 
   // if execution reaches here, we have already verified that
-
   // bytes 1 and 2 are valid for a command packet.
-
-
 
   // verify that (Byte 3 + Byte 4) = 0xFF
 
   if ((cmdcode + scanbyte) == 0xFF)
-
   {
-
     //printstr_p(PSTR("6"),DEBUG);
 
-
-
     if ((cmdcode & 0x03) == 0) // verify that Byte 3 is a multiple of 4
-
     {
-
       //printstr_p(PSTR("7"),DEBUG);
 
-
-
       ACKcount = -4; // acknowledge command
-
       scanptr = fsr; // save scanptr, won't look at this byte again
 
-
-
       // Now, let's jump to the section of code that handles the
-
       // command we just received.
-
-
 
       DecodeCommand();
 
       //printstr_p(PSTR("\n"),DEBUG);
-
-
-
     }
 
     else
-
     {
-
       DumpFullCommand(); // ABORT: dump invalid packet for display
-
     }
-
   }
 
   else
-
   {
-
     DumpFullCommand(); // ABORT: dump invalid packet for display
-
   }
-
 }
 
 //-----------------------------------------------------------------------------
@@ -192,47 +127,31 @@ FourthByte:
 //-----------------------------------------------------------------------------
 
 static void DumpFullCommand(void)
-
 {
-
   fsr = scanptr; // restart back at the beginning of the packet
 
   if (GetCaptureByte() == TRUE) // send byte 1
-
   {
-
     EnqueueHex(scanbyte);
-
   }
 
   if (GetCaptureByte() == TRUE) // send byte 2
-
   {
-
     EnqueueHex(scanbyte);
-
   }
 
   if (GetCaptureByte() == TRUE) // send byte 3
-
   {
-
     EnqueueHex(scanbyte);
-
   }
 
   if (GetCaptureByte() == TRUE) // send byte 4
-
   {
-
     EnqueueHex(scanbyte);
-
   }
 
   EnqueueString(sNEWLINE);
-
   scanptr = fsr; // save scanptr, won't look at this byte again
-
 }
 
 //-----------------------------------------------------------------------------
@@ -249,35 +168,23 @@ static void DumpFullCommand(void)
 //-----------------------------------------------------------------------------
 
 static uint8_t GetCaptureByte(void)
-
 {
-
   uint8_t return_u8 = FALSE;
 
   // have we already caught up with capturer?
-
   if (fsr != capptr)
-
   {
-
     scanbyte = capbuffer[fsr]; // get a byte from the capture buffer
-
     fsr++;
 
     if (fsr == CAP_BUFFER_END) // have we overflowed the
-
     { // capture buffer?
-
       fsr = 0;
-
     } // yes, roll over to beginning
 
     return_u8 = TRUE;
-
   }
-
   return return_u8;
-
 }
 
 //-----------------------------------------------------
@@ -299,13 +206,9 @@ static uint8_t GetCaptureByte(void)
 //-----------------------------------------------------------------------------
 
 static void SetStateIdle(void)
-
 {
-
   playing = FALSE;
-
   BIDIstate = StateIdle;
-
 }
 static void SetStateTP(void)
 {
@@ -328,20 +231,15 @@ static void SetStateTP(void)
 //-----------------------------------------------------------------------------
 
 static void SetStateIdleThenPlay(void)
-
 {
-
   playing = 0;
-
   BIDIstate = StateIdleThenPlay;
-
   BIDIcount = -20;
-
 }
 
 //-----------------------------------------------------------------------------
 /*!
-  \brief    void (void)
+  \brief    SetStatePlay(void)
   set state to play mode
   \author     Koelling
   \date       06.10.2007
@@ -352,13 +250,9 @@ static void SetStateIdleThenPlay(void)
 //-----------------------------------------------------------------------------
 
 static void SetStatePlay(void)
-
 {
-
   playing = TRUE;
-
   BIDIstate = StatePlay;
-
 }
 
 //-----------------------------------------------------------------------------
@@ -374,17 +268,11 @@ static void SetStatePlay(void)
 //-----------------------------------------------------------------------------
 
 static void SetStateInitPlay(void)
-
 {
-
   playing = TRUE;
-
   BIDIstate = StateInitPlay;
-
   discload = 0xD1; //0xFF - 0x2E
-
   BIDIcount = -24;
-
 }
 
 //-----------------------------------------------------------------------------
@@ -408,20 +296,11 @@ static void SetStateInitPlay(void)
 //-----------------------------------------------------------------------------
 
 static void SetStatePlayLeadIn(void)
-
 {
-
   playing = TRUE;
-
   BIDIstate = StatePlayLeadIn;
-
   BIDIcount = -10;
-
 }
-
-
-
-
 
 //-----------------------------------------------------------------------------
 /*!
@@ -452,15 +331,10 @@ static void SetStatePlayLeadIn(void)
 //-----------------------------------------------------------------------------
 
 static void SetStateTrackLeadIn(void)
-
 {
-
   playing = TRUE;
-
   BIDIstate = StateTrackLeadIn;
-
   BIDIcount = -12;
-
 }
 
 
@@ -486,13 +360,9 @@ static void SetStateTrackLeadIn(void)
 //-----------------------------------------------------------------------------
 
 static void SendDisplayBytes(void)
-
 {
-
   SendByte(disc); // disc display value
-
   SendDisplayBytesNoCD();
-
 }
 
 //-----------------------------------------------------------------------------
@@ -507,20 +377,12 @@ static void SendDisplayBytes(void)
 //-----------------------------------------------------------------------------
 
 static void SendDisplayBytesNoCD(void)
-
 {
-
   uint8_t send_byte_u8 = 0;
 
-
-
   SendByte(track);
-
   SendByte(minute);
-
   SendByte(second);
-
-
 
   // D4 - scan on, mix on
 
@@ -530,26 +392,16 @@ static void SendDisplayBytesNoCD(void)
 
   // 00 - scan off, mix off
 
-
-
   if (mix == TRUE) // mode (scan/mix)
-
   {
-
     send_byte_u8 |= 0x20; // turn on mix light
-
   }
 
   if (scan == TRUE)
-
   {
-
     send_byte_u8 |= 0x10; // turn on scan display //this probably cose mute for few microsec.
-
   }
-
   SendByte(send_byte_u8);
-
 }
 
 //-----------------------------------------------------------------------------
@@ -567,19 +419,12 @@ static void SendDisplayBytesNoCD(void)
 //-----------------------------------------------------------------------------
 
 static void SendDisplayBytesInitCD(void)
-
 {
-
   SendByte(0x99); // number of tracks total (99)?
-
   SendByte(0x99); // total minutes?
-
   SendByte(0x59); // total seconds?
-
-  SendByte(0x49);//0xFF - 0xB7 = 48, 53, 31, 25, and 37 seen from real CDC,
-
+  SendByte(0x49); //0xFF - 0xB7 = 48, 53, 31, 25, and 37 seen from real CDC,
   // no idea what it really means.
-
 }
 
 //-----------------------------------------------------------------------------
@@ -597,29 +442,17 @@ static void SendDisplayBytesInitCD(void)
 //-----------------------------------------------------------------------------
 
 static void SendFrameByte(uint8_t byte_u8)
-
 {
-
   if (ACKcount == 0)
-
   {
-
     SendByte(byte_u8);
-
   }
-
   else
-
   {
-
     byte_u8 |= 0x20; // flag acknowledgement
-
     ACKcount++;
-
     SendByte(byte_u8);
-
   }
-
 }
 
 //-----------------------------------------------------------------------------
@@ -635,39 +468,27 @@ static void SendFrameByte(uint8_t byte_u8)
 //-----------------------------------------------------------------------------
 
 static void SendByte(uint8_t byte_u8)
-
 {
-
   static uint8_t display_byte_counter_u8 = 0;
-
   // wait for head unit to store sent byte
-
   // 335us didn't work so good on late 2003 wolfsburg double din,
-
   // so we now wait 700us instead.
-
   display_byte_buffer_mau8[display_byte_counter_u8] = byte_u8;
-
   display_byte_counter_u8++;
 
   if (display_byte_counter_u8 == 8)
-
   {
-
     display_byte_counter_u8 = 0;
 #ifdef USETIMER2
     TCCR2B |= _BV(CS22); // prescaler = 64 -> 1 timer clock tick is 4us long
     TIMSK2 |= _BV(OCIE2A); // enable output compare interrupt on timer2
 #else
 #ifdef USETIMER3
-    TCCR3B |= _BV(CS31)|_BV(CS30); // prescaler = 64 -> 1 timer clock tick is 4us long
+    TCCR3B |= _BV(CS31) | _BV(CS30); // prescaler = 64 -> 1 timer clock tick is 4us long
     TIMSK3 |= _BV(OCIE3A); // enable output compare interrupt on timer3
 #endif
 #endif
-    
-
   }
-
 }
 
 //-----------------------------------------------------------------------------
@@ -684,25 +505,16 @@ static void SendByte(uint8_t byte_u8)
 //-----------------------------------------------------------------------------
 
 static void EnqueueString(const uint8_t *addr PROGMEM)
-
 {
-
 #ifndef JUST_HEX_TO_SERIAL
-
   txbuffer[txinptr] = addr;
-
   txinptr++;
 
   if (txinptr == TX_BUFFER_END)
-
   {
-
     txinptr = 0;
-
   }
-
 #endif
-
 }
 
 //-----------------------------------------------------------------------------
@@ -718,27 +530,18 @@ static void EnqueueString(const uint8_t *addr PROGMEM)
 //-----------------------------------------------------------------------------
 
 static void EnqueueHex(uint8_t hexbyte_u8)
-
 {
-
   uint8_t nibble_u8;
 
-
-
   nibble_u8 = hexbyte_u8 >> 4; // send high nibble first
-
   nibble_u8 <<= 1; // multiply high nibble by 2
 
   EnqueueString(&sHEX[nibble_u8]);
 
-
-
   nibble_u8 = hexbyte_u8 & 0x0F; // prepare low nibble
-
   nibble_u8 <<= 1; // multiply low nibble by 2
 
   EnqueueString(&sHEX[nibble_u8]);
-
 }
 
 //-----------------------------------------------------------------------------
@@ -754,15 +557,10 @@ static void EnqueueHex(uint8_t hexbyte_u8)
 //-----------------------------------------------------------------------------
 
 static void ResetTime(void)
-
 {
-
   secondcount = SECONDWAIT;
-
   second = 0;
-
   minute = 0;
-
 }
 
 //-----------------------------------------------------------------------------
@@ -778,24 +576,19 @@ static void ResetTime(void)
 //-----------------------------------------------------------------------------
 
 static void SendStateIdle(void)
-
 {
-
   secondcount = SECONDWAIT; // stop display from ticking time
 
   SendFrameByte(0x8B);//FF - 0x74
-
   SendDisplayBytes();
-
   SendByte(0x70);//FF - 0x8F, mutes audio on Monsoon head units
-
   SendFrameByte(0x83);//FF - 0x7C
-
 }
 
 static void SendStateTP(void)
 { //B4 BE EF FE DB FF DF BC
   secondcount = SECONDWAIT; // stop display from ticking time
+
   SendFrameByte(0x4B);//FF - 0x4b
   SendDisplayBytes();
   SendByte(0x20);
@@ -815,21 +608,14 @@ static void SendStateTP(void)
 //-----------------------------------------------------------------------------
 
 static void SendStatePlayLeadInEnd(void)
-
 {
-
   SendFrameByte(0xC3);//FF - 0x3C
-
   BIDIcount++;
 
   if (BIDIcount == 0)
-
   {
-
     SetStatePlay();
-
   }
-
 }
 
 //-----------------------------------------------------------------------------
@@ -845,21 +631,14 @@ static void SendStatePlayLeadInEnd(void)
 //-----------------------------------------------------------------------------
 
 static void SendStateInitPlayEnd(void)
-
 {
-
   SendFrameByte(0xC3);//FF - 0x3C
-
   BIDIcount++;
 
   if (BIDIcount == 0)
-
   {
-
     SetStatePlayLeadIn();
-
   }
-
 }
 
 //-----------------------------------------------------------------------------
@@ -875,7 +654,6 @@ static void SendStateInitPlayEnd(void)
 //-----------------------------------------------------------------------------
 
 static void SendStateInitPlayAnnounceCD(void)
-
 {
 
   // 0xF6..0xF0: CD-ROM Loaded (seen on changer)
@@ -891,27 +669,18 @@ static void SendStateInitPlayAnnounceCD(void)
   SendByte(discload);
 
   if (discload == 0xD6)
-
   {
-
     discload = 0xD1;
-
   }
 
   else
-
   {
-
     discload++;
-
   }
 
   SendDisplayBytesInitCD();
-
   SendByte(0x00);//0xFF - 0xFF
-
   SendStateInitPlayEnd();
-
 }
 
 //-----------------------------------------------------------------------------
@@ -927,17 +696,11 @@ static void SendStateInitPlayAnnounceCD(void)
 //-----------------------------------------------------------------------------
 
 static void SendStatePlayLeadInAnnounceCD(void)
-
 {
-
   SendByte((disc & 0x0F) | 0xD0);
-
   SendDisplayBytesInitCD();
-
   SendByte(0x00);//0xFF - 0xFF
-
   SendStatePlayLeadInEnd();
-
 }
 
 //-----------------------------------------------------------------------------
@@ -953,14 +716,12 @@ static void SendStatePlayLeadInAnnounceCD(void)
 //-----------------------------------------------------------------------------
 
 static void SendPacket(void)
-
 {
-
   switch (BIDIstate) {
     case StateTP:
       SendStateTP();
       break;
-    
+
     case StateIdle:
       SendStateIdle();
       break;
@@ -973,6 +734,7 @@ static void SendPacket(void)
         SetStateInitPlay();
         SendStateIdle();
       }
+
       else
       {
         SendStateIdle();
@@ -1001,9 +763,11 @@ static void SendPacket(void)
         SendStateInitPlayAnnounceCD();
         break;
       }
+
       SendDisplayBytes();
       SendByte(0x10);//0xFF - 0xEF
-//no break here!!
+    //no break here!!
+
     case StateInitPlayEnd:
       SendStateInitPlayEnd();
       break;
@@ -1033,7 +797,8 @@ static void SendPacket(void)
 
       SendDisplayBytes();
       SendByte(0x51);//0xFF - 0xAE
-//no break here!!
+    //no break here!!
+
     case StatePlayLeadInEnd:
       SendStatePlayLeadInEnd();
       break;
@@ -1075,34 +840,130 @@ static uint8_t cdButtonPushed(uint8_t cdnumber) {
       if (++cd1pushed == 6)
         cd1pushed = 0;
       return cd1pushed;
+
     case 2:
       cd1pushed = cd3pushed = cd4pushed = cd5pushed = cd6pushed;
       if (++cd2pushed == 6)
         cd2pushed = 0;
-        return cd2pushed;
+      return cd2pushed;
 
-      case 3:
-        cd1pushed = cd2pushed = cd4pushed = cd5pushed = cd6pushed;
-        if (++cd3pushed == 6)
-          cd3pushed = 0;
-        return cd3pushed;
+    case 3:
+      cd1pushed = cd2pushed = cd4pushed = cd5pushed = cd6pushed;
+      if (++cd3pushed == 6)
+        cd3pushed = 0;
+      return cd3pushed;
 
-      case 4:
-        cd1pushed = cd2pushed = cd3pushed = cd5pushed = cd6pushed;
-        if (++cd4pushed == 6)
-          cd4pushed = 0;
-        return cd4pushed;
+    case 4:
+      cd1pushed = cd2pushed = cd3pushed = cd5pushed = cd6pushed;
+      if (++cd4pushed == 6)
+        cd4pushed = 0;
+      return cd4pushed;
 
-      case 5:
-        cd1pushed = cd2pushed = cd3pushed = cd4pushed = cd6pushed;
-        if (++cd5pushed == 6)
-          cd5pushed = 0;
-        return cd5pushed;
+    case 5:
+      cd1pushed = cd2pushed = cd3pushed = cd4pushed = cd6pushed;
+      if (++cd5pushed == 6)
+        cd5pushed = 0;
+      return cd5pushed;
 
-      case 6:
-        cd1pushed = cd2pushed = cd3pushed = cd4pushed = cd5pushed;
-        if (++cd6pushed == 6)
-          cd5pushed = 0;
-        return cd5pushed;
-      }
+    case 6:
+      cd1pushed = cd2pushed = cd3pushed = cd4pushed = cd5pushed;
+      if (++cd6pushed == 6)
+        cd5pushed = 0;
+      return cd5pushed;
   }
+}
+
+static void android_buttons() {
+#ifdef ANDROID_HEADPHONES
+  //android headphone control, this is fired every 50ms
+
+  //play button
+  if (play_count > 0) {
+    Serial.println("play");
+    Serial.println(play_count);
+    Serial.println(next_count);
+    Serial.println(prev_count);
+    play_count--;
+
+#if defined(BUTTONS_ACTIVE_HIGH)
+    ANDROID_PLAY_PORT |= (1 << ANDROID_PLAY); //high //PORTD |= B01000000; //digitalWrite(6, HIGH);
+#elif defined(BUTTONS_ACTIVE_LOW)
+    ANDROID_PLAY_PORT &= ~_BV(ANDROID_PLAY); //low   //PORTD &= B10111111; //digitalWrite(6, LOW);
+#else
+#error You cannot leave both BUTTONS_ACTIVE_HIGH and BUTTONS_ACTIVE_LOW undefined!
+#endif
+  }
+
+  else {
+#if defined(BUTTONS_ACTIVE_HIGH)
+    ANDROID_PLAY_PORT &= ~_BV(ANDROID_PLAY); //low   //PORTD &= B10111111; //digitalWrite(6, LOW);
+#elif defined(BUTTONS_ACTIVE_LOW)
+    ANDROID_PLAY_PORT |= (1 << ANDROID_PLAY); //high //PORTD |= B01000000; //digitalWrite(6, HIGH);
+#else
+#error You cannot leave both BUTTONS_ACTIVE_HIGH and BUTTONS_ACTIVE_LOW undefined!
+#endif
+  }
+
+  //next button
+  if (next_count > 0) {
+    Serial.println("next");
+    Serial.println(play_count);
+    Serial.println(next_count);
+    Serial.println(prev_count);
+    next_count--;
+
+#if defined(BUTTONS_ACTIVE_HIGH)
+    ANDROID_NEXT_PORT |= _BV(ANDROID_NEXT); //high //PORTD |= B00100000; //digitalWrite(5, HIGH);
+#elif defined(BUTTONS_ACTIVE_LOW)
+    ANDROID_NEXT_PORT &= ~_BV(ANDROID_NEXT); //low //PORTD &= B11011111; //digitalWrite(5, LOW);
+#else
+#error You cannot leave both BUTTONS_ACTIVE_HIGH and BUTTONS_ACTIVE_LOW undefined!
+#endif
+  }
+
+  else {
+#if defined(BUTTONS_ACTIVE_HIGH)
+    ANDROID_NEXT_PORT &= ~_BV(ANDROID_NEXT); //low //PORTD &= B11011111; //digitalWrite(5, LOW);
+#elif defined(BUTTONS_ACTIVE_LOW)
+    ANDROID_NEXT_PORT |= _BV(ANDROID_NEXT); //high //PORTD |= B00100000; //digitalWrite(5, HIGH)
+#else
+#error You cannot leave both BUTTONS_ACTIVE_HIGH and BUTTONS_ACTIVE_LOW undefined!
+#endif
+  }
+
+  //prev button
+  if (prev_count > 0) {
+    Serial.println("prev");
+    Serial.println(play_count);
+    Serial.println(next_count);
+    Serial.println(prev_count);
+    prev_count--;
+
+#if defined(BUTTONS_ACTIVE_HIGH)
+    ANDROID_PREV_PORT |= _BV(ANDROID_PREV); //high //PORTD |= B10000000; //digitalWrite(7, HIGH);
+#elif defined(BUTTONS_ACTIVE_LOW)
+    ANDROID_PREV_PORT &= ~_BV(ANDROID_PREV); //low //PORTD &= B01111111; //digitalWrite(7, LOW);
+#else
+#error You cannot leave both BUTTONS_ACTIVE_HIGH and BUTTONS_ACTIVE_LOW undefined!
+#endif
+  }
+  else {
+#if defined(BUTTONS_ACTIVE_HIGH)
+    ANDROID_PREV_PORT &= ~_BV(ANDROID_PREV); //low //PORTD &= B01111111; //digitalWrite(7, LOW);
+#elif defined(BUTTONS_ACTIVE_LOW)
+    ANDROID_PREV_PORT |= _BV(ANDROID_PREV); //high //PORTD |= B10000000; //digitalWrite(7, HIGH);
+#else
+#error You cannot leave both BUTTONS_ACTIVE_HIGH and BUTTONS_ACTIVE_LOW undefined!
+#endif
+
+    //uncomment in case smartphone/MP3 player requires double press to go to previous song
+    /*
+      if (prev_count_delay > 0 ) { //we ended first push and do not finished second push
+      prev_count_delay--;
+      if (prev_count_delay == 0) //we are at last run of delay loop
+        prev_count = ANDROID_PUSH_COUNT;
+      }
+    */
+  }
+#endif
+
