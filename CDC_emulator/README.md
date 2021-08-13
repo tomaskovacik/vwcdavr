@@ -2,7 +2,7 @@ Little talk/history: http://kovo-blog.blogspot.sk/2014/02/cd-changer-emulator.ht
 
 CDC_emulator: Arduino based CD changer emulator for VW/Audi/Skoda/Seat radios, based on AVR port of vwcdpic (see header of file for more info)
 
--Android headphones three button support, with cdc_arduino_ported_k9spud_vwcdpic_headphone_support
+- Android headphones three button support, with cdc_arduino_ported_k9spud_vwcdpic_headphone_support (thx @domnulvlad)
 - Android headphones single button support - dropped (if you wanna have this, take a look at history of .ino files and make patch, I do not have time to test this...)
 - Bluetooth support for modules with serial comunication, not fully implemented yet 
 
