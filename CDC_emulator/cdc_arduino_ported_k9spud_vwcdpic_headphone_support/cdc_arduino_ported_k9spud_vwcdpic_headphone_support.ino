@@ -1,10 +1,9 @@
-/*****************************************************************************
-
+si si /*****************************************************************************
 
    Audi/Volkswagen Audi Interface
 
-   Target: arduino atmega328(tested)
 
+   Target: arduino atmega328(tested)
 
    Author: Vincent
 
@@ -13,11 +12,9 @@
    Version: 0.01
 
 
-
    Originally ported from VWCDPIC Project:
 
    http://www.k9spud.com/vwcdpic/
-
 
 
    Ported from Matthias Koelling's AVR Code:
@@ -36,16 +33,43 @@
    DataIn    -> digital 11(PB3) (10 for atmega328PB)
    Clock     -> digital 13(PB5)
 
-   computer -> arduino pin
+   computer  -> arduino pin
    serial TX -> digital 0 (PD0)
    serial RX -> digital 1 (PD1)
 
    19. Mar 2015  tomaskovacik
    port to atmega8
 
-   14.Jun 2019 kovo
+   14. Jun 2019 kovo
    this compile fine against mega324(P/A/PA/PB)
 
+   13. Aug 2021 domnulvlad
+   ○Added Android headphone button / MP3 player button support, pinout:
+   Next button -> digital 5 (PD5)
+   Play button -> digital 6 (PD6)
+   Prev button -> digital 7 (PD7)
+
+   •To disable, comment out #define ANDROID_HEADPHONES (it's enabled by default)
+
+   •If you are using this function, you also have the option to select whether the buttons are active-high or active-low,
+   in general for smartphone headphone button control you should select active-high, and for most MP3 players select active-low,
+   but do check which one you need in your case and select the appropriate option, either #define BUTTONS_ACTIVE_HIGH or
+   #define BUTTONS_ACTIVE_LOW
+
+   •If you need the prev button to be pressed twice to go to the previous song, check out the comment at the
+   end of the functions.ino file
+   
+   •If necessary, you can enable the function to mute the player on startup (if it starts playing when it receives power) so it
+   doesn't play while not in CDC mode, check comment below #define ANDROID_HEADPHONES
+
+   ○Triggering modes:
+   •Seek forward/backward are both play/pause buttons (they do not increment/decrement CD number on screen,
+   can be changed in "case Do_PREVCD" and "case Do_SEEKFORWARD_MK" of "switch (cmdcode)"
+   •FR/Down is the prev button (also decrements track number)
+   •FF/Up is the next button (also increments track number)
+   
+   •The playing/pausing is "smart", it starts playing when entering CDC mode, pauses when going back to radio,
+   and most importantly, it keeps track of the manual pause/unpause with flags, so it is never playing while not in CDC mode
  *****************************************************************************/
 
 //#define DUMPMODE
@@ -80,15 +104,28 @@
 /* enable bluetooth module control over serial line
    XS3868
 */
-#define BLUETOOTH
+//#define BLUETOOTH
 
 /*
    read disc# track# status over serial line
 */
 //#define DISC_TRACK_NUMBER_FROM_MPD
 
-/* -- Includes ------------------------------------------------------------- */
+#define ANDROID_HEADPHONES //comment out to disable
+//#define MUTE_ON_STARTUP //if you need the play button pressed on startup (if not in CDC mode), if the MP3 player starts playing when it receives power (which can be problematic if the unit starts in radio mode)
+//#define startup_mute_delay 6 //in seconds, the time needed to wait before pressing play (if needed) on startup, my player needs a delay because it wastes 6 seconds with a startup jingle
 
+//even if not using ANDROID_HEADPHONES, one of the next two has to be defined (not both), or the compiler will throw an error:
+//#define BUTTONS_ACTIVE_HIGH //uncomment if using Android headphones / MP3 player with active high buttons
+#define BUTTONS_ACTIVE_LOW //uncomment if using MP3 player with active low buttons (most common)
+
+#ifdef BUTTONS_ACTIVE_HIGH
+#ifdef BUTTONS_ACTIVE_LOW
+#error You cannot define both BUTTONS_ACTIVE_HIGH and BUTTONS_ACTIVE_LOW at the same time!
+#endif
+#endif
+
+/* -- Includes ------------------------------------------------------------- */
 //#include <avr/io.h>
 //#include <avr/sfr_defs.h>
 //#include <stdlib.h>
@@ -97,7 +134,6 @@
 //#include <util/delay.h>
 
 /* -- Defines -------------------------------------------------------------- */
-
 #define TRUE 1
 
 // Low period of PWTX line:
@@ -126,52 +162,66 @@
 #define TX_BUFFER_END   12
 #define CAP_BUFFER_END	24
 
+//android headphones
+#ifdef ANDROID_HEADPHONES
+#define ANDROID_PUSH_COUNT 2 //100ms push - how long push take 
+#define ANDROID_DELAY_COUNT 1 //50ms delay - how long we wait between pushes
+#endif
+
 #define VER_MAJOR       '1'
 #define VER_MINOR       '0'
 #define VER_PATCHLEVEL  'b'
 
 #if defined(__AVR_ATmega88__) || defined(__AVR_ATmega88A__) || defined(__AVR_ATmega328__) || defined(__AVR_ATmega328A__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega328PA__) || defined(__AVR_ATmega328PB__)
-#define RADIO_COMMAND      PB0 //ICP
+//standard pinout: 8,11,13
+#define RADIO_COMMAND      PB0 //digital pin 8
 #define RADIO_COMMAND_DDR  DDRB
-#define RADIO_COMMAND_PORT  PORTB
-#define RADIO_COMMAND_PIN PINB
-//standard pinout 8,11,13
-//#define RADIO_CLOCK       PB5
-//#define RADIO_CLOCK_DDR    DDRB
-//#define RADIO_CLOCK_PORT  PORTB
-//#if defined(__AVR_ATmega328PB__) //cannot use pb3 with serial1
-//#define RADIO_DATA        PB2
-//#else
-//#define RADIO_DATA        PB3 
-//#endif
-//#define RADIO_DATA_DDR    DDRB
-//#define RADIO_DATA_PORT  PORTB
-//my pinout, 8,6,A0
-#define RADIO_CLOCK        PD4
-#define RADIO_CLOCK_DDR    DDRD
-#define RADIO_CLOCK_PORT  PORTD
-#define RADIO_DATA         PC3
-#define RADIO_DATA_DDR     DDRC
-#define RADIO_DATA_PORT  PORTC
-//#define RADIO_ACC 3 // PD3 = INT1
+#define RADIO_COMMAND_PORT PORTB
+#define RADIO_COMMAND_PIN  PINB
+
+#define RADIO_CLOCK        PB5 //digital pin 13
+#define RADIO_CLOCK_DDR    DDRB
+#define RADIO_CLOCK_PORT   PORTB
+
+#if defined(__AVR_ATmega328PB__) //cannot use PB3 with Serial1
+#define RADIO_DATA         PB2 //digital pin 10
+#else
+#define RADIO_DATA         PB3 //digital pin 11
+#endif
+#define RADIO_DATA_DDR     DDRB
+#define RADIO_DATA_PORT    PORTB
 #endif
 
-
-
 #if defined(__AVR_ATmega324__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__)
-#define RADIO_COMMAND      PD6 //ICP 
+#define RADIO_COMMAND      PD6
 #define RADIO_COMMAND_DDR  DDRD
-#define RADIO_COMMAND_PORT  PORTD
-#define RADIO_COMMAND_PIN PIND
+#define RADIO_COMMAND_PORT PORTD
+#define RADIO_COMMAND_PIN  PIND
+
 #define RADIO_CLOCK        PB7
 #define RADIO_CLOCK_DDR    DDRB
-#define RADIO_CLOCK_PORT  PORTB
+#define RADIO_CLOCK_PORT   PORTB
+
 #define RADIO_DATA         PB5
 #define RADIO_DATA_DDR     DDRB
-#define RADIO_DATA_PORT  PORTB
+#define RADIO_DATA_PORT    PORTB
+
 #define RADIO_ACC 3
 #endif
 
+#ifdef ANDROID_HEADPHONES
+#define ANDROID_NEXT       PD5 //Android NEXT button control Arduino pin digital 5
+#define ANDROID_NEXT_DDR   DDRD
+#define ANDROID_NEXT_PORT  PORTD
+
+#define ANDROID_PLAY       PD6 //Android PLAY button control Arduino pin digital 6
+#define ANDROID_PLAY_DDR   DDRD
+#define ANDROID_PLAY_PORT  PORTD
+
+#define ANDROID_PREV       PD7 //Android PREV button control Arduino pin digital 7
+#define ANDROID_PREV_DDR   DDRD
+#define ANDROID_PREV_PORT  PORTD
+#endif
 
 // Command Codes
 // -------------
@@ -203,7 +253,6 @@
 // 53 2C E0 1F Mix 6
 // 53 2C E4 1B ENABLE
 // 53 2C F8 07 Up
-
 
 //#define  Do_PLAY           0x08  // mix button held down (RCD300 head unit only)
 #define  Do_PLAY           0x03  // mix button held down (RCD300 head unit only)
@@ -251,9 +300,9 @@ enum STATES
 /* -- Extern Global Variables ---------------------------------------------- */
 
 #ifdef BLUETOOTH
-const uint8_t sBK8000L_PAIRING_INIT[] PROGMEM = "AT+CA\r\n"; //  pairing   AT+CA\r\n
-const uint8_t sBK8000L_PAIRING_EXIT[] PROGMEM = "AT+CB\r\n"; //  Exit pairing  AT+CB\r\n
-const uint8_t sBK8000L_CONNECT_LAST_DEVICE[] PROGMEM = "AT+CC\r\n"; //  The last paired device connected  AT+CC\r\n     what this should do? connect to last connected device?
+const uint8_t sBK8000L_PAIRING_INIT[] PROGMEM = "AT+CA\r\n"; //Pairing   AT+CA\r\n
+const uint8_t sBK8000L_PAIRING_EXIT[] PROGMEM = "AT+CB\r\n"; //Exit pairing  AT+CB\r\n
+const uint8_t sBK8000L_CONNECT_LAST_DEVICE[] PROGMEM = "AT+CC\r\n"; //  The last paired device connected  AT+CC\r\n  What should this do? Connect to last connected device?
 const uint8_t sBK8000L_DISCONNECT[] PROGMEM = "AT+CD\r\n";
 
 const uint8_t sDATAERR[] PROGMEM = "";
@@ -364,8 +413,6 @@ uint8_t dataerr;
 uint8_t startbit;
 #endif
 
-
-
 uint16_t captime; // timer count of low pulse (temp)
 int8_t capbit; // bits left to capture for this byte
 int8_t capbitpacket; // bits left to capture for the entire packet
@@ -385,10 +432,31 @@ uint8_t txoutptr;
 uint8_t display_byte_buffer_mau8[8]; // holds display bytes sent to the head unit
 uint8_t const *txbuffer[TX_BUFFER_END]; // 39-26-1 = 12 serial output strings queue
 uint8_t capbuffer[CAP_BUFFER_END]; // 64-39-1 = 24 bytes for head unit command
+
 uint8_t counter_10ms_u8 = 0; // counter for 10ms intervals
+uint8_t counter_50ms = 0;
 uint8_t flag_50ms = false; // indicates that a period of 50ms isover
+
+uint8_t once = true; //flag to make sure PLAY on Android headphones is only pressed once when entering CDC mode from head unit
+uint8_t has_enabled = false; //flag to check if the unit is in CDC mode
+uint8_t muted_on_startup = false; //flag to determine if the play button was pressed on startup
+uint8_t manually_muted = false; //flag to make sure the player is never unmuted while not in CDC mode
+
 #if defined(__AVR_ATmega8__) || defined(__AVR_ATmega128__)
 uint8_t counter_timer0_overflows = 0; //timer0 overflow counts to calc 10ms
+#endif
+
+#ifdef ANDROID_HEADPHONES
+//play button: tested: play button pushed for 100ms = 10 cycles of 10ms counter
+int8_t play_count = 0;
+//next button: tested: next button pushed for 100ms = 10 cycles of 10ms counter
+#ifndef ANDROID_HEADPHONES_ONE_BUTTON
+int8_t next_count = 0;
+//prev button: tested: prev button pushed twise for 100ms = 2x20 cycles of 10ms counter,
+uint8_t prev_count = 0;
+#endif
+//test: 10m between updates
+uint8_t prev_count_delay = 0;
 #endif
 
 /* -- Modul Global Function Prototypes ------------------------------------- */
@@ -421,10 +489,10 @@ static void SendStatePlayLeadInAnnounceCD(void);
 static void SendStateTP(void);
 static void printstr_p(const char *s);
 static uint8_t cdButtonPushed(uint8_t cdnumber);
+
 #define TRUE 1
 #define FALSE 0
 
-//should be based on MCU capabilities
 #define USETIMER2
 //#define USETIMER3
 
@@ -447,12 +515,38 @@ static uint8_t cdButtonPushed(uint8_t cdnumber);
 
 void Init_VWCDC(void)
 {
-  cli();
+  cli(); //noInterrupts()
   TIMSK0 = TIMSK1 = TIMSK2 = 0;//TIMSK3 = TIMSK4 = 0x00; //on arduino timer0 is used for millis(), we change prescaler, but also need to disable overflow interrupt
-  RADIO_CLOCK_DDR |= _BV(RADIO_CLOCK);
-  RADIO_DATA_DDR  |= _BV(RADIO_DATA);
-  RADIO_COMMAND_DDR &= ~_BV(RADIO_COMMAND); // input capture as input
-  RADIO_COMMAND_PORT |= _BV(RADIO_COMMAND); // enable pull up
+  RADIO_CLOCK_DDR |= _BV(RADIO_CLOCK); //pinMode(RADIO_CLOCK, OUTPUT);
+  RADIO_DATA_DDR  |= _BV(RADIO_DATA); //pinMode(RADIO_DATA, OUTPUT);
+  RADIO_COMMAND_DDR &= ~_BV(RADIO_COMMAND); //pinMode(RADIO_COMMAND, INPUT); // input capture as input
+  RADIO_COMMAND_PORT |= _BV(RADIO_COMMAND); //digitalWrite(RADIO_COMMAND, HIGH); // enable pull up
+
+#ifdef ANDROID_HEADPHONES
+#if defined(BUTTONS_ACTIVE_HIGH)
+  ANDROID_PREV_PORT &= ~_BV(ANDROID_PREV); //digitalWrite(ANDROID_PREV, LOW);
+#elif defined(BUTTONS_ACTIVE_LOW)
+  ANDROID_PREV_PORT |= _BV(ANDROID_PREV); //digitalWrite(ANDROID_PREV, HIGH);
+#else
+#error You cannot leave both BUTTONS_ACTIVE_HIGH and BUTTONS_ACTIVE_LOW undefined!
+#endif
+
+  ANDROID_PLAY_DDR |= _BV(ANDROID_PLAY); //DDRD |= B01000000; //pinMode(6, OUTPUT);
+  ANDROID_NEXT_DDR |= _BV(ANDROID_NEXT); //DDRD |= B00100000; //pinMode(5, OUTPUT);
+  ANDROID_PREV_DDR |= _BV(ANDROID_PREV); //DDRD |= B10000000; //pinMode(7, OUTPUT);
+
+#if defined(BUTTONS_ACTIVE_HIGH)
+  //ANDROID_PREV_PORT &= ~_BV(ANDROID_PREV); //PORTD &= B01111111; //digitalWrite(7, LOW);
+  //ANDROID_PLAY_PORT &= ~_BV(ANDROID_PLAY); //PORTD &= B10111111; //digitalWrite(6, LOW);
+  //ANDROID_NEXT_PORT &= ~_BV(ANDROID_NEXT); //PORTD &= B11011111; //digitalWrite(5, LOW);
+#elif defined(BUTTONS_ACTIVE_LOW)
+  ANDROID_PREV_PORT |= _BV(ANDROID_PREV); //PORTD |= B10000000; //digitalWrite(7, HIGH);
+  ANDROID_PLAY_PORT |= _BV(ANDROID_PLAY); //PORTD |= B01000000; //digitalWrite(6, HIGH);
+  ANDROID_NEXT_PORT |= _BV(ANDROID_NEXT); //PORTD |= B00100000; //digitalWrite(5, HIGH);
+#else
+#error You cannot leave both BUTTONS_ACTIVE_HIGH and BUTTONS_ACTIVE_LOW undefined!
+#endif
+#endif
 
   //Timer1 init
   //Used for timing the incoming commands from headunit
@@ -476,7 +570,7 @@ void Init_VWCDC(void)
   OCR3A = _700US; // _700US = 175 => 4µs x 175 = 700µs
   TCCR3B |= _BV(WGM32); // Timer3 in CTC Mode
   TCCR3B |= _BV(CS30) | _BV(CS30); // prescaler = 64 -> 1 timer clock tick is 4us long
-  TIMSK3 |= _BV(OCIE3A); 
+  TIMSK3 |= _BV(OCIE3A);
 #endif
 #endif
 
@@ -541,7 +635,7 @@ void Init_VWCDC(void)
 #endif
 
   SendPacket(); // force first display update packet
-  sei();
+  sei(); // interrupts();
   //    SREG |= 0x80;   // enable interrupts
 }
 
@@ -569,7 +663,7 @@ ISR(TIMER2_COMPA_vect)
 #ifdef USETIMER3
 ISR(TIMER3_COMPA_vect)
 {
-  TCCR3B &= ~_BV(CS30); 
+  TCCR3B &= ~_BV(CS30);
   TCCR3B &= ~_BV(CS31);
   TCNT3 = 0; // clear Timer2
   TIFR3 |= _BV(OCF3A); //no need to do this
@@ -577,7 +671,6 @@ ISR(TIMER3_COMPA_vect)
 #endif
   static uint8_t display_byte_counter_u8 = 0;
   uint8_t byte_u8;
-
 
   if (display_byte_counter_u8 < 8)
   {
@@ -613,7 +706,7 @@ ISR(TIMER3_COMPA_vect)
     TCCR2B |= _BV(CS22); // prescaler = 64 -> 1 timer clock tick is 4us long
 #else
 #ifdef USETIMER3
-    TCCR3B |= _BV(CS41)|_BV(CS40);
+    TCCR3B |= _BV(CS41) | _BV(CS40);
 #endif
 #endif
   }
@@ -673,11 +766,28 @@ ISR(TIMER4_COMPA_vect)
 {
   counter_10ms_u8++;
 
-  if (counter_10ms_u8 == 5)
+  if (counter_10ms_u8 == 5) //if 5*10=50ms have passed
   {
-    counter_10ms_u8 = 0;
+#ifdef MUTE_ON_STARTUP //function for pausing the mp3 player if it normally starts unpaused
+    counter_50ms++; //and the unit is turned on in radio mode instead of CDC
+    
+    if (counter_50ms == startup_mute_delay * 20) { //startup_mute_delay seconds passed
+      counter_50ms = 0;
+      if (!has_enabled) { //check if it HASN'T started in CDC mode
+        if (!muted_on_startup) { //check if it hasn't done this already
+          play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+          muted_on_startup = true; //make sure it doesn't repeat this every startup_mute_delay seconds
+        }
+      }
+    }
+#endif
+
+    counter_10ms_u8 = 0; //reset the 10ms counter so it can count up to 50ms again
     flag_50ms = TRUE;
 
+#ifdef ANDROID_HEADPHONES
+    android_buttons(); //every 50ms, fire the function to virtually press a button on Android headphones/MP3 player, if enabled
+#endif
   }
 }
 #endif
@@ -869,7 +979,7 @@ void CDC_Protocol(void)
   if (flag_50ms == TRUE)
   {
     flag_50ms = FALSE;
-    SendPacket()  ;
+    SendPacket();
     scancount++;
     if (scancount == 0)
     {
@@ -1025,7 +1135,9 @@ static void DecodeCommand(void)
       break;
 
     case Do_ENABLE:
+    
     case Do_ENABLE_MK:
+      has_enabled = true; //we are now in CDC mode, set the flag
       mix = FALSE;
       if (playing == FALSE)
       {
@@ -1033,6 +1145,14 @@ static void DecodeCommand(void)
       }
       if (!mix_button)
         EnqueueString(sMENABLE);
+
+#ifdef ANDROID_HEADPHONES //press PLAY on Android headphones/MP3 player when head unit switches into CDC mode
+      if (once) { //make sure this function only executes once
+        play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+        once = false; //to make sure PLAY can't be pressed anymore until the head unit switches out of CDC mode
+        manually_muted = false; //make it so it can be manually muted again
+      }
+#endif
       break;
 
     case Do_LOADCD:
@@ -1050,33 +1170,47 @@ static void DecodeCommand(void)
       //      disc = 0x41; // set back to CD 1
 #endif
       EnqueueString(sMDISABLE);
+
+#ifdef ANDROID_HEADPHONES //press PLAY on Android headphones/MP3 player when head unit switches out of CDC mode
+      if (!manually_muted) { //pause when exiting CDC mode, unless it is already paused
+        play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+      }
+      once = true; //reset flag so it can press PLAY again when switching back to CDC
+#endif
       break;
 
     case Do_SEEKBACK:
-    case Do_PREVCD:
+    
+    case Do_PREVCD: //repurposed as pause button
       ResetTime();
       EnqueueString(sPRV_LIST);
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
-      disc--;
-      if ((disc & 0x0F) == 0)
-      {
+      /* uncomment if you want the CD number to decrement, even though Seek Backward/Prev CD is now for play/pause
+        disc--;
+        if ((disc & 0x0F) == 0)
+        {
         disc = 0x46; // set back to CD 1
-      }
+        }
+      */
 #endif
       break;
 
     case Do_SEEKFORWARD:
-    case Do_SEEKFORWARD_MK:
+    
+    case Do_SEEKFORWARD_MK: //repurposed as pause button
       ResetTime();
       if (cd_button == FALSE) // mk don't increment when previous command was a cd button
       {
         EnqueueString(sNXT_LIST);
+
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
-        disc++;
-        if (disc > 0x46)
-        {
-          disc = 0x41;
-        }
+        /* uncomment if you want the CD number to increment, even though Seek Forward is now for play/pause
+              disc++;
+              if (disc > 0x46)
+              {
+                disc = 0x41;
+              }
+        */
 #endif
         // Going beyond CD9 displays hex codes on premium head unit.
         // Examples: "CD A"
@@ -1090,9 +1224,14 @@ static void DecodeCommand(void)
       {
         cd_button = FALSE; // mk clear cd button flag
       }
+#ifdef ANDROID_HEADPHONES //press PLAY on Android headphones/MP3 player when pressing prev cd button
+      play_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PLAY pin
+      manually_muted = !manually_muted;
+#endif
       break;
 
     case Do_MIX:
+    
     case Do_MIX_CD:
       mix_button = 1;
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
@@ -1113,7 +1252,6 @@ static void DecodeCommand(void)
       break;
 
     case Do_SCAN:
-
       scancount = SCANWAIT;
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
       if (scan == FALSE)
@@ -1135,7 +1273,8 @@ static void DecodeCommand(void)
       break;
 
     case Do_UP:
-    case Do_UP_MK3:
+    
+    case Do_UP_MK3: //next track
       if (playing == TRUE) // skip track lead-in if not in play mode
       {
         SetStateTrackLeadIn();
@@ -1154,10 +1293,15 @@ static void DecodeCommand(void)
       }
 #endif
       EnqueueString(sNEXT);
+
+#ifdef ANDROID_HEADPHONES  //pres NEXT on Android headphones/MP3 player
+      next_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_NEXT pin
+#endif
       break;
 
     case Do_DOWN:
-    case Do_DOWN_MK3:
+    
+    case Do_DOWN_MK3: //previous track
       if (playing == TRUE) // skip track lead-in if not in play mode
       {
         SetStateTrackLeadIn();
@@ -1176,6 +1320,12 @@ static void DecodeCommand(void)
       }
 #endif
       EnqueueString(sPREVIOUS);
+
+#ifdef ANDROID_HEADPHONES //press PREV on Android headphones/MP3 player
+      prev_count = ANDROID_PUSH_COUNT; // 100ms high on ANDROID_PREV pin
+      //only needed if using double push for PREV, see functions.ino line 1154
+      //prev_count_delay = ANDROID_DELAY_COUNT; // 50ms high on ANDROID_PREV pin
+#endif
       break;
 
     case Do_CD1:
@@ -1239,15 +1389,14 @@ static void DecodeCommand(void)
         SetStateInitPlay();
       }
       break;
-    default:
 
+    default:
       /* if execution reaches here, we have verified that we got
          a valid command packet, but the command code received is not
          one that we understand.
 
          Dump the unknown command code for the user to view.
       */
-
       EnqueueString(sDASH);
       EnqueueHex(cmdcode);
       EnqueueString(sNEWLINE);
@@ -1255,9 +1404,9 @@ static void DecodeCommand(void)
   }
 }
 
-int main()
+int main() //setup
 {
-#ifdef BLUETOOTH 
+#ifdef BLUETOOTH
 #if defined(__AVR_ATmega324__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__) || defined(__AVR_ATmega324PB__) || defined(__AVR_ATmega328PB__)
   Serial1.begin(9600);
 #else
@@ -1272,16 +1421,15 @@ int main()
   Serial.begin(115200);
 #endif
 #endif
-  //Serial.println("COM+SNAME+VWCDPIC1");
-  
+
   Init_VWCDC();
 
 #ifdef DISC_TRACK_NUMBER_FROM_MPD
   //start in idle mode
   SetStateIdle();
 #endif
-  //Serial.println("COM+TONEOFF");
-  while (1)
+
+  while (1) //loop
   {
 #ifdef DISC_TRACK_NUMBER_FROM_MPD
     if (Serial1.available() > 0) {
@@ -1340,12 +1488,12 @@ static void printstr_p(const char *s)
   {
 #ifdef BLUETOOTH
 #if defined(__AVR_ATmega324__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__) || defined(__AVR_ATmega324PB__) || defined(__AVR_ATmega328PB__)
-  Serial1.print(c);
+    Serial1.print(c);
 #else
-  Serial.print(c);
+    Serial.print(c);
 #endif
 #else
-  Serial.print(c);
+    Serial.print(c);
 #endif
     if (c == '\n')
       break;
