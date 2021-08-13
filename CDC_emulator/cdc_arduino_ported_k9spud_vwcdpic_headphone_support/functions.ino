@@ -889,8 +889,6 @@ static void android_buttons() {
     ANDROID_PLAY_PORT |= (1 << ANDROID_PLAY); //high //PORTD |= B01000000; //digitalWrite(6, HIGH);
 #elif defined(BUTTONS_ACTIVE_LOW)
     ANDROID_PLAY_PORT &= ~_BV(ANDROID_PLAY); //low   //PORTD &= B10111111; //digitalWrite(6, LOW);
-#else
-#error You cannot leave both BUTTONS_ACTIVE_HIGH and BUTTONS_ACTIVE_LOW undefined!
 #endif
   }
 
@@ -899,8 +897,6 @@ static void android_buttons() {
     ANDROID_PLAY_PORT &= ~_BV(ANDROID_PLAY); //low   //PORTD &= B10111111; //digitalWrite(6, LOW);
 #elif defined(BUTTONS_ACTIVE_LOW)
     ANDROID_PLAY_PORT |= (1 << ANDROID_PLAY); //high //PORTD |= B01000000; //digitalWrite(6, HIGH);
-#else
-#error You cannot leave both BUTTONS_ACTIVE_HIGH and BUTTONS_ACTIVE_LOW undefined!
 #endif
   }
 
@@ -916,8 +912,6 @@ static void android_buttons() {
     ANDROID_NEXT_PORT |= _BV(ANDROID_NEXT); //high //PORTD |= B00100000; //digitalWrite(5, HIGH);
 #elif defined(BUTTONS_ACTIVE_LOW)
     ANDROID_NEXT_PORT &= ~_BV(ANDROID_NEXT); //low //PORTD &= B11011111; //digitalWrite(5, LOW);
-#else
-#error You cannot leave both BUTTONS_ACTIVE_HIGH and BUTTONS_ACTIVE_LOW undefined!
 #endif
   }
 
@@ -926,8 +920,6 @@ static void android_buttons() {
     ANDROID_NEXT_PORT &= ~_BV(ANDROID_NEXT); //low //PORTD &= B11011111; //digitalWrite(5, LOW);
 #elif defined(BUTTONS_ACTIVE_LOW)
     ANDROID_NEXT_PORT |= _BV(ANDROID_NEXT); //high //PORTD |= B00100000; //digitalWrite(5, HIGH)
-#else
-#error You cannot leave both BUTTONS_ACTIVE_HIGH and BUTTONS_ACTIVE_LOW undefined!
 #endif
   }
 
@@ -943,8 +935,6 @@ static void android_buttons() {
     ANDROID_PREV_PORT |= _BV(ANDROID_PREV); //high //PORTD |= B10000000; //digitalWrite(7, HIGH);
 #elif defined(BUTTONS_ACTIVE_LOW)
     ANDROID_PREV_PORT &= ~_BV(ANDROID_PREV); //low //PORTD &= B01111111; //digitalWrite(7, LOW);
-#else
-#error You cannot leave both BUTTONS_ACTIVE_HIGH and BUTTONS_ACTIVE_LOW undefined!
 #endif
   }
   else {
@@ -952,8 +942,6 @@ static void android_buttons() {
     ANDROID_PREV_PORT &= ~_BV(ANDROID_PREV); //low //PORTD &= B01111111; //digitalWrite(7, LOW);
 #elif defined(BUTTONS_ACTIVE_LOW)
     ANDROID_PREV_PORT |= _BV(ANDROID_PREV); //high //PORTD |= B10000000; //digitalWrite(7, HIGH);
-#else
-#error You cannot leave both BUTTONS_ACTIVE_HIGH and BUTTONS_ACTIVE_LOW undefined!
 #endif
 
     //uncomment in case smartphone/MP3 player requires double press to go to previous song
@@ -966,4 +954,4 @@ static void android_buttons() {
     */
   }
 #endif
-
+}

@@ -55,6 +55,7 @@
    in general for smartphone headphone button control you should select active-high, and for most MP3 players select active-low,
    but do check which one you need in your case and select the appropriate option, either #define BUTTONS_ACTIVE_HIGH or
    #define BUTTONS_ACTIVE_LOW
+   ⦿If you either don't define one of them or you define both, active high will be automatically selected!
 
    •If you need the prev button to be pressed twice to go to the previous song, check out the comment at the
    end of the functions.ino file
@@ -115,13 +116,21 @@
 //#define MUTE_ON_STARTUP //if you need the play button pressed on startup (if not in CDC mode), if the MP3 player starts playing when it receives power (which can be problematic if the unit starts in radio mode)
 //#define startup_mute_delay 6 //in seconds, the time needed to wait before pressing play (if needed) on startup, my player needs a delay because it wastes 6 seconds with a startup jingle
 
-//even if not using ANDROID_HEADPHONES, one of the next two has to be defined (not both), or the compiler will throw an error:
+//choose one:
 //#define BUTTONS_ACTIVE_HIGH //uncomment if using Android headphones / MP3 player with active high buttons
 #define BUTTONS_ACTIVE_LOW //uncomment if using MP3 player with active low buttons (most common)
 
+//if both options are accidentally chosen, select only active high
 #ifdef BUTTONS_ACTIVE_HIGH
 #ifdef BUTTONS_ACTIVE_LOW
-#error You cannot define both BUTTONS_ACTIVE_HIGH and BUTTONS_ACTIVE_LOW at the same time!
+#undef BUTTONS_ACTIVE_LOW
+#endif
+#endif
+
+//if no option is chosen, select active high
+#ifndef BUTTONS_ACTIVE_HIGH
+#ifndef BUTTONS_ACTIVE_LOW
+#define BUTTONS_ACTIVE_HIGH
 #endif
 #endif
 
@@ -527,8 +536,6 @@ void Init_VWCDC(void)
   ANDROID_PREV_PORT &= ~_BV(ANDROID_PREV); //digitalWrite(ANDROID_PREV, LOW);
 #elif defined(BUTTONS_ACTIVE_LOW)
   ANDROID_PREV_PORT |= _BV(ANDROID_PREV); //digitalWrite(ANDROID_PREV, HIGH);
-#else
-#error You cannot leave both BUTTONS_ACTIVE_HIGH and BUTTONS_ACTIVE_LOW undefined!
 #endif
 
   ANDROID_PLAY_DDR |= _BV(ANDROID_PLAY); //DDRD |= B01000000; //pinMode(6, OUTPUT);
@@ -543,8 +550,6 @@ void Init_VWCDC(void)
   ANDROID_PREV_PORT |= _BV(ANDROID_PREV); //PORTD |= B10000000; //digitalWrite(7, HIGH);
   ANDROID_PLAY_PORT |= _BV(ANDROID_PLAY); //PORTD |= B01000000; //digitalWrite(6, HIGH);
   ANDROID_NEXT_PORT |= _BV(ANDROID_NEXT); //PORTD |= B00100000; //digitalWrite(5, HIGH);
-#else
-#error You cannot leave both BUTTONS_ACTIVE_HIGH and BUTTONS_ACTIVE_LOW undefined!
 #endif
 #endif
 
@@ -979,7 +984,7 @@ void CDC_Protocol(void)
   if (flag_50ms == TRUE)
   {
     flag_50ms = FALSE;
-    SendPacket();
+    SendPacket()  ;
     scancount++;
     if (scancount == 0)
     {
