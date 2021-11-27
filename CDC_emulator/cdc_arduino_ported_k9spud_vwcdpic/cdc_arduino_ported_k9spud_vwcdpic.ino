@@ -136,23 +136,23 @@
 #define RADIO_COMMAND_PORT  PORTB
 #define RADIO_COMMAND_PIN PINB
 //standard pinout 8,11,13
-//#define RADIO_CLOCK       PB5
-//#define RADIO_CLOCK_DDR    DDRB
-//#define RADIO_CLOCK_PORT  PORTB
-//#if defined(__AVR_ATmega328PB__) //cannot use pb3 with serial1
-//#define RADIO_DATA        PB2
-//#else
-//#define RADIO_DATA        PB3 
-//#endif
-//#define RADIO_DATA_DDR    DDRB
-//#define RADIO_DATA_PORT  PORTB
+#define RADIO_CLOCK       PB5
+#define RADIO_CLOCK_DDR    DDRB
+#define RADIO_CLOCK_PORT  PORTB
+#if defined(__AVR_ATmega328PB__) //cannot use pb3 with serial1
+#define RADIO_DATA        PB2
+#else
+#define RADIO_DATA        PB3 
+#endif
+#define RADIO_DATA_DDR    DDRB
+#define RADIO_DATA_PORT  PORTB
 //my pinout, 8,6,A0
-#define RADIO_CLOCK        PD4
-#define RADIO_CLOCK_DDR    DDRD
-#define RADIO_CLOCK_PORT  PORTD
-#define RADIO_DATA         PC3
-#define RADIO_DATA_DDR     DDRC
-#define RADIO_DATA_PORT  PORTC
+//#define RADIO_CLOCK        PD4
+//#define RADIO_CLOCK_DDR    DDRD
+//#define RADIO_CLOCK_PORT  PORTD
+//#define RADIO_DATA         PC3
+//#define RADIO_DATA_DDR     DDRC
+//#define RADIO_DATA_PORT  PORTC
 //#define RADIO_ACC 3 // PD3 = INT1
 #endif
 
