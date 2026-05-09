@@ -1102,7 +1102,7 @@ static uint8_t cdButtonPushed(uint8_t cdnumber) {
       case 6:
         cd1pushed = cd2pushed = cd3pushed = cd4pushed = cd5pushed;
         if (++cd6pushed == 6)
-          cd5pushed = 0;
-        return cd5pushed;
+          cd6pushed = 0;
+        return cd6pushed;
       }
   }

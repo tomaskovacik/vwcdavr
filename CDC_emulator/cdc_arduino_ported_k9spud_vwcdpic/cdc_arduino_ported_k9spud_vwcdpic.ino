@@ -652,7 +652,7 @@ ISR(TIMER3_COMPA_vect)
 ISR(TIMER0_OVF_vect) {
   counter_timer0_overflows++;
 
-  if (counter_timer0_overflows = _TIMER0_OVERFLOW_COUNTS )
+  if (counter_timer0_overflows == _TIMER0_OVERFLOW_COUNTS )
   {
     counter_timer0_overflows = 0;
     flag_50ms = TRUE;
@@ -1186,7 +1186,7 @@ static void DecodeCommand(void)
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
       disc = 0x42; // set CD 2
 #endif
-      if (cdButtonPushed(1))
+      if (cdButtonPushed(2))
         EnqueueString(sLIST2);
       break;
 
