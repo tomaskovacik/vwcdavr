@@ -31,7 +31,7 @@ Source files:
 ## Response/frame behavior patterns
 
 - Real changer streams repeated 8-byte status/display frames between command events.
-- Around SCAN events, mode/status bytes often move to values consistent with scan flag enabled (examples with `... EF ...` sequences in decoded rows).
+- Around SCAN events, mode/status bytes often move to values consistent with scan flag enabled (for example, lines in the dump files that include `... EF ...` inside the 8-byte response frame text).
 - Dumps also show many interleaved, partially corrupted/noisy rows (capture timing/noise), so stable interpretation depends on repeated motifs rather than single lines.
 
 ## Practical implication for emulator tuning
