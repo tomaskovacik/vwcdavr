@@ -1116,15 +1116,9 @@ static void DecodeCommand(void)
 
       scancount = SCANWAIT;
 #ifndef DISC_TRACK_NUMBER_FROM_MPD
-      if (scan == FALSE)
-      {
-        scan = TRUE;
-      }
-      else
-      {
-        scan = FALSE;
-
-      }
+      // Keep SCAN display bit disabled to avoid scan-mode mute behavior
+      // seen on some head units while still accepting the command.
+      scan = FALSE;
 #endif
 
 #ifdef PJRC
