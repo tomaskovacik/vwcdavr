@@ -1,7 +1,7 @@
 ## CDC emulator scan/mute test notes
 
 ### Context
-- Investigated `CDC_emulator/cdc_arduino_ported_k9spud_vwcdpic` protocol handling and dumps in `/home/runner/work/vwcdavr/vwcdavr/dumps`.
+- Investigated `CDC_emulator/cdc_arduino_ported_k9spud_vwcdpic` protocol handling and dumps in `dumps/`.
 - Login/command framing looks correct (`53 2C <cmd> <~cmd>` and command byte multiple-of-4 checks).
 
 ### Observed issue

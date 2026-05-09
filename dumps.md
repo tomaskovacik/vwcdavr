@@ -1,8 +1,8 @@
 ## Dump pattern notes
 
 Source files:
-- `/home/runner/work/vwcdavr/vwcdavr/dumps/dump_cdc_real_changer.txt`
-- `/home/runner/work/vwcdavr/vwcdavr/dumps/dump_cdc_real_changer_real_radio_audi_concert1.txt`
+- `dumps/dump_cdc_real_changer.txt`
+- `dumps/dump_cdc_real_changer_real_radio_audi_concert1.txt`
 
 ## Packet structure patterns
 
