@@ -746,15 +746,15 @@ void VWCDC::sendFrameByte(uint8_t byte_u8)
 //-----------------------------------------------------------------------------
 void VWCDC::sendByte(uint8_t byte_u8)
 {
-  static uint8_t display_byte_counter_u8 = 0;
+  static uint8_t send_byte_counter_u8 = 0;
   // wait for head unit to store sent byte
   // 335us didn't work so good on late 2003 wolfsburg double din,
   // so we now wait 700us instead.
-  display_byte_buffer_mau8[display_byte_counter_u8] = byte_u8;
-  display_byte_counter_u8++;
-  if (display_byte_counter_u8 == 8)
+  display_byte_buffer_mau8[send_byte_counter_u8] = byte_u8;
+  send_byte_counter_u8++;
+  if (send_byte_counter_u8 == 8)
   {
-    display_byte_counter_u8 = 0;
+    send_byte_counter_u8 = 0;
   }
 }
 //-----------------------------------------------------------------------------
@@ -1126,11 +1126,11 @@ void VWCDC::printstrP(const char *s)
 
 void VWCDC::outputByte(void)
 {
-  static uint8_t display_byte_counter_u8 = 0;
+  static uint8_t output_byte_counter_u8 = 0;
   uint8_t byte_u8;
-  if (display_byte_counter_u8 < 8)
+  if (output_byte_counter_u8 < 8)
   {
-    byte_u8 = display_byte_buffer_mau8[display_byte_counter_u8];
+    byte_u8 = display_byte_buffer_mau8[output_byte_counter_u8];
 
 #ifdef DUMPMODE2
     _serial.print("|");
@@ -1143,7 +1143,7 @@ void VWCDC::outputByte(void)
       RADIO_CLOCK_PORT |= _BV(RADIO_CLOCK); // SCLK high
       //_delay_loop_1(CLK_DELAY);
       _1us_delay=1;
-      while(_1us_delay);
+      while(_1us_delay) {}
       if ((byte_u8 & 0x80) == 0) // mask highest bit and test if set
       {
         RADIO_DATA_PORT |= _BV(RADIO_DATA); // DATA high
@@ -1156,14 +1156,14 @@ void VWCDC::outputByte(void)
       RADIO_CLOCK_PORT &= ~_BV(RADIO_CLOCK); // SCLK low
       //_delay_loop_1(CLK_DELAY);
       _1us_delay=1;
-      while(_1us_delay);      
+      while(_1us_delay) {}
     }
   }
   counter_to_send_packet = _700US;
-  display_byte_counter_u8++;
-  if (display_byte_counter_u8 == 8)
+  output_byte_counter_u8++;
+  if (output_byte_counter_u8 == 8)
   { //wait 50ms
-    display_byte_counter_u8 = 0;
+    output_byte_counter_u8 = 0;
     counter_to_send_packet = _50MS;
   }
 }
