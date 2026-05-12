@@ -967,15 +967,15 @@ void CDC_Protocol(void)
   ;--------------------------------------------------------------------------
   ; Button Push Packets (NEC IR extended address, LSB-first bit order)
   ;--------------------------------------------------------------------------
-  ; CA341906 Mix 1
-  ; CA340707 Mix 6
+  ; CA3406F9 Mix 1
+  ; CA3407F8 Mix 6
   ; CA3405FA Scan
   ;     Note: Blaupunkt Gamma V head unit will continue to send scan key code
   ;       unless display is switched into scan mode.
   ;       (reported by tony.gilbert@orange.co.uk)
   ; CA3408F7 Head Unit mode change. Emitted at power up, power down, and
   ;        any mode change. (disable playing)
-  ; CA34181A Seek Back Pressed
+  ; CA341AE5 Seek Back Pressed
   ; CA341BE4 Seek Forward Pressed
   ; CA341EE1 Dn
   ; CA3415EA Dn on Mk3 premium (Adam Yellen <adam@yellen.com>)
