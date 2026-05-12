@@ -173,65 +173,66 @@
 #endif
 
 
-// Command Codes
+// Command Codes (NEC IR extended address, LSB-first bit order)
 // -------------
 //
-// First byte is always 53
-// Second byte is always 2C
+// First byte is always CA  (= reverse_bits(0x53))
+// Second byte is always 34 (= reverse_bits(0x2C))
 // Third and Fourth bytes always add up to FF
-// All command codes seem to be a multiple of 4.
+// All standard command codes have the two MSBs clear (bits 7:6 == 0b00).
 //
 //
-// 53 2C 0C F3 CD 1
-// 53 2C 10 EF DISABLE
-// 53 2C 14 EB Change CD (ignored)
-// 53 2C 18 E7 Previous CD (only on Audi Concert <)
-// 53 2C 2C D3 CD 5 (first packet)
-// 53 2C 38 C7 Change CD/Next CD (aka MINQUIRY)
-// 53 2C 4C B3 CD 3 (first packet)
-// 53 2C 58 A7 Seek Back Pressed
-// 53 2C 60 9F Mix 1
-// 53 2C 68 97 Up on Mk3 premium (Adam Yellen)
-// 53 2C 78 87 Dn
-// 53 2C 8C 73 CD 2 (first packet)
-// 53 2C A0 5F Scan
-// 53 2C A4 5B something to do with power on (Audi Concert)
-// 53 2C A8 57 Dn on Mk3 premium (Adam Yellen <adam@yellen.com>)
-// 53 2C AC 53 CD 6 (first packet)
-// 53 2C CC 33 CD 4 (first packet)
-// 53 2C D8 27 Seek Forward Pressed
-// 53 2C E0 1F Mix 6
-// 53 2C E4 1B ENABLE
-// 53 2C F8 07 Up
+// CA 34 30 CF CD 1
+// CA 34 08 F7 DISABLE
+// CA 34 28 D7 Change CD (ignored)
+// CA 34 18 E7 Previous CD (only on Audi Concert <)
+// CA 34 34 CB CD 5 (first packet)
+// CA 34 1C E3 Change CD/Next CD (aka MINQUIRY)
+// CA 34 32 CD CD 3 (first packet)
+// CA 34 1A E5 Seek Back Pressed
+// CA 34 06 F9 Mix 1
+// CA 34 16 E9 Up on Mk3 premium (Adam Yellen)
+// CA 34 1E E1 Dn
+// CA 34 31 CE CD 2 (first packet)
+// CA 34 05 FA Scan
+// CA 34 25 DA something to do with power on (Audi Concert)
+// CA 34 15 EA Dn on Mk3 premium (Adam Yellen <adam@yellen.com>)
+// CA 34 35 CA CD 6 (first packet)
+// CA 34 33 CC CD 4 (first packet)
+// CA 34 1B E4 Seek Forward Pressed
+// CA 34 07 F8 Mix 6
+// CA 34 27 D8 ENABLE
+// CA 34 1F E0 Up
 
 
-//#define  Do_PLAY           0x08  // mix button held down (RCD300 head unit only)
-#define  Do_PLAY           0x03  // mix button held down (RCD300 head unit only)
-#define  Do_LOADCD	  0x01	// not used
-#define  Do_ENABLE_MK      0x08  // mk concert1
-#define  Do_CD1            0x0C  // CD 1
-#define  Do_DISABLE        0x10  // DISABLE
-#define  Do_CHANGECD       0x14  // Change CD (changer ignores & no ACK)
-#define  Do_PREVCD         0x18  // PREVIOUS CD (Audi Concert head unit)
-#define  Do_CD5            0x2C  // CD 5
-#define  Do_TP             0x30  // TP info (TP button pressed)
-#define  Do_SEEKFORWARD_MK 0x38  // mk concert 1 LOAD CD (aka MINQUIRY).
+// Command codes in NEC IR extended-address order (LSB first, i.e. reverse_bits of original MSB-first values)
+//#define  Do_PLAY           0x10  // mix button held down (RCD300 head unit only) [was 0x08]
+#define  Do_PLAY           0xC0  // mix button held down (RCD300 head unit only) [was 0x03]
+#define  Do_LOADCD         0x80  // not used                                     [was 0x01]
+#define  Do_ENABLE_MK      0x10  // mk concert1                                  [was 0x08]
+#define  Do_CD1            0x30  // CD 1                                          [was 0x0C]
+#define  Do_DISABLE        0x08  // DISABLE                                       [was 0x10]
+#define  Do_CHANGECD       0x28  // Change CD (changer ignores & no ACK)          [was 0x14]
+#define  Do_PREVCD         0x18  // PREVIOUS CD (Audi Concert head unit)          [was 0x18]
+#define  Do_CD5            0x34  // CD 5                                          [was 0x2C]
+#define  Do_TP             0x0C  // TP info (TP button pressed)                   [was 0x30]
+#define  Do_SEEKFORWARD_MK 0x1C  // mk concert 1 LOAD CD (aka MINQUIRY).         [was 0x38]
 // Also means "Next CD" if no CD button pressed
-#define  Do_CD3            0x4C  // CD 3
-#define  Do_SEEKBACK       0x58  // SEEK BACK
-#define  Do_MIX_CD         0x60  // MIX 1 (mix tracks within one disc)
-#define  Do_UP_MK3         0x68  // UP (Mk3 head unit)
-#define  Do_DOWN           0x78  // DOWN
-#define  Do_CD2            0x8C  // CD 2
-#define  Do_SCAN           0xA0  // SCAN
-#define  Do_UNKNOWNCMD     0xA4  // power on CD mode?? (Audi Concert head unit)
-#define  Do_DOWN_MK3       0xA8  // DOWN (Mk3 head unit only)
-#define  Do_CD6            0xAC  // CD 6
-#define  Do_CD4            0xCC  // CD 4
-#define  Do_SEEKFORWARD    0xD8  // Seek Forward
-#define  Do_MIX            0xE0  // MIX 6 (mix tracks across all discs)
-#define  Do_ENABLE         0xE4  // ENABLE
-#define  Do_UP             0xF8  // UP
+#define  Do_CD3            0x32  // CD 3                                          [was 0x4C]
+#define  Do_SEEKBACK       0x1A  // SEEK BACK                                     [was 0x58]
+#define  Do_MIX_CD         0x06  // MIX 1 (mix tracks within one disc)            [was 0x60]
+#define  Do_UP_MK3         0x16  // UP (Mk3 head unit)                            [was 0x68]
+#define  Do_DOWN           0x1E  // DOWN                                          [was 0x78]
+#define  Do_CD2            0x31  // CD 2                                          [was 0x8C]
+#define  Do_SCAN           0x05  // SCAN                                          [was 0xA0]
+#define  Do_UNKNOWNCMD     0x25  // power on CD mode?? (Audi Concert head unit)   [was 0xA4]
+#define  Do_DOWN_MK3       0x15  // DOWN (Mk3 head unit only)                     [was 0xA8]
+#define  Do_CD6            0x35  // CD 6                                          [was 0xAC]
+#define  Do_CD4            0x33  // CD 4                                          [was 0xCC]
+#define  Do_SEEKFORWARD    0x1B  // Seek Forward                                  [was 0xD8]
+#define  Do_MIX            0x07  // MIX 6 (mix tracks across all discs)           [was 0xE0]
+#define  Do_ENABLE         0x27  // ENABLE                                        [was 0xE4]
+#define  Do_UP             0x1F  // UP                                            [was 0xF8]
 
 enum STATES
 {
@@ -708,9 +709,9 @@ ISR(TIMER1_OVF_vect)
     // if the capture bits were not a complete 8 bits, we need to finish
     // rotating the bits upward so that the data is nicely formatted
 
-    while (capbit != 0) // have we finished rotating all bits up?
+    while (capbit != 0) // have we finished rotating all bits down?
     {
-      capbuffer[capptr] <<= 1; // rotate in 0 bit
+      capbuffer[capptr] >>= 1; // rotate in 0 bit (LSB first)
       capbit++;
     }
 
@@ -786,11 +787,11 @@ ISR(TIMER1_CAPT_vect)
           //       command strings with error free data.
           //
           // if the capture bits were not a complete 8 bits, we need to finish
-          // rotating the bits upward so that the data is nicely formatted
+          // rotating the bits downward so that the data is nicely formatted
 
-          while (capbit != 0) // have we finished rotating all bits up?
+          while (capbit != 0) // have we finished rotating all bits down?
           {
-            capbuffer[capptr] <<= 1; // rotate in 0 bit
+            capbuffer[capptr] >>= 1; // rotate in 0 bit (LSB first)
             capbit++;
           }
           capbit = -8;
@@ -811,11 +812,11 @@ ISR(TIMER1_CAPT_vect)
       { // no, just a regular data bit
         if (captime > LOWTHRESHOLD)
         { // yes, go ahead and store this data
-          capbuffer[capptr] <<= 1; // nope
+          capbuffer[capptr] >>= 1; // LSB first: shift right, new bit enters at MSB
 
           if (captime > HIGHTHRESHOLD)
           {
-            capbuffer[capptr] |= 1;
+            capbuffer[capptr] |= 0x80;
           }
 
           capbitpacket++;
@@ -964,39 +965,39 @@ void CDC_Protocol(void)
   \brief    void DecodeCommand(void)
   decode cmdcode and do required actions
   ;--------------------------------------------------------------------------
-  ; Button Push Packets
+  ; Button Push Packets (NEC IR extended address, LSB-first bit order)
   ;--------------------------------------------------------------------------
-  ; 532C609F Mix 1
-  ; 532CE01F Mix 6
-  ; 532CA05F Scan
+  ; CA3406F9 Mix 1
+  ; CA3407F8 Mix 6
+  ; CA3405FA Scan
   ;     Note: Blaupunkt Gamma V head unit will continue to send scan key code
   ;       unless display is switched into scan mode.
   ;       (reported by tony.gilbert@orange.co.uk)
-  ; 532C10EF Head Unit mode change. Emitted at power up, power down, and
+  ; CA3408F7 Head Unit mode change. Emitted at power up, power down, and
   ;        any mode change. (disable playing)
-  ; 532C58A7 Seek Back Pressed
-  ; 532CD827 Seek Forward Pressed
-  ; 532C7887 Dn
-  ; 532CA857 Dn on Mk3 premium (Adam Yellen <adam@yellen.com>)
-  ; 532CF807 Up
-  ; 532C6897 Up on Mk3 premium (Adam Yellen)
-  ; 532C38C7 CD Change (third packet)
-  ; 532CE41B Seek Forward Released (enable playing)
-  ; 532CE41B Seek Back Released (enable playing)
-  ; 532CE41B CD Mode selected. Emitted at power up (if starting in CD
+  ; CA341AE5 Seek Back Pressed
+  ; CA341BE4 Seek Forward Pressed
+  ; CA341EE1 Dn
+  ; CA3415EA Dn on Mk3 premium (Adam Yellen <adam@yellen.com>)
+  ; CA341FE0 Up
+  ; CA3416E9 Up on Mk3 premium (Adam Yellen)
+  ; CA341CE3 CD Change (third packet)
+  ; CA3427D8 Seek Forward Released (enable playing)
+  ; CA3427D8 Seek Back Released (enable playing)
+  ; CA3427D8 CD Mode selected. Emitted at power up (if starting in CD
   ;            mode), change to CD mode. (enable playing)
-  ; 532C14EB CD Change (second packet)
-  ; 532C0CF3 CD 1 (first packet)
-  ; 532C8C73 CD 2 (first packet)
-  ; 532C4CB3 CD 3 (first packet)
-  ; 532CCC33 CD 4 (first packet)
-  ; 532C2CD3 CD 5 (first packet)
-  ; 532CAC53 CD 6 (first packet)
+  ; CA3428D7 CD Change (second packet)
+  ; CA3430CF CD 1 (first packet)
+  ; CA3431CE CD 2 (first packet)
+  ; CA3432CD CD 3 (first packet)
+  ; CA3433CC CD 4 (first packet)
+  ; CA3434CB CD 5 (first packet)
+  ; CA3435CA CD 6 (first packet)
   ;
   ; Monsoon State Changes:
-  ; 532CE41B enable playing (transition to State 2)
-  ; 532C38C7 disc loaded inquiry (transition to State 5)
-  ; 532C10EF disable playing (transition to State 1)
+  ; CA3427D8 enable playing (transition to State 2)
+  ; CA341CE3 disc loaded inquiry (transition to State 5)
+  ; CA3408F7 disable playing (transition to State 1)
   ;--------------------------------------------------------------------------
   \author     Koelling
   \date       05.10.2007
