@@ -39,7 +39,7 @@ FirstByteTest:
 
   //printstr_p(PSTR("2"),DEBUG);
 
-  if (scanbyte == 0x53)
+  if (scanbyte == 0xCA) // NEC LSB-first extended address byte 1 (= reverse_bits(0x53))
 
   {
 
@@ -69,7 +69,7 @@ SecondByte:
 
   }
 
-  if (scanbyte == 0x2C) // verify that byte 2 is 0x2C)
+  if (scanbyte == 0x34) // verify that byte 2 is 0x34 (= reverse_bits(0x2C))
 
   {
 
@@ -81,7 +81,7 @@ SecondByte:
 
   // dump first byte and then see if this one is the real first byte.
 
-  EnqueueHex(0x53);
+  EnqueueHex(0xCA);
 
   goto FirstByteTest;
 
@@ -131,7 +131,7 @@ FourthByte:
 
 
 
-    if ((cmdcode & 0x03) == 0) // verify that Byte 3 is a multiple of 4
+    if ((cmdcode & 0xC0) == 0) // verify that Byte 3 has bits 7:6 clear (standard command range)
 
     {
 
