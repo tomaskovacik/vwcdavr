@@ -448,7 +448,7 @@ ISR(TIMER2_COMPA_vect)
 ISR(TIMER0_OVF_vect) {
   counter_timer0_overflows++;
 
-  if (counter_timer0_overflows = _TIMER0_OVERFLOW_COUNTS )
+  if (counter_timer0_overflows == _TIMER0_OVERFLOW_COUNTS )
   {
     counter_timer0_overflows = 0;
     flag_50ms = TRUE;
